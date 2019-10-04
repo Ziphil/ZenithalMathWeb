@@ -2,12 +2,12 @@
 
 
 body {
-  font-family: "Times New Roman";
-  font-size: 15pt;
+  font-family: "Times New Roman", "IPA P明朝", "YuMincho", "Yu Mincho", serif;
+  font-size: 16px;
 }
 
 article {
-  width: 800px;
+  width: 700px;
   margin: 40px auto;
   padding: 0px;
 }
@@ -17,7 +17,7 @@ article h1 {
   padding: 0px;
   font-family: "Times New Roman";
   font-weight: normal;
-  font-size: 20pt;
+  font-size: 22px;
 }
 
 article p {
