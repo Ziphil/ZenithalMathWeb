@@ -13,7 +13,8 @@ module ZenithalMathCreaterConstant
     "n", "i", "op", "o", "text"
   ]
   REPLACEMENTS = {
-    "-" => "−"
+    "-" => "−",
+    "*" => "∗"
   }
 
   PAREN_SYMBOLS = {
@@ -72,8 +73,10 @@ module ZenithalMathCreaterConstant
     "plus" => ["+", :bin], 
     "minus" => ["−", :bin],
     "pm" => ["±", :bin],
+    "mp" => ["∓", :bin],
     "times" => ["×", :bin],
     "div" => ["÷", :bin],
+    "ast" => ["∗", :bin],
     "eq" => ["=", :rel],
     "coloneqq" => [":=", :rel],
     "eqqcolon" => ["=:", :rel],
