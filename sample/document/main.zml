@@ -23,7 +23,7 @@
       \p<
         &m<\frac<A><B>>
         or more complicated
-        &m<57 ⊗ \frac<φ ⋈ \frac<K><2>><3 − \frac<\frac<1><xy × z> ⨳ \frac<m><7 Ψ>><Δ>>>.
+        &m<57 ⊗ \frac<φ ⋈ \frac<K><2>><3 - \frac<\frac<1><xy × z> ⨳ \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
@@ -41,11 +41,20 @@
       >
       \h1<Some practical example>
       \p<
-        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \o<:=> \sp<b><2> − 4 ac ≥ 0> holds, and those roots are explicitly written as
+        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \coloneqq> \sp<b><2> - 4 ac ≥ 0> holds, and those roots are explicitly written as
         &mb<
-          x = \frac<− b ± \sqrt<\sp<b><2> − 4 ac>><2 a>
+          x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>
         >
         Otherwise &m<D `< 0>, in which case the equation does not have real roots but two distinct imaginary roots.
+      >
+      \p<
+        主イデアル整域 &m<A> 上の多項式 &m<P ∈ A \b<X>> を考え、
+        &mb<
+          P \eqqcolon> \sp<X><n> + \sb<a><1> \sp<X><n - 1> + \cdots> + \sb<a><n>
+        >
+        と係数表示する。
+        &m<A> のある素元 &m<π> が存在し、各 &m<i = 1, \cdots>, n - 1> に対して &m<π> は &m<\sb<a><i>> をわり切り、さらに &m<\sp<π><2>> は &m<\sb<a><n>> をわり切らないとする。
+        このとき、&m<K \coloneqq> \op<Frac> \p<A>> とおくと、&m<P> は &m<K> 上既約である。
       >
     >
 
