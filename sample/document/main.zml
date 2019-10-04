@@ -48,13 +48,27 @@
         Otherwise &m<D `< 0>, in which case the equation does not have real roots but two distinct imaginary roots.
       >
       \p|class="normal"|<
-        主イデアル整域 &m<A> 上の多項式 &m<P ∈ A \b<X>> を考え、
+        主イデアル整域 &m<A> 上の多項式 &m<P \in> A \b<X>> を考え、
         &mb<
           P \eqqcolon> \sp<X><n> + \sb<a><1> \sp<X><n - 1> + \cdots> + \sb<a><n>
         >
         と係数表示する。
         &m<A> のある素元 &m<π> が存在し、各 &m<i = 1, \cdots>, n - 1> に対して &m<π> は &m<\sb<a><i>> をわり切り、さらに &m<\sp<π><2>> は &m<\sb<a><n>> をわり切らないとする。
         このとき、&m<K \coloneqq> \op<Frac> \p<A>> とおくと、&m<P> は &m<K> 上既約である。
+      >
+      \p|class="normal"|<
+        2 階連続的微分可能な &m<R> 値 2 変数関数 &m<f \p<x, y>> の極大値や極小値が知りたいとする。
+        点 &m<\p<\sb<x><0>, \sb<y><0>>> が極大値もしくは極小値であるための必要条件として、その点が停留点であること、すなわち
+        &mb<
+          \frac<\partial> f><\partial> x> \p<\sb<x><0>, \sb<y><0>> = \frac<\partial> f><\partial> y> \p<\sb<x><0>, \sb<y><0>> = 0
+        >
+        が成り立つことが挙げられる。
+        この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<\p<x, y>> の周りでの振る舞いは、
+        &mb<
+          f \p<\sb<x><0> + h, \sb<y><0> + k> = f \p<\sb<x><0>, \sb<y><0>> + \frac<1><2> \p|s="5"|<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> \p<\sb<x><0>, \sb<y><0>> + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> \p<\sb<x><0>, \sb<y><0>> + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> \p<\sb<x><0>, \sb<y><0>>> + o \p<\sp<`r><2>>
+        >
+        と記述できる。
+        ここで、&m<`r \coloneqq> \sqrt<\sp<h><2> + \sp<k><2>>> とした。
       >
     >
 
