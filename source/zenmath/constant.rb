@@ -80,9 +80,11 @@ module ZenithalMathCreaterConstant
     "eq" => ["=", :rel],
     "coloneqq" => [":=", :rel],
     "eqqcolon" => ["=:", :rel],
+    "in" => ["∈", :rel],
     "comma" => [",", :del],
     "colon" => [":", :del],
     "semicolon" => [";", :del],
+    "partial" => ["∂", :txt],
     "cdots" => ["⋯", :ord]
   }
 

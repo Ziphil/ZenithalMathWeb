@@ -51,6 +51,11 @@ math-o {
     margin: 0em spacing(0);
   }
 
+  &.txt {
+    margin: 0em spacing(0);
+    font-family: inherit;
+  }
+
   &.lp {
     margin: 0em spacing(0);
   }
