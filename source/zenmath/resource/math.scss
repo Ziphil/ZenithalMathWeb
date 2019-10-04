@@ -77,7 +77,7 @@ math-o {
 
 math-frac {
   margin: 0em $fraction-padding;
-  vertical-align: 0.13em;
+  vertical-align: 0.05em;
   display: inline-block;
 
   >math-num {
@@ -87,12 +87,15 @@ math-frac {
   }
 
   >math-denwrap {
+    margin: 0.4em 0em 0em 0em;
     width: 100%;
     display: inline-table;
   }
 
   >math-denwrap::before {
-    margin: -0.15em 0em - $fraction-padding;
+    margin: -0.25em 0em 0em 0em;
+    margin-left: -$fraction-padding;
+    margin-right: -$fraction-padding;
     height: 1px;
     border-top: 1px solid;
     display: block;
@@ -111,16 +114,16 @@ math-frac {
 math-sqrt {
 
   >math-surd {
-    margin: 0.35em 0em 0em 0em;
+    margin: 0.37em 0em 0em 0em;
     vertical-align: top;
   }
 
   >math-surd.s1 {
-    margin: 1.05em 0em 0em 0em;
+    margin: 1.07em 0em 0em 0em;
   }
 
   >math-surd.s2 {
-    margin: 1.54em 0em 0em 0em;
+    margin: 1.56em 0em 0em 0em;
   }
 
   >math-surd >math-o,
