@@ -57,15 +57,15 @@ math-o {
   }
 
   &.lp {
-    margin: 0em spacing(0);
+    margin: 0em spacing(0) 0em spacing(1);
   }
 
   math-i.op +&.lp {
-    margin: 0em spacing(0) 0em spacing(-3);
+    margin: 0em spacing(0) 0em spacing(-2);
   }
 
   &.rp {
-    margin: 0em spacing(0);
+    margin: 0em spacing(1) 0em spacing(0);
   }
 
   math-scr & {
