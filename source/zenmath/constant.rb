@@ -4,14 +4,17 @@
 module ZenithalMathCreaterConstant
 
   CREATION_METHODS = {
-    "n" => :number, "i" => :identifier, "o" => :operator,
-    "sp" => :superscript,
+    "n" => :custom_number, "i" => :custom_identifier, "op" => :custom_identifier, "o" => :custom_operator,
+    "sp" => :superscript, "sb" => :superscript,
     "frac" => :fraction,
     "sqrt" => :radical
   }
   LEAF_ELEMENTS = [
-    "n", "i", "o", "text"
+    "n", "i", "op", "o", "text"
   ]
+  REPLACEMENTS = {
+    "-" => "−"
+  }
 
   PAREN_SYMBOLS = {
     "p" => {
@@ -64,9 +67,20 @@ module ZenithalMathCreaterConstant
     "lim", "colim",
     "deg", "dim", "det", "sgn", "arg"
   ]
+
   OPERATORS = {
-    "pm" => "\u00B1",
-    "coloneq" => ":="
+    "plus" => ["+", :bin], 
+    "minus" => ["−", :bin],
+    "pm" => ["±", :bin],
+    "times" => ["×", :bin],
+    "div" => ["÷", :bin],
+    "eq" => ["=", :rel],
+    "coloneqq" => [":=", :rel],
+    "eqqcolon" => ["=:", :rel],
+    "comma" => [",", :del],
+    "colon" => [":", :del],
+    "semicolon" => [";", :del],
+    "cdots" => ["⋯", :ord]
   }
 
   GREEKS = {

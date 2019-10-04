@@ -41,9 +41,9 @@ module ZenithalMathCreater
           this << Text.new(char, true, nil, false)
         end
       elsif char !~ /\s/
-        this << Element.build("math-o") do |this|
-          this << Text.new(char, true, nil, false)
-        end
+        name = OPERATORS.find{|s, (t, u)| char == t}&.first || char
+        name = REPLACEMENTS.fetch(name, name)
+        this << create_operator(name, {}, [])
       end
     end
     return this
@@ -57,7 +57,7 @@ module ZenithalMathCreater
     return next_char
   end
 
-  def create_number(name, attributes, children_list)
+  def create_custom_number(name, attributes, children_list)
     this = Nodes[]
     this << Element.build("math-n") do |this|
       this << children_list[0]
@@ -65,15 +65,16 @@ module ZenithalMathCreater
     return this
   end
 
-  def create_identifier(name, attributes, children_list)
+  def create_custom_identifier(name, attributes, children_list)
     this = Nodes[]
     this << Element.build("math-i") do |this|
+      this["class"] = name unless name == "i"
       this << children_list[0]
     end
     return this
   end
 
-  def create_operator(name, attributes, children_list)
+  def create_custom_operator(name, attributes, children_list)
     this = Nodes[]
     this << Element.build("math-o") do |this|
       this << children_list[0]
@@ -81,9 +82,21 @@ module ZenithalMathCreater
     return this
   end
 
+  def create_operator(name, attributes, children_list)
+    this = Nodes[]
+    symbol, kind = OPERATORS.fetch(name, [name, :bin])
+    symbol = symbol.gsub("<", "&lt;").gsub(">", "&gt;")
+    this << Element.build("math-o") do |this|
+      this["class"] = kind
+      this << ~symbol
+    end
+    return this
+  end
+
   def create_superscript(name, attributes, children_list)
     this = Nodes[]
-    this << Element.build("math-sup") do |this|
+    element_name = (name == "sp") ? "math-sup" : "math-sub"
+    this << Element.build(element_name) do |this|
       this << Element.build("math-base") do |this|
         this << children_list[0]
       end
