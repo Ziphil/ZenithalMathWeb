@@ -22,6 +22,10 @@ module ZenithalMathParserMethod
       options = options.clone
       options[:math] = true
       return options
+    elsif LEAF_ELEMENTS.include?(name)
+      options = options.clone
+      options[:math_leaf] = true
+      return options
     else
       return super
     end
@@ -68,7 +72,7 @@ module ZenithalMathParserMethod
   end
 
   def create_text(raw_text, options)
-    if options[:math]
+    if options[:math] && !options[:math_leaf]
       return create_math_text(raw_text)
     else
       return super

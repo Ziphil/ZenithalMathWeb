@@ -9,6 +9,9 @@ module ZenithalMathCreaterConstant
     "frac" => :fraction,
     "sqrt" => :radical
   }
+  LEAF_ELEMENTS = [
+    "n", "i", "o", "text"
+  ]
 
   PAREN_SYMBOLS = {
     "p" => {
