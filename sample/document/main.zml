@@ -1,0 +1,53 @@
+\zml?|version="1.0"|>
+\xml?|version="1.0",encoding="UTF-8"|>
+
+\html|lang="ja"|<
+  \head<
+    \meta|charset="UTF-8"|>
+    &math-style|url="font.otf"|>
+    \link|rel="stylesheet",type="text/css",href="style.css"|>
+    \title<Math>
+  >
+  \body<
+
+    \article<
+      \h1<Notice>
+      \p<
+        The spacing is optimised for Times New Roman font.
+        If you would like to render formulae using a different font, you should modify margin or padding values in the stylesheet.
+      >
+      \p<
+        Rendering is tested only on the latest desktop version of Google Chrome, so the layout may be off when viewed with a different browser.
+      >
+      \h1<Fractions>
+      \p<
+        &m<\frac<A><B>>
+        or more complicated
+        &m<57 ⊗ \frac<φ ⋈ \frac<K><2>><3 − \frac<\frac<1><xy × z> ⨳ \frac<m><7 Ψ>><Δ>>>.
+      >
+      \h1<Radicals>
+      \p<
+        &m<\sqrt<A>>
+        or
+        &m<\sqrt|s="2"|<\frac<1><i ⩕ j> + \frac<1><j ⩖ i>>>
+        or
+        &m<\frac<W><\sqrt<5 W>> = \sqrt|s="2"|<\frac<W><5>>>.
+      >
+      \h1<Parentheses>
+      \p<
+        &m<\p<A>>, &m<\c|s="4"|<\frac<1><2>>>
+        or more
+        &m<\p|s="10"|<\frac<1 + \frac<2><3>><4>>>
+      >
+      \h1<Some practical example>
+      \p<
+        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \o<:=> \sp<b><2> − 4 ac ≥ 0> holds, and those roots are explicitly written as
+        &mb<
+          x = \frac<− b ± \sqrt<\sp<b><2> − 4 ac>><2 a>
+        >
+        Otherwise &m<D `< 0>, in which case the equation does not have real roots but two distinct imaginary roots.
+      >
+    >
+
+  >
+>

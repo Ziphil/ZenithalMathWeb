@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+
+body {
+  font-family: "Times New Roman";
+  font-size: 15pt;
+}
+
+article {
+  width: 800px;
+  margin: 40px auto;
+  padding: 0px;
+}
+
+article h1 {
+  margin: 40px 0px 15px 0px;
+  padding: 0px;
+  font-family: "Times New Roman";
+  font-weight: normal;
+  font-size: 20pt;
+}
+
+article p {
+  margin: 5px 0px;
+  padding: 0px;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+article a {
+  color: hsl(200, 80%, 50%);
+  text-decoration: underline;
+}
+
+article span.display-math {
+  margin: 5px 0px;
+  text-align: center;
+  display: block;
+}
+
+article math-root {
+  color: hsl(240, 80%, 50%);
+}

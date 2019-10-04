@@ -1,0 +1,193 @@
+@charset "utf-8";
+
+
+@function spacing($value) {
+  $spacing-const: 1em / 18;
+  @return $value * $spacing-const;
+}
+
+
+$fraction-padding: spacing(2);
+$radical-padding: spacing(1);
+
+
+math-n {
+  margin: 0em spacing(0);
+  line-height: 0.8;
+}
+
+
+math-i {
+  margin: 0em spacing(0);
+  line-height: 0.8;
+  font-style: italic;
+}
+
+
+math-o {
+  margin: 0em spacing(4);
+  line-height: 0.7;
+  font-family: "Math";
+
+  &.lp {
+    margin: 0em spacing(0);
+  }
+
+  &.rp {
+    margin: 0em spacing(0);
+  }
+
+  math-scr & {
+    margin: 0em spacing(0);
+  }
+
+}
+
+
+math-frac {
+  margin: 0em $fraction-padding;
+  vertical-align: 0.13em;
+  display: inline-block;
+
+  >math-num {
+    margin: 0em 0em;
+    text-align: center;
+    display: block;
+  }
+
+  >math-denwrap {
+    width: 100%;
+    display: inline-table;
+  }
+
+  >math-denwrap::before {
+    margin: -0.15em 0em - $fraction-padding;
+    height: 1px;
+    border-top: 1px solid;
+    display: block;
+    content: "";
+  }
+
+  >math-denwrap >math-den {
+    margin: 0em 0em;
+    text-align: center;
+    display: table-row;
+  }
+
+}
+
+
+math-sqrt {
+
+  >math-surd {
+    margin: 0.3em 0em 0em 0em;
+    vertical-align: top;
+  }
+
+  >math-surd.s1 {
+    margin: 1em 0em 0em 0em;
+  }
+
+  >math-surd.s2 {
+    margin: 1.49em 0em 0em 0em;
+  }
+
+  >math-surd >math-o,
+  >math-surd >math-o.var {
+    margin: 0em;
+  }
+
+  >math-sqrtcont {
+    padding: 0.15em $radical-padding 0em 0em;
+    border-top: 1px solid;
+  }
+
+}
+
+
+math-sup {
+  
+  >math-base {
+    margin: 0.15em 0em 0em 0em;
+  }
+
+  >math-scr {
+    margin: 0em 0em 0em 0em;
+    vertical-align: top;
+    font-size: 70.7%;
+  }
+
+}
+
+
+math-root {
+  line-height: 0;
+
+  * {
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  .l0 {
+    margin-left: spacing(0);
+  }
+
+  .l1 {
+    margin-left: spacing(1);
+  }
+
+  .l2 {
+    margin-left: spacing(2);
+  }
+
+  .l3 {
+    margin-left: spacing(3);
+  }
+
+  .l4 {
+    margin-left: spacing(4);
+  }
+
+  .l5 {
+    margin-left: spacing(5);
+  }
+
+  .l6 {
+    margin-left: spacing(6);
+  }
+
+  .r0 {
+    margin-right: spacing(0);
+  }
+
+  .r1 {
+    margin-right: spacing(1);
+  }
+
+  .r2 {
+    margin-right: spacing(2);
+  }
+
+  .r3 {
+    margin-right: spacing(3);
+  }
+
+  .r4 {
+    margin-right: spacing(4);
+  }
+
+  .r5 {
+    margin-right: spacing(5);
+  }
+
+  .r6 {
+    margin-right: spacing(6);
+  }
+
+}
+
+
+@font-face {
+  font-family: "Math";
+  src: url("__mathfonturl__");
+}
