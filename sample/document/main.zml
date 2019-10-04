@@ -40,14 +40,14 @@
         &m<\p|s="10"|<\frac<1 + \frac<2><3>><4>>>
       >
       \h1<Some practical example>
-      \p<
+      \p|class="normal"|<
         The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \coloneqq> \sp<b><2> - 4 ac ≥ 0> holds, and those roots are explicitly written as
         &mb<
           x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>
         >
         Otherwise &m<D `< 0>, in which case the equation does not have real roots but two distinct imaginary roots.
       >
-      \p<
+      \p|class="normal"|<
         主イデアル整域 &m<A> 上の多項式 &m<P ∈ A \b<X>> を考え、
         &mb<
           P \eqqcolon> \sp<X><n> + \sb<a><1> \sp<X><n - 1> + \cdots> + \sb<a><n>

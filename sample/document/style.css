@@ -38,6 +38,10 @@ article span.display-math {
   display: block;
 }
 
-article math-root {
+article p math-root {
   color: hsl(240, 80%, 50%);
+}
+
+article p.normal math-root {
+  color: black;
 }
