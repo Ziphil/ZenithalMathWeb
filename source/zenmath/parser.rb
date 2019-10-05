@@ -22,7 +22,7 @@ module ZenithalMathParserMethod
       options = options.clone
       options[:math] = true
       return options
-    elsif LEAF_ELEMENTS.include?(name)
+    elsif DATA["leaf"].include?(name)
       options = options.clone
       options[:math_leaf] = true
       return options

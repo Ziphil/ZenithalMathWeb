@@ -7,7 +7,6 @@ require_relative 'zenmath/utility'
 
 module Zenithal
 
-  require_relative 'zenmath/constant' 
   require_relative 'zenmath/creater'
   require_relative 'zenmath/parser'
 
