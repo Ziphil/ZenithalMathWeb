@@ -1,5 +1,6 @@
 out
 sample/out
+mathjax.html
 .vscode
 *.gem
 **/debug.rb
