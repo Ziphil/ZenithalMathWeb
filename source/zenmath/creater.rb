@@ -14,6 +14,7 @@ module ZenithalMathCreater
     :integral => :integral,
     :function => :function, :operator => :operator,
     "n" => :custom_number, "i" => :custom_identifier, "op" => :custom_identifier, "o" => :custom_operator,
+    "text" => :raw_text,
     "sp" => :superscript, "sb" => :superscript,
     "frac" => :fraction,
     "sqrt" => :radical
@@ -98,10 +99,9 @@ module ZenithalMathCreater
   def create_operator(name, attributes, children_list)
     this = Nodes[]
     symbol, kind = DATA["operator"].fetch(name, [name, "bin"])
-    symbol = symbol.gsub("<", "&lt;").gsub(">", "&gt;")
     this << Element.build("math-o") do |this|
       this["class"] = kind
-      this << ~symbol
+      this << Text.new(symbol, true, nil, false)
     end
     return this
   end
@@ -145,7 +145,7 @@ module ZenithalMathCreater
           this["class"] = "s#{stretch_level}"
         end
         this << Element.build("math-o") do |this|
-          this << ~symbol
+          this << Text.new(symbol, true, nil, false)
         end
       end
       this << Element.build("math-sqrtcont") do |this|
@@ -161,14 +161,14 @@ module ZenithalMathCreater
     left_symbol, right_symbol = DATA["paren"][name].fetch(stretch_level, ["", ""])
     this << Element.build("math-o") do |this|
       this["class"] = "lp"
-      this << ~left_symbol
+      this << Text.new(left_symbol, true, nil, false)
     end
     this << Element.build("math-row") do |this|
       this << children_list[0]
     end
     this << Element.build("math-o") do |this|
       this["class"] = "rp"
-      this << ~right_symbol
+      this << Text.new(right_symbol, true, nil, false)
     end
     return this
   end
@@ -177,8 +177,22 @@ module ZenithalMathCreater
     this = Nodes[]
     this << Element.build("math-i") do |this|
       this["class"] = "op"
-      this << ~name
+      this << Text.new(name, true, nil, false)
     end
+    return this
+  end
+
+  def create_raw_text(name, attributes, children_list)
+    this = Nodes[]
+    this << Element.build("math-text") do |this|
+      this << children_list[0]
+    end
+    return this
+  end
+
+  def create_raw(name, attributes, children_list)
+    this = Nodes[]
+    this << children_list[0]
     return this
   end
 

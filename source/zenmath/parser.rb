@@ -10,6 +10,7 @@ include REXML
 module ZenithalMathParserMethod
 
   STYLE_MACRO_NAME = "math-style"
+  RAW_MACRO_NAME = "raw"
   STYLE_PATH = "resource/math.scss"
 
   include ZenithalMathCreater
@@ -21,6 +22,10 @@ module ZenithalMathParserMethod
     if macro && @math_macro_names.include?(name)
       options = options.clone
       options[:math] = true
+      return options
+    elsif macro && name == RAW_MACRO_NAME
+      options = options.clone
+      options[:math] = nil
       return options
     elsif DATA["leaf"].include?(name)
       options = options.clone
@@ -42,6 +47,9 @@ module ZenithalMathParserMethod
       raw_nodes = @macros[name].call(attributes, next_children_list)
       nodes = raw_nodes.inject(Nodes[], :<<)
       return nodes
+    elsif name == RAW_MACRO_NAME
+      children = children_list.first
+      return children
     elsif name == STYLE_MACRO_NAME
       path = File.expand_path("../" + STYLE_PATH, __FILE__)
       style_string = SassC::Engine.new(File.read(path), {:style => :compressed}).render
