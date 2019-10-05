@@ -9,7 +9,7 @@ include REXML
 
 module ZenithalMathParserMethod
 
-  STYLE_MACRO_NAME = "math-style"
+  RESOURCE_MACRO_NAME = "math-resource"
   RAW_MACRO_NAME = "raw"
   STYLE_PATH = "resource/math.scss"
   SCRIPT_PATH = "resource/math.js"
@@ -51,12 +51,12 @@ module ZenithalMathParserMethod
     elsif name == RAW_MACRO_NAME
       children = children_list.first
       return children
-    elsif name == STYLE_MACRO_NAME
+    elsif name == RESOURCE_MACRO_NAME
       style_path = File.expand_path("../" + STYLE_PATH, __FILE__)
       script_path = File.expand_path("../" + SCRIPT_PATH, __FILE__)
       data_path = File.expand_path("../" + DATA_PATH, __FILE__)
       style_string = SassC::Engine.new(File.read(style_path), {:style => :compressed}).render
-      style_string.gsub!("__mathfonturl__", attributes["url"].to_s)
+      style_string.gsub!("__mathfonturl__", attributes["font-url"].to_s)
       script_string = "DATA=" + File.read(data_path) + "\n" + File.read(script_path)
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
