@@ -53,9 +53,9 @@
       >
       \h1<Parentheses>
       \p<
-        &m<(A)>, &m<\c<\frac<1><2>>>
+        &m<(A)>, &m<\p<\frac<1><2>>>
         or more
-        &m<\p<\frac<1 + \frac<2><3>><4>>>.
+        &m<\sp<\p<1 + \frac<1 + \frac<\sp<`a><2>><2>><4>>><n + \frac<1><2>>>.
       >
       \p<
         Sizes:
@@ -80,9 +80,19 @@
       \p<
         &m<\sp<A><B> \sb<C><D>>
         or
-        &m<\sp<X><\sp<q><2> + \sqrt<2> q - 2>>
+        &m<\sp<X><\sp<q><2> + \sqrt<2> q - 2> * \sb<Y><\sp<d><2> + \sqrt<2> d - 2>>
         or
-        &m<\sp<\p<1 + \frac<1><`j>>><1 + \frac<1><\sp<`j><2>>>>.
+        &m<\sp<\p<1 + \frac<1><1 + \frac<`j><2>>>><1 + \frac<1><\sp<`j><2>>> * \sb<\p<1 + \frac<1 + \frac<`h><2>><2>>><`h + \frac<1><2>>>.
+      >
+      \p<
+        Both:
+        &m<\sbsp<A><B><C>>
+        or
+        &m<\sbsp<\p<1 + \frac<1><2>>><`G><`D>>,
+        compare
+        &m<\sp<\sb<a><k>><n>>
+        and
+        &m<\sbsp<a><k><n>>.
       >
       \h1<Functions>
       \p<

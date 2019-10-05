@@ -2,13 +2,15 @@
 
 
 body {
+  margin: 0px;
+  padding: 0px;
   font-family: "Times New Roman", "IPA P明朝", "YuMincho", "Yu Mincho", serif;
   font-size: 16px;
 }
 
 article {
   width: 700px;
-  margin: 40px auto;
+  margin: 0px auto;
   padding: 0px;
 }
 
