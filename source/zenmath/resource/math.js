@@ -56,10 +56,16 @@ function stretchParen(element) {
   } else {
     stretchLevel = 12;
   }
+  let shift = getHeight(element) / 2 - getBaselineHeight(element) - 0.25;
+  if (shift >= -0.3 && shift <= 0.3) {
+    shift = 0;
+  }
   let leftElement = element.previousElementSibling;
   let rightElement = element.nextElementSibling;
   leftElement.textContent = DATA["paren"][kind][stretchLevel][0];
   rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
+  leftElement.style.verticalAlign = "" + shift + "em";
+  rightElement.style.verticalAlign = "" + shift + "em";
 }
 
 function getFontSize(element) {
@@ -78,6 +84,18 @@ function getHeight(element) {
   let height = element.getBoundingClientRect().height;
   let heightEm = height / getFontSize(element);
   return heightEm;
+}
+
+function getBaselineHeight(element){
+  let bottom = element.getBoundingClientRect().bottom;
+  let baselineLocator = document.createElement("img");
+  element.appendChild(baselineLocator);
+  baselineLocator.style.verticalAlign = "baseline";
+  let baseline = baselineLocator.getBoundingClientRect().bottom;
+  element.removeChild(baselineLocator);
+  let baselineHeight = bottom - baseline;
+  let baselineHeightEm = baselineHeight / getFontSize(element)
+  return baselineHeightEm;
 }
 
 function execute() {
