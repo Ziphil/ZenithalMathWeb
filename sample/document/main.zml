@@ -4,7 +4,7 @@
 \html|lang="ja"|<
   \head<
     \meta|charset="UTF-8"|>
-    &math-style|url="font.otf"|>
+    &math-resource|font-url="font.otf"|>
     \link|rel="stylesheet",type="text/css",href="style.css"|>
     \title<Math>
   >
@@ -29,15 +29,52 @@
       \p<
         &m<\sqrt<A>>
         or
-        &m<\sqrt|s="2"|<\frac<1><i ⩕ j> + \frac<1><j ⩖ i>>>
+        &m<\sqrt<\frac<1><i ⩕ j> + \frac<1><j ⩖ i>>>
         or
-        &m<\frac<W><\sqrt<5 W>> = \sqrt|s="2"|<\frac<W><5>>>.
+        &m<\frac<W><\sqrt<5 W>> = \sqrt<\frac<W><5>>>.
+      >
+      \p<
+        Sizes:
+        &m<\sqrt<&raw<\span|class="box",style="height:1em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.1em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.2em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.3em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.4em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.5em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.6em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.7em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.8em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.9em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.1em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.2em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.3em"|>>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.4em"|>>>>.
       >
       \h1<Parentheses>
       \p<
-        &m<\p<A>>, &m<\c|s="4"|<\frac<1><2>>>
+        &m<(A)>, &m<\c<\frac<1><2>>>
         or more
-        &m<\p|s="10"|<\frac<1 + \frac<2><3>><4>>>.
+        &m<\p<\frac<1 + \frac<2><3>><4>>>.
+      >
+      \p<
+        Sizes:
+        &m<\p<&raw<\span|class="box",style="height:1em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:1.2em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:1.4em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:1.6em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:1.8em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:2em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:2.2em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:2.4em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:2.6em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:2.8em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:3em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:3.2em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:3.4em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:3.6em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:3.8em"|>>>>
+        &m<\p<&raw<\span|class="box",style="height:4em"|>>>>.
       >
       \h1<Superscripts and subscripts>
       \p<
@@ -45,13 +82,13 @@
         or
         &m<\sp<X><\sp<q><2> + \sqrt<2> q - 2>>
         or
-        &m<\sp<\p|s="4"|<1 + \frac<1><`j>>><1 + \frac<1><\sp<`j><2>>>>.
+        &m<\sp<\p<1 + \frac<1><`j>>><1 + \frac<1><\sp<`j><2>>>>.
       >
       \h1<Functions>
       \p<
         &m<\sin> A>
         or
-        &m<\exp> \p<a - b> = \frac<\exp> a><\exp> b>>
+        &m<\exp> (a - b) = \frac<\exp> a><\exp> b>>
         or
         &m<Z * \sp<Z><3> `> \sp<Z><4> - 1>.
       >
@@ -64,24 +101,24 @@
         Otherwise &m<D `< 0>, in which case the equation does not have real roots but two distinct imaginary roots.
       >
       \p|class="normal"|<
-        主イデアル整域 &m<A> 上の多項式 &m<P \in> A \b<X>> を考え、
+        主イデアル整域 &m<A> 上の多項式 &m<P \in> A `[X`]> を考え、
         &mb<
           P \eqqcolon> \sp<X><n> + \sb<a><1> \sp<X><n - 1> + \cdots> + \sb<a><n>
         >
         と係数表示する。
         &m<A> のある素元 &m<π> が存在し、各 &m<i = 1, \cdots>, n - 1> に対して &m<π> は &m<\sb<a><i>> をわり切り、さらに &m<\sp<π><2>> は &m<\sb<a><n>> をわり切らないとする。
-        このとき、&m<K \coloneqq> \op<Frac> \p<A>> とおくと、&m<P> は &m<K> 上既約である。
+        このとき、&m<K \coloneqq> \op<Frac> (A)> とおくと、&m<P> は &m<K> 上既約である。
       >
       \p|class="normal"|<
-        2 階連続的微分可能な &m<R> 値 2 変数関数 &m<f \p<x, y>> の極大値や極小値が知りたいとする。
-        点 &m<\p<\sb<x><0>, \sb<y><0>>> が極大値もしくは極小値であるための必要条件として、その点が停留点であること、すなわち
+        2 階連続的微分可能な &m<R> 値 2 変数関数 &m<f (x, y)> の極大値や極小値が知りたいとする。
+        点 &m<(\sb<x><0>, \sb<y><0>)> が極大値もしくは極小値であるための必要条件として、その点が停留点であること、すなわち
         &mb<
-          \frac<\partial> f><\partial> x> \p<\sb<x><0>, \sb<y><0>> = \frac<\partial> f><\partial> y> \p<\sb<x><0>, \sb<y><0>> = 0
+          \frac<\partial> f><\partial> x> (\sb<x><0>, \sb<y><0>) = \frac<\partial> f><\partial> y> (\sb<x><0>, \sb<y><0>) = 0
         >
         が成り立つことが挙げられる。
-        この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<\p<x, y>> の周りでの振る舞いは、
+        この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<(x, y)> の周りでの振る舞いは、
         &mb<
-          f \p<\sb<x><0> + h, \sb<y><0> + k> = f \p<\sb<x><0>, \sb<y><0>> + \frac<1><2> \p|s="5"|<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> \p<\sb<x><0>, \sb<y><0>> + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> \p<\sb<x><0>, \sb<y><0>> + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> \p<\sb<x><0>, \sb<y><0>>> + o \p<\sp<`r><2>>
+          f (\sb<x><0> + h, \sb<y><0> + k) = f (\sb<x><0>, \sb<y><0>) + \frac<1><2> \p<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> (\sb<x><0>, \sb<y><0>) + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> (\sb<x><0>, \sb<y><0>) + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> (\sb<x><0>, \sb<y><0>)> + o (\sp<`r><2>)
         >
         と記述できる。
         ここで、&m<`r \coloneqq> \sqrt<\sp<h><2> + \sp<k><2>>> とした。
