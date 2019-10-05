@@ -138,18 +138,18 @@ module ZenithalMathCreater
 
   def create_radical(name, attributes, children_list)
     this = Nodes[]
+    stretch = !attributes["s"]
     stretch_level = attributes["s"] || "0"
     symbol = DATA["radical"].fetch(stretch_level, "")
     this << Element.build("math-sqrt") do |this|
       this << Element.build("math-surd") do |this|
-        unless stretch_level == "0"
-          this["class"] = "s#{stretch_level}"
-        end
+        this["class"] = "s#{stretch_level}" unless stretch
         this << Element.build("math-o") do |this|
           this << Text.new(symbol, true, nil, false)
         end
       end
       this << Element.build("math-sqrtcont") do |this|
+        this["class"] = "st-sqrt" if stretch
         this << children_list[0]
       end
     end

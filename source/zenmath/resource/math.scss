@@ -114,16 +114,21 @@ math-frac {
 math-sqrt {
 
   >math-surd {
-    margin: 0.37em 0em 0em 0em;
+    margin: 0.31em 0em 0em 0em;
     vertical-align: top;
+    font-size: 90%;
   }
 
   >math-surd.s1 {
-    margin: 1.07em 0em 0em 0em;
+    margin: 0.97em 0em 0em 0em;
   }
 
   >math-surd.s2 {
-    margin: 1.56em 0em 0em 0em;
+    margin: 1.5em 0em 0em 0em;
+  }
+
+  >math-surd.s3 {
+    margin: 2.01em 0em 0em 0em;
   }
 
   >math-surd >math-o,
