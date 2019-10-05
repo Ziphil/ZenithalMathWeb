@@ -19,7 +19,8 @@ module ZenithalMathCreater
     "frac" => :fraction,
     "sqrt" => :radical
   }
-  DATA = JSON.parse(File.read(File.expand_path("../resource/math.json", __FILE__)))
+  DATA_PATH = "resource/math.json"
+  DATA = JSON.parse(File.read(File.expand_path("../" + DATA_PATH, __FILE__)))
 
   private
 
@@ -157,6 +158,7 @@ module ZenithalMathCreater
 
   def create_paren(name, attributes, children_list)
     this = Nodes[]
+    stretch = !attributes["s"]
     stretch_level = attributes["s"] || "0"
     left_symbol, right_symbol = DATA["paren"][name].fetch(stretch_level, ["", ""])
     this << Element.build("math-o") do |this|
@@ -164,6 +166,7 @@ module ZenithalMathCreater
       this << Text.new(left_symbol, true, nil, false)
     end
     this << Element.build("math-row") do |this|
+      this["class"] = "st-paren st-paren-#{name}" if stretch
       this << children_list[0]
     end
     this << Element.build("math-o") do |this|

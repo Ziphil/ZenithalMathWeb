@@ -45,3 +45,15 @@ article p math-root {
 article p.normal math-root {
   color: black;
 }
+
+article p math-root span.box {
+  width: 1em;
+  display: inline-block;
+  vertical-align: middle; 
+  background-color: hsl(240, 80%, 80%);
+}
+
+article p math-root span.box::before {
+  line-height: 1;
+  content: "?";
+}

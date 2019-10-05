@@ -12,6 +12,7 @@ module ZenithalMathParserMethod
   STYLE_MACRO_NAME = "math-style"
   RAW_MACRO_NAME = "raw"
   STYLE_PATH = "resource/math.scss"
+  SCRIPT_PATH = "resource/math.js"
 
   include ZenithalMathCreater
   include ZenithalParserMethod
@@ -51,13 +52,20 @@ module ZenithalMathParserMethod
       children = children_list.first
       return children
     elsif name == STYLE_MACRO_NAME
-      path = File.expand_path("../" + STYLE_PATH, __FILE__)
-      style_string = SassC::Engine.new(File.read(path), {:style => :compressed}).render
+      style_path = File.expand_path("../" + STYLE_PATH, __FILE__)
+      script_path = File.expand_path("../" + SCRIPT_PATH, __FILE__)
+      data_path = File.expand_path("../" + DATA_PATH, __FILE__)
+      style_string = SassC::Engine.new(File.read(style_path), {:style => :compressed}).render
       style_string.gsub!("__mathfonturl__", attributes["url"].to_s)
-      element = Element.build("style") do |element|
-        element << ~style_string
+      script_string = "DATA=" + File.read(data_path) + "\n" + File.read(script_path)
+      nodes = Nodes[]
+      nodes << Element.build("style") do |element|
+        element << Text.new(style_string, true, nil, true)
       end
-      return element
+      nodes << Element.build("script") do |element|
+        element << CData.new(script_string)
+      end
+      return nodes
     else
       return super
     end

@@ -72,7 +72,10 @@
     "colon": [":", "del"],
     "semicolon": [";", "del"],
     "partial": ["∂", "txt"],
-    "cdots": ["⋯", "ord"]
+    "cdots": ["⋯", "ord"],
+    "lparen": ["(", "lp"], "rparen": [")", "rp"],
+    "lbracket": ["[", "lp"], "rbracket": ["]", "rp"],
+    "lbrace": ["{", "lp"], "rbrace": ["}", "rp"]
   },
   "greek": {
     "a": "α", "b": "β", "c": "ψ", "d": "δ", "e": "ε", "f": "φ", "g": "γ", "h": "η", "i": "ι", "j": "ξ", "k": "κ", "l": "λ", "m": "μ", 

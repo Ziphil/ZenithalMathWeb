@@ -171,6 +171,7 @@ math-sub {
 
 math-root {
   line-height: 0;
+  white-space: nowrap;
 
   * {
     display: inline-block;
