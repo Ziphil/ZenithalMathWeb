@@ -158,4 +158,13 @@ module ZenithalMathCreater
     return this
   end
 
+  def create_function(name, attributes, children_list)
+    this = Nodes[]
+    this << Element.build("math-i") do |this|
+      this["class"] = "op"
+      this << ~name
+    end
+    return this
+  end
+
 end
