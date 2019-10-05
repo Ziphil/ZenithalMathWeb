@@ -1,7 +1,7 @@
 //
 
 
-function stretchRadical(element) {
+function modifyRadical(element) {
   let height = getHeight(element) + 0.15;
   let stretchLevel = 0;
   if (height <= 1.5) {
@@ -19,12 +19,12 @@ function stretchRadical(element) {
   surdSymbolElement.textContent = DATA["radical"][stretchLevel];
 }
 
-function stretchParen(element) {
+function modifyParen(element) {
   let height = getHeight(element);
   let kind = "p";
   for (let clazz of element.classList) {
     let match;
-    if (match = clazz.match(/st-paren-(\w+)/)) {
+    if (match = clazz.match(/md-paren-(\w+)/)) {
       kind = match[1];
     }
   }
@@ -56,7 +56,7 @@ function stretchParen(element) {
   } else {
     stretchLevel = 12;
   }
-  let shift = getHeight(element) / 2 - getBaselineHeight(element) - 0.25;
+  let shift = getHeight(element) / 2 - getBaselineCenter(element);
   if (shift >= -0.3 && shift <= 0.3) {
     shift = 0;
   }
@@ -66,6 +66,20 @@ function stretchParen(element) {
   rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
   leftElement.style.verticalAlign = "" + shift + "em";
   rightElement.style.verticalAlign = "" + shift + "em";
+}
+
+function modifySuperscript(element) {
+  let baseElement = element.previousElementSibling;
+  let fontRatio = getFontSize(baseElement) / getFontSize(element);
+  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
+  element.style.verticalAlign = "" + shift + "em";
+}
+
+function modifySubscript(element) {
+  let baseElement = element.previousElementSibling;
+  let fontRatio = getFontSize(baseElement) / getFontSize(element);
+  let shift = -getBaselineCenter(baseElement) * fontRatio;
+  element.style.verticalAlign = "" + shift + "em";
 }
 
 function getFontSize(element) {
@@ -86,7 +100,7 @@ function getHeight(element) {
   return heightEm;
 }
 
-function getBaselineHeight(element){
+function getBaselineCenter(element) {
   let bottom = element.getBoundingClientRect().bottom;
   let baselineLocator = document.createElement("img");
   element.appendChild(baselineLocator);
@@ -94,13 +108,44 @@ function getBaselineHeight(element){
   let baseline = baselineLocator.getBoundingClientRect().bottom;
   element.removeChild(baselineLocator);
   let baselineHeight = bottom - baseline;
-  let baselineHeightEm = baselineHeight / getFontSize(element)
+  let baselineHeightEm = baselineHeight / getFontSize(element) + 0.3;
   return baselineHeightEm;
 }
 
+function renderBaselineCenter(element) {
+  let clientRect = element.getBoundingClientRect()
+  let baselineCenter = getBaselineCenter(element) * getFontSize(element);
+  let line = document.createElement("div");
+  let upperBox = document.createElement("div");
+  let lowerBox = document.createElement("div");
+  line.style.position = "absolute";
+  line.style.borderTop = "1px #FF000088 solid";
+  line.style.width = "" + clientRect.width + "px";
+  line.style.height = "1px";
+  line.style.top = "" + (clientRect.bottom - baselineCenter) + "px";
+  line.style.left = "" + clientRect.left + "px";
+  upperBox.style.position = "absolute";
+  upperBox.style.backgroundColor = "#FF000033";
+  upperBox.style.width = "" + clientRect.width + "px";
+  upperBox.style.height = "" + (clientRect.height - baselineCenter) + "px";
+  upperBox.style.top = "" + clientRect.top + "px";
+  upperBox.style.left = "" + clientRect.left + "px";
+  lowerBox.style.position = "absolute";
+  lowerBox.style.backgroundColor = "#FFFF0033";
+  lowerBox.style.width = "" + clientRect.width + "px";
+  lowerBox.style.height = "" + baselineCenter + "px";
+  lowerBox.style.top = "" + (clientRect.top + clientRect.height - baselineCenter) + "px";
+  lowerBox.style.left = "" + clientRect.left + "px";
+  document.body.appendChild(line);
+  document.body.appendChild(upperBox);
+  document.body.appendChild(lowerBox);
+}
+
 function execute() {
-  document.querySelectorAll(".st-sqrt").forEach(stretchRadical);
-  document.querySelectorAll(".st-paren").forEach(stretchParen);
+  document.querySelectorAll("math-sup >math-scr").forEach(modifySuperscript);
+  document.querySelectorAll("math-sub >math-scr").forEach(modifySubscript);
+  document.querySelectorAll(".md-sqrt").forEach(modifyRadical);
+  document.querySelectorAll(".md-paren").forEach(modifyParen);
 }
 
 window.onload = execute;

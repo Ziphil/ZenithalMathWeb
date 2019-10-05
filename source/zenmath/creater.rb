@@ -149,7 +149,7 @@ module ZenithalMathCreater
         end
       end
       this << Element.build("math-sqrtcont") do |this|
-        this["class"] = "st-sqrt" if stretch
+        this["class"] = "md-sqrt" if stretch
         this << children_list[0]
       end
     end
@@ -166,7 +166,7 @@ module ZenithalMathCreater
       this << Text.new(left_symbol, true, nil, false)
     end
     this << Element.build("math-row") do |this|
-      this["class"] = "st-paren st-paren-#{name}" if stretch
+      this["class"] = "md-paren md-paren-#{name}" if stretch
       this << children_list[0]
     end
     this << Element.build("math-o") do |this|
