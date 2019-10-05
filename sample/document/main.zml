@@ -37,7 +37,23 @@
       \p<
         &m<\p<A>>, &m<\c|s="4"|<\frac<1><2>>>
         or more
-        &m<\p|s="10"|<\frac<1 + \frac<2><3>><4>>>
+        &m<\p|s="10"|<\frac<1 + \frac<2><3>><4>>>.
+      >
+      \h1<Superscripts and subscripts>
+      \p<
+        &m<\sp<A><B> \sb<C><D>>
+        or
+        &m<\sp<X><\sp<q><2> + \sqrt<2> q - 2>>
+        or
+        &m<\sp<\p|s="4"|<1 + \frac<1><`j>>><1 + \frac<1><\sp<`j><2>>>>.
+      >
+      \h1<Functions>
+      \p<
+        &m<\sin> A>
+        or
+        &m<\exp> \p<a - b> = \frac<\exp> a><\exp> b>>
+        or
+        &m<Z * \sp<Z><3> `> \sp<Z><4> - 1>.
       >
       \h1<Some practical example>
       \p|class="normal"|<
