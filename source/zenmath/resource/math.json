@@ -121,7 +121,7 @@
     "emptyset": ["∅", ["ord"]],
     "wp": ["℘", ["ord"]],
     "slash": ["/", ["ord"]],
-    "backslash": ["∖", ["ord"]],
+    "backslash": ["\\", ["ord"]],
     "top": ["⊤", ["ord"]],
     "bot": ["⊥", ["ord"]],
     "neg": ["¬", ["ord"]],
