@@ -23,13 +23,13 @@
       \p<
         &m<\frac<A><B>>
         or more complicated
-        &m<57 ⊗ \frac<φ ⋈ \frac<K><2>><3 - \frac<\frac<1><xy × z> ⨳ \frac<m><7 Ψ>><Δ>>>.
+        &m<57 \boxtimes> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smashp> \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
         &m<\sqrt<A>>
         or
-        &m<\sqrt<\frac<1><i ⩕ j> + \frac<1><j ⩖ i>>>
+        &m<\sqrt<\frac<1><i \wedgewedge> j> + \frac<1><j \veevee> i>>>
         or
         &m<\frac<W><\sqrt<5 W>> = \sqrt<\frac<W><5>>>.
       >
@@ -108,9 +108,16 @@
         or
         &m<Z * \sp<Z><3> `> \sp<Z><4> - 1>.
       >
+      \h1<Miscellaneous>
+      \p<
+        Greek variants: &m<(\varbeta>, `b) * (\varepsilon>, `e) * (\vartheta>, `u) * (\varkappa>, `k) * (\varpi>, `p) * (\varrho>, `r) * (\varphi>, `f) * (\varcapupsilon>, `Y)>.
+      >
+      \p<
+        Archaic greek letters: &m<\digamma> * \koppa> * \sampi>>.
+      >
       \h1<Some practical example>
       \p|class="normal"|<
-        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \coloneqq> \sp<b><2> - 4 ac ≥ 0> holds, and those roots are explicitly written as
+        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \coloneqq> \sp<b><2> - 4 ac \geq> 0> holds, and those roots are explicitly written as
         &mb<
           x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>
         >
