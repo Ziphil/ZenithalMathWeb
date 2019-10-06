@@ -67,7 +67,7 @@ class WholeSampleConverter
 
   def create_parser
     source = File.read(DOCUMENT_DIR + "/main.zml")
-    parser = ZenithalMathParser.new(source)
+    parser = ZenmathParser.new(source)
     parser.brace_name = "x"
     parser.bracket_name = "xn"
     parser.slash_name = "i"

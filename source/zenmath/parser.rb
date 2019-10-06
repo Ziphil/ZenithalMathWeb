@@ -7,14 +7,14 @@ require 'sassc'
 include REXML
 
 
-module ZenithalMathParserMethod
+module ZenmathParserMethod
 
   RESOURCE_MACRO_NAME = "math-resource"
   RAW_MACRO_NAME = "raw"
   STYLE_PATH = "resource/math.scss"
   SCRIPT_PATH = "resource/math.js"
 
-  include ZenithalMathCreater
+  include ZenmathBuilder
   include ZenithalParserMethod
 
   private
@@ -106,9 +106,9 @@ module ZenithalMathParserMethod
 end
 
 
-class ZenithalMathParser < ZenithalParser
+class ZenmathParser < ZenithalParser
 
-  include ZenithalMathParserMethod
+  include ZenmathParserMethod
 
   def initialize(source)
     super(source)

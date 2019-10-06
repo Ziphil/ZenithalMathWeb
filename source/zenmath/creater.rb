@@ -7,7 +7,7 @@ require 'rexml/document'
 include REXML
 
 
-module ZenithalMathCreater
+module ZenmathBuilder
 
   CREATION_METHODS = {
     :paren => :paren,
