@@ -1,18 +1,38 @@
 <div align="center">
-<h1>Zenithal Math</h1>
+<h1>Zotica ＋ ZenMath</h1>
 </div>
 
 ## 概要
-Zenithal Math (略称 ZenMath) は、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
+
+### 構成要素
+このリポジトリは、以下の 2 つの要素から構成されています。
+
+- HTML 上に数式を表示するための HTML カスタム要素仕様 ＋ CSS ＋ JavaScript セット (Zotica)
+- 上記仕様に則った HTML を出力するためのマークアップ言語 (ZenMath)
+
+以下でそれぞれについて説明します。
+
+### Zotica
+Zotica とは、数式を記述するための HTML カスタム要素と、それを綺麗に表示するための CSS ＋ JavaScript のセットです。
+この HTML 要素の仕様は、数式の構造というよりもブラウザ上での見た目に沿った構成になっており、記号の位置を調整するためのアドホックな要素も含みます。
+そのため、人間が直接書くことは想定していません。
+
+カスタム要素の仕様は以下の通りです。
+現在は試案段階なので、突然変更になる可能性があります。
+
+- バージョン 1.0 (準備中)
+
+### ZenMath
+Zenithal Math Markup Language (略称 ZenMath) は、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
 人間が直接書くことを想定しています。
 
 ZenMath はほとんど ZenML のサブセットになっています。
-ZenML と異なる点は、以下の 2 ヶ所です。
+ZenML と異なる点は、以下の 2 ヶ所のみです。
 
 - 一部の普通の要素が 2 つ以上の引数をもてる
 - エスケープ記法がラテン文字に対しても使える (対応するギリシャ文字に変換される)
 
-このリポジトリは、Ruby 実装の ZenML パーサーである `ZenithalParser` クラスを拡張した `ZenithalMathParser` クラスを提供します。
+このリポジトリは、Ruby 実装の ZenML パーサーである `ZenithalParser` クラスを拡張した `ZenmathParser` クラスを提供します。
 このクラスは通常の ZenML パーサーと同じように ZenML ドキュメントをパースしますが、引数の内容が ZenMath で書かれるマクロを処理できるようになっています。
 
 ## インストール
@@ -21,14 +41,14 @@ RubyGems からインストールできるようになる予定です。
 gem install zenmath
 ```
 
-## 使い方
-`ZenithalMathParser` インスタンスを作成します。
+## パーサーの使い方
+`ZenmathParser` インスタンスを作成します。
 
 このクラスには `register_math_macro` メソッドが追加されており、引数の内容が ZenMath で書かれるマクロを登録することができます。
-このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された ZenMath の構造そのものではなく、それが HTML に変換されたものになります。
+このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された ZenMath の構造そのものではなく、それが Zotica に変換されたものになります。
 
-ZenMath が変換された HTML を正しく表示するには、専用の CSS を適用する必要があります。
-このクラスのパーサーを使うと、`math-style` マクロによってその CSS を `style` 要素として埋め込むことができます。
+Zotica を正しく表示するには、専用の CSS と JavaScript を適用する必要があります。
+このクラスのパーサーを使うと、`math-style` マクロによって必要な CSS と JavaScript を埋め込むことができます。
 
 詳しくは以下のコードを参照してください。
 ```ruby
@@ -40,11 +60,11 @@ include REXML
 include Zenithal
 # パーサーの作成
 source = File.read("sample.zml")
-parser = ZenithalMathParser.new(source)
+parser = ZenmathParser.new(source)
 # ZenMath マクロの登録
 parser.register_math_macro("math") do |attributes, children_list|
-  # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を HTML に変換したものが渡される
-  # ここではそれをそのまま返して HTML を表示させている
+  # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を Zotica に変換したものが渡される
+  # ここではそれをそのまま返して HTML として表示させている
   next children_list.first
 end
 ```
@@ -54,7 +74,7 @@ end
 \xml?|version="1.0",encoding="UTF-8"|>
 \html<
   \head<
-    ## 数式を正しく表示するための CSS を埋め込む
+    ## 数式を正しく表示するための CSS と JavaScript を埋め込む
     &math-style|url="font.otf"|>
   >
   \body<
