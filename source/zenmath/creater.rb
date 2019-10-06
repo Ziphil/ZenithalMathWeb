@@ -83,7 +83,7 @@ module ZenmathBuilder
   def create_custom_identifier(name, attributes, children_list)
     this = Nodes[]
     this << Element.build("math-i") do |this|
-      this["class"] = name unless name == "i"
+      this["class"] = "fun" unless name == "i"
       this << children_list[0]
     end
     return this
@@ -178,17 +178,19 @@ module ZenmathBuilder
     stretch = !attributes["s"]
     stretch_level = attributes["s"] || "0"
     left_symbol, right_symbol = DATA["paren"][name].fetch(stretch_level, ["", ""])
-    this << Element.build("math-o") do |this|
-      this["class"] = "lp"
-      this << Text.new(left_symbol, true, nil, false)
-    end
-    this << Element.build("math-row") do |this|
-      this["class"] = "md-paren md-paren-#{name}" if stretch
-      this << children_list[0]
-    end
-    this << Element.build("math-o") do |this|
-      this["class"] = "rp"
-      this << Text.new(right_symbol, true, nil, false)
+    this << Element.build("math-paren") do |this|
+      this << Element.build("math-o") do |this|
+        this["class"] = "lp"
+        this << Text.new(left_symbol, true, nil, false)
+      end
+      this << Element.build("math-parencont") do |this|
+        this["class"] = "md-paren md-paren-#{name}" if stretch
+        this << children_list[0]
+      end
+      this << Element.build("math-o") do |this|
+        this["class"] = "rp"
+        this << Text.new(right_symbol, true, nil, false)
+      end
     end
     return this
   end
@@ -217,7 +219,7 @@ module ZenmathBuilder
   def create_function(name, attributes, children_list)
     this = Nodes[]
     this << Element.build("math-i") do |this|
-      this["class"] = "op"
+      this["class"] = "fun"
       this << Text.new(name, true, nil, false)
     end
     return this

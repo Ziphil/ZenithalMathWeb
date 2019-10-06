@@ -18,7 +18,7 @@ math-i {
   line-height: 0.8;
   font-style: italic;
 
-  &.op {
+  &.fun {
     margin: 0em spacing(3) 0em spacing(0);
     font-style: normal;
   }
@@ -61,7 +61,7 @@ math-o {
     margin: 0em spacing(0) 0em spacing(1);
   }
 
-  math-i.op +&.lp {
+  math-i.fun +&.lp {
     margin: 0em spacing(0) 0em spacing(-2);
   }
 
