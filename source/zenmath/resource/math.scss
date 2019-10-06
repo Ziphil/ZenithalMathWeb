@@ -7,10 +7,6 @@
 }
 
 
-$fraction-padding: spacing(2);
-$radical-padding: spacing(1);
-
-
 math-n {
   margin: 0em spacing(0);
   line-height: 0.8;
@@ -82,7 +78,7 @@ math-o {
 
 
 math-frac {
-  margin: 0em $fraction-padding;
+  margin: 0em spacing(3);
   vertical-align: 0.05em;
   display: inline-block;
 
@@ -100,8 +96,8 @@ math-frac {
 
   >math-denwrap::before {
     margin: -0.25em 0em 0em 0em;
-    margin-left: -$fraction-padding;
-    margin-right: -$fraction-padding;
+    margin-left: - spacing(2);
+    margin-right: - spacing(2);
     height: 1px;
     border-top: 1px solid;
     display: block;
@@ -143,7 +139,7 @@ math-sqrt {
   }
 
   >math-sqrtcont {
-    padding: 0.15em $radical-padding 0em 0em;
+    padding: 0.15em spacing(1) 0em spacing(0);
     border-top: 1px solid;
   }
 
@@ -199,8 +195,7 @@ math-subsup {
   }
 
   &.int {
-    margin: 0em spacing(3);
-    border: 0.01px transparent solid;
+    margin: 0em spacing(0);
   }
 
 }

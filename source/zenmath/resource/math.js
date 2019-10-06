@@ -119,18 +119,24 @@ function modifySubsuperscript(element) {
   let baseElement = element.children[0];
   let subscriptElement = element.children[1];
   let superscriptElement = element.children[2];
+  let lowerWidth = getWidth(subscriptElement);
+  let upperWidth = getWidth(superscriptElement);
   let lowerShift = calcSubscriptShift(baseElement, subscriptElement);
   let upperShift = calcSuperscriptShift(baseElement, superscriptElement);
   let upperMargin = -getWidth(subscriptElement);
   let lowerMargin = 0;
   if (baseElement.children[0].classList.contains("int")) {
     lowerMargin -= 0.6;
+    lowerWidth -= 0.6;
     upperMargin += 0.6;
   }
   subscriptElement.style.verticalAlign = "" + lowerShift + "em";
   superscriptElement.style.verticalAlign = "" + upperShift + "em";
   superscriptElement.style.marginLeft = "" + upperMargin + "em";
   subscriptElement.style.marginLeft = "" + lowerMargin + "em";
+  if (lowerWidth > upperWidth) {
+    superscriptElement.style.width = "" + lowerWidth + "em";
+  }
 }
 
 function getFontSize(element) {
