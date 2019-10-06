@@ -94,6 +94,12 @@
         and
         &m<\sbsp<a><k><n>>.
       >
+      \h1<Integrals>
+      \p<
+        &m<\int<A><B> C>
+        or
+        &m<\int<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
+      >
       \h1<Functions>
       \p<
         &m<\sin> A>
@@ -132,6 +138,18 @@
         >
         と記述できる。
         ここで、&m<`r \coloneqq> \sqrt<\sp<h><2> + \sp<k><2>>> とした。
+      >
+      \p|class="normal"|<
+        Cauchy の積分公式により、正則関数 &m<F (z)> の値は、ある単純閉曲線 &m<C> の内側の点 &m<z> に対し、 
+        &mb<
+          F (z) = \frac<1><2 `p i> \oint<C><> \frac<F (`z)><`z - z> d `z
+        >
+        で与えられる。
+        これにより、&m<F> の &m<n> 階導関数は、
+        &mb<
+          \sp<F><(n)> (z) = \frac<n !><2 `p i> \oint<C><> \frac<F (`z)><\sp<(`z - z)><n - 1>> d `z
+        >
+        と書けることが分かる。
       >
     >
 
