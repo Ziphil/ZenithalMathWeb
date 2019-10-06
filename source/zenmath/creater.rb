@@ -15,7 +15,7 @@ module ZenithalMathCreater
     :function => :function, :operator => :operator,
     "n" => :custom_number, "i" => :custom_identifier, "op" => :custom_identifier, "o" => :custom_operator,
     "text" => :raw_text,
-    "sp" => :superscript, "sb" => :superscript,
+    "sp" => :superscript, "sb" => :superscript, "sbsp" => :subsuperscript,
     "frac" => :fraction,
     "sqrt" => :radical
   }
@@ -116,6 +116,22 @@ module ZenithalMathCreater
       end
       this << Element.build("math-scr") do |this|
         this << children_list[1]
+      end
+    end
+    return this
+  end
+
+  def create_subsuperscript(name, attributes, children_list)
+    this = Nodes[]
+    this << Element.build("math-subsup") do |this|
+      this << Element.build("math-base") do |this|
+        this << children_list[0]
+      end
+      this << Element.build("math-scr") do |this|
+        this << children_list[1]
+      end
+      this << Element.build("math-scr") do |this|
+        this << children_list[2]
       end
     end
     return this

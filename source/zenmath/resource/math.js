@@ -69,17 +69,32 @@ function modifyParen(element) {
 }
 
 function modifySuperscript(element) {
-  let baseElement = element.previousElementSibling;
-  let fontRatio = getFontSize(baseElement) / getFontSize(element);
+  let baseElement = element.children[0];
+  let scriptElement = element.children[1];
+  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
   let shift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
-  element.style.verticalAlign = "" + shift + "em";
+  scriptElement.style.verticalAlign = "" + shift + "em";
 }
 
 function modifySubscript(element) {
-  let baseElement = element.previousElementSibling;
-  let fontRatio = getFontSize(baseElement) / getFontSize(element);
+  let baseElement = element.children[0];
+  let scriptElement = element.children[1];
+  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
   let shift = -getBaselineCenter(baseElement) * fontRatio;
-  element.style.verticalAlign = "" + shift + "em";
+  scriptElement.style.verticalAlign = "" + shift + "em";
+}
+
+function modifySubsuperscript(element) {
+  let baseElement = element.children[0];
+  let subscriptElement = element.children[1];
+  let superscriptElement = element.children[2];
+  let fontRatio = getFontSize(baseElement) / getFontSize(subscriptElement);
+  let lowerShift = -getBaselineCenter(baseElement) * fontRatio;
+  let upperShift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
+  let upperMargin = -getWidth(subscriptElement);
+  subscriptElement.style.verticalAlign = "" + lowerShift + "em";
+  superscriptElement.style.verticalAlign = "" + upperShift + "em";
+  superscriptElement.style.marginLeft = "" + upperMargin + "em";
 }
 
 function getFontSize(element) {
@@ -142,8 +157,9 @@ function renderBaselineCenter(element) {
 }
 
 function execute() {
-  document.querySelectorAll("math-sup >math-scr").forEach(modifySuperscript);
-  document.querySelectorAll("math-sub >math-scr").forEach(modifySubscript);
+  document.querySelectorAll("math-sup").forEach(modifySuperscript);
+  document.querySelectorAll("math-sub").forEach(modifySubscript);
+  document.querySelectorAll("math-subsup").forEach(modifySubsuperscript);
   document.querySelectorAll(".md-sqrt").forEach(modifyRadical);
   document.querySelectorAll(".md-paren").forEach(modifyParen);
 }
