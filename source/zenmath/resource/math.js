@@ -1,7 +1,8 @@
 //
 
 
-function calcRadicalStretchLevel(height) {
+function calcRadicalStretchLevel(element) {
+  let height = getHeight(element) + 0.15;
   let stretchLevel = 0;
   if (height <= 1.5) {
     stretchLevel = 0;
@@ -18,8 +19,7 @@ function calcRadicalStretchLevel(height) {
 function modifyRadical(element) {
   let surdElement = element.previousElementSibling;
   let surdSymbolElement = surdElement.children[0];
-  let height = getHeight(element) + 0.15;
-  let stretchLevel = calcRadicalStretchLevel(height);
+  let stretchLevel = calcRadicalStretchLevel(element);
   surdElement.classList.add("s" + stretchLevel);
   surdSymbolElement.textContent = DATA["radical"][stretchLevel];
 }
@@ -35,7 +35,8 @@ function calcParenKind(element) {
   return kind;
 }
 
-function calcParenStretchLevel(height) {
+function calcParenStretchLevel(element) {
+  let height = getHeight(element);
   let stretchLevel = 0;
   if (height <= 1) {
     stretchLevel = 0;
@@ -78,9 +79,8 @@ function calcParenShift(element) {
 function modifyParen(element) {
   let leftElement = element.previousElementSibling;
   let rightElement = element.nextElementSibling;
-  let height = getHeight(element);
   let kind = calcParenKind(element);
-  let stretchLevel = calcParenStretchLevel(height);
+  let stretchLevel = calcParenStretchLevel(element);
   let shift = calcParenShift(element);
   leftElement.textContent = DATA["paren"][kind][stretchLevel][0];
   rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
