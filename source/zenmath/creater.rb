@@ -192,6 +192,27 @@ module ZenithalMathCreater
     return this
   end
 
+  def create_integral(name, attributes, children_list)
+    this = Nodes[]
+    symbol = DATA["integral"][name][1]
+    this << Element.build("math-subsup") do |this|
+      this["class"] = "int"
+      this << Element.build("math-base") do |this|
+        this << Element.build("math-o") do |this|
+          this["class"] = "int"
+          this << Text.new(symbol, true, nil, false)
+        end
+      end
+      this << Element.build("math-scr") do |this|
+        this << children_list[0]
+      end
+      this << Element.build("math-scr") do |this|
+        this << children_list[1]
+      end
+    end
+    return this
+  end
+
   def create_function(name, attributes, children_list)
     this = Nodes[]
     this << Element.build("math-i") do |this|

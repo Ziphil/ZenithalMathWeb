@@ -42,8 +42,8 @@
     }
   },
   "integral": {
-    "int": "∫",
-    "oint": "∮"
+    "int": ["∫", "\uDB80\uDD35"],
+    "oint": ["∮", "\uDB80\uDD44"]
   },
   "radical": {
     "0": "√", "1": "\uDB80\uDD1D", "2": "\uDB80\uDD1E", "3": "\uDB80\uDD1F"
@@ -71,6 +71,8 @@
     "comma": [",", "del"],
     "colon": [":", "del"],
     "semicolon": [";", "del"],
+    "excl": ["!", "txt"],
+    "ques": ["?", "txt"],
     "partial": ["∂", "txt"],
     "cdots": ["⋯", "ord"],
     "lparen": ["(", "lp"], "rparen": [")", "rp"],

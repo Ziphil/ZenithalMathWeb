@@ -51,6 +51,12 @@ math-o {
     margin: 0em spacing(0);
   }
 
+  &.int {
+    margin: 0em spacing(0);
+    height: 2.1em;
+    line-height: 2.1em;
+  }
+
   &.txt {
     margin: 0em spacing(0);
     font-family: inherit;
@@ -177,19 +183,24 @@ math-sub {
 math-subsup {
   
   >math-base {
-    margin: 0em 0em 0em 0em;
+    margin: 0em;
   }
 
   >math-scr:nth-of-type(1) {
-    margin: 0em 0em 0em 0em;
+    margin: 0em;
     vertical-align: -0.45em;
     font-size: 80%;
   }
 
   >math-scr:nth-of-type(2) {
-    margin: 0em 0em 0em 0em;
+    margin: 0em;
     vertical-align: 0.48em;
     font-size: 80%;
+  }
+
+  &.int {
+    margin: 0em spacing(3);
+    border: 0.01px transparent solid;
   }
 
 }
