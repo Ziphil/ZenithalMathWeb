@@ -1,8 +1,7 @@
 //
 
 
-function modifyRadical(element) {
-  let height = getHeight(element) + 0.15;
+function calcRadicalStretchLevel(height) {
   let stretchLevel = 0;
   if (height <= 1.5) {
     stretchLevel = 0;
@@ -13,14 +12,19 @@ function modifyRadical(element) {
   } else {
     stretchLevel = 3;
   }
+  return stretchLevel;
+}
+
+function modifyRadical(element) {
   let surdElement = element.previousElementSibling;
   let surdSymbolElement = surdElement.children[0];
+  let height = getHeight(element) + 0.15;
+  let stretchLevel = calcRadicalStretchLevel(height);
   surdElement.classList.add("s" + stretchLevel);
   surdSymbolElement.textContent = DATA["radical"][stretchLevel];
 }
 
-function modifyParen(element) {
-  let height = getHeight(element);
+function calcParenKind(element) {
   let kind = "p";
   for (let clazz of element.classList) {
     let match;
@@ -28,6 +32,10 @@ function modifyParen(element) {
       kind = match[1];
     }
   }
+  return kind;
+}
+
+function calcParenStretchLevel(height) {
   let stretchLevel = 0;
   if (height <= 1) {
     stretchLevel = 0;
@@ -56,31 +64,53 @@ function modifyParen(element) {
   } else {
     stretchLevel = 12;
   }
+  return stretchLevel;
+}
+
+function calcParenShift(element) {
   let shift = getHeight(element) / 2 - getBaselineCenter(element);
   if (shift >= -0.3 && shift <= 0.3) {
     shift = 0;
   }
+  return shift;
+}
+
+function modifyParen(element) {
   let leftElement = element.previousElementSibling;
   let rightElement = element.nextElementSibling;
+  let height = getHeight(element);
+  let kind = calcParenKind(element);
+  let stretchLevel = calcParenStretchLevel(height);
+  let shift = calcParenShift(element);
   leftElement.textContent = DATA["paren"][kind][stretchLevel][0];
   rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
   leftElement.style.verticalAlign = "" + shift + "em";
   rightElement.style.verticalAlign = "" + shift + "em";
 }
 
+function calcSuperscriptShift(baseElement, scriptElement) {
+  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
+  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
+  return shift;
+}
+
+function calcSubscriptShift(baseElement, scriptElement) {
+  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
+  let shift = -getBaselineCenter(baseElement) * fontRatio;
+  return shift;
+}
+
 function modifySuperscript(element) {
   let baseElement = element.children[0];
   let scriptElement = element.children[1];
-  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
-  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
+  let shift = calcSuperscriptShift(baseElement, scriptElement);
   scriptElement.style.verticalAlign = "" + shift + "em";
 }
 
 function modifySubscript(element) {
   let baseElement = element.children[0];
   let scriptElement = element.children[1];
-  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
-  let shift = -getBaselineCenter(baseElement) * fontRatio;
+  let shift = calcSubscriptShift(baseElement, scriptElement);
   scriptElement.style.verticalAlign = "" + shift + "em";
 }
 
@@ -88,9 +118,8 @@ function modifySubsuperscript(element) {
   let baseElement = element.children[0];
   let subscriptElement = element.children[1];
   let superscriptElement = element.children[2];
-  let fontRatio = getFontSize(baseElement) / getFontSize(subscriptElement);
-  let lowerShift = -getBaselineCenter(baseElement) * fontRatio;
-  let upperShift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
+  let lowerShift = calcSubscriptShift(baseElement, subscriptElement);
+  let upperShift = calcSuperscriptShift(baseElement, superscriptElement);
   let upperMargin = -getWidth(subscriptElement);
   subscriptElement.style.verticalAlign = "" + lowerShift + "em";
   superscriptElement.style.verticalAlign = "" + upperShift + "em";
@@ -127,7 +156,7 @@ function getBaselineCenter(element) {
   return baselineHeightEm;
 }
 
-function renderBaselineCenter(element) {
+function renderDebug(element) {
   let clientRect = element.getBoundingClientRect()
   let baselineCenter = getBaselineCenter(element) * getFontSize(element);
   let line = document.createElement("div");
