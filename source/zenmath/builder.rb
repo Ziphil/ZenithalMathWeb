@@ -29,6 +29,9 @@ module ZenmathBuilder
       end
     when DATA["function"].method(:include?)
       nodes = ZenmathBuilder.build_identifier(name, true)
+    when DATA["identifier"].method(:key?)
+      symbol = DATA["identifier"].fetch(name, "")
+      nodes = ZenmathBuilder.build_identifier(symbol, false)
     when DATA["operator"].method(:key?)
       symbol, kinds = DATA["operator"].fetch(name, [name, ["bin"]])
       nodes = ZenmathBuilder.build_operator(symbol, kinds)
