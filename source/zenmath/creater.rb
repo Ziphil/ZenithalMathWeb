@@ -99,9 +99,10 @@ module ZenithalMathCreater
 
   def create_operator(name, attributes, children_list)
     this = Nodes[]
-    symbol, kind = DATA["operator"].fetch(name, [name, "bin"])
+    symbol, kinds = DATA["operator"].fetch(name, [name, ["bin"]])
+    clazz = kinds.join(" ")
     this << Element.build("math-o") do |this|
-      this["class"] = kind
+      this["class"] = clazz
       this << Text.new(symbol, true, nil, false)
     end
     return this
