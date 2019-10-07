@@ -6,19 +6,29 @@ body {
   padding: 0px;
   font-family: "Times New Roman", "IPA P明朝", "YuMincho", "Yu Mincho", serif;
   font-size: 16px;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+div.title {
+  width: 700px;
+  margin: 40px auto 60px auto;
+  padding: 0px;
+  font-size: 36px;
+  text-align: center;
 }
 
 article {
   width: 700px;
-  margin: 0px auto;
+  margin: 40px auto;
   padding: 0px;
 }
 
 article h1 {
   margin: 40px 0px 15px 0px;
   padding: 0px;
-  font-weight: normal;
   font-size: 22px;
+  font-weight: normal;
 }
 
 article p {

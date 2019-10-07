@@ -6,9 +6,13 @@
     \meta|charset="UTF-8"|>
     &math-resource|font-url="font.otf"|>
     \link|rel="stylesheet",type="text/css",href="style.css"|>
-    \title<Math>
+    \title<Zotica>
   >
   \body<
+
+    \div|class="title"|<
+      Zotica
+    >
 
     \article<
       \h1<Notice>
@@ -55,7 +59,7 @@
       \p<
         &m<(A)>, &m<\paren<\frac<1><2>>>
         or more
-        &m<\sp<\paren<1 + \frac<1 + \frac<\sp<`a><2>><2>><4>>><n + \frac<1><2>>>.
+        &m<\sp<\bracket<1 + \frac<1 + \frac<\sp<`a><2>><2>><4>>><n + \frac<1><2>>>.
       >
       \p<
         Sizes:
@@ -102,11 +106,23 @@
       >
       \h1<Overscripts and underscripts>
       \p<
-        To be implemented.
+        &m<\ov<A><B> \un<C><D>>.
+      >
+      \p<
+        Both:
+        &m<\unov<A><B><C>>
+        or
+        &m<P \unov<X><\sp<n><2> + 2 n + 1><\sp<n><2> - 2 n> Q>
+        or
+        &m<U \unov<Y><\sb<\aleph>><0>><r + \frac<1><2>> V>.
       >
       \h1<Sums and products>
       \p<
-        To be implemented.
+        &m<\sum<A><B> C>
+        or more practically
+        &m<\varphi> (x) = \sum<n = 0><\infty>> \frac<\sp<\varphi>><(n)> (0)><n !> \sp<x><n>>
+        or
+        &m<\bigotimes<L \in> \frak<L>><> \bigoplus<M \in> \frak<M>><> \op<Hom> (L, M)>.
       >
       \h1<Accents>
       \p<
