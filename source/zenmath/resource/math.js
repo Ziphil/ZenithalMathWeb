@@ -88,39 +88,39 @@ function modifyParen(element) {
   rightElement.style.verticalAlign = "" + shift + "em";
 }
 
-function calcSuperscriptShift(baseElement, scriptElement) {
-  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
-  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement) - 0.1) * fontRatio;
-  return shift;
-}
-
-function calcSubscriptShift(baseElement, scriptElement) {
-  let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
+function calcSubShift(baseElement, subElement) {
+  let fontRatio = getFontSize(baseElement) / getFontSize(subElement);
   let shift = (-getBaselineCenter(baseElement) + 0.2) * fontRatio;
   return shift;
 }
 
-function modifySubsuperscript(element) {
+function calcSuperShift(baseElement, superElement) {
+  let fontRatio = getFontSize(baseElement) / getFontSize(superElement);
+  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement) - 0.1) * fontRatio;
+  return shift;
+}
+
+function modifySubsuper(element) {
   let baseElement = element.children[0];
-  let subscriptElement = element.children[1];
-  let superscriptElement = element.children[2];
-  let lowerWidth = getWidth(subscriptElement);
-  let upperWidth = getWidth(superscriptElement);
-  let lowerShift = calcSubscriptShift(baseElement, subscriptElement);
-  let upperShift = calcSuperscriptShift(baseElement, superscriptElement);
-  let upperMargin = -getWidth(subscriptElement);
+  let subElement = element.children[1];
+  let superElement = element.children[2];
+  let lowerWidth = getWidth(subElement);
+  let upperWidth = getWidth(superElement);
+  let lowerShift = calcSubShift(baseElement, subElement);
+  let upperShift = calcSuperShift(baseElement, superElement);
+  let upperMargin = -getWidth(subElement);
   let lowerMargin = 0;
   if (baseElement.children[0].classList.contains("int")) {
     lowerMargin -= 0.6;
     lowerWidth -= 0.6;
     upperMargin += 0.6;
   }
-  subscriptElement.style.verticalAlign = "" + lowerShift + "em";
-  superscriptElement.style.verticalAlign = "" + upperShift + "em";
-  superscriptElement.style.marginLeft = "" + upperMargin + "em";
-  subscriptElement.style.marginLeft = "" + lowerMargin + "em";
+  subElement.style.verticalAlign = "" + lowerShift + "em";
+  superElement.style.verticalAlign = "" + upperShift + "em";
+  superElement.style.marginLeft = "" + upperMargin + "em";
+  subElement.style.marginLeft = "" + lowerMargin + "em";
   if (lowerWidth > upperWidth) {
-    superscriptElement.style.width = "" + lowerWidth + "em";
+    superElement.style.width = "" + lowerWidth + "em";
   }
 }
 
@@ -184,7 +184,7 @@ function renderDebug(element) {
 }
 
 function execute() {
-  document.querySelectorAll("math-subsup").forEach(modifySubsuperscript);
+  document.querySelectorAll("math-subsup").forEach(modifySubsuper);
   document.querySelectorAll(".md-sqrt").forEach(modifyRadical);
   document.querySelectorAll(".md-paren").forEach(modifyParen);
 }

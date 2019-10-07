@@ -24,15 +24,15 @@ module ZenmathBuilder
       end
     when DATA["integral"].method(:key?)
       symbol = DATA["integral"].fetch(name, ["", ""]).last
-      nodes = ZenmathBuilder.build_integral(symbol) do |subscript_element, superscript_element|
-        subscript_element << children_list[0]
-        superscript_element << children_list[1]
+      nodes = ZenmathBuilder.build_integral(symbol) do |sub_element, super_element|
+        sub_element << children_list[0]
+        super_element << children_list[1]
       end
     when DATA["sum"].method(:key?)
       symbol = DATA["sum"].fetch(name, ["", ""]).last
-      nodes = ZenmathBuilder.build_sum(symbol) do |underscript_element, overscript_element|
-        underscript_element << children_list[0]
-        overscript_element << children_list[1]
+      nodes = ZenmathBuilder.build_sum(symbol) do |under_element, over_element|
+        under_element << children_list[0]
+        over_element << children_list[1]
       end
     when DATA["function"].method(:include?)
       nodes = ZenmathBuilder.build_identifier(name, true)
@@ -55,36 +55,36 @@ module ZenmathBuilder
       name = children_list[0].first.to_s
       nodes = ZenmathBuilder.build_operator(name, ["bin"])
     when "sb"
-      nodes = ZenmathBuilder.build_subsuperscript do |base_element, subscript_element, superscript_element|
+      nodes = ZenmathBuilder.build_subsuper do |base_element, sub_element, super_element|
         base_element << children_list[0]
-        subscript_element << children_list[1]
+        sub_element << children_list[1]
       end
     when "sp"
-      nodes = ZenmathBuilder.build_subsuperscript do |base_element, subscript_element, superscript_element|
+      nodes = ZenmathBuilder.build_subsuper do |base_element, sub_element, super_element|
         base_element << children_list[0]
-        superscript_element << children_list[1]
+        super_element << children_list[1]
       end
     when "sbsp"
-      nodes = ZenmathBuilder.build_subsuperscript do |base_element, subscript_element, superscript_element|
+      nodes = ZenmathBuilder.build_subsuper do |base_element, sub_element, super_element|
         base_element << children_list[0]
-        subscript_element << children_list[1]
-        superscript_element << children_list[2]
+        sub_element << children_list[1]
+        super_element << children_list[2]
       end
     when "un"
-      nodes = ZenmathBuilder.build_underoverscript do |base_element, underscript_element, overscript_element|
+      nodes = ZenmathBuilder.build_underover do |base_element, under_element, over_element|
         base_element << children_list[0]
-        underscript_element << children_list[1]
+        under_element << children_list[1]
       end
     when "ov"
-      nodes = ZenmathBuilder.build_underoverscript do |base_element, underscript_element, overscript_element|
+      nodes = ZenmathBuilder.build_underover do |base_element, under_element, over_element|
         base_element << children_list[0]
-        overscript_element << children_list[1]
+        over_element << children_list[1]
       end
     when "unov"
-      nodes = ZenmathBuilder.build_underoverscript do |base_element, underscript_element, overscript_element|
+      nodes = ZenmathBuilder.build_underover do |base_element, under_element, over_element|
         base_element << children_list[0]
-        underscript_element << children_list[1]
-        overscript_element << children_list[2]
+        under_element << children_list[1]
+        over_element << children_list[2]
       end
     when "frac"
       nodes = ZenmathBuilder.build_fraction do |numerator_element, denominator_element|
@@ -162,41 +162,41 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_subsuperscript(&block)
+  def self.build_subsuper(&block)
     this = Nodes[]
-    base_element, subscript_element, superscript_element = nil
+    base_element, sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
       this << Element.build("math-base") do |this|
         base_element = this
       end
       this << Element.build("math-sub") do |this|
-        subscript_element = this
+        sub_element = this
       end
       this << Element.build("math-sup") do |this|
-        superscript_element = this
+        super_element = this
       end
     end
-    block&.call(base_element, subscript_element, superscript_element)
+    block&.call(base_element, sub_element, super_element)
     return this
   end
 
-  def self.build_underoverscript(&block)
+  def self.build_underover(&block)
     this = Nodes[]
-    base_element, underscript_element, overscript_element = nil
+    base_element, under_element, over_element = nil
     this << Element.build("math-underover") do |this|
       this << Element.build("math-over") do |this|
-        overscript_element = this
+        over_element = this
       end
       this << Element.build("math-basewrap") do |this|
         this << Element.build("math-base") do |this|
           base_element = this
         end
         this << Element.build("math-under") do |this|
-          underscript_element = this
+          under_element = this
         end
       end
     end
-    block&.call(base_element, underscript_element, overscript_element)
+    block&.call(base_element, under_element, over_element)
     return this
   end
 
@@ -273,7 +273,7 @@ module ZenmathBuilder
 
   def self.build_integral(symbol, &block)
     this = Nodes[]
-    subscript_element, superscript_element = nil
+    sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
       this["class"] = "int"
       this << Element.build("math-base") do |this|
@@ -283,23 +283,23 @@ module ZenmathBuilder
         end
       end
       this << Element.build("math-sub") do |this|
-        subscript_element = this
+        sub_element = this
       end
       this << Element.build("math-sup") do |this|
-        superscript_element = this
+        super_element = this
       end
     end
-    block&.call(subscript_element, superscript_element)
+    block&.call(sub_element, super_element)
     return this
   end
 
   def self.build_sum(symbol, &block)
     this = Nodes[]
-    underscript_element, overscript_element = nil
+    under_element, over_element = nil
     this << Element.build("math-underover") do |this|
       this["class"] = "sum"
       this << Element.build("math-over") do |this|
-        overscript_element = this
+        over_element = this
       end
       this << Element.build("math-basewrap") do |this|
         this << Element.build("math-base") do |this|
@@ -309,11 +309,11 @@ module ZenmathBuilder
           end
         end
         this << Element.build("math-under") do |this|
-          underscript_element = this
+          under_element = this
         end
       end
     end
-    block&.call(underscript_element, overscript_element)
+    block&.call(under_element, over_element)
     return this
   end
 
