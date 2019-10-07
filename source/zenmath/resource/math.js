@@ -2,13 +2,13 @@
 
 
 function calcRadicalStretchLevel(element) {
-  let height = getHeight(element) + 0.15;
+  let height = getHeight(element);
   let stretchLevel = 0;
-  if (height <= 1.5) {
+  if (height <= 1.35) {
     stretchLevel = 0;
-  } else if (height <= 1.5 + 0.5 * 1) {
+  } else if (height <= 1.35 + 0.5 * 1) {
     stretchLevel = 1;
-  } else if (height <= 1.5 + 0.5 * 2) {
+  } else if (height <= 1.35 + 0.5 * 2) {
     stretchLevel = 2;
   } else {
     stretchLevel = 3;
@@ -40,27 +40,27 @@ function calcParenStretchLevel(element) {
   let stretchLevel = 0;
   if (height <= 1) {
     stretchLevel = 0;
-  } else if (height <= 1 + 0.25 * 1) {
+  } else if (height <= 1 + 0.27 * 1) {
     stretchLevel = 1;
-  } else if (height <= 1 + 0.25 * 2) {
+  } else if (height <= 1 + 0.27 * 2) {
     stretchLevel = 2;
-  } else if (height <= 1 + 0.25 * 3) {
+  } else if (height <= 1 + 0.27 * 3) {
     stretchLevel = 3;
-  } else if (height <= 1 + 0.25 * 4) {
+  } else if (height <= 1 + 0.27 * 4) {
     stretchLevel = 4;
-  } else if (height <= 1 + 0.25 * 5) {
+  } else if (height <= 1 + 0.27 * 5) {
     stretchLevel = 5;
-  } else if (height <= 1 + 0.25 * 6) {
+  } else if (height <= 1 + 0.27 * 6) {
     stretchLevel = 6;
-  } else if (height <= 1 + 0.25 * 7) {
+  } else if (height <= 1 + 0.27 * 7) {
     stretchLevel = 7;
-  } else if (height <= 1 + 0.25 * 8) {
+  } else if (height <= 1 + 0.27 * 8) {
     stretchLevel = 8;
-  } else if (height <= 1 + 0.25 * 9) {
+  } else if (height <= 1 + 0.27 * 9) {
     stretchLevel = 9;
-  } else if (height <= 1 + 0.25 * 10) {
+  } else if (height <= 1 + 0.27 * 10) {
     stretchLevel = 10;
-  } else if (height <= 1 + 0.25 * 11) {
+  } else if (height <= 1 + 0.27 * 11) {
     stretchLevel = 11;
   } else {
     stretchLevel = 12;
@@ -90,13 +90,13 @@ function modifyParen(element) {
 
 function calcSuperscriptShift(baseElement, scriptElement) {
   let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
-  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement)) * fontRatio;
+  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement) - 0.1) * fontRatio;
   return shift;
 }
 
 function calcSubscriptShift(baseElement, scriptElement) {
   let fontRatio = getFontSize(baseElement) / getFontSize(scriptElement);
-  let shift = -getBaselineCenter(baseElement) * fontRatio;
+  let shift = (-getBaselineCenter(baseElement) + 0.2) * fontRatio;
   return shift;
 }
 

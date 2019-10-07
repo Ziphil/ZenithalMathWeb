@@ -8,18 +8,18 @@
 
 
 math-n {
-  margin: 0em spacing(0);
-  line-height: 0.8;
+  padding: 0em spacing(0);
+  line-height: 1;
 }
 
 
 math-i {
-  margin: 0em spacing(0);
-  line-height: 0.8;
+  padding: 0em spacing(0);
+  line-height: 1;
   font-style: italic;
 
   &.fun {
-    margin: 0em spacing(3) 0em spacing(0);
+    padding: 0em spacing(3) 0em spacing(0);
     font-style: normal;
   }
 
@@ -27,30 +27,30 @@ math-i {
 
 
 math-o {
-  margin: 0em spacing(3);
+  padding: 0em spacing(4);
   line-height: 0.7;
   font-family: "Math";
 
   &.bin {
-    margin: 0em spacing(4);
+    padding: 0em spacing(4);
   }
 
   &.rel {
-    margin: 0em spacing(5);
+    padding: 0em spacing(5);
   }
 
   &.del {
-    margin: 0em spacing(5) 0em spacing(0);
+    padding: 0em spacing(5) 0em spacing(0);
   }
 
   &.ord {
-    margin: 0em spacing(0);
+    padding: 0em spacing(0);
   }
 
   &.int {
-    margin: 0em spacing(0);
-    height: 2.1em;
-    line-height: 2.1em;
+    padding: 0em spacing(0);
+    height: 2.3em;
+    line-height: 2.3em;
   }
 
   &.txt {
@@ -58,27 +58,32 @@ math-o {
   }
 
   &.lp {
-    margin: 0em spacing(0) 0em spacing(1);
+    padding: 0em spacing(0) 0em spacing(1);
   }
 
   math-i.fun +&.lp {
-    margin: 0em spacing(0) 0em spacing(-2);
+    padding: 0em spacing(0) 0em spacing(1);
+    margin-left: spacing(-3);
   }
 
   &.rp {
-    margin: 0em spacing(1) 0em spacing(0);
+    padding: 0em spacing(1) 0em spacing(0);
   }
 
   math-scr & {
-    margin: 0em spacing(0) !important;
+    padding: 0em spacing(0) !important;
+  }
+
+  * >&:first-child {
+    padding: 0em spacing(0);
   }
 
 }
 
 
 math-frac {
-  margin: 0em spacing(3);
-  vertical-align: 0.05em;
+  padding: 0em spacing(2) !important;
+  vertical-align: 0.1em;
   display: inline-block;
 
   >math-num {
@@ -88,15 +93,15 @@ math-frac {
   }
 
   >math-denwrap {
-    margin: 0.4em 0em 0em 0em;
+    margin: 0em 0em 0em 0em;
     width: 100%;
     display: inline-table;
   }
 
   >math-denwrap::before {
-    margin: -0.25em 0em 0em 0em;
-    margin-left: - spacing(2);
-    margin-right: - spacing(2);
+    margin: -0.2em 0em 0em 0em;
+    margin-left: spacing(-2);
+    margin-right: spacing(-2);
     height: 1px;
     border-top: 1px solid;
     display: block;
@@ -134,7 +139,7 @@ math-sqrt {
 
   >math-surd >math-o,
   >math-surd >math-o.var {
-    margin: 0em;
+    padding: 0em spacing(0);
   }
 
   >math-sqrtcont {
@@ -148,12 +153,13 @@ math-sqrt {
 math-sup {
   
   >math-base {
-    margin: 0em 0em 0em 0em;
+    padding: 0em spacing(0);
   }
 
   >math-scr {
-    margin: 0em 0em 0em 0em;
-    vertical-align: 0.48em;
+    padding: 0em spacing(0);
+    margin: -0.15em 0em 0em 0em;
+    vertical-align: 0.51em;
     font-size: 80%;
   }
 
@@ -163,12 +169,13 @@ math-sup {
 math-sub {
   
   >math-base {
-    margin: 0em 0em 0em 0em;
+    padding: 0em spacing(0);
   }
 
   >math-scr {
-    margin: 0em 0em 0em 0em;
-    vertical-align: -0.45em;
+    padding: 0em spacing(0);
+    margin: 0em 0em -0.15em 0em;
+    vertical-align: -0.36em;
     font-size: 80%;
   }
 
@@ -178,18 +185,20 @@ math-sub {
 math-subsup {
   
   >math-base {
-    margin: 0em;
+    margin: 0em spacing(0);
   }
 
   >math-scr:nth-of-type(1) {
-    margin: 0em;
-    vertical-align: -0.45em;
+    padding: 0em spacing(0);
+    margin: 0em 0em -0.15em 0em;
+    vertical-align: -0.36em;
     font-size: 80%;
   }
 
   >math-scr:nth-of-type(2) {
-    margin: 0em;
-    vertical-align: 0.48em;
+    padding: 0em spacing(0);
+    margin: -0.15em 0em 0em 0em;
+    vertical-align: 0.51em;
     font-size: 80%;
   }
 
@@ -209,60 +218,24 @@ math-root {
     box-sizing: border-box;
   }
 
-  .l0 {
-    margin-left: spacing(0);
+  * >*:first-child {
+    padding-left: spacing(0);
   }
 
-  .l1 {
-    margin-left: spacing(1);
+  * >*:last-child {
+    padding-right: spacing(0);
   }
 
-  .l2 {
-    margin-left: spacing(2);
+  @for $i from 0 through 18 {
+    .l#{$i} {
+      padding-left: spacing($i);
+    }
   }
 
-  .l3 {
-    margin-left: spacing(3);
-  }
-
-  .l4 {
-    margin-left: spacing(4);
-  }
-
-  .l5 {
-    margin-left: spacing(5);
-  }
-
-  .l6 {
-    margin-left: spacing(6);
-  }
-
-  .r0 {
-    margin-right: spacing(0);
-  }
-
-  .r1 {
-    margin-right: spacing(1);
-  }
-
-  .r2 {
-    margin-right: spacing(2);
-  }
-
-  .r3 {
-    margin-right: spacing(3);
-  }
-
-  .r4 {
-    margin-right: spacing(4);
-  }
-
-  .r5 {
-    margin-right: spacing(5);
-  }
-
-  .r6 {
-    margin-right: spacing(6);
+  @for $i from 0 through 18 {
+    .r#{$i} {
+      padding-right: spacing($i);
+    }
   }
 
 }
