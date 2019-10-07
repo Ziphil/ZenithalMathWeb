@@ -214,6 +214,38 @@ math-subsup {
 }
 
 
+math-underover {
+  vertical-align: 0em;
+
+  >math-scr {
+    margin: 0em 0em;
+    font-size: 80%;
+    text-align: center;
+    display: block;
+  }
+
+  >math-basewrap {
+    margin: 0em 0em 0em 0em;
+    width: 100%;
+    display: inline-table;
+  }
+
+  >math-basewrap >math-base {
+    margin: 0em 0em 0em 0em;
+    text-align: center;
+    display: block;
+  }
+
+  >math-basewrap >math-scr {
+    margin: 0em 0em;
+    font-size: 80%;
+    text-align: center;
+    display: table-row;
+  }
+
+}
+
+
 math-root {
   line-height: 0;
   white-space: nowrap;

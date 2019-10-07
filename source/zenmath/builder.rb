@@ -63,6 +63,22 @@ module ZenmathBuilder
         subscript_element << children_list[1]
         superscript_element << children_list[2]
       end
+    when "un"
+      nodes = ZenmathBuilder.build_underoverscript do |base_element, underscript_element, overscript_element|
+        base_element << children_list[0]
+        underscript_element << children_list[1]
+      end
+    when "ov"
+      nodes = ZenmathBuilder.build_underoverscript do |base_element, underscript_element, overscript_element|
+        base_element << children_list[0]
+        overscript_element << children_list[1]
+      end
+    when "unov"
+      nodes = ZenmathBuilder.build_underoverscript do |base_element, underscript_element, overscript_element|
+        base_element << children_list[0]
+        underscript_element << children_list[1]
+        overscript_element << children_list[2]
+      end
     when "frac"
       nodes = ZenmathBuilder.build_fraction do |numerator_element, denominator_element|
         numerator_element << children_list[0]
@@ -184,6 +200,26 @@ module ZenmathBuilder
       end
     end
     block&.call(base_element, subscript_element, superscript_element)
+    return this
+  end
+
+  def self.build_underoverscript(&block)
+    this = Nodes[]
+    base_element, underscript_element, overscript_element = nil
+    this << Element.build("math-underover") do |this|
+      this << Element.build("math-scr") do |this|
+        overscript_element = this
+      end
+      this << Element.build("math-basewrap") do |this|
+        this << Element.build("math-base") do |this|
+          base_element = this
+        end
+        this << Element.build("math-scr") do |this|
+          underscript_element = this
+        end
+      end
+    end
+    block&.call(base_element, underscript_element, overscript_element)
     return this
   end
 
