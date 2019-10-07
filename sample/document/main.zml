@@ -53,28 +53,28 @@
       >
       \h1<Parentheses>
       \p<
-        &m<(A)>, &m<\p<\frac<1><2>>>
+        &m<(A)>, &m<\paren<\frac<1><2>>>
         or more
-        &m<\sp<\p<1 + \frac<1 + \frac<\sp<`a><2>><2>><4>>><n + \frac<1><2>>>.
+        &m<\sp<\paren<1 + \frac<1 + \frac<\sp<`a><2>><2>><4>>><n + \frac<1><2>>>.
       >
       \p<
         Sizes:
-        &m<\p<&raw<\span|class="box",style="height:1em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:1.2em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:1.4em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:1.6em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:1.8em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:2em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:2.2em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:2.4em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:2.6em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:2.8em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:3em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:3.2em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:3.4em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:3.6em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:3.8em"|>>>>
-        &m<\p<&raw<\span|class="box",style="height:4em"|>>>>.
+        &m<\paren<&raw<\span|class="box",style="height:1em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.2em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.4em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.6em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.8em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:2em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.2em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.4em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.6em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.8em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:3em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.2em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.4em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.6em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.8em"|>>>>
+        &m<\paren<&raw<\span|class="box",style="height:4em"|>>>>.
       >
       \h1<Superscripts and subscripts>
       \p<
@@ -82,13 +82,13 @@
         or
         &m<\sp<X><\sp<q><2> + \sqrt<2> q - 2> * \sb<Y><\sp<d><2> + \sqrt<2> d - 2>>
         or
-        &m<\sp<\p<1 + \frac<1><1 + \frac<`j><2>>>><1 + \frac<1><\sp<`j><2>>> * \sb<\p<1 + \frac<1 + \frac<`h><2>><2>>><`h + \frac<1><2>>>.
+        &m<\sp<\paren<1 + \frac<1><1 + \frac<`j><2>>>><1 + \frac<1><\sp<`j><2>>> * \sb<\paren<1 + \frac<1 + \frac<`h><2>><2>>><`h + \frac<1><2>>>.
       >
       \p<
         Both:
         &m<\sbsp<A><B><C>>
         or
-        &m<\sbsp<\p<1 + \frac<1><2>>><`G><`D>>,
+        &m<\sbsp<\paren<1 + \frac<1><2>>><`G><`D>>,
         compare
         &m<\sp<\sb<a><k>><n>>
         and
@@ -100,13 +100,33 @@
         or
         &m<\int<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
       >
+      \h1<Overscripts and underscripts>
+      \p<
+        To be implemented.
+      >
+      \h1<Sums and products>
+      \p<
+        To be implemented.
+      >
+      \h1<Accents>
+      \p<
+        To be implemented.
+      >
       \h1<Functions>
       \p<
         &m<\sin> A>
         or
         &m<\exp> (a - b) = \frac<\exp> a><\exp> b>>
         or
-        &m<Z * \sp<Z><3> `> \sp<Z><4> - 1>.
+        &m<\max> `{ \dim> V \mid> V \in> \op<Hoge> (\scr<V>) `}>.
+      >
+      \h1<Alternative letters>
+      \p<
+        &m<\bb<Aa> * \scr<Bb> * \frak<Cc>>
+        or
+        &m<`s \nin> \frak<gl> (\sb<\frak<S>><n>)>
+        or
+        &m<`t \in> \sp<\scr<G>><\scr<F>>: T \raarr> S>.
       >
       \h1<Miscellaneous>
       \p<
@@ -133,7 +153,7 @@
         このとき、&m<K \coloneqq> \op<Frac> (A)> とおくと、&m<P> は &m<K> 上既約である。
       >
       \p|class="normal"|<
-        2 階連続的微分可能な &m<R> 値 2 変数関数 &m<f (x, y)> の極大値や極小値が知りたいとする。
+        2 階連続的微分可能な &m<\bb<R>> 値 2 変数関数 &m<f (x, y)> の極大値や極小値が知りたいとする。
         点 &m<(\sb<x><0>, \sb<y><0>)> が極大値もしくは極小値であるための必要条件として、その点が停留点であること、すなわち
         &mb<
           \frac<\partial> f><\partial> x> (\sb<x><0>, \sb<y><0>) = \frac<\partial> f><\partial> y> (\sb<x><0>, \sb<y><0>) = 0
@@ -141,7 +161,7 @@
         が成り立つことが挙げられる。
         この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<(x, y)> の周りでの振る舞いは、
         &mb<
-          f (\sb<x><0> + h, \sb<y><0> + k) = f (\sb<x><0>, \sb<y><0>) + \frac<1><2> \p<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> (\sb<x><0>, \sb<y><0>) + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> (\sb<x><0>, \sb<y><0>) + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> (\sb<x><0>, \sb<y><0>)> + o (\sp<`r><2>)
+          f (\sb<x><0> + h, \sb<y><0> + k) = f (\sb<x><0>, \sb<y><0>) + \frac<1><2> \paren<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> (\sb<x><0>, \sb<y><0>) + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> (\sb<x><0>, \sb<y><0>) + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> (\sb<x><0>, \sb<y><0>)> + o (\sp<`r><2>)
         >
         と記述できる。
         ここで、&m<`r \coloneqq> \sqrt<\sp<h><2> + \sp<k><2>>> とした。
