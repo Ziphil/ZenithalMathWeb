@@ -27,7 +27,7 @@
       \p<
         &m<\frac<A><B>>
         or more complicated
-        &m<57 \boxtimes> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smashp> \frac<m><7 Ψ>><Δ>>>.
+        &m<\bb<4> \pitchfork> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smashp> \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
@@ -98,6 +98,10 @@
         and
         &m<\sbsp<a><k><n>>.
       >
+      \p<
+        Primes are kinds of superscripts:
+        &m<\sp<A><\pr>> \setminus> \sp<B><\ppr>>>.
+      >
       \h1<Integrals>
       \p<
         &m<\int<A><B> C>
@@ -125,6 +129,14 @@
         &m<\bigotimes<L \in> \frak<L>><> \bigoplus<M \in> \frak<M>><> \op<Hom> (L, M)>.
       >
       \h1<Accents>
+      \p<
+        To be implemented (maybe arduous work though…).
+      >
+      \h1<Matrices>
+      \p<
+        To be implemented.
+      >
+      \h1<Tables>
       \p<
         To be implemented.
       >
