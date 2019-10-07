@@ -23,9 +23,16 @@ module ZenmathBuilder
         content_element << children_list[0]
       end
     when DATA["integral"].method(:key?)
-      nodes = ZenmathBuilder.build_integral(name) do |subscript_element, superscript_element|
+      symbol = DATA["integral"].fetch(name, ["", ""]).last
+      nodes = ZenmathBuilder.build_integral(symbol) do |subscript_element, superscript_element|
         subscript_element << children_list[0]
         superscript_element << children_list[1]
+      end
+    when DATA["sum"].method(:key?)
+      symbol = DATA["sum"].fetch(name, ["", ""]).last
+      nodes = ZenmathBuilder.build_sum(symbol) do |underscript_element, overscript_element|
+        underscript_element << children_list[0]
+        overscript_element << children_list[1]
       end
     when DATA["function"].method(:include?)
       nodes = ZenmathBuilder.build_identifier(name, true)
@@ -264,7 +271,7 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_integral(kind, &block)
+  def self.build_integral(symbol, &block)
     this = Nodes[]
     subscript_element, superscript_element = nil
     this << Element.build("math-subsup") do |this|
@@ -272,7 +279,6 @@ module ZenmathBuilder
       this << Element.build("math-base") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "int"
-          symbol = DATA["integral"][kind][1]
           this << Text.new(symbol, true, nil, false)
         end
       end
@@ -284,6 +290,30 @@ module ZenmathBuilder
       end
     end
     block&.call(subscript_element, superscript_element)
+    return this
+  end
+
+  def self.build_sum(symbol, &block)
+    this = Nodes[]
+    underscript_element, overscript_element = nil
+    this << Element.build("math-underover") do |this|
+      this["class"] = "sum"
+      this << Element.build("math-over") do |this|
+        overscript_element = this
+      end
+      this << Element.build("math-basewrap") do |this|
+        this << Element.build("math-base") do |this|
+          this << Element.build("math-o") do |this|
+            this["class"] = "sum"
+            this << Text.new(symbol, true, nil, false)
+          end
+        end
+        this << Element.build("math-under") do |this|
+          underscript_element = this
+        end
+      end
+    end
+    block&.call(underscript_element, overscript_element)
     return this
   end
 

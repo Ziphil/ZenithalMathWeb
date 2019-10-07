@@ -58,6 +58,12 @@ math-o {
     line-height: 2.3em;
   }
 
+  &.sum {
+    padding: 0em spacing(0);
+    height: 1.4em;
+    line-height: 1.4em;
+  }
+
   &.txt {
     font-family: inherit;
   }
