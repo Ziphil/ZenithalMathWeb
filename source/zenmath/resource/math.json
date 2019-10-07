@@ -16,7 +16,10 @@
       "9": ["\uDB80\uDC41", "\uDB80\uDC4D"], "10": ["\uDB80\uDC42", "\uDB80\uDC4E"], "11": ["\uDB80\uDC43", "\uDB80\uDC4F"], "12": ["\uDB80\uDC44", "\uDB80\uDC50"]
     },
     "bracket": {
-      "0": ["[", "]"]
+      "0": ["[", "]"],
+      "1": ["\uDB80\uDC51", "\uDB80\uDC5D"], "2": ["\uDB80\uDC52", "\uDB80\uDC5E"], "3": ["\uDB80\uDC53", "\uDB80\uDC5F"], "4": ["\uDB80\uDC54", "\uDB80\uDC60"],
+      "5": ["\uDB80\uDC55", "\uDB80\uDC61"], "6": ["\uDB80\uDC56", "\uDB80\uDC62"], "7": ["\uDB80\uDC57", "\uDB80\uDC63"], "8": ["\uDB80\uDC58", "\uDB80\uDC64"],
+      "9": ["\uDB80\uDC59", "\uDB80\uDC65"], "10": ["\uDB80\uDC5A", "\uDB80\uDC66"], "11": ["\uDB80\uDC5B", "\uDB80\uDC67"], "12": ["\uDB80\uDC5C", "\uDB80\uDC68"]
     },
     "brace": {
       "0": ["{", "}"],
