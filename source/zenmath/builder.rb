@@ -73,6 +73,10 @@ module ZenmathBuilder
       nodes = ZenmathBuilder.build_radical(stretch_level) do |content_element|
         content_element << children_list[0]
       end
+    when "bb", "scr", "frak"
+      alphabets = children_list[0].first.value
+      symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
+      nodes = ZenmathBuilder.build_identifier(symbol, false, true)
     end
     return nodes
   end
@@ -112,11 +116,14 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_identifier(name, function)
+  def self.build_identifier(name, function = false, alternative = false)
     this = Nodes[]
     this << Element.build("math-i") do |this|
       if function
-        this["class"] = "fun"
+        this["class"] += " fun"
+      end
+      if alternative
+        this["class"] += " alt"
       end
       this << Text.new(name, true, nil, false)
     end
