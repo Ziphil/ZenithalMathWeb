@@ -100,21 +100,6 @@ function calcSubscriptShift(baseElement, scriptElement) {
   return shift;
 }
 
-function modifySuperscript(element) {
-  let baseElement = element.children[0];
-  let scriptElement = element.children[1];
-  let shift = calcSuperscriptShift(baseElement, scriptElement);
-  scriptElement.style.verticalAlign = "" + shift + "em";
-}
-
-function modifySubscript(element) {
-  let baseElement = element.children[0];
-  let scriptElement = element.children[1];
-  let shift = calcSubscriptShift(baseElement, scriptElement);
-  scriptElement.style.verticalAlign = "" + shift + "em";
-}
-
-
 function modifySubsuperscript(element) {
   let baseElement = element.children[0];
   let subscriptElement = element.children[1];
@@ -199,8 +184,6 @@ function renderDebug(element) {
 }
 
 function execute() {
-  document.querySelectorAll("math-sup").forEach(modifySuperscript);
-  document.querySelectorAll("math-sub").forEach(modifySubscript);
   document.querySelectorAll("math-subsup").forEach(modifySubsuperscript);
   document.querySelectorAll(".md-sqrt").forEach(modifyRadical);
   document.querySelectorAll(".md-paren").forEach(modifyParen);

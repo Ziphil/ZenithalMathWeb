@@ -47,15 +47,15 @@ module ZenmathBuilder
     when "o"
       name = children_list[0].first.to_s
       nodes = ZenmathBuilder.build_operator(name, ["bin"])
-    when "sp"
-      nodes = ZenmathBuilder.build_superscript do |base_element, script_element|
-        base_element << children_list[0]
-        script_element << children_list[1]
-      end
     when "sb"
-      nodes = ZenmathBuilder.build_subscript do |base_element, script_element|
+      nodes = ZenmathBuilder.build_subsuperscript do |base_element, subscript_element, superscript_element|
         base_element << children_list[0]
-        script_element << children_list[1]
+        subscript_element << children_list[1]
+      end
+    when "sp"
+      nodes = ZenmathBuilder.build_subsuperscript do |base_element, subscript_element, superscript_element|
+        base_element << children_list[0]
+        superscript_element << children_list[1]
       end
     when "sbsp"
       nodes = ZenmathBuilder.build_subsuperscript do |base_element, subscript_element, superscript_element|
@@ -155,36 +155,6 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_superscript(&block)
-    this = Nodes[]
-    base_element, script_element = nil
-    this << Element.build("math-sup") do |this|
-      this << Element.build("math-base") do |this|
-        base_element = this
-      end
-      this << Element.build("math-scr") do |this|
-        script_element = this
-      end
-    end
-    block&.call(base_element, script_element)
-    return this
-  end
-
-  def self.build_subscript(&block)
-    this = Nodes[]
-    base_element, script_element = nil
-    this << Element.build("math-sub") do |this|
-      this << Element.build("math-base") do |this|
-        base_element = this
-      end
-      this << Element.build("math-scr") do |this|
-        script_element = this
-      end
-    end
-    block&.call(base_element, script_element)
-    return this
-  end
-
   def self.build_subsuperscript(&block)
     this = Nodes[]
     base_element, subscript_element, superscript_element = nil
@@ -192,10 +162,10 @@ module ZenmathBuilder
       this << Element.build("math-base") do |this|
         base_element = this
       end
-      this << Element.build("math-scr") do |this|
+      this << Element.build("math-sub") do |this|
         subscript_element = this
       end
-      this << Element.build("math-scr") do |this|
+      this << Element.build("math-sup") do |this|
         superscript_element = this
       end
     end
@@ -207,14 +177,14 @@ module ZenmathBuilder
     this = Nodes[]
     base_element, underscript_element, overscript_element = nil
     this << Element.build("math-underover") do |this|
-      this << Element.build("math-scr") do |this|
+      this << Element.build("math-over") do |this|
         overscript_element = this
       end
       this << Element.build("math-basewrap") do |this|
         this << Element.build("math-base") do |this|
           base_element = this
         end
-        this << Element.build("math-scr") do |this|
+        this << Element.build("math-under") do |this|
           underscript_element = this
         end
       end
@@ -306,10 +276,10 @@ module ZenmathBuilder
           this << Text.new(symbol, true, nil, false)
         end
       end
-      this << Element.build("math-scr") do |this|
+      this << Element.build("math-sub") do |this|
         subscript_element = this
       end
-      this << Element.build("math-scr") do |this|
+      this << Element.build("math-sup") do |this|
         superscript_element = this
       end
     end
