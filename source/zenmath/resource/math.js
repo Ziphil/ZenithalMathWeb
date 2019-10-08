@@ -69,7 +69,7 @@ function calcParenStretchLevel(element) {
 }
 
 function calcParenShift(element) {
-  let shift = getHeight(element) / 2 - getBaselineCenter(element);
+  let shift = getHeight(element) / 2 - getLowerHeight(element);
   if (shift >= -0.3 && shift <= 0.3) {
     shift = 0;
   }
@@ -90,18 +90,19 @@ function modifyParen(element) {
 
 function calcSubShift(baseElement, subElement) {
   let fontRatio = getFontSize(baseElement) / getFontSize(subElement);
-  let shift = (-getBaselineCenter(baseElement) + 0.2) * fontRatio;
-  return shift;
+  let shift = (getLowerHeight(baseElement) - 0.2) * fontRatio;
+  return -shift;
 }
 
 function calcSuperShift(baseElement, superElement) {
   let fontRatio = getFontSize(baseElement) / getFontSize(superElement);
-  let shift = (getHeight(baseElement) - getBaselineCenter(baseElement) - 0.1) * fontRatio;
+  let shift = (getUpperHeight(baseElement) - 0.1) * fontRatio;
   return shift;
 }
 
 function modifySubsuper(element) {
   let baseElement = element.children[0];
+  let baseSymbolElement = baseElement.children[0];
   let subElement = element.children[1];
   let superElement = element.children[2];
   let lowerWidth = getWidth(subElement);
@@ -110,7 +111,7 @@ function modifySubsuper(element) {
   let upperShift = calcSuperShift(baseElement, superElement);
   let upperMargin = -getWidth(subElement);
   let lowerMargin = 0;
-  if (baseElement.children[0].classList.contains("int")) {
+  if (baseSymbolElement.classList.contains("int")) {
     lowerMargin -= 0.6;
     lowerWidth -= 0.6;
     upperMargin += 0.6;
@@ -142,21 +143,28 @@ function getHeight(element) {
   return heightEm;
 }
 
-function getBaselineCenter(element) {
-  let bottom = element.getBoundingClientRect().bottom;
-  let baselineLocator = document.createElement("img");
-  element.appendChild(baselineLocator);
-  baselineLocator.style.verticalAlign = "baseline";
-  let baseline = baselineLocator.getBoundingClientRect().bottom;
-  element.removeChild(baselineLocator);
-  let baselineHeight = bottom - baseline;
-  let baselineHeightEm = baselineHeight / getFontSize(element) + 0.3;
-  return baselineHeightEm;
+function getLowerHeight(element) {
+  let bottom = element.getBoundingClientRect().bottom + window.pageYOffset;
+  let locator = document.createElement("img");
+  element.appendChild(locator);
+  locator.style.verticalAlign = "baseline";
+  let baselineBottom = locator.getBoundingClientRect().bottom + window.pageYOffset;
+  element.removeChild(locator);
+  let heightPx = bottom - baselineBottom;
+  let height = heightPx / getFontSize(element) + 0.3;
+  return height;
+}
+
+function getUpperHeight(element) {
+  let height = getHeight(element) - getLowerHeight(element);
+  return height;
 }
 
 function renderDebug(element) {
-  let clientRect = element.getBoundingClientRect()
-  let baselineCenter = getBaselineCenter(element) * getFontSize(element);
+  let clientRect = element.getBoundingClientRect();
+  let scrollOffset = window.pageYOffset;
+  let lowerHeight = getLowerHeight(element) * getFontSize(element);
+  let upperHeight = getUpperHeight(element) * getFontSize(element);
   let line = document.createElement("div");
   let upperBox = document.createElement("div");
   let lowerBox = document.createElement("div");
@@ -164,23 +172,23 @@ function renderDebug(element) {
   line.style.borderTop = "1px #FF000088 solid";
   line.style.width = "" + clientRect.width + "px";
   line.style.height = "1px";
-  line.style.top = "" + (clientRect.bottom - baselineCenter) + "px";
+  line.style.top = "" + (clientRect.bottom - lowerHeight + scrollOffset) + "px";
   line.style.left = "" + clientRect.left + "px";
-  upperBox.style.position = "absolute";
-  upperBox.style.backgroundColor = "#FF000033";
-  upperBox.style.width = "" + clientRect.width + "px";
-  upperBox.style.height = "" + (clientRect.height - baselineCenter) + "px";
-  upperBox.style.top = "" + clientRect.top + "px";
-  upperBox.style.left = "" + clientRect.left + "px";
   lowerBox.style.position = "absolute";
   lowerBox.style.backgroundColor = "#FFFF0033";
   lowerBox.style.width = "" + clientRect.width + "px";
-  lowerBox.style.height = "" + baselineCenter + "px";
-  lowerBox.style.top = "" + (clientRect.top + clientRect.height - baselineCenter) + "px";
+  lowerBox.style.height = "" + lowerHeight + "px";
+  lowerBox.style.top = "" + (clientRect.top + upperHeight + scrollOffset) + "px";
   lowerBox.style.left = "" + clientRect.left + "px";
+  upperBox.style.position = "absolute";
+  upperBox.style.backgroundColor = "#FF000033";
+  upperBox.style.width = "" + clientRect.width + "px";
+  upperBox.style.height = "" + upperHeight + "px";
+  upperBox.style.top = "" + (clientRect.top + scrollOffset) + "px";
+  upperBox.style.left = "" + clientRect.left + "px";
   document.body.appendChild(line);
-  document.body.appendChild(upperBox);
   document.body.appendChild(lowerBox);
+  document.body.appendChild(upperBox);
 }
 
 function execute() {
