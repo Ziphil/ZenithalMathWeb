@@ -229,6 +229,34 @@ math-underover {
 }
 
 
+math-paren {
+
+  >math-stretch >math-upper,
+  >math-stretch >math-ext >math-extcont,
+  >math-stretch >math-mid,
+  >math-stretch >math-lower {
+    height: 1.25em;
+    line-height: 2em;
+    font-family: "Math";
+    display: block;
+  }
+
+  >math-stretch >math-mid {
+    height: 1.9em;
+    line-height: 3.4em;
+  }
+
+  >math-stretch >math-ext {
+    overflow: hidden;
+  }
+
+  >math-stretch >math-ext >math-extcont {
+    transform: scale(1, 500);
+  }
+
+}
+
+
 math-root {
   line-height: 0;
   white-space: nowrap;

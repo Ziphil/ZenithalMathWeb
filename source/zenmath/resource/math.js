@@ -25,7 +25,7 @@ function modifyRadical(element) {
 }
 
 function calcParenKind(element) {
-  let kind = "p";
+  let kind = "paren";
   for (let clazz of element.classList) {
     let match;
     if (match = clazz.match(/md-paren-(\w+)/)) {
@@ -62,8 +62,10 @@ function calcParenStretchLevel(element) {
     stretchLevel = 10;
   } else if (height <= 1 + 0.27 * 11) {
     stretchLevel = 11;
-  } else {
+  } else if (height <= 1 + 0.27 * 12) {
     stretchLevel = 12;
+  } else {
+    stretchLevel = null;
   }
   return stretchLevel;
 }
@@ -77,15 +79,73 @@ function calcParenShift(element) {
 }
 
 function modifyParen(element) {
+  let stretchLevel = calcParenStretchLevel(element);
+  if (stretchLevel != null) {
+    let leftElement = element.previousElementSibling;
+    let rightElement = element.nextElementSibling;
+    let kind = calcParenKind(element);
+    let shift = calcParenShift(element);
+    leftElement.textContent = DATA["paren"][kind][stretchLevel][0];
+    rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
+    leftElement.style.verticalAlign = "" + shift + "em";
+    rightElement.style.verticalAlign = "" + shift + "em";
+  } else {
+    createParen(element);
+  }
+}
+
+function createParen(element) {
   let leftElement = element.previousElementSibling;
   let rightElement = element.nextElementSibling;
+  let symbolElements = [leftElement, rightElement];
   let kind = calcParenKind(element);
-  let stretchLevel = calcParenStretchLevel(element);
-  let shift = calcParenShift(element);
-  leftElement.textContent = DATA["paren"][kind][stretchLevel][0];
-  rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
-  leftElement.style.verticalAlign = "" + shift + "em";
-  rightElement.style.verticalAlign = "" + shift + "em";
+  let hasMiddle = !!DATA["paren"][kind]["mid"];
+  for (let i of [0, 1]) {
+    let symbolElement = symbolElements[i];
+    let parenElement = symbolElement.parentNode;
+    let stretchElement = document.createElement("math-stretch");
+    let upperElement = document.createElement("math-upper");
+    let lowerElement = document.createElement("math-lower");
+    let middleElement = document.createElement("math-mid");
+    let extensionElements = [];
+    let extensionContentElements = [];
+    for (let j = 0 ; j < 2 ; j ++) { 
+      let extensionElement = document.createElement("math-ext");
+      let extensionContentElement = document.createElement("math-extcont")
+      extensionElements.push(extensionElement);
+      extensionContentElements.push(extensionContentElement);
+      extensionElement.append(extensionContentElement);
+    }
+    if (hasMiddle) {
+      stretchElement.append(upperElement, extensionElements[0], middleElement, extensionElements[1], lowerElement);
+    } else {
+      stretchElement.append(upperElement, extensionElements[0], lowerElement);
+    }
+    parenElement.removeChild(symbolElement);
+    if (i == 0) {
+      parenElement.insertBefore(stretchElement, parenElement.firstChild);
+    } else {
+      parenElement.appendChild(stretchElement);
+    }
+    upperElement.textContent = DATA["paren"][kind]["upper"][i];
+    lowerElement.textContent = DATA["paren"][kind]["lower"][i];
+    if (hasMiddle) {
+      middleElement.textContent = DATA["paren"][kind]["mid"][i];
+    }
+    for (let j = 0 ; j < 2 ; j ++) {
+      let extensionElement = extensionElements[j];
+      let extensionContentElement = extensionContentElements[j];
+      let extensionHeight = 0;
+      if (hasMiddle) {
+        extensionHeight = (getHeight(element) - getHeight(upperElement) - getHeight(lowerElement) - getHeight(middleElement)) / 2;
+      } else {
+        extensionHeight = getHeight(element) - getHeight(upperElement) - getHeight(lowerElement);
+      }
+      extensionContentElement.textContent = DATA["paren"][kind]["ext"][i];
+      extensionElement.style.height = "" + extensionHeight + "em";
+    }
+    stretchElement.style.verticalAlign = "" + (-getLowerHeight(element) + 0.25) + "em";
+  }
 }
 
 function calcSubShift(baseElement, subElement) {
