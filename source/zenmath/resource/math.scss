@@ -165,7 +165,6 @@ math-sqrt {
 
 
 math-subsup {
-  margin: -0.15em 0em;
   
   >math-base {
     margin: 0em spacing(0);
@@ -185,6 +184,14 @@ math-subsup {
 
   &.int {
     margin: 0em spacing(0);
+  }
+
+  &.sup {
+    margin-top: -0.15em;
+  }
+
+  &.sub {
+    margin-bottom: -0.15em;
   }
 
 }

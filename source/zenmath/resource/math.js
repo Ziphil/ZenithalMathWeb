@@ -123,6 +123,16 @@ function modifySubsuper(element) {
   if (lowerWidth > upperWidth) {
     superElement.style.width = "" + lowerWidth + "em";
   }
+  if (subElement.children.length > 0) {
+    element.classList.add("sub");
+  } else {
+    element.removeChild(subElement);
+  }
+  if (superElement.children.length > 0) {
+    element.classList.add("sup");
+  } else {
+    element.removeChild(superElement);
+  }
 }
 
 function getFontSize(element) {
