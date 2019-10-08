@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("zenml", ">= 1.1.2")
   spec.add_runtime_dependency("sassc")
 
-  spec.files = Dir.glob("source/**/*.rb")
+  spec.files = Dir.glob("source/**/*")
   spec.require_paths = ["source"]
 end
