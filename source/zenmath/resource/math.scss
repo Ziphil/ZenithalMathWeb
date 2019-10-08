@@ -259,6 +259,8 @@ math-paren {
 
 math-root {
   line-height: 0;
+  display: inline-block;
+  box-sizing: border-box;
   white-space: nowrap;
 
   * {
