@@ -59,8 +59,7 @@ math-o {
   }
 
   &.sum {
-    padding: 0em spacing(0);
-    height: 1.4em;
+    padding: 0.1em spacing(0);
     line-height: 1.4em;
   }
 
@@ -85,11 +84,13 @@ math-o {
   math-sup &,
   math-under &,
   math-over & {
-    padding: 0em spacing(0) !important;
+    padding-left: spacing(0) !important;
+    padding-right: spacing(0) !important;
   }
 
   * >&:first-child {
-    padding: 0em spacing(0);
+    padding-left: spacing(0);
+    padding-right: spacing(0);
   }
 
 }
