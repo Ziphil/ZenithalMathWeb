@@ -80,6 +80,12 @@
         &m<\paren<&raw<\span|class="box",style="height:3.8em"|>>>>
         &m<\paren<&raw<\span|class="box",style="height:4em"|>>>>.
       >
+      \p<
+        Very large:
+        &m<\paren<\frac<1 + \frac<1 + \frac<1><2>><2 + \frac<1><2>>><2 + \frac<1 + \frac<1><\frac<1><2>>><2>>>>,
+        &m<\sbsp<\bracket<\frac<1 + \frac<3><2 + \frac<1><2>>><2 + \frac<1 + \frac<1><1 + \frac<1><2>>><2 + \frac<1><2>>>>><Sb><Sp>>,
+        &m<\sbsp<\brace<\frac<1 + \frac<1 + \frac<1 + \frac<1><2>><2>><2>><2 + \frac<1 + \frac<1><2>><2>>>><Sb><Sp>>.
+      >
       \h1<Superscripts and subscripts>
       \p<
         &m<\sp<A><B> \sb<C><D>>
