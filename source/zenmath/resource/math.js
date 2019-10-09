@@ -209,6 +209,21 @@ function modifySubsuper(element) {
   }
 }
 
+function modifyUnderover(element) {
+  let underElement = element.children[1].children[1];
+  let overElement = element.children[0];
+  if (underElement.children.length > 0) {
+    element.classList.add("under");
+  } else {
+    underElement.parentNode.removeChild(underElement);
+  }
+  if (overElement.children.length > 0) {
+    element.classList.add("over");
+  } else {
+    element.removeChild(overElement);
+  }
+}
+
 function getFontSize(element) {
   let fontSizeString = window.getComputedStyle(element).fontSize;
   let fontSize = parseFloat(fontSizeString);
@@ -277,6 +292,7 @@ function renderDebug(element) {
 
 function execute() {
   document.querySelectorAll("math-subsup").forEach(modifySubsuper);
+  document.querySelectorAll("math-underover").forEach(modifyUnderover);
   document.querySelectorAll(".md-sqrt").forEach(modifyRadical);
   document.querySelectorAll(".md-paren").forEach(modifyParen);
 }

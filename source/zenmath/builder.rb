@@ -104,6 +104,18 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_radical(symbol, stretch_level) do |content_this|
         content_this << children_list[0]
       end
+    when "matrix"
+      this << ZenmathBuilder.build_matrix do |table_this|
+        table_this << children_list[0]
+      end
+    when "row"
+      this << ZenmathBuilder.build_table_row do |this|
+        children_list.each do |children|
+          this << ZenmathBuilder.build_table_cell do |this|
+            this << children
+          end
+        end
+      end
     when "bb", "scr", "frak"
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
@@ -374,6 +386,37 @@ module ZenmathBuilder
       end
     end
     block&.call(base_element)
+    return this
+  end
+
+  def self.build_matrix(&block)
+    this = Nodes[]
+    table_element = nil
+    this << Element.build("math-table") do |this|
+      this["class"] = "mat"
+      table_element = this
+    end
+    block&.call(table_element)
+    return this
+  end
+
+  def self.build_table_row(&block)
+    this = Nodes[]
+    row_element = nil
+    this << Element.build("math-row") do |this|
+      row_element = this
+    end
+    block&.call(row_element)
+    return this
+  end
+
+  def self.build_table_cell(&block)
+    this = Nodes[]
+    cell_element = nil
+    this << Element.build("math-cell") do |this|
+      cell_element = this
+    end
+    block&.call(cell_element)
     return this
   end
 

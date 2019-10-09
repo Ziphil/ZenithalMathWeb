@@ -163,7 +163,7 @@ math-sqrt {
   }
 
   >math-sqrtcont {
-    padding: 0.15em spacing(1) 0em spacing(0);
+    padding: 0.1em spacing(1) 0em spacing(0);
     border-top: 1px solid;
   }
 
@@ -192,12 +192,12 @@ math-subsup {
     margin: 0em spacing(0);
   }
 
-  &.sup {
-    margin-top: -0.15em;
+  &.sub {
+    margin-bottom: -0.05em;
   }
 
-  &.sub {
-    margin-bottom: -0.15em;
+  &.sup {
+    margin-top: -0.05em;
   }
 
 }
@@ -239,6 +239,14 @@ math-underover {
     font-size: 100%;
   }
 
+  &.under {
+    margin-bottom: -0.05em;
+  }
+
+  &.over {
+    margin-top: -0.05em;
+  }
+
 }
 
 
@@ -265,6 +273,32 @@ math-vstretch {
 
   >math-bar >math-barcont {
     transform: scale(1, 100);
+  }
+
+}
+
+
+math-table {
+  vertical-align: middle;
+  display: inline-table;
+
+  >math-row {
+    display: table-row;
+  }
+
+  >math-row >math-cell {
+    padding-top: spacing(6);
+    padding-left: spacing(15);
+    text-align: center;
+    display: table-cell;
+  }
+
+  >math-row:first-of-type >math-cell {
+    padding-top: 0em;
+  }
+
+  >math-row >math-cell:first-of-type {
+    padding-left: 0em;
   }
 
 }
