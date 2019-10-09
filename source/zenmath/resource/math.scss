@@ -229,29 +229,29 @@ math-underover {
 }
 
 
-math-paren {
+math-vstretch {
 
-  >math-stretch >math-upper,
-  >math-stretch >math-ext >math-extcont,
-  >math-stretch >math-mid,
-  >math-stretch >math-lower {
+  >math-top,
+  >math-bar >math-barcont,
+  >math-mid,
+  >math-bot {
     height: 1.25em;
     line-height: 2em;
     font-family: "Math";
     display: block;
   }
 
-  >math-stretch >math-mid {
+  >math-mid {
     height: 1.9em;
     line-height: 3.4em;
   }
 
-  >math-stretch >math-ext {
+  >math-bar {
     overflow: hidden;
   }
 
-  >math-stretch >math-ext >math-extcont {
-    transform: scale(1, 500);
+  >math-bar >math-barcont {
+    transform: scale(1, 100);
   }
 
 }

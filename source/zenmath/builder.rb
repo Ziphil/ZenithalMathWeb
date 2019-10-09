@@ -252,9 +252,11 @@ module ZenmathBuilder
       else
         left_symbol, right_symbol = DATA["paren"][kind].fetch("0", ["", ""])
       end
-      this << Element.build("math-o") do |this|
-        this["class"] = "lp"
-        this << Text.new(left_symbol, true, nil, false)
+      this << Element.build("math-left") do |this|
+        this << Element.build("math-o") do |this|
+          this["class"] = "lp"
+          this << Text.new(left_symbol, true, nil, false)
+        end
       end
       this << Element.build("math-parencont") do |this|
         unless stretch_level
@@ -262,9 +264,11 @@ module ZenmathBuilder
         end
         content_element = this
       end
-      this << Element.build("math-o") do |this|
-        this["class"] = "rp"
-        this << Text.new(right_symbol, true, nil, false)
+      this << Element.build("math-right") do |this|
+        this << Element.build("math-o") do |this|
+          this["class"] = "rp"
+          this << Text.new(right_symbol, true, nil, false)
+        end
       end
     end
     block&.call(content_element)

@@ -83,10 +83,12 @@ function modifyParen(element) {
   if (stretchLevel != null) {
     let leftElement = element.previousElementSibling;
     let rightElement = element.nextElementSibling;
+    let leftSymbolElement = leftElement.children[0];
+    let rightSymbolElement = rightElement.children[0];
     let kind = calcParenKind(element);
     let shift = calcParenShift(element);
-    leftElement.textContent = DATA["paren"][kind][stretchLevel][0];
-    rightElement.textContent = DATA["paren"][kind][stretchLevel][1];
+    leftSymbolElement.textContent = DATA["paren"][kind][stretchLevel][0];
+    rightSymbolElement.textContent = DATA["paren"][kind][stretchLevel][1];
     leftElement.style.verticalAlign = "" + shift + "em";
     rightElement.style.verticalAlign = "" + shift + "em";
   } else {
@@ -97,52 +99,51 @@ function modifyParen(element) {
 function createParen(element) {
   let leftElement = element.previousElementSibling;
   let rightElement = element.nextElementSibling;
-  let symbolElements = [leftElement, rightElement];
+  let leftSymbolElement = leftElement.children[0];
+  let rightSymbolElement = rightElement.children[0];
+  let symbolParentElements = [leftElement, rightElement];
+  let symbolElements = [leftSymbolElement, rightSymbolElement];
   let kind = calcParenKind(element);
   let hasMiddle = !!DATA["paren"][kind]["mid"];
   for (let i of [0, 1]) {
+    let symbolParentElement = symbolParentElements[i];
     let symbolElement = symbolElements[i];
-    let parenElement = symbolElement.parentNode;
-    let stretchElement = document.createElement("math-stretch");
-    let upperElement = document.createElement("math-upper");
-    let lowerElement = document.createElement("math-lower");
+    let stretchElement = document.createElement("math-vstretch");
+    let topElement = document.createElement("math-top");
+    let bottomElement = document.createElement("math-bot");
     let middleElement = document.createElement("math-mid");
-    let extensionElements = [];
-    let extensionContentElements = [];
+    let barElements = [];
+    let barContentElements = [];
     for (let j = 0 ; j < 2 ; j ++) { 
-      let extensionElement = document.createElement("math-ext");
-      let extensionContentElement = document.createElement("math-extcont")
-      extensionElements.push(extensionElement);
-      extensionContentElements.push(extensionContentElement);
-      extensionElement.append(extensionContentElement);
+      let barElement = document.createElement("math-bar");
+      let barContentElement = document.createElement("math-barcont")
+      barElements.push(barElement);
+      barContentElements.push(barContentElement);
+      barElement.append(barContentElement);
     }
     if (hasMiddle) {
-      stretchElement.append(upperElement, extensionElements[0], middleElement, extensionElements[1], lowerElement);
+      stretchElement.append(topElement, barElements[0], middleElement, barElements[1], bottomElement);
     } else {
-      stretchElement.append(upperElement, extensionElements[0], lowerElement);
+      stretchElement.append(topElement, barElements[0], bottomElement);
     }
-    parenElement.removeChild(symbolElement);
-    if (i == 0) {
-      parenElement.insertBefore(stretchElement, parenElement.firstChild);
-    } else {
-      parenElement.appendChild(stretchElement);
-    }
-    upperElement.textContent = DATA["paren"][kind]["upper"][i];
-    lowerElement.textContent = DATA["paren"][kind]["lower"][i];
+    symbolParentElement.removeChild(symbolElement);
+    symbolParentElement.appendChild(stretchElement);
+    topElement.textContent = DATA["paren"][kind]["top"][i];
+    bottomElement.textContent = DATA["paren"][kind]["bot"][i];
     if (hasMiddle) {
       middleElement.textContent = DATA["paren"][kind]["mid"][i];
     }
     for (let j = 0 ; j < 2 ; j ++) {
-      let extensionElement = extensionElements[j];
-      let extensionContentElement = extensionContentElements[j];
+      let barElement = barElements[j];
+      let barContentElement = barContentElements[j];
       let extensionHeight = 0;
       if (hasMiddle) {
-        extensionHeight = (getHeight(element) - getHeight(upperElement) - getHeight(lowerElement) - getHeight(middleElement)) / 2;
+        extensionHeight = (getHeight(element) - getHeight(topElement) - getHeight(bottomElement) - getHeight(middleElement)) / 2;
       } else {
-        extensionHeight = getHeight(element) - getHeight(upperElement) - getHeight(lowerElement);
+        extensionHeight = getHeight(element) - getHeight(topElement) - getHeight(bottomElement);
       }
-      extensionContentElement.textContent = DATA["paren"][kind]["ext"][i];
-      extensionElement.style.height = "" + extensionHeight + "em";
+      barContentElement.textContent = DATA["paren"][kind]["bar"][i];
+      barElement.style.height = "" + extensionHeight + "em";
     }
     stretchElement.style.verticalAlign = "" + (-getLowerHeight(element) + 0.25) + "em";
   }
