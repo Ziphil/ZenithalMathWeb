@@ -112,11 +112,12 @@ function modifyEachParen(contentElement, parentElement, position) {
   } else {
     let hasEdge = true;
     let hasMiddle = !!DATA["paren"][kind]["mid"];
-    appendParen(contentElement, parentElement, kind, position, hasEdge, hasMiddle);
+    appendParen(contentElement, parentElement, position, hasEdge, hasMiddle);
   }
 }
 
-function appendParen(contentElement, parentElement, kind, position, hasEdge, hasMiddle) {
+function appendParen(contentElement, parentElement, position, hasEdge, hasMiddle) {
+  let kind = calcParenKind(contentElement);
   let stretchElement = document.createElement("math-vstretch");
   let topElement = null;
   let bottomElement = null;
