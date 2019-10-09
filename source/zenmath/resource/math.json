@@ -80,6 +80,28 @@
   "radical": {
     "0": "√", "1": "\uDB80\uDD1D", "2": "\uDB80\uDD1E", "3": "\uDB80\uDD1F"
   },
+  "accent": {
+    "bar": "ˉ",
+    "tilde": "˜",
+    "hat": "ˆ",
+    "check": "ˇ",
+    "acute": "ˊ",
+    "grave": "ˋ",
+    "breve": "˘",
+    "ring": "˚",
+    "dot": "˙"
+  },
+  "wide": {
+    "widetilde": {
+      "0": "\uDB80\uDCA1", "1": "\uDB80\uDCA2", "2": "\uDB80\uDCA3", "3": "\uDB80\uDCA4", "4": "\uDB80\uDCA5"
+    },
+    "widehat": {
+      "0": "\uDB80\uDC97", "1": "\uDB80\uDC98", "2": "\uDB80\uDC99", "3": "\uDB80\uDC9A", "4": "\uDB80\uDC9B"
+    },
+    "widecheck": {
+      "0": "\uDB80\uDC9C", "1": "\uDB80\uDC9D", "2": "\uDB80\uDC9E", "3": "\uDB80\uDC9F", "4": "\uDB80\uDCA0"
+    }
+  },
   "function": [
     "sin", "cos", "tan", "cot", "sec", "csc", "sinh", "cosh", "tanh",
     "log", "ln", "lg", "exp",
@@ -117,7 +139,7 @@
     "rthree": ["⋌", ["bin"]],
     "smashp": ["⨳", ["bin"]],
     "div": ["÷", ["bin"]],
-    "dot": ["·", ["bin"]],
+    "cdot": ["·", ["bin"]],
     "ast": ["∗", ["bin"]],
     "star": ["⋆", ["bin"]],
     "wr": ["≀", ["bin"]],
