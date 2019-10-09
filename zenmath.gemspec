@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   end_string
   spec.required_ruby_version = ">= 2.5"
   
-  spec.add_runtime_dependency("zenml", ">= 1.1.2")
+  spec.add_runtime_dependency("zenml", ">= 1.2.0")
   spec.add_runtime_dependency("sassc")
 
   spec.files = Dir.glob("source/**/*")
