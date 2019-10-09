@@ -2,7 +2,6 @@
 
 
 require 'zenml'
-require_relative 'zenmath/utility'
 
 
 module Zenithal

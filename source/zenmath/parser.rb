@@ -121,4 +121,10 @@ class ZenmathParser < ZenithalParser
     @macros.store(name, block)
   end
 
+  def register_simple_math_macro(name)
+    register_math_macro(name) do |attributes, children_list|
+      next [children_list.first]
+    end
+  end
+
 end
