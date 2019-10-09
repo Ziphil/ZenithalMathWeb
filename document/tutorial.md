@@ -37,35 +37,14 @@ source = File.read("index.zml")
 # パーサーの作成
 parser = ZenmathParser.new(source)
 # &m<(ZenMath コード)> の形で ZenMath 形式で数式を書けるようにする
-parser.register_math_macro("m") do |attributes, children_list|
-  next [children_list.first]
-end
+parser.register_simple_math_macro("m")
 # パース
 document = parser.parse
 
 # HTML へのコンバーターの作成
-converter = ZenithalConverter.new(document, :text)
-# HTML に変換するための設定
-singletons = ["br", "img", "hr", "meta", "input", "embed", "area", "base", "link"]
-converter.add([//], [""]) do |element|
-  close = !singletons.include?(element.name)
-  html = "<#{element.name}"
-  element.attributes.each_attribute do |attribute|
-    html << " #{attribute.name}='#{attribute.to_s}'"
-  end
-  html << ">"
-  if close
-    html << apply(element, "")
-    html << "</#{element.name}>"
-  end
-  next html
-end
-converter.add_default(nil) do |text|
-  next text.to_s
-end
+converter = ZenithalConverter.simple_html(document)
 # 変換
 output = converter.convert
-output = "<!DOCTYPE html>\n\n" + output
 
 # ファイルへ書き込み
 File.write("index.html", output)
@@ -87,6 +66,9 @@ HTML に変換したい ZenML ドキュメントを作り、作業フォルダ�
     \h1<Zotica Test>
     \p<
       &m<x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>>
+    >
+    \p<
+      &m<\frac<`p><2> = \sum<k = 0><\infty>> \frac<(2 k)!><\sp<2><2 k> \sp<(k!)><2>> \frac<1><2 k + 1> = \prod<k = 1><\infty>> \frac<4 \sp<k><2>><4 \sp<k><2> - 1>>
     >
   >
 >
