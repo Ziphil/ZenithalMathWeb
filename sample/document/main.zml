@@ -57,7 +57,7 @@
       >
       \h1<Parentheses>
       \p<
-        &m<(A)>, &m<\paren<\frac<1><2>>>
+        &m<(A)>, &m<\vert<B>>, &m<\brace<\frac<1><2>>>, &m<\angle<\frac<1><2>>>, &m<\tort<\frac<1><2>>>, &m<\ceil<\sp<2><\sp<3><4>>>>, &m<\pparen<\sp<2><\sp<3><4>>>>, &m<\vvert<\frac<1 + \frac<1><2>><2>>>,
         or more
         &m<\sp<\bracket<1 + \frac<1 + \frac<\sp<`a><2>><2>><4>>><n + \frac<1><2>>>.
       >
@@ -136,14 +136,33 @@
       >
       \h1<Accents>
       \p<
-        &m<\dot<A>, \hat<B>, \tilde<c>, \ring<d>, \dotbelow<E>, \hatbelow<F>, \tildebelow<g>, \ringbelow<h>>.
+        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\dotbelow<E>>, &m<\hatbelow<F>>, &m<\tildebelow<g>>, &m<\ringbelow<h>>.
       >
       \p<
         Wide: not implemented.
       >
       \h1<Matrices>
       \p<
-        To be implemented.
+        &m<\paren<\matrix<\row<1><2>\row<3><4>>>>,
+        &m<
+          \vert<\matrix<
+            \row<\sb<a><11>><\sb<a><12>><\sb<a><13>><\sb<a><14>><\sb<a><15>>
+            \row<\sb<a><21>><\sb<a><22>><\sb<a><23>><\sb<a><24>><\sb<a><25>>
+            \row<\sb<a><31>><\sb<a><32>><\sb<a><33>><\sb<a><34>><\sb<a><35>>
+            \row<\sb<a><41>><\sb<a><42>><\sb<a><43>><\sb<a><44>><\sb<a><45>>
+          >>
+        >
+        or
+        &m<
+          \sb<V><n> \coloneqq> \det>
+          \paren<\matrix<
+            \row<1><\sb<X><1>><\sp<\sb<X><1>><2>><\cdots>><\sp<\sb<X><1>><n - 1>>
+            \row<1><\sb<X><2>><\sp<\sb<X><2>><2>><\cdots>><\sp<\sb<X><2>><n - 1>>
+            \row<\vdots>><\vdots>><\vdots>><\ddots>><\vdots>>
+            \row<1><\sb<X><n>><\sp<\sb<X><n>><2>><\cdots>><\sp<\sb<X><n>><n - 1>>
+          >>
+          = \prod<1 \leq> i `< j \leq> n><> (\sb<X><j> - \sb<X><i>)
+        >.
       >
       \h1<Tables>
       \p<
