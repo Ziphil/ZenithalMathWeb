@@ -105,11 +105,10 @@ math-o {
 
 math-frac {
   padding: 0em spacing(2) !important;
-  vertical-align: 0.1em;
-  display: inline-block;
+  vertical-align: 0.15em;
 
   >math-num {
-    margin: 0em 0em;
+    margin: 0em 0em -0.1em 0em;
     text-align: center;
     display: block;
   }
@@ -120,20 +119,19 @@ math-frac {
     display: inline-table;
   }
 
-  >math-denwrap::before {
-    margin: -0.2em 0em 0em 0em;
-    margin-left: spacing(-2);
-    margin-right: spacing(-2);
+  >math-denwrap >math-line {
+    margin: 0em spacing(-2);
+    padding: 0em spacing(2) !important;
+    width: 100%;
     height: 1px;
     border-top: 1px solid;
-    display: block;
-    content: "";
+    box-sizing: content-box;
   }
 
   >math-denwrap >math-den {
     margin: 0em 0em;
     text-align: center;
-    display: table-row;
+    display: block;
   }
 
 }

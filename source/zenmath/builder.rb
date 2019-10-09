@@ -216,6 +216,7 @@ module ZenmathBuilder
         numerator_element = this
       end
       this << Element.build("math-denwrap") do |this|
+        this << Element.new("math-line")
         this << Element.build("math-den") do |this|
           denominator_element = this
         end
