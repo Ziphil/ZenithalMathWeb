@@ -236,6 +236,9 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-sqrt") do |this|
+      unless stretch_level
+        this["class"] = "md-sqrt"
+      end
       this << Element.build("math-surd") do |this|
         if stretch_level
           this["class"] = "s#{stretch_level}" 
@@ -245,9 +248,6 @@ module ZenmathBuilder
         end
       end
       this << Element.build("math-sqrtcont") do |this|
-        unless stretch_level
-          this["class"] = "md-sqrt"
-        end
         content_element = this
       end
     end
@@ -265,6 +265,9 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
+      unless stretch_level
+        this["class"] = "md-paren md-paren-#{kind}"
+      end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "lp"
@@ -272,9 +275,6 @@ module ZenmathBuilder
         end
       end
       this << Element.build("math-parencont") do |this|
-        unless stretch_level
-          this["class"] = "md-paren md-paren-#{kind}"
-        end
         content_element = this
       end
       this << Element.build("math-right") do |this|

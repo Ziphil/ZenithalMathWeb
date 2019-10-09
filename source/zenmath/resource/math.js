@@ -17,8 +17,9 @@ function calcRadicalStretchLevel(element) {
 }
 
 function modifyRadical(element) {
-  let surdElement = element.previousElementSibling;
+  let surdElement = element.children[0];
   let surdSymbolElement = surdElement.children[0];
+  let contentElement = element.children[1];
   let stretchLevel = calcRadicalStretchLevel(element);
   surdElement.classList.add("s" + stretchLevel);
   surdSymbolElement.textContent = DATA["radical"][stretchLevel];
@@ -93,9 +94,10 @@ function calcBarHeight(element, topElement, bottomElement, middleElement) {
 }
 
 function modifyParen(element) {
-  let parentElements = [element.previousElementSibling, element.nextElementSibling];
+  let contentElement = element.children[1];
+  let parentElements = [element.children[0], element.children[2]];
   for (let position of [0, 1]) {
-    modifyEachParen(element, parentElements[position], position);
+    modifyEachParen(contentElement, parentElements[position], position);
   }
 }
 
