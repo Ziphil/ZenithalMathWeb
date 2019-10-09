@@ -78,75 +78,73 @@ function calcParenShift(element) {
   return shift;
 }
 
-function modifyParen(element) {
-  let stretchLevel = calcParenStretchLevel(element);
-  if (stretchLevel != null) {
-    let leftElement = element.previousElementSibling;
-    let rightElement = element.nextElementSibling;
-    let leftSymbolElement = leftElement.children[0];
-    let rightSymbolElement = rightElement.children[0];
-    let kind = calcParenKind(element);
-    let shift = calcParenShift(element);
-    leftSymbolElement.textContent = DATA["paren"][kind][stretchLevel][0];
-    rightSymbolElement.textContent = DATA["paren"][kind][stretchLevel][1];
-    leftElement.style.verticalAlign = "" + shift + "em";
-    rightElement.style.verticalAlign = "" + shift + "em";
+function calcBarHeight(element, topElement, bottomElement, middleElement) {
+  let height = 0;
+  if (topElement && bottomElement) {
+    if (middleElement) {
+      height = (getHeight(element) - getHeight(topElement) - getHeight(bottomElement) - getHeight(middleElement)) / 2;
+    } else {
+      height = getHeight(element) - getHeight(topElement) - getHeight(bottomElement);
+    }
   } else {
-    createParen(element);
+    height = getHeight(element);
+  }
+  return height;
+}
+
+function modifyParen(element) {
+  let parentElements = [element.previousElementSibling, element.nextElementSibling];
+  for (let position of [0, 1]) {
+    modifyEachParen(element, parentElements[position], position);
   }
 }
 
-function createParen(element) {
-  let leftElement = element.previousElementSibling;
-  let rightElement = element.nextElementSibling;
-  let leftSymbolElement = leftElement.children[0];
-  let rightSymbolElement = rightElement.children[0];
-  let symbolParentElements = [leftElement, rightElement];
-  let symbolElements = [leftSymbolElement, rightSymbolElement];
-  let kind = calcParenKind(element);
-  let hasMiddle = !!DATA["paren"][kind]["mid"];
-  for (let i of [0, 1]) {
-    let symbolParentElement = symbolParentElements[i];
-    let symbolElement = symbolElements[i];
-    let stretchElement = document.createElement("math-vstretch");
-    let topElement = document.createElement("math-top");
-    let bottomElement = document.createElement("math-bot");
-    let middleElement = document.createElement("math-mid");
-    let barElements = [];
-    let barContentElements = [];
-    for (let j = 0 ; j < 2 ; j ++) { 
-      let barElement = document.createElement("math-bar");
-      let barContentElement = document.createElement("math-barcont")
-      barElements.push(barElement);
-      barContentElements.push(barContentElement);
-      barElement.append(barContentElement);
-    }
-    if (hasMiddle) {
-      stretchElement.append(topElement, barElements[0], middleElement, barElements[1], bottomElement);
-    } else {
-      stretchElement.append(topElement, barElements[0], bottomElement);
-    }
-    symbolParentElement.removeChild(symbolElement);
-    symbolParentElement.appendChild(stretchElement);
-    topElement.textContent = DATA["paren"][kind]["top"][i];
-    bottomElement.textContent = DATA["paren"][kind]["bot"][i];
-    if (hasMiddle) {
-      middleElement.textContent = DATA["paren"][kind]["mid"][i];
-    }
-    for (let j = 0 ; j < 2 ; j ++) {
-      let barElement = barElements[j];
-      let barContentElement = barContentElements[j];
-      let extensionHeight = 0;
-      if (hasMiddle) {
-        extensionHeight = (getHeight(element) - getHeight(topElement) - getHeight(bottomElement) - getHeight(middleElement)) / 2;
-      } else {
-        extensionHeight = getHeight(element) - getHeight(topElement) - getHeight(bottomElement);
-      }
-      barContentElement.textContent = DATA["paren"][kind]["bar"][i];
-      barElement.style.height = "" + extensionHeight + "em";
-    }
-    stretchElement.style.verticalAlign = "" + (-getLowerHeight(element) + 0.25) + "em";
+function modifyEachParen(contentElement, parentElement, position) {
+  let kind = calcParenKind(contentElement);
+  let stretchLevel = calcParenStretchLevel(contentElement);
+  if (stretchLevel != null) {
+    let symbolElement = parentElement.children[0];
+    let shift = calcParenShift(contentElement);
+    symbolElement.textContent = DATA["paren"][kind][stretchLevel][position];
+    parentElement.style.verticalAlign = "" + shift + "em";
+  } else {
+    let hasEdge = true;
+    let hasMiddle = !!DATA["paren"][kind]["mid"];
+    appendParen(contentElement, parentElement, kind, position, hasEdge, hasMiddle);
   }
+}
+
+function appendParen(contentElement, parentElement, kind, position, hasEdge, hasMiddle) {
+  let stretchElement = document.createElement("math-vstretch");
+  let topElement = null;
+  let bottomElement = null;
+  let middleElement = null;
+  if (hasEdge) {
+    topElement = document.createElement("math-top");
+    bottomElement = document.createElement("math-bot");
+    topElement.textContent = DATA["paren"][kind]["top"][position];
+    bottomElement.textContent = DATA["paren"][kind]["bot"][position];
+    stretchElement.append(topElement, bottomElement);
+    if (hasMiddle) {
+      middleElement = document.createElement("math-mid");
+      middleElement.textContent = DATA["paren"][kind]["mid"][position];
+      stretchElement.insertBefore(middleElement, stretchElement.children[1]);
+    }
+  }
+  parentElement.removeChild(parentElement.children[0]);
+  parentElement.appendChild(stretchElement);
+  let barSize = (hasMiddle) ? 2 : 1;
+  let barHeight = calcBarHeight(contentElement, topElement, bottomElement, middleElement);
+  let stretchShift = -getLowerHeight(contentElement) + 0.25;
+  for (let i = 0 ; i < barSize ; i ++) { 
+    let barElement = document.createElement("math-bar");
+    let barContentElement = document.createElement("math-barcont");
+    barContentElement.textContent = DATA["paren"][kind]["bar"][position];
+    barElement.style.height = "" + barHeight + "em";
+    barElement.append(barContentElement);
+    stretchElement.insertBefore(barElement, stretchElement.children[2 * i + 1]);
+  }
+  stretchElement.style.verticalAlign = "" + stretchShift + "em";
 }
 
 function calcSubShift(baseElement, subElement) {
