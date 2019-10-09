@@ -25,13 +25,13 @@
       >
       \h1<Fractions>
       \p<
-        &m<\frac<A><B>>
+        &m<\frac<A><B>, \frac<c><e>>
         or more complicated
         &m<\bb<4> \pitchfork> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smashp> \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
-        &m<\sqrt<A>>
+        &m<\sqrt<A>, \sqrt<c>>
         or
         &m<\sqrt<\frac<1><i \wedgewedge> j> + \frac<1><j \veevee> i>>>
         or
@@ -136,7 +136,10 @@
       >
       \h1<Accents>
       \p<
-        To be implemented (maybe arduous work though…).
+        &m<\dot<A>, \hat<B>, \tilde<c>, \ring<d>, \dotbelow<E>, \hatbelow<F>, \tildebelow<g>, \ringbelow<h>>.
+      >
+      \p<
+        Wide: not implemented.
       >
       \h1<Matrices>
       \p<
