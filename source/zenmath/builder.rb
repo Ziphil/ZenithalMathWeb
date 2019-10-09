@@ -15,93 +15,95 @@ module ZenmathBuilder
   private
 
   def create_math_element(name, attributes, children_list)
-    nodes = Nodes[]
+    this = Nodes[]
     case name
     when DATA["paren"].method(:key?)
       stretch_level = attributes["s"]
-      nodes = ZenmathBuilder.build_paren(name, stretch_level) do |content_element|
-        content_element << children_list[0]
+      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, stretch_level)
+      this << ZenmathBuilder.build_paren(name, left_symbol, right_symbol, stretch_level) do |content_this|
+        content_this << children_list[0]
       end
     when DATA["integral"].method(:key?)
-      symbol = DATA["integral"].fetch(name, ["", ""]).last
-      nodes = ZenmathBuilder.build_integral(symbol) do |sub_element, super_element|
-        sub_element << children_list[0]
-        super_element << children_list[1]
+      symbol = ZenmathBuilder.fetch_integral_symbol(name)
+      this << ZenmathBuilder.build_integral(symbol) do |sub_this, super_this|
+        sub_this << children_list[0]
+        super_this << children_list[1]
       end
     when DATA["sum"].method(:key?)
-      symbol = DATA["sum"].fetch(name, ["", ""]).last
-      nodes = ZenmathBuilder.build_sum(symbol) do |under_element, over_element|
-        under_element << children_list[0]
-        over_element << children_list[1]
+      symbol = ZenmathBuilder.fetch_sum_symbol(name)
+      this << ZenmathBuilder.build_sum(symbol) do |under_this, over_this|
+        under_this << children_list[0]
+        over_this << children_list[1]
       end
     when DATA["function"].method(:include?)
-      nodes = ZenmathBuilder.build_identifier(name, true)
+      this << ZenmathBuilder.build_identifier(name, true)
     when DATA["identifier"].method(:key?)
       symbol = DATA["identifier"].fetch(name, "")
-      nodes = ZenmathBuilder.build_identifier(symbol, false)
+      this << ZenmathBuilder.build_identifier(symbol, false)
     when DATA["operator"].method(:key?)
       symbol, kinds = DATA["operator"].fetch(name, [name, ["bin"]])
-      nodes = ZenmathBuilder.build_operator(symbol, kinds)
+      this << ZenmathBuilder.build_operator(symbol, kinds)
     when "n"
       number = children_list[0].first.to_s
-      nodes = ZenmathBuilder.build_number(number)
+      this << ZenmathBuilder.build_number(number)
     when "i"
       name = children_list[0].first.to_s
-      nodes = ZenmathBuilder.build_identifier(name, false)
+      this << ZenmathBuilder.build_identifier(name, false)
     when "op"
       name = children_list[0].first.to_s
-      nodes = ZenmathBuilder.build_identifier(name, true)
+      this << ZenmathBuilder.build_identifier(name, true)
     when "o"
       name = children_list[0].first.to_s
-      nodes = ZenmathBuilder.build_operator(name, ["bin"])
+      this << ZenmathBuilder.build_operator(name, ["bin"])
     when "sb"
-      nodes = ZenmathBuilder.build_subsuper do |base_element, sub_element, super_element|
-        base_element << children_list[0]
-        sub_element << children_list[1]
+      this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+        base_this << children_list[0]
+        sub_this << children_list[1]
       end
     when "sp"
-      nodes = ZenmathBuilder.build_subsuper do |base_element, sub_element, super_element|
-        base_element << children_list[0]
-        super_element << children_list[1]
+      this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+        base_this << children_list[0]
+        super_this << children_list[1]
       end
     when "sbsp"
-      nodes = ZenmathBuilder.build_subsuper do |base_element, sub_element, super_element|
-        base_element << children_list[0]
-        sub_element << children_list[1]
-        super_element << children_list[2]
+      this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+        base_this << children_list[0]
+        sub_this << children_list[1]
+        super_this << children_list[2]
       end
     when "un"
-      nodes = ZenmathBuilder.build_underover do |base_element, under_element, over_element|
-        base_element << children_list[0]
-        under_element << children_list[1]
+      this << ZenmathBuilder.build_underover do |base_this, under_this, over_this|
+        base_this << children_list[0]
+        under_this << children_list[1]
       end
     when "ov"
-      nodes = ZenmathBuilder.build_underover do |base_element, under_element, over_element|
-        base_element << children_list[0]
-        over_element << children_list[1]
+      this << ZenmathBuilder.build_underover do |base_this, under_this, over_this|
+        base_this << children_list[0]
+        over_this << children_list[1]
       end
     when "unov"
-      nodes = ZenmathBuilder.build_underover do |base_element, under_element, over_element|
-        base_element << children_list[0]
-        under_element << children_list[1]
-        over_element << children_list[2]
+      this << ZenmathBuilder.build_underover do |base_this, under_this, over_this|
+        base_this << children_list[0]
+        under_this << children_list[1]
+        over_this << children_list[2]
       end
     when "frac"
-      nodes = ZenmathBuilder.build_fraction do |numerator_element, denominator_element|
-        numerator_element << children_list[0]
-        denominator_element << children_list[1]
+      this << ZenmathBuilder.build_fraction do |numerator_this, denominator_this|
+        numerator_this << children_list[0]
+        denominator_this << children_list[1]
       end
     when "sqrt"
       stretch_level = attributes["s"]
-      nodes = ZenmathBuilder.build_radical(stretch_level) do |content_element|
-        content_element << children_list[0]
+      symbol = ZenmathBuilder.fetch_radical_symbol(stretch_level)
+      this << ZenmathBuilder.build_radical(symbol, stretch_level) do |content_this|
+        content_this << children_list[0]
       end
     when "bb", "scr", "frak"
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
-      nodes = ZenmathBuilder.build_identifier(symbol, false, true)
+      this << ZenmathBuilder.build_identifier(symbol, false, true)
     end
-    return nodes
+    return this
   end
 
   def create_math_text(text)
@@ -217,16 +219,19 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_radical(stretch_level, &block)
+  def self.fetch_radical_symbol(stretch_level)
+    stretch_level ||= "0"
+    symbol = DATA["radical"]&.fetch(stretch_level) || ""
+    return symbol
+  end
+
+  def self.build_radical(symbol, stretch_level, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-sqrt") do |this|
       this << Element.build("math-surd") do |this|
         if stretch_level
           this["class"] = "s#{stretch_level}" 
-          symbol = DATA["radical"].fetch(stretch_level, "")
-        else
-          symbol = DATA["radical"]["0"]
         end
         this << Element.build("math-o") do |this|
           this << Text.new(symbol, true, nil, false)
@@ -243,15 +248,16 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_paren(kind, stretch_level, &block)
+  def self.fetch_paren_symbols(kind, stretch_level)
+    stretch_level ||= "0"
+    left_symbol, right_symbol = DATA["paren"]&.fetch(kind)&.fetch("0") || ["", ""]
+    return left_symbol, right_symbol
+  end
+
+  def self.build_paren(kind, left_symbol, right_symbol, stretch_level, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
-      if stretch_level
-        left_symbol, right_symbol = DATA["paren"][kind].fetch(stretch_level, ["", ""])
-      else
-        left_symbol, right_symbol = DATA["paren"][kind].fetch("0", ["", ""])
-      end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "lp"
@@ -275,6 +281,12 @@ module ZenmathBuilder
     return this
   end
 
+  def self.fetch_integral_symbol(name, size = :large)
+    size_index = (size == :large) ? 1 : 0
+    symbol = DATA["integral"]&.fetch(name)&.fetch(size_index) || ""
+    return symbol
+  end
+
   def self.build_integral(symbol, &block)
     this = Nodes[]
     sub_element, super_element = nil
@@ -295,6 +307,12 @@ module ZenmathBuilder
     end
     block&.call(sub_element, super_element)
     return this
+  end
+
+  def self.fetch_sum_symbol(name, size = :large)
+    size_index = (size == :large) ? 1 : 0
+    symbol = DATA["sum"]&.fetch(name)&.fetch(size_index) || ""
+    return symbol
   end
 
   def self.build_sum(symbol, &block)
