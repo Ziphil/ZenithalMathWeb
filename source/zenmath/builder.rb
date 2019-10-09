@@ -35,6 +35,12 @@ module ZenmathBuilder
         under_this << children_list[0]
         over_this << children_list[1]
       end
+    when DATA["accent"].method(:key?)
+      symbol, position = DATA["accent"].fetch(name, ["", "over"])
+      position = position.intern
+      this << ZenmathBuilder.build_accent(symbol, position) do |base_this|
+        base_this << children_list[0]
+      end
     when DATA["function"].method(:include?)
       this << ZenmathBuilder.build_identifier(name, true)
     when DATA["identifier"].method(:key?)
@@ -336,6 +342,37 @@ module ZenmathBuilder
       end
     end
     block&.call(under_element, over_element)
+    return this
+  end
+
+  def self.build_accent(symbol, position = :over, &block)
+    this = Nodes[]
+    base_element = nil
+    this << Element.build("math-underover") do |this|
+      this["class"] = "acc"
+      this << Element.build("math-over") do |this|
+        if position == :over
+          this << Element.build("math-o") do |this|
+            this["class"] = "acc"
+            this << Text.new(symbol, true, nil, false)
+          end
+        end
+      end
+      this << Element.build("math-basewrap") do |this|
+        this << Element.build("math-base") do |this|
+          base_element = this
+        end
+        this << Element.build("math-under") do |this|
+          if position == :under
+            this << Element.build("math-o") do |this|
+              this["class"] = "acc"
+              this << Text.new(symbol, true, nil, false)
+            end
+          end
+        end
+      end
+    end
+    block&.call(base_element)
     return this
   end
 

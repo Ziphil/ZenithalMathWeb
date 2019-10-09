@@ -52,6 +52,13 @@ math-o {
     padding: 0em spacing(0);
   }
 
+  &.acc {
+    padding: 0em spacing(0);
+    height: 0.2em;
+    line-height: 0.9;
+    vertical-align: -0.3em;
+  }
+
   &.int {
     padding: 0em spacing(0);
     height: 2.3em;
@@ -207,6 +214,10 @@ math-underover {
     display: block;
   }
 
+  &.acc >math-over {
+    font-size: 100%;
+  }
+
   >math-basewrap {
     margin: 0em 0em;
     width: 100%;
@@ -223,7 +234,11 @@ math-underover {
     margin: 0em 0em;
     font-size: 80%;
     text-align: center;
-    display: table-row;
+    display: block;
+  }
+
+  &.acc >math-basewrap >math-under {
+    font-size: 100%;
   }
 
 }

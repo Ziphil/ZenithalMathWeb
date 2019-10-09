@@ -81,15 +81,24 @@
     "0": "√", "1": "\uDB80\uDD1D", "2": "\uDB80\uDD1E", "3": "\uDB80\uDD1F"
   },
   "accent": {
-    "bar": "ˉ",
-    "tilde": "˜",
-    "hat": "ˆ",
-    "check": "ˇ",
-    "acute": "ˊ",
-    "grave": "ˋ",
-    "breve": "˘",
-    "ring": "˚",
-    "dot": "˙"
+    "bar": ["ˉ", "over"],
+    "tilde": ["˜", "over"],
+    "hat": ["ˆ", "over"],
+    "check": ["ˇ", "over"],
+    "acute": ["ˊ", "over"],
+    "grave": ["ˋ", "over"],
+    "breve": ["˘", "over"],
+    "ring": ["˚", "over"],
+    "dot": ["˙", "over"],
+    "barbelow": ["ˉ", "under"],
+    "tildebelow": ["˜", "under"],
+    "hatbelow": ["ˆ", "under"],
+    "checkbelow": ["ˇ", "under"],
+    "acutebelow": ["ˊ", "under"],
+    "gravebelow": ["ˋ", "under"],
+    "brevebelow": ["˘", "under"],
+    "ringbelow": ["˚", "under"],
+    "dotbelow": ["˙", "under"]
   },
   "wide": {
     "widetilde": {
