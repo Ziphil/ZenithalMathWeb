@@ -18,10 +18,10 @@
       \h1<Notice>
       \p<
         The spacing is optimised for Times New Roman font.
-        If you would like to render formulae using a different font, you should modify margin or padding values in the stylesheet.
+        If you would like to render formulae using a different font, you may need to modify margin or padding values in the stylesheet.
       >
       \p<
-        Rendering is tested only on the latest desktop version of Google Chrome, so the layout may be off when viewed with a different browser.
+        Rendering is tested only on the latest desktop version of Google Chrome, so the layout may be broken when viewed with a different browser.
       >
       \h1<Fractions>
       \p<
@@ -140,6 +140,11 @@
       >
       \p<
         Wide: not implemented.
+      >
+      \p<
+        Accents should be placed according to the height and the inclination of the letters to which they are attached, but it is hard to achieve on browsers.
+        MathJax, my marvellous precursor, seems to achieve this by keeping all the information (such as height or italic inclination) of glyphs in advance.
+        This solution, however, severely restricts available fonts in Zotica, which ruins one of its selling points that it can be used with any font.
       >
       \h1<Matrices>
       \p<
