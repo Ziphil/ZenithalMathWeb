@@ -95,7 +95,7 @@ math-o {
     padding-right: spacing(0) !important;
   }
 
-  * >&:first-child {
+  *:not(.raw) >&:first-child {
     padding-left: spacing(0);
     padding-right: spacing(0);
   }
@@ -279,10 +279,21 @@ math-vstretch {
 
 
 math-table {
-  gap: spacing(6) spacing(15);
   vertical-align: middle;
   display: inline-grid !important;
   align-items: baseline;
+
+  &.matrix {
+    gap: spacing(6) spacing(15);
+  }
+
+  &.array {
+    gap: spacing(6) spacing(0);
+  }
+
+  &.case {
+    gap: spacing(6) spacing(24);
+  }
 
   >math-cell {
     text-align: center;
@@ -308,11 +319,11 @@ math-root {
     box-sizing: border-box;
   }
 
-  * >*:first-child {
+  *:not(.raw) >*:first-child {
     padding-left: spacing(0);
   }
 
-  * >*:last-child {
+  *:not(.raw) >*:last-child {
     padding-right: spacing(0);
   }
 

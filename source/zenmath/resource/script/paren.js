@@ -1,14 +1,18 @@
 //
 
 
-function calcParenKind(element) {
-  let kind = "paren";
+function calcParenKinds(element) {
+  let left_kind = "paren";
+  let right_kind = "paren";
   for (let clazz of element.classList) {
-    if (!clazz.match(/^md(\w*)$/)) {
-      kind = clazz;
+    let match;
+    if (match = clazz.match(/^left-(\w*)$/)) {
+      left_kind = match[1];
+    } else if (match = clazz.match(/^right-(\w*)$/)) {
+      right_kind = match[1];
     }
   }
-  return kind;
+  return [left_kind, right_kind];
 }
 
 function calcParenStretchLevel(element, kind) {
@@ -76,14 +80,17 @@ function calcParenStretchShift(element) {
 function modifyParen(element) {
   let contentElement = element.children[1];
   let parentElements = [element.children[0], element.children[2]];
-  let kind = calcParenKind(element);
-  let stretchLevel = calcParenStretchLevel(contentElement, kind);
+  let kinds = calcParenKinds(element);
   for (let position of [0, 1]) {
     let parentElement = parentElements[position];
-    if (stretchLevel != null) {
-      modifyParenStretch(contentElement, parentElement, kind, stretchLevel, position);
-    } else {
-      appendParenStretch(contentElement, parentElement, kind, position);
+    let kind = kinds[position];
+    if (kind != "none") {
+      let stretchLevel = calcParenStretchLevel(contentElement, kind);
+      if (stretchLevel != null) {
+        modifyParenStretch(contentElement, parentElement, kind, stretchLevel, position);
+      } else {
+        appendParenStretch(contentElement, parentElement, kind, position);
+      }
     }
   }
 }

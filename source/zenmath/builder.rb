@@ -18,8 +18,8 @@ module ZenmathBuilder
     case name
     when DATA["paren"].method(:key?)
       stretch_level = attributes["s"]
-      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, stretch_level)
-      this << ZenmathBuilder.build_paren(name, left_symbol, right_symbol, stretch_level) do |content_this|
+      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
+      this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, stretch_level) do |content_this|
         content_this << children_list[0]
       end
     when DATA["integral"].method(:key?)
@@ -35,7 +35,7 @@ module ZenmathBuilder
         over_this << children_list[1]
       end
     when DATA["accent"].method(:key?)
-      symbol, position = DATA["accent"].fetch(name, ["", "over"])
+      symbol, position = DATA.dig("accent", name) || ["", "over"]
       position = position.intern
       this << ZenmathBuilder.build_accent(symbol, position) do |base_this|
         base_this << children_list[0]
@@ -46,7 +46,7 @@ module ZenmathBuilder
       symbol = DATA["identifier"].fetch(name, "")
       this << ZenmathBuilder.build_identifier(symbol, false)
     when DATA["operator"].method(:key?)
-      symbol, kinds = DATA["operator"].fetch(name, [name, ["bin"]])
+      symbol, kinds = DATA.dig("operator", name) || [name, ["bin"]]
       this << ZenmathBuilder.build_operator(symbol, kinds)
     when "n"
       number = children_list[0].first.to_s
@@ -104,18 +104,40 @@ module ZenmathBuilder
         content_this << children_list[0]
       end
     when "matrix"
-      this << ZenmathBuilder.build_matrix(true) do |table_this|
+      this << ZenmathBuilder.build_array(nil, false) do |table_this|
+        table_this["class"] = "matrix"
         table_this << children_list[0]
+      end
+    when "array"
+      align_config = attributes["align"]
+      this << ZenmathBuilder.build_array(align_config, true) do |table_this|
+        table_this["class"] = "array"
+        table_this << children_list[0]
+      end
+    when "case"
+      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols("brace", "none", nil)
+      this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, nil) do |this|
+        this << ZenmathBuilder.build_array("ll", false) do |table_this|
+          table_this["class"] = "case"
+          table_this << children_list[0]
+        end
       end
     when "c"
       this << ZenmathBuilder.build_table_cell do |cell_this|
         cell_this << children_list[0]
       end
+    when "cc"
+      children_list.each do |children|
+        this << ZenmathBuilder.build_table_cell do |cell_this|
+          cell_this << children
+        end
+      end
+      this << Element.new("math-sys-br")
     when "br"
       this << Element.new("math-sys-br")
     when "bb", "cal", "scr", "frak"
       alphabets = children_list[0].first.value
-      symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
+      symbol = alphabets.chars.map{|s| DATA.dig("alternative", name, s) || ""}.join
       this << ZenmathBuilder.build_identifier(symbol, false, true)
     when "text"
       text = children_list[0].first.value
@@ -133,8 +155,8 @@ module ZenmathBuilder
         this << ZenmathBuilder.build_identifier(char, false)
       elsif char !~ /\s/
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
-        name = DATA["replacement"].fetch(name, name)
-        symbol, kinds = DATA["operator"].fetch(name, [name, ["bin"]])
+        name = DATA["replacement"][name] || name
+        symbol, kinds = DATA["operator"][name] || [name, ["bin"]]
         this << ZenmathBuilder.build_operator(symbol, kinds)
       end
     end
@@ -238,7 +260,7 @@ module ZenmathBuilder
 
   def self.fetch_radical_symbol(stretch_level)
     stretch_level ||= "0"
-    symbol = DATA["radical"]&.fetch(stretch_level) || ""
+    symbol = DATA.dig("radical", stretch_level) || ""
     return symbol
   end
 
@@ -261,17 +283,18 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_paren_symbols(kind, stretch_level)
+  def self.fetch_paren_symbols(left_kind, right_kind, stretch_level)
     stretch_level ||= "0"
-    left_symbol, right_symbol = DATA["paren"]&.fetch(kind)&.fetch("0") || ["", ""]
+    left_symbol = DATA.dig("paren", left_kind, "0", 0) || ""
+    right_symbol = DATA.dig("paren", right_kind, "0", 1) || ""
     return left_symbol, right_symbol
   end
 
-  def self.build_paren(kind, left_symbol, right_symbol, stretch_level, &block)
+  def self.build_paren(left_kind, right_kind, left_symbol, right_symbol, stretch_level, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
-      this["class"] = "mod #{kind}" unless stretch_level
+      this["class"] = "mod left-#{left_kind} right-#{right_kind}" unless stretch_level
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "lp"
@@ -294,7 +317,7 @@ module ZenmathBuilder
 
   def self.fetch_integral_symbol(name, size = :large)
     size_index = (size == :large) ? 1 : 0
-    symbol = DATA["integral"]&.fetch(name)&.fetch(size_index) || ""
+    symbol = DATA.dig("integral", name, size_index) || ""
     return symbol
   end
 
@@ -322,7 +345,7 @@ module ZenmathBuilder
 
   def self.fetch_sum_symbol(name, size = :large)
     size_index = (size == :large) ? 1 : 0
-    symbol = DATA["sum"]&.fetch(name)&.fetch(size_index) || ""
+    symbol = DATA.dig("sum", name, size_index) || ""
     return symbol
   end
 
@@ -381,7 +404,9 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_matrix(fix = false, &block)
+  ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
+
+  def self.build_array(align_config = nil, raw = false, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
@@ -389,17 +414,21 @@ module ZenmathBuilder
       table_element = this
     end
     block&.call(table_element)
-    if fix
-      column, row = 1, 1
-      table_element.each_element do |child|
-        if child.name == "math-cell"
-          child["style"] = "grid-row: #{row}; grid-column: #{column};"
-          column += 1
-        elsif child.name == "math-sys-br"
-          table_element.delete_element(child)
-          row += 1
-          column = 1
+    align_array = align_config&.chars
+    column, row = 1, 1
+    table_element.each_element do |child|
+      if child.name == "math-cell"
+        child["class"] = [*child["class"].split(" "), "raw"].join(" ") if raw 
+        child["style"] += "grid-row: #{row}; grid-column: #{column};"
+        if align_array
+          align = ALIGNS[align_array[column - 1]]
+          child["style"] += "text-align: #{align}" 
         end
+        column += 1
+      elsif child.name == "math-sys-br"
+        table_element.delete_element(child)
+        row += 1
+        column = 1
       end
     end
     return this
