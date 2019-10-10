@@ -27,7 +27,7 @@
       \p<
         &m<\frac<A><B>, \frac<c><e>>
         or more complicated
-        &m<\bb<4> \pitchfork> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smashp> \frac<m><7 Ψ>><Δ>>>.
+        &m<\bb<4> \pitchfork> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smash> \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
@@ -230,6 +230,12 @@
       >
       \p<
         Archaic greek letters: &m<(\capdigamma>, \digamma>) * (\capkoppa>, \koppa>) * (\capsampi>, \sampi>)>.
+      >
+      \p<
+        Symbols: &m<\hbar> * \sharp> \flat> * \crotchet> \quaver> * \bspade> \wheart> * \dagger> * \amp> \invamp>>.
+      >
+      \p<
+        Combining negation symbol: &m<A \lls>\not> B>.
       >
       \p<
         Texts as subformulae: &m<`{ x \in> X \mid> x \text< is very good> `}> or &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
