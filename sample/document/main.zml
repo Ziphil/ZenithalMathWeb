@@ -180,12 +180,33 @@
           = \prod<1 \leq> i `< j \leq> n><> (\sb<X><j> - \sb<X><i>)
         >.
       >
+      \h1<Arrays>
       \p<
-        Currently the ZenMath's syntax for matrices is a bit complicated, and may bother the users.
+        &m<
+          \array<
+            \c<`F :> \c<V \otimes> W> \c<\longto>> \c<\bb<K>> \br>
+            \c> \c<v \otimes> w> \c<\longmapsto>> \c<f (v) g (w)>
+          >
+        >
+        or
+        &m<
+          \array|align="rcl"|<
+            \cc<\nabla> \cdot> \bf<B>><=><0>
+            \cc<\nabla> \times> \bf<E> + \frac<\partial> \bf<B>><\partial> t>><=><\bf<0>>
+            \cc<\nabla> \cdot> \bf<D>><=><`r>
+            \cc<\nabla> \times> \bf<H> - \frac<\partial> \bf<D>><\partial> t>><=><\bf<j>>
+          >
+        >
       >
-      \h1<Tables>
       \p<
-        To be implemented.
+        Cases:
+        &m<
+          \vert<x> =
+          \case<
+            \cc<x><(x \geq> 0)>
+            \cc<- x><(x `< 0)>
+          >
+        >
       >
       \h1<Functions>
       \p<
@@ -217,13 +238,35 @@
       \p<
         To be implemented.
       >
-      \h1<Some practical example>
+      \h1<Some practical examples>
       \p|class="normal"|<
-        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has real roots when &m<D \coloneqq> \sp<b><2> - 4 ac \geq> 0> holds, and those roots are explicitly written as
+        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has two real roots when &m<D \coloneqq> \sp<b><2> - 4 ac `> 0> holds, and those roots are explicitly written as
         &mb<
-          x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>
+          x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>.
         >
-        Otherwise &m<D `< 0>, in which case the equation does not have real roots but two distinct imaginary roots.
+        The proof is quite easy.
+        The left-hand side of the equation is transformed as:
+        &mb<
+          \array|align="rcl"|<
+            \cc<a \sp<x><2> + bx + c><=><a \paren<\sp<x><2> + \frac<b><a> x> + c>
+            \cc<><=><a \paren<\sp<\paren<x + \frac<b><2 a>>><2> - \sp<\paren<\frac<b><2 a>>><2>> + c>
+            \cc<><=><a \sp<\paren<x + \frac<b><2 a>>><2> - \frac<\sp<b><2>><4 a> + c>
+            \cc<><=><a \sp<\paren<x + \frac<b><2 a>>><2> - \frac<\sp<b><2> - 4 ac><4 a>.>
+          >
+        >
+        Thus the equation is equivalent to
+        &mb<
+          a \sp<\paren<x + \frac<b><2 a>>><2> - \frac<\sp<b><2> - 4 ac><4 a> = 0,
+        >
+        and also equivalent to
+        &mb<
+          \sp<\paren<x + \frac<b><2 a>>><2> = \frac<\sp<b><2> - 4 ac><4 \sp<a><2>>.
+        >
+        Taking the square roots of both sides yields
+        &mb<
+          x + \frac<b><2 a> = \frac<\pm> \sqrt<\sp<b><2> - 4 ac>><2 a>.
+        >
+        Transposing &m<b `/ 2 a> to the left finally gives the desired formula.
       >
       \p|class="normal"|<
         主イデアル整域 &m<A> 上の多項式 &m<P \in> A `[X`]> を考え、
