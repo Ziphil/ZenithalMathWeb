@@ -119,6 +119,9 @@ module ZenmathBuilder
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
       this << ZenmathBuilder.build_identifier(symbol, false, true)
+    when "text"
+      text = children_list[0].first.value
+      this << ZenmathBuilder.build_text(text)
     end
     return this
   end
@@ -419,13 +422,11 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_text(&block)
+  def self.build_text(text, &block)
     this = Nodes[]
-    text_element = nil
     this << Element.build("math-text") do |this|
-      text_element = this
+      this << Text.new(text, true, nil, false)
     end
-    block&.call(text_element)
     return this
   end
 
