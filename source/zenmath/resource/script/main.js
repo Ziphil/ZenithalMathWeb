@@ -4,8 +4,8 @@
 function execute() {
   document.querySelectorAll("math-subsup").forEach(modifySubsuper);
   document.querySelectorAll("math-underover").forEach(modifyUnderover);
-  document.querySelectorAll(".md-sqrt").forEach(modifyRadical);
-  document.querySelectorAll(".md-paren").forEach(modifyParen);
+  document.querySelectorAll("math-sqrt.mod").forEach(modifyRadical);
+  document.querySelectorAll("math-paren.mod").forEach(modifyParen);
 }
 
 function getFontSize(element) {

@@ -173,12 +173,10 @@ module ZenmathBuilder
   def self.build_identifier(name, function = false, alternative = false)
     this = Nodes[]
     this << Element.build("math-i") do |this|
-      if function
-        this["class"] += " fun"
-      end
-      if alternative
-        this["class"] += " alt"
-      end
+      classes = []
+      classes << "fun" if function
+      classes << "alt" if alternative
+      this["class"] = classes.join(" ")
       this << Text.new(name, true, nil, false)
     end
     return this
@@ -259,13 +257,9 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-sqrt") do |this|
-      unless stretch_level
-        this["class"] = "md-sqrt"
-      end
+      this["class"] = "mod" unless stretch_level
       this << Element.build("math-surd") do |this|
-        if stretch_level
-          this["class"] = "s#{stretch_level}" 
-        end
+        this["class"] = "s#{stretch_level}" if stretch_level
         this << Element.build("math-o") do |this|
           this << Text.new(symbol, true, nil, false)
         end
@@ -288,9 +282,7 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
-      unless stretch_level
-        this["class"] = "md-paren md-paren-#{kind}"
-      end
+      this["class"] = "mod #{kind}" unless stretch_level
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "lp"

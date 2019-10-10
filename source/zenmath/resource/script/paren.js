@@ -4,9 +4,8 @@
 function calcParenKind(element) {
   let kind = "paren";
   for (let clazz of element.classList) {
-    let match;
-    if (match = clazz.match(/md-paren-(\w+)/)) {
-      kind = match[1];
+    if (!clazz.match(/^md(\w*)$/)) {
+      kind = clazz;
     }
   }
   return kind;
@@ -78,26 +77,28 @@ function modifyParen(element) {
   let contentElement = element.children[1];
   let parentElements = [element.children[0], element.children[2]];
   let kind = calcParenKind(element);
-  for (let position of [0, 1]) {
-    modifyEachParen(contentElement, parentElements[position], kind, position);
-  }
-}
-
-function modifyEachParen(contentElement, parentElement, kind, position) {
   let stretchLevel = calcParenStretchLevel(contentElement, kind);
-  if (stretchLevel != null) {
-    let symbolElement = parentElement.children[0];
-    let shift = calcParenShift(contentElement);
-    symbolElement.textContent = DATA["paren"][kind][stretchLevel][position];
-    parentElement.style.verticalAlign = "" + shift + "em";
-  } else {
-    appendParen(contentElement, parentElement, kind, position);
+  for (let position of [0, 1]) {
+    let parentElement = parentElements[position];
+    if (stretchLevel != null) {
+      modifyParenStretch(contentElement, parentElement, kind, stretchLevel, position);
+    } else {
+      appendParenStretch(contentElement, parentElement, kind, position);
+    }
   }
 }
 
-function appendParen(contentElement, parentElement, kind, position) {
+function modifyParenStretch(contentElement, parentElement, kind, stretchLevel, position) {
+  let symbolElement = parentElement.children[0];
+  let shift = calcParenShift(contentElement);
+  symbolElement.textContent = DATA["paren"][kind][stretchLevel][position];
+  parentElement.style.verticalAlign = "" + shift + "em";
+  parentElement.classList.add("s" + stretchLevel);
+}
+
+function appendParenStretch(contentElement, parentElement, kind, position) {
   let stretchElement = document.createElement("math-vstretch");
-  let hasTop = !!DATA["paren"][kind]["top"]
+  let hasTop = !!DATA["paren"][kind]["top"];
   let hasBottom = !!DATA["paren"][kind]["bot"];
   let hasMiddle = !!DATA["paren"][kind]["mid"];
   let topElement = null;
@@ -118,6 +119,7 @@ function appendParen(contentElement, parentElement, kind, position) {
     bottomElement.textContent = DATA["paren"][kind]["bot"][position];
     stretchElement.append(bottomElement);
   }
+  parentElement.classList.add("sinf");
   parentElement.removeChild(parentElement.children[0]);
   parentElement.appendChild(stretchElement);
   let barSize = (hasMiddle) ? 2 : 1;
