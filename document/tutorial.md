@@ -37,7 +37,7 @@ source = File.read("index.zml")
 # パーサーの作成
 parser = ZenmathParser.new(source)
 # &m<(ZenMath コード)> の形で ZenMath 形式で数式を書けるようにする
-parser.register_simple_math_macro("m")
+parser.simple_math_macro_name = "m"
 # パース
 document = parser.parse
 

@@ -9,8 +9,6 @@ include REXML
 
 module ZenmathParserMethod
 
-  RESOURCE_MACRO_NAME = "math-resource"
-  RAW_MACRO_NAME = "raw"
   STYLE_PATH = "resource/math.scss"
   SCRIPT_PATH = "resource/math.js"
 
@@ -24,7 +22,7 @@ module ZenmathParserMethod
       options = options.clone
       options[:math] = true
       return options
-    elsif macro && name == RAW_MACRO_NAME
+    elsif macro && name == @raw_macro_name
       options = options.clone
       options[:math] = nil
       return options
@@ -48,16 +46,12 @@ module ZenmathParserMethod
       raw_nodes = @macros[name].call(attributes, next_children_list)
       nodes = raw_nodes.inject(Nodes[], :<<)
       return nodes
-    elsif name == RAW_MACRO_NAME
+    elsif name == @raw_macro_name
       children = children_list.first
       return children
-    elsif name == RESOURCE_MACRO_NAME
-      style_path = File.expand_path("../" + STYLE_PATH, __FILE__)
-      script_path = File.expand_path("../" + SCRIPT_PATH, __FILE__)
-      data_path = File.expand_path("../" + DATA_PATH, __FILE__)
-      style_string = SassC::Engine.new(File.read(style_path), {:style => :compressed}).render
-      style_string.gsub!("__mathfonturl__", attributes["font-url"].to_s)
-      script_string = "DATA=" + File.read(data_path) + "\n" + File.read(script_path)
+    elsif name == @resource_macro_name
+      style_string = @style_string.gsub("__mathfonturl__", attributes["font-url"] || "font.otf")
+      script_string = @script_string
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
         element << Text.new(style_string, true, nil, true)
@@ -103,6 +97,21 @@ module ZenmathParserMethod
     end
   end
 
+  def create_style_string
+    style_path = File.expand_path("../" + STYLE_PATH, __FILE__)
+    style_string = SassC::Engine.new(File.read(style_path), {:style => :compressed}).render
+    @style_string = style_string
+  end
+
+  def create_script_string
+    script_path = File.expand_path("../" + SCRIPT_PATH, __FILE__)
+    data_path = File.expand_path("../" + DATA_PATH, __FILE__)
+    script_string = File.read(script_path)
+    data_string = File.read(data_path)
+    script_string = "const DATA = " + data_string + ";\n" + script_string
+    @script_string = script_string
+  end
+
 end
 
 
@@ -110,10 +119,20 @@ class ZenmathParser < ZenithalParser
 
   include ZenmathParserMethod
 
+  attr_reader :raw_macro_name
+  attr_reader :resource_macro_name
+
   def initialize(source)
     super(source)
+    @simple_math_macro_name = nil
+    @raw_macro_name = "raw"
+    @resource_macro_name = "math-resource"
     @math_macro_names = []
     @math_level = 0
+    @style_string = ""
+    @script_string = ""
+    create_style_string
+    create_script_string
   end
 
   def register_math_macro(name, &block)
@@ -121,7 +140,8 @@ class ZenmathParser < ZenithalParser
     @macros.store(name, block)
   end
 
-  def register_simple_math_macro(name)
+  def simple_math_macro_name=(name)
+    @simple_math_macro_name = name
     register_math_macro(name) do |attributes, children_list|
       next [children_list.first]
     end
