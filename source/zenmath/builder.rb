@@ -107,13 +107,13 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_matrix do |table_this|
         table_this << children_list[0]
       end
-    when "row"
-      this << ZenmathBuilder.build_table_row do |this|
-        children_list.each do |children|
-          this << ZenmathBuilder.build_table_cell do |this|
-            this << children
-          end
-        end
+    when "r"
+      this << ZenmathBuilder.build_table_row do |row_this|
+        row_this <<  children_list[0]
+      end
+    when "c"
+      this << ZenmathBuilder.build_table_cell do |cell_this|
+        cell_this << children_list[0]
       end
     when "bb", "scr", "frak"
       alphabets = children_list[0].first.value
