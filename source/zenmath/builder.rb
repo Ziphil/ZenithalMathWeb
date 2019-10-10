@@ -104,17 +104,26 @@ module ZenmathBuilder
         content_this << children_list[0]
       end
     when "matrix"
+      children = children_list[0]
+      row, column = 1, 1
       this << ZenmathBuilder.build_matrix do |table_this|
-        table_this << children_list[0]
-      end
-    when "r"
-      this << ZenmathBuilder.build_table_row do |row_this|
-        row_this <<  children_list[0]
+        children.each do |child|
+          if child.is_a?(Element) && child.name == "math-cell"
+            child["style"] = "grid-row: #{row}; grid-column: #{column};"
+            table_this << child
+            column += 1
+          elsif child.is_a?(Element) && child.name == "math-br"
+            row += 1
+            column = 1
+          end
+        end
       end
     when "c"
       this << ZenmathBuilder.build_table_cell do |cell_this|
         cell_this << children_list[0]
       end
+    when "br"
+      this << Element.new("math-br")
     when "bb", "cal", "scr", "frak"
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join

@@ -156,34 +156,26 @@
       \p<
         &m<
           \paren<\matrix<
-            \r<\c<1> \c<2>>
-            \r<\c<3> \c<4>>
+            \c<1> \c<2> \br>
+            \c<3> \c<4>
           >>
         >,
         &m<
           \vert<\matrix<
-            \r<\c<\sb<a><11>> \c<\sb<a><12>> \c<\sb<a><13>> \c<\sb<a><14>> \c<\sb<a><15>>>
-            \r<\c<\sb<a><21>> \c<\sb<a><22>> \c<\sb<a><23>> \c<\sb<a><24>> \c<\sb<a><25>>>
-            \r<\c<\sb<a><31>> \c<\sb<a><32>> \c<\sb<a><33>> \c<\sb<a><34>> \c<\sb<a><35>>>
-            \r<\c<\sb<a><41>> \c<\sb<a><42>> \c<\sb<a><43>> \c<\sb<a><44>> \c<\sb<a><45>>>
+            \c<\sb<a><11>> \c<\sb<a><12>> \c<\sb<a><13>> \c<\sb<a><14>> \c<\sb<a><15>> \br>
+            \c<\sb<a><21>> \c<\sb<a><22>> \c<\sb<a><23>> \c<\sb<a><24>> \c<\sb<a><25>> \br> 
+            \c<\sb<a><31>> \c<\sb<a><32>> \c<\sb<a><33>> \c<\sb<a><34>> \c<\sb<a><35>> \br>
+            \c<\sb<a><41>> \c<\sb<a><42>> \c<\sb<a><43>> \c<\sb<a><44>> \c<\sb<a><45>>
           >>
         >
         or
         &m<
           \sb<V><n> \coloneqq> \det>
           \paren<\matrix<
-            \r<
-              \c<1> \c<\sb<X><1>> \c<\sp<\sb<X><1>><2>> \c<\cdots>> \c<\sp<\sb<X><1>><n - 1>>
-            >
-            \r<
-              \c<1> \c<\sb<X><2>> \c<\sp<\sb<X><2>><2>> \c<\cdots>> \c<\sp<\sb<X><2>><n - 1>>
-            >
-            \r<
-              \c<\vdots>> \c<\vdots>> \c<\vdots>> \c<\ddots>> \c<\vdots>>
-            >
-            \r<
-              \c<1> \c<\sb<X><n>> \c<\sp<\sb<X><n>><2>> \c<\cdots>> \c<\sp<\sb<X><n>><n - 1>>
-            >
+            \c<1> \c<\sb<X><1>> \c<\sp<\sb<X><1>><2>> \c<\cdots>> \c<\sp<\sb<X><1>><n - 1>> \br>
+            \c<1> \c<\sb<X><2>> \c<\sp<\sb<X><2>><2>> \c<\cdots>> \c<\sp<\sb<X><2>><n - 1>> \br>
+            \c<\vdots>> \c<\vdots>> \c<\vdots>> \c<\ddots>> \c<\vdots>> \br>
+            \c<1> \c<\sb<X><n>> \c<\sp<\sb<X><n>><2>> \c<\cdots>> \c<\sp<\sb<X><n>><n - 1>>
           >>
           = \prod<1 \leq> i `< j \leq> n><> (\sb<X><j> - \sb<X><i>)
         >.

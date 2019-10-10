@@ -33,7 +33,7 @@ math-i {
 
 math-o {
   padding: 0em spacing(4);
-  line-height: 0.7;
+  line-height: 0.8;
   font-family: "Math";
 
   &.bin {
@@ -279,26 +279,14 @@ math-vstretch {
 
 
 math-table {
+  gap: spacing(6) spacing(15);
   vertical-align: middle;
-  display: inline-table;
+  display: inline-grid !important;
+  align-items: baseline;
 
-  >math-row {
-    display: table-row;
-  }
-
-  >math-row >math-cell {
-    padding-top: spacing(6);
-    padding-left: spacing(15);
+  >math-cell {
     text-align: center;
-    display: table-cell;
-  }
-
-  >math-row:first-of-type >math-cell {
-    padding-top: 0em;
-  }
-
-  >math-row >math-cell:first-of-type {
-    padding-left: 0em;
+    vertical-align: baseline;
   }
 
 }
