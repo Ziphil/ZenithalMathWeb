@@ -10,7 +10,7 @@ include REXML
 module ZenmathParserMethod
 
   STYLE_PATH = "resource/math.scss"
-  SCRIPT_PATH = "resource/math.js"
+  SCRIPT_DIR = "resource/script"
 
   include ZenmathBuilder
   include ZenithalParserMethod
@@ -50,8 +50,8 @@ module ZenmathParserMethod
       children = children_list.first
       return children
     elsif name == @resource_macro_name
-      style_string = @style_string.gsub("__mathfonturl__", attributes["font-url"] || "font.otf")
-      script_string = @script_string
+      style_string = STYLE_STRING.gsub("__mathfonturl__", attributes["font-url"] || "font.otf")
+      script_string = SCRIPT_STRING
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
         element << Text.new(style_string, true, nil, true)
@@ -97,20 +97,27 @@ module ZenmathParserMethod
     end
   end
 
-  def create_style_string
-    style_path = File.expand_path("../" + STYLE_PATH, __FILE__)
-    style_string = SassC::Engine.new(File.read(style_path), {:style => :compressed}).render
-    @style_string = style_string
+  def self.create_style_string
+    path = File.expand_path("../" + STYLE_PATH, __FILE__)
+    string = SassC::Engine.new(File.read(path), {:style => :compressed}).render
+    return string
   end
 
-  def create_script_string
-    script_path = File.expand_path("../" + SCRIPT_PATH, __FILE__)
-    data_path = File.expand_path("../" + DATA_PATH, __FILE__)
-    script_string = File.read(script_path)
-    data_string = File.read(data_path)
-    script_string = "const DATA = " + data_string + ";\n" + script_string
-    @script_string = script_string
+  def self.create_script_string
+    dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
+    string = "const DATA = "
+    string << JSON.generate(DATA.slice("radical", "paren"))
+    string << ";\n"
+    Dir.each_child(dir) do |entry|
+      string << File.read(dir + "/" + entry)
+      string << "\n"
+    end
+    string << "window.onload = execute;"
+    return string
   end
+
+  STYLE_STRING = self.create_style_string
+  SCRIPT_STRING = self.create_script_string
 
 end
 
@@ -129,10 +136,6 @@ class ZenmathParser < ZenithalParser
     @resource_macro_name = "math-resource"
     @math_macro_names = []
     @math_level = 0
-    @style_string = ""
-    @script_string = ""
-    create_style_string
-    create_script_string
   end
 
   def register_math_macro(name, &block)

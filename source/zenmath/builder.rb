@@ -10,7 +10,6 @@ include REXML
 module ZenmathBuilder
 
   DATA_PATH = "resource/math.json"
-  DATA = JSON.parse(File.read(File.expand_path("../" + DATA_PATH, __FILE__)))
 
   private
 
@@ -429,5 +428,15 @@ module ZenmathBuilder
     block&.call(text_element)
     return this
   end
+
+  private
+
+  def self.create_data
+    path = File.expand_path("../" + DATA_PATH, __FILE__)
+    data = JSON.parse(File.read(path))
+    return data
+  end
+
+  DATA = self.create_data
 
 end
