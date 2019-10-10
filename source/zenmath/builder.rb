@@ -104,26 +104,15 @@ module ZenmathBuilder
         content_this << children_list[0]
       end
     when "matrix"
-      children = children_list[0]
-      row, column = 1, 1
-      this << ZenmathBuilder.build_matrix do |table_this|
-        children.each do |child|
-          if child.is_a?(Element) && child.name == "math-cell"
-            child["style"] = "grid-row: #{row}; grid-column: #{column};"
-            table_this << child
-            column += 1
-          elsif child.is_a?(Element) && child.name == "math-br"
-            row += 1
-            column = 1
-          end
-        end
+      this << ZenmathBuilder.build_matrix(true) do |table_this|
+        table_this << children_list[0]
       end
     when "c"
       this << ZenmathBuilder.build_table_cell do |cell_this|
         cell_this << children_list[0]
       end
     when "br"
-      this << Element.new("math-br")
+      this << Element.new("math-sys-br")
     when "bb", "cal", "scr", "frak"
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
@@ -392,7 +381,7 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_matrix(&block)
+  def self.build_matrix(fix = false, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
@@ -400,16 +389,19 @@ module ZenmathBuilder
       table_element = this
     end
     block&.call(table_element)
-    return this
-  end
-
-  def self.build_table_row(&block)
-    this = Nodes[]
-    row_element = nil
-    this << Element.build("math-row") do |this|
-      row_element = this
+    if fix
+      column, row = 1, 1
+      table_element.each_element do |child|
+        if child.name == "math-cell"
+          child["style"] = "grid-row: #{row}; grid-column: #{column};"
+          column += 1
+        elsif child.name == "math-sys-br"
+          table_element.delete_element(child)
+          row += 1
+          column = 1
+        end
+      end
     end
-    block&.call(row_element)
     return this
   end
 
