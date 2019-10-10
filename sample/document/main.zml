@@ -55,6 +55,9 @@
         &m<\sqrt<&raw<\span|class="box",style="height:2.3em"|>>>>
         &m<\sqrt<&raw<\span|class="box",style="height:2.4em"|>>>>.
       >
+      \p<
+        Very large: not implemented.
+      >
       \h1<Parentheses>
       \p<
         &m<(A)>, &m<\vert<B>>, &m<\brace<\frac<1><2>>>, &m<\angle<\frac<1><2>>>, &m<\tort<\frac<1><2>>>, &m<\ceil<\sp<2><\sp<3><4>>>>, &m<\pparen<\sp<2><\sp<3><4>>>>, &m<\vvert<\frac<1 + \frac<1><2>><2>>>,
@@ -86,6 +89,9 @@
         &m<\sbsp<\bracket<\frac<1 + \frac<3><2 + \frac<1><2>>><2 + \frac<1 + \frac<1><1 + \frac<1><2>>><2 + \frac<1><2>>>>><Sb><Sp>>,
         &m<\sbsp<\brace<\frac<1 + \frac<1 + \frac<1 + \frac<1><2>><2>><2>><2 + \frac<1 + \frac<1><2>><2>>>><Sb><Sp>>.
       >
+      \p<
+        With a middle bar: not implemented.
+      >
       \h1<Superscripts and subscripts>
       \p<
         &m<\sp<A><B> \sb<C><D>>
@@ -101,7 +107,7 @@
         &m<\sbsp<\paren<1 + \frac<1><2>>><`G><`D>>,
         compare
         &m<\sp<\sb<a><k>><n>>
-        and
+        with
         &m<\sbsp<a><k><n>>.
       >
       \p<
@@ -112,7 +118,7 @@
       \p<
         &m<\int<A><B> C>
         or
-        &m<\int<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
+        &m<\fint<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
       >
       \h1<Overscripts and underscripts>
       \p<
@@ -148,26 +154,42 @@
       >
       \h1<Matrices>
       \p<
-        &m<\paren<\matrix<\row<1><2>\row<3><4>>>>,
+        &m<
+          \paren<\matrix<
+            \r<\c<1> \c<2>>
+            \r<\c<3> \c<4>>
+          >>
+        >,
         &m<
           \vert<\matrix<
-            \row<\sb<a><11>><\sb<a><12>><\sb<a><13>><\sb<a><14>><\sb<a><15>>
-            \row<\sb<a><21>><\sb<a><22>><\sb<a><23>><\sb<a><24>><\sb<a><25>>
-            \row<\sb<a><31>><\sb<a><32>><\sb<a><33>><\sb<a><34>><\sb<a><35>>
-            \row<\sb<a><41>><\sb<a><42>><\sb<a><43>><\sb<a><44>><\sb<a><45>>
+            \r<\c<\sb<a><11>> \c<\sb<a><12>> \c<\sb<a><13>> \c<\sb<a><14>> \c<\sb<a><15>>>
+            \r<\c<\sb<a><21>> \c<\sb<a><22>> \c<\sb<a><23>> \c<\sb<a><24>> \c<\sb<a><25>>>
+            \r<\c<\sb<a><31>> \c<\sb<a><32>> \c<\sb<a><33>> \c<\sb<a><34>> \c<\sb<a><35>>>
+            \r<\c<\sb<a><41>> \c<\sb<a><42>> \c<\sb<a><43>> \c<\sb<a><44>> \c<\sb<a><45>>>
           >>
         >
         or
         &m<
           \sb<V><n> \coloneqq> \det>
           \paren<\matrix<
-            \row<1><\sb<X><1>><\sp<\sb<X><1>><2>><\cdots>><\sp<\sb<X><1>><n - 1>>
-            \row<1><\sb<X><2>><\sp<\sb<X><2>><2>><\cdots>><\sp<\sb<X><2>><n - 1>>
-            \row<\vdots>><\vdots>><\vdots>><\ddots>><\vdots>>
-            \row<1><\sb<X><n>><\sp<\sb<X><n>><2>><\cdots>><\sp<\sb<X><n>><n - 1>>
+            \r<
+              \c<1> \c<\sb<X><1>> \c<\sp<\sb<X><1>><2>> \c<\cdots>> \c<\sp<\sb<X><1>><n - 1>>
+            >
+            \r<
+              \c<1> \c<\sb<X><2>> \c<\sp<\sb<X><2>><2>> \c<\cdots>> \c<\sp<\sb<X><2>><n - 1>>
+            >
+            \r<
+              \c<\vdots>> \c<\vdots>> \c<\vdots>> \c<\ddots>> \c<\vdots>>
+            >
+            \r<
+              \c<1> \c<\sb<X><n>> \c<\sp<\sb<X><n>><2>> \c<\cdots>> \c<\sp<\sb<X><n>><n - 1>>
+            >
           >>
           = \prod<1 \leq> i `< j \leq> n><> (\sb<X><j> - \sb<X><i>)
         >.
+      >
+      \p<
+        Currently the ZenMath's syntax for matrices is a bit complicated, and may bother the users.
       >
       \h1<Tables>
       \p<
@@ -183,7 +205,7 @@
       >
       \h1<Alternative letters>
       \p<
-        &m<\bb<Aa> * \scr<Bb> * \frak<Cc>>
+        &m<\bb<Aa> * \cal<Bb> * \scr<Cc> * \frak<Dd>>
         or
         &m<`s \nin> \frak<gl> (\sb<\frak<S>><n>)>
         or
@@ -194,7 +216,14 @@
         Greek variants: &m<(\varbeta>, `b) * (\varepsilon>, `e) * (\vartheta>, `u) * (\varkappa>, `k) * (\varpi>, `p) * (\varrho>, `r) * (\varphi>, `f) * (\varcapupsilon>, `Y)>.
       >
       \p<
-        Archaic greek letters: &m<\digamma> * \koppa> * \sampi>>.
+        Archaic greek letters: &m<(\capdigamma>, \digamma>) * (\capkoppa>, \koppa>) * (\capsampi>, \sampi>)>.
+      >
+      \p<
+        Texts as subformulae: &m<`{ x \in> X \mid> x \text< is very good> `}> or &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
+      >
+      \h1<Commutative diagrams>
+      \p<
+        To be implemented.
       >
       \h1<Some practical example>
       \p|class="normal"|<
@@ -220,7 +249,7 @@
           \frac<\partial> f><\partial> x> (\sb<x><0>, \sb<y><0>) = \frac<\partial> f><\partial> y> (\sb<x><0>, \sb<y><0>) = 0
         >
         が成り立つことが挙げられる。
-        この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<(x, y)> の周りでの振る舞いは、
+        この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<(\sb<x><0>, \sb<y><0>)> の周りでの振る舞いは、
         &mb<
           f (\sb<x><0> + h, \sb<y><0> + k) = f (\sb<x><0>, \sb<y><0>) + \frac<1><2> \paren<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> (\sb<x><0>, \sb<y><0>) + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> (\sb<x><0>, \sb<y><0>) + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> (\sb<x><0>, \sb<y><0>)> + o (\sp<`r><2>)
         >
