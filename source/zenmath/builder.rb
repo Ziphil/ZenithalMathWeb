@@ -135,6 +135,10 @@ module ZenmathBuilder
       this << Element.new("math-sys-br")
     when "br"
       this << Element.new("math-sys-br")
+    when "bf"
+      this << ZenmathBuilder.build_style(["bold"]) do |content_this|
+        content_this << children_list[0]
+      end
     when "bb", "cal", "scr", "frak"
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA.dig("alternative", name, s) || ""}.join
@@ -441,6 +445,17 @@ module ZenmathBuilder
       cell_element = this
     end
     block&.call(cell_element)
+    return this
+  end
+
+  def self.build_style(kinds, &block)
+    this = Nodes[]
+    content_element = nil
+    this << Element.build("math-style") do |this|
+      this["class"] = kinds.join(" ")
+      content_element = this
+    end
+    block&.call(content_element)
     return this
   end
 

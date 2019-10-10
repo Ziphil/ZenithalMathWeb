@@ -303,6 +303,15 @@ math-table {
 }
 
 
+math-style {
+
+  &.bold {
+    font-weight: bold;
+  }
+
+}
+
+
 math-text {
   white-space: pre;
 }
