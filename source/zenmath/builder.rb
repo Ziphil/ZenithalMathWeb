@@ -115,7 +115,7 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_table_cell do |cell_this|
         cell_this << children_list[0]
       end
-    when "bb", "scr", "frak"
+    when "bb", "cal", "scr", "frak"
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA["alternative"][name].fetch(s, "")}.join
       this << ZenmathBuilder.build_identifier(symbol, false, true)
