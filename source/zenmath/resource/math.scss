@@ -48,6 +48,11 @@ math-o {
     padding: 0em spacing(5) 0em spacing(0);
   }
 
+  &.not {
+    padding: 0em spacing(5);
+    margin: 0em spacing(0) 0em spacing(-10);
+  }
+
   &.ord {
     padding: 0em spacing(0);
   }
