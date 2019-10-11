@@ -194,8 +194,8 @@
         &m<\overbrace<&raw<\span|class="box",style="width:3em"|>>>>.
       >
       \p<
-        Other wide accents:
-        &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
+        Other examples:
+        &m<\widetilde<f \oplus> g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
       >
       \p<
         Accents should be placed according to the height and the inclination of the letters to which they are attached, but it is hard to achieve on browsers.
