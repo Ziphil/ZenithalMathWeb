@@ -14,9 +14,9 @@ function calcWideKind(element) {
 
 function calcWideMaxStretchLevel(kind, position) {
   let keys = Object.keys(DATA["wide"][kind][position]);
-  let maxStretchLevel = 0;
+  let maxStretchLevel = -1;
   for (let key of keys) {
-    if (key.match(/^\d+$/) && parseInt(key) > maxStretchLevel) {
+    if (key.match(/^\d+$/) && DATA["wide"][kind][position][key] && parseInt(key) > maxStretchLevel) {
       maxStretchLevel = parseInt(key);
     }
   }
@@ -27,7 +27,7 @@ function calcWideStretchLevel(element, kind, position) {
   let width = getWidth(element);
   let maxStretchLevel = calcWideMaxStretchLevel(kind, position);
   let stretchLevel = 0;
-  if (width <= 0.79) {
+  if (width <= 0.79 && maxStretchLevel >= 0) {
     stretchLevel = 0;
   } else if (width <= 1.25 && maxStretchLevel >= 1) {
     stretchLevel = 1;
@@ -45,6 +45,18 @@ function calcWideStretchLevel(element, kind, position) {
     }
   }
   return stretchLevel;
+}
+
+function calcWideBarWidth(element, beginElement, endElement, middleElement) {
+  let wholeWidth = getWidth(element);
+  let beginWidth = (beginElement) ? getWidth(beginElement) : 0;
+  let endWidth = (endElement) ? getWidth(endElement) : 0;
+  let middleWidth = (middleElement) ? getWidth(middleElement) : 0;
+  let width = wholeWidth - beginWidth - endWidth - middleWidth;
+  if (middleElement) {
+    width = width / 2;
+  }
+  return width;
 }
 
 function modifyWide(element) {
@@ -73,4 +85,43 @@ function modifyWideStretch(contentElement, parentElement, kind, stretchLevel, po
 }
 
 function appendWideStretch(contentElement, parentElement, kind, position) {
+  let stretchElement = document.createElement("math-hstretch");
+  let hasBegin = !!DATA["wide"][kind][position]["beg"];
+  let hasEnd = !!DATA["wide"][kind][position]["end"];
+  let hasMiddle = !!DATA["wide"][kind][position]["mid"];
+  let beginElement = null;
+  let endElement = null;
+  let middleElement = null;
+  if (hasBegin) {
+    beginElement = document.createElement("math-beg");
+    beginElement.textContent = DATA["wide"][kind][position]["beg"];
+    stretchElement.append(beginElement);
+  }
+  if (hasMiddle) {
+    middleElement = document.createElement("math-mid");
+    middleElement.textContent = DATA["wide"][kind][position]["mid"];
+    stretchElement.append(middleElement);
+  }
+  if (hasEnd) {
+    endElement = document.createElement("math-end");
+    endElement.textContent = DATA["wide"][kind][position]["end"];
+    stretchElement.append(endElement);
+  }
+  parentElement.classList.add("sinf");
+  parentElement.removeChild(parentElement.children[0]);
+  parentElement.appendChild(stretchElement);
+  let barSize = (hasMiddle) ? 2 : 1;
+  let barWidth = calcWideBarWidth(contentElement, beginElement, endElement, middleElement);
+  for (let i = 0 ; i < barSize ; i ++) { 
+    let barElement = document.createElement("math-bar");
+    let barContentElement = document.createElement("math-barcont");
+    barContentElement.textContent = DATA["wide"][kind][position]["bar"];
+    barElement.style.width = "" + barWidth + "em";
+    barElement.append(barContentElement);
+    if (i == 0) {
+      stretchElement.insertBefore(barElement, stretchElement.children[(hasBegin) ? 1 : 0]);
+    } else {
+      stretchElement.insertBefore(barElement, stretchElement.children[(hasBegin) ? 3 : 2]);
+    }
+  }
 }

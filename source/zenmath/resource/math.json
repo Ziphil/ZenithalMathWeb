@@ -215,9 +215,64 @@
         "0": "\uDB80\uDC9C", "1": "\uDB80\uDC9D", "2": "\uDB80\uDC9E", "3": "\uDB80\uDC9F", "4": "\uDB80\uDCA0"
       }
     ],
+    "overline": [
+      null,
+      {
+        "0": "",
+        "bar": "\uDB80\uDCB5"
+      }
+    ],
+    "overrarr": [
+      null,
+      {
+        "0": "",
+        "bar": "\uDB80\uDCD5", "end": "\uDB80\uDCEA"
+      }
+    ],
+    "overlarr": [
+      null,
+      {
+        "0": "",
+        "end": "\uDB80\uDCE4", "bar": "\uDB80\uDCD5"
+      }
+    ],
+    "overbrace": [
+      null,
+      {
+        "0": "\uDB80\uDDC7", "1": "\uDB80\uDDC8", "2": "\uDB80\uDDC9", "3": "\uDB80\uDDCA", "4": "\uDB80\uDDCB",
+        "beg": "\uDB80\uDDC4", "bar": "\uDB80\uDDAA", "mid": "\uDB80\uDDC5", "end": "\uDB80\uDDC6"
+      }
+    ],
     "widetildebelow": [
       {
         "0": "\uDB80\uDCA6", "1": "\uDB80\uDCA7", "2": "\uDB80\uDCA8", "3": "\uDB80\uDCA9", "4": "\uDB80\uDCAA"
+      },
+      null
+    ],
+    "underline": [
+      {
+        "bar": "\uDB80\uDC92"
+      },
+      null
+    ],
+    "underrarr": [
+      {
+        "0": "",
+        "bar": "\uDB80\uDCFE", "end": "\uDB80\uDCFF"
+      },
+      null
+    ],
+    "underlarr": [
+      {
+        "0": "",
+        "beg": "\uDB80\uDCF9", "bar": "\uDB80\uDCFE"
+      },
+      null
+    ],
+    "underbrace": [
+      {
+        "0": "\uDB80\uDDCF", "1": "\uDB80\uDDD0", "2": "\uDB80\uDDD1", "3": "\uDB80\uDDD2", "4": "\uDB80\uDDD3",
+        "beg": "\uDB80\uDDCC", "bar": "\uDB80\uDDB2", "mid": "\uDB80\uDDCD", "end": "\uDB80\uDDCE"
       },
       null
     ]

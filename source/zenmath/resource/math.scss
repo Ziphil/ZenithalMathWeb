@@ -57,8 +57,12 @@ math-o {
     padding: 0em spacing(0);
   }
 
-  &.acc {
-    padding: 0em spacing(0);
+  math-over >&.acc {
+    padding: 0.2em spacing(0) 0em spacing(0);
+  }
+
+  math-under >&.acc {
+    padding: 0em spacing(0) 0.2em spacing(0);
   }
 
   &.int {
@@ -279,6 +283,43 @@ math-vstretch {
 
   >math-bar >math-barcont {
     transform: scale(1, 100);
+  }
+
+}
+
+
+math-hstretch {
+
+  >math-beg,
+  >math-bar >math-barcont,
+  >math-mid,
+  >math-end {
+    font-family: "Math";
+    line-height: 0.8em;
+  }
+
+  math-over >& >math-beg,
+  math-over >& >math-bar,
+  math-over >& >math-mid,
+  math-over >& >math-end {
+    padding-top: 0.4em;
+    vertical-align: top;
+  }
+
+  math-under >& >math-beg,
+  math-under >& >math-bar,
+  math-under >& >math-mid,
+  math-under >& >math-end {
+    padding-bottom: 0.4em;
+    vertical-align: bottom;
+  }
+
+  >math-bar {
+    overflow: hidden;
+  }
+
+  >math-bar >math-barcont {
+    transform: scale(100, 1);
   }
 
 }
