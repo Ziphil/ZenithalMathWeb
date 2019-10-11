@@ -35,9 +35,14 @@ module ZenmathBuilder
         over_this << children_list[1]
       end
     when DATA["accent"].method(:key?)
-      symbol, position = DATA.dig("accent", name) || ["", "over"]
-      position = position.intern
-      this << ZenmathBuilder.build_accent(symbol, position) do |base_this|
+      under_symbol, over_symbol = DATA.dig("accent", name) || [nil, nil]
+      this << ZenmathBuilder.build_accent(under_symbol, over_symbol) do |base_this|
+        base_this << children_list[0]
+      end
+    when DATA["wide"].method(:key?)
+      stretch_level = attributes["s"]
+      under_symbol, over_symbol = ZenmathBuilder.fetch_wide_symbols(name, stretch_level)
+      this << ZenmathBuilder.build_wide(name, under_symbol, over_symbol, stretch_level) do |base_this|
         base_this << children_list[0]
       end
     when DATA["function"].method(:include?)
@@ -377,16 +382,16 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_accent(symbol, position = :over, &block)
+  def self.build_accent(under_symbol, over_symbol, &block)
     this = Nodes[]
     base_element = nil
     this << Element.build("math-underover") do |this|
       this["class"] = "acc"
       this << Element.build("math-over") do |this|
-        if position == :over
+        if over_symbol
           this << Element.build("math-o") do |this|
             this["class"] = "acc"
-            this << Text.new(symbol, true, nil, false)
+            this << Text.new(over_symbol, true, nil, false)
           end
         end
       end
@@ -395,10 +400,49 @@ module ZenmathBuilder
           base_element = this
         end
         this << Element.build("math-under") do |this|
-          if position == :under
+          if under_symbol
             this << Element.build("math-o") do |this|
               this["class"] = "acc"
-              this << Text.new(symbol, true, nil, false)
+              this << Text.new(under_symbol, true, nil, false)
+            end
+          end
+        end
+      end
+    end
+    block&.call(base_element)
+    return this
+  end
+
+  def self.fetch_wide_symbols(kind, stretch_level)
+    stretch_level ||= "0"
+    under_symbol = DATA.dig("wide", kind, "0", 0) || nil
+    over_symbol = DATA.dig("wide", kind, "0", 1) || nil
+    return under_symbol, over_symbol
+  end
+
+  def self.build_wide(kind, under_symbol, over_symbol, stretch_level, &block)
+    this = Nodes[]
+    base_element = nil
+    this << Element.build("math-underover") do |this|
+      this["class"] = "wide"
+      this["class"] = [*this["class"].split(" "), "mod", "wide-#{kind}"].join(" ") unless stretch_level
+      this << Element.build("math-over") do |this|
+        if over_symbol
+          this << Element.build("math-o") do |this|
+            this["class"] = "acc"
+            this << Text.new(over_symbol, true, nil, false)
+          end
+        end
+      end
+      this << Element.build("math-basewrap") do |this|
+        this << Element.build("math-base") do |this|
+          base_element = this
+        end
+        this << Element.build("math-under") do |this|
+          if under_symbol
+            this << Element.build("math-o") do |this|
+              this["class"] = "acc"
+              this << Text.new(under_symbol, true, nil, false)
             end
           end
         end

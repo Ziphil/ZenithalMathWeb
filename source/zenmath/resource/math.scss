@@ -59,9 +59,6 @@ math-o {
 
   &.acc {
     padding: 0em spacing(0);
-    height: 0.2em;
-    line-height: 0.9;
-    vertical-align: -0.3em;
   }
 
   &.int {
@@ -217,7 +214,9 @@ math-underover {
     display: block;
   }
 
-  &.acc >math-over {
+  &.acc >math-over,
+  &.wide >math-over {
+    margin: 0em 0em -0.75em 0em;
     font-size: 100%;
   }
 
@@ -240,7 +239,9 @@ math-underover {
     display: block;
   }
 
-  &.acc >math-basewrap >math-under {
+  &.acc >math-basewrap >math-under,
+  &.wide >math-basewrap >math-under {
+    margin: -0.75em 0em 0em 0em;
     font-size: 100%;
   }
 

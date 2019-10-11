@@ -106,7 +106,7 @@ module ZenmathParserMethod
   def self.create_script_string
     dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
     string = "const DATA = "
-    string << JSON.generate(DATA.slice("radical", "paren"))
+    string << JSON.generate(DATA.slice("radical", "paren", "wide"))
     string << ";\n"
     Dir.each_child(dir) do |entry|
       string << File.read(dir + "/" + entry)

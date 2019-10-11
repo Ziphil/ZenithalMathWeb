@@ -6,6 +6,7 @@ function execute() {
   document.querySelectorAll("math-underover").forEach(modifyUnderover);
   document.querySelectorAll("math-sqrt.mod").forEach(modifyRadical);
   document.querySelectorAll("math-paren.mod").forEach(modifyParen);
+  document.querySelectorAll("math-underover.wide.mod").forEach(modifyWide);
 }
 
 function getFontSize(element) {
