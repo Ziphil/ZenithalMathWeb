@@ -218,9 +218,13 @@ math-underover {
     display: block;
   }
 
-  &.acc >math-over,
+  &.acc >math-over {
+    margin: 0em 0em -0.73em 0em;
+    font-size: 100%;
+  }
+
   &.wide >math-over {
-    margin: 0em 0em -0.75em 0em;
+    margin: 0em 0em -0.73em 0em;
     font-size: 100%;
   }
 
@@ -243,9 +247,13 @@ math-underover {
     display: block;
   }
 
-  &.acc >math-basewrap >math-under,
+  &.acc >math-basewrap >math-under {
+    margin: -0.8em 0em 0em 0em;
+    font-size: 100%;
+  }
+
   &.wide >math-basewrap >math-under {
-    margin: -0.75em 0em 0em 0em;
+    margin: -0.7em 0em 0em 0em;
     font-size: 100%;
   }
 
@@ -302,7 +310,7 @@ math-hstretch {
   math-over >& >math-bar,
   math-over >& >math-mid,
   math-over >& >math-end {
-    padding-top: 0.4em;
+    padding-top: 0.3em;
     vertical-align: top;
   }
 
@@ -310,7 +318,7 @@ math-hstretch {
   math-under >& >math-bar,
   math-under >& >math-mid,
   math-under >& >math-end {
-    padding-bottom: 0.4em;
+    padding-bottom: 0.3em;
     vertical-align: bottom;
   }
 

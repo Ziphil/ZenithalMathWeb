@@ -56,6 +56,9 @@ function calcWideBarWidth(element, beginElement, endElement, middleElement) {
   if (middleElement) {
     width = width / 2;
   }
+  if (width < 0) {
+    width = 0;
+  }
   return width;
 }
 

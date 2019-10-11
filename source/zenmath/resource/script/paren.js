@@ -80,6 +80,9 @@ function calcParenBarHeight(element, topElement, bottomElement, middleElement) {
   if (middleElement) {
     height = height / 2;
   }
+  if (height < 0) {
+    height = 0;
+  }
   return height;
 }
 

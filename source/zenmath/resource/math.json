@@ -226,14 +226,14 @@
       null,
       {
         "0": "",
-        "bar": "\uDB80\uDCD5", "end": "\uDB80\uDCEA"
+        "bar": "\uDB80\uDCE9", "end": "\uDB80\uDCEA"
       }
     ],
     "overlarr": [
       null,
       {
         "0": "",
-        "end": "\uDB80\uDCE4", "bar": "\uDB80\uDCD5"
+        "end": "\uDB80\uDCE4", "bar": "\uDB80\uDCE9"
       }
     ],
     "overbrace": [
@@ -251,6 +251,7 @@
     ],
     "underline": [
       {
+        "0": "",
         "bar": "\uDB80\uDC92"
       },
       null
