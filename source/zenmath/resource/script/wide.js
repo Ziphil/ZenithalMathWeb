@@ -24,25 +24,17 @@ function calcWideMaxStretchLevel(kind, position) {
 }
 
 function calcWideStretchLevel(element, kind, position) {
-  let width = getWidth(element);
+  let widthAbs = getWidth(element) * 1000;
   let maxStretchLevel = calcWideMaxStretchLevel(kind, position);
-  let stretchLevel = 0;
-  if (width <= 0.79 && maxStretchLevel >= 0) {
-    stretchLevel = 0;
-  } else if (width <= 1.25 && maxStretchLevel >= 1) {
-    stretchLevel = 1;
-  } else if (width <= 1.71 && maxStretchLevel >= 2) {
-    stretchLevel = 2;
-  } else if (width <= 2.15 && maxStretchLevel >= 3) {
-    stretchLevel = 3;
-  } else if (width <= 2.61 && maxStretchLevel >= 4) {
-    stretchLevel = 4;
-  } else {
-    if (DATA["wide"][kind][position]["bar"]) {
-      stretchLevel = null;
-    } else {
-      stretchLevel = maxStretchLevel;
+  let stretchLevel = null;
+  for (let i = 0 ; i <= maxStretchLevel ; i ++) {
+    if (widthAbs <= DATA["wide"][kind][position]["width"][i]) {
+      stretchLevel = i;
+      break;
     }
+  }
+  if (stretchLevel == null && !DATA["wide"][kind][position]["bar"]) {
+    stretchLevel = maxStretchLevel;
   }
   return stretchLevel;
 }

@@ -27,41 +27,17 @@ function calcParenMaxStretchLevel(kind, position) {
 }
 
 function calcParenStretchLevel(element, kind, position) {
-  let height = getHeight(element);
+  let heightAbs = getHeight(element) * 1000;
   let maxStretchLevel = calcParenMaxStretchLevel(kind, position);
-  let stretchLevel = 0;
-  if (height <= 1) {
-    stretchLevel = 0;
-  } else if (height <= 1 + 0.27 * 1 && maxStretchLevel >= 1) {
-    stretchLevel = 1;
-  } else if (height <= 1 + 0.27 * 2 && maxStretchLevel >= 2) {
-    stretchLevel = 2;
-  } else if (height <= 1 + 0.27 * 3 && maxStretchLevel >= 3) {
-    stretchLevel = 3;
-  } else if (height <= 1 + 0.27 * 4 && maxStretchLevel >= 4) {
-    stretchLevel = 4;
-  } else if (height <= 1 + 0.27 * 5 && maxStretchLevel >= 5) {
-    stretchLevel = 5;
-  } else if (height <= 1 + 0.27 * 6 && maxStretchLevel >= 6) {
-    stretchLevel = 6;
-  } else if (height <= 1 + 0.27 * 7 && maxStretchLevel >= 7) {
-    stretchLevel = 7;
-  } else if (height <= 1 + 0.27 * 8 && maxStretchLevel >= 8) {
-    stretchLevel = 8;
-  } else if (height <= 1 + 0.27 * 9 && maxStretchLevel >= 9) {
-    stretchLevel = 9;
-  } else if (height <= 1 + 0.27 * 10 && maxStretchLevel >= 10) {
-    stretchLevel = 10;
-  } else if (height <= 1 + 0.27 * 11 && maxStretchLevel >= 11) {
-    stretchLevel = 11;
-  } else if (height <= 1 + 0.27 * 12 && maxStretchLevel >= 12) {
-    stretchLevel = 12;
-  } else {
-    if (DATA["paren"][kind][position]["bar"]) {
-      stretchLevel = null;
-    } else {
-      stretchLevel = maxStretchLevel;
+  let stretchLevel = null;
+  for (let i = 0 ; i <= maxStretchLevel ; i ++) {
+    if (heightAbs <= 1159 + 242 * i) {
+      stretchLevel = i;
+      break;
     }
+  }
+  if (stretchLevel == null && !DATA["paren"][kind][position]["bar"]) {
+    stretchLevel = maxStretchLevel;
   }
   return stretchLevel;
 }

@@ -2,15 +2,15 @@
 
 
 function calcRadicalStretchLevel(element) {
-  let height = getHeight(element);
-  let stretchLevel = 0;
-  if (height <= 1.35) {
-    stretchLevel = 0;
-  } else if (height <= 1.35 + 0.5 * 1) {
-    stretchLevel = 1;
-  } else if (height <= 1.35 + 0.5 * 2) {
-    stretchLevel = 2;
-  } else {
+  let heightAbs = getHeight(element) * 1000;
+  let stretchLevel = null;
+  for (let i = 0 ; i <= 3 ; i ++) {
+    if (heightAbs <= DATA["radical"]["height"][i]) {
+      stretchLevel = i;
+      break;
+    }
+  }
+  if (stretchLevel == null) {
     stretchLevel = 3;
   }
   return stretchLevel;
