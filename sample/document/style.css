@@ -60,6 +60,7 @@ article p.normal math-root {
 
 article p math-root span.box {
   width: 1em;
+  height: 1em;
   display: inline-block;
   vertical-align: middle; 
   background-color: hsl(240, 80%, 80%);

@@ -142,14 +142,60 @@
       >
       \h1<Accents>
       \p<
-        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\dotbelow<E>>, &m<\hatbelow<F>>, &m<\tildebelow<g>>, &m<\ringbelow<h>>.
+        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\barbelow<E>>, &m<\tildebelow<g>>.
       >
       \p<
-        Wide: not implemented.
+        Wide:
+        &m<\widetilde<&raw<\span|class="box",style="width:0.5em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.6em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.7em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.8em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.9em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.1em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.2em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.3em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.4em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.5em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.6em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.7em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.8em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.9em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:2em"|>>>>
+        or
+        &m<\widetildebelow<&raw<\span|class="box",style="width:1.5em"|>>>>.
+      >
+      \p<
+        Wide braces:
+        &m<\overbrace<&raw<\span|class="box",style="width:1em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.1em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.2em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.3em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.4em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.5em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.6em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.7em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.8em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.9em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.1em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.2em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.3em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.4em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.5em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.6em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.7em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.8em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.9em"|>>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:3em"|>>>>.
+      >
+      \p<
+        Other wide accents:
+        &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + 2i - 3>>.
       >
       \p<
         Accents should be placed according to the height and the inclination of the letters to which they are attached, but it is hard to achieve on browsers.
-        MathJax, my marvellous precursor, seems to achieve this by keeping all the information (such as height or italic inclination) of glyphs in advance.
+        MathJax, seems to achieve this by keeping all the information (such as height or italic inclination) of glyphs in advance.
         This solution, however, severely restricts available fonts in Zotica, which ruins one of its selling points that it can be used with any font.
       >
       \h1<Matrices>
