@@ -464,13 +464,18 @@ module ZenmathBuilder
     block&.call(table_element)
     align_array = align_config&.chars
     column, row = 1, 1
-    table_element.each_element do |child|
+    table_element.elements.each_with_index do |child, i|
       if child.name == "math-cell"
-        child["class"] = [*child["class"].split(" "), "raw"].join(" ") if raw 
+        if raw
+          extra_class = []
+          extra_class << "lpres" unless column == 1
+          extra_class << "rpres" unless table_element.elements[i + 1]&.name == "math-sys-br"
+          child["class"] = (child["class"].split(" ") + extra_class).join(" ")
+        end
         child["style"] += "grid-row: #{row}; grid-column: #{column};"
         if align_array
           align = ALIGNS[align_array[column - 1]]
-          child["style"] += "text-align: #{align}" 
+          child["style"] += "text-align: #{align};" 
         end
         column += 1
       elsif child.name == "math-sys-br"

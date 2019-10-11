@@ -101,7 +101,7 @@ math-o {
     padding-right: spacing(0) !important;
   }
 
-  *:not(.raw) >&:first-child {
+  *:not(.lpres) >&:first-child {
     padding-left: spacing(0);
     padding-right: spacing(0);
   }
@@ -382,11 +382,11 @@ math-root {
     box-sizing: border-box;
   }
 
-  *:not(.raw) >*:first-child {
+  *:not(.lpres) >*:first-child {
     padding-left: spacing(0);
   }
 
-  *:not(.raw) >*:last-child {
+  *:not(.rpres) >*:last-child {
     padding-right: spacing(0);
   }
 
