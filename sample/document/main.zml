@@ -142,10 +142,14 @@
       >
       \h1<Accents>
       \p<
-        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\barbelow<E>>, &m<\tildebelow<g>>.
+        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\barbelow<E>>, &m<\tildebelow<F>>,  &m<\tildebelow<g>>.
       >
       \p<
         Wide:
+        &m<\widetilde<ABap>>, &m<\widehat<ABap>>, &m<\widecheck<ABap>>, &m<\widetildebelow<ABap>>.
+      >
+      \p<
+        Sizes:
         &m<\widetilde<&raw<\span|class="box",style="width:0.5em"|>>>>
         &m<\widetilde<&raw<\span|class="box",style="width:0.6em"|>>>>
         &m<\widetilde<&raw<\span|class="box",style="width:0.7em"|>>>>
@@ -191,7 +195,7 @@
       >
       \p<
         Other wide accents:
-        &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + 2i - 3>>.
+        &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
       >
       \p<
         Accents should be placed according to the height and the inclination of the letters to which they are attached, but it is hard to achieve on browsers.
