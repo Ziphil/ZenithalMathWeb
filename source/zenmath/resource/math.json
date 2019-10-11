@@ -9,67 +9,148 @@
     "*": "∗"
   },
   "paren": {
-    "paren": {
-      "0": ["(", ")"],
-      "1": ["\uDB80\uDC39", "\uDB80\uDC45"], "2": ["\uDB80\uDC3A", "\uDB80\uDC46"], "3": ["\uDB80\uDC3B", "\uDB80\uDC47"], "4": ["\uDB80\uDC3C", "\uDB80\uDC48"],
-      "5": ["\uDB80\uDC3D", "\uDB80\uDC49"], "6": ["\uDB80\uDC3E", "\uDB80\uDC4A"], "7": ["\uDB80\uDC3F", "\uDB80\uDC4B"], "8": ["\uDB80\uDC40", "\uDB80\uDC4C"],
-      "9": ["\uDB80\uDC41", "\uDB80\uDC4D"], "10": ["\uDB80\uDC42", "\uDB80\uDC4E"], "11": ["\uDB80\uDC43", "\uDB80\uDC4F"], "12": ["\uDB80\uDC44", "\uDB80\uDC50"],
-      "top": ["⎛", "⎞"], "bar": ["⎜", "⎟"], "bot": ["⎝", "⎠"] 
-    },
-    "pparen": {
-      "0": ["⦅", "⦆"],
-      "1": ["\uDB80\uDE0A", "\uDB80\uDE0E"], "2": ["\uDB80\uDE0B", "\uDB80\uDE0F"], "3": ["\uDB80\uDE0C", "\uDB80\uDE10"], "4": ["\uDB80\uDE0D", "\uDB80\uDE11"]
-    },
-    "bracket": {
-      "0": ["[", "]"],
-      "1": ["\uDB80\uDC51", "\uDB80\uDC5D"], "2": ["\uDB80\uDC52", "\uDB80\uDC5E"], "3": ["\uDB80\uDC53", "\uDB80\uDC5F"], "4": ["\uDB80\uDC54", "\uDB80\uDC60"],
-      "5": ["\uDB80\uDC55", "\uDB80\uDC61"], "6": ["\uDB80\uDC56", "\uDB80\uDC62"], "7": ["\uDB80\uDC57", "\uDB80\uDC63"], "8": ["\uDB80\uDC58", "\uDB80\uDC64"],
-      "9": ["\uDB80\uDC59", "\uDB80\uDC65"], "10": ["\uDB80\uDC5A", "\uDB80\uDC66"], "11": ["\uDB80\uDC5B", "\uDB80\uDC67"], "12": ["\uDB80\uDC5C", "\uDB80\uDC68"],
-      "top": ["⎡", "⎤"], "bar": ["⎢", "⎥"], "bot": ["⎣", "⎦"]
-    },
-    "bbracket": {
-      "0": ["⟦", "⟧"],
-      "1": ["\uDB80\uDDE8", "\uDB80\uDDEC"], "2": ["\uDB80\uDDE9", "\uDB80\uDDED"], "3": ["\uDB80\uDDEA", "\uDB80\uDDEE"], "4": ["\uDB80\uDDEB", "\uDB80\uDDEF"]
-    },
-    "brace": {
-      "0": ["{", "}"],
-      "1": ["\uDB80\uDC69", "\uDB80\uDC75"], "2": ["\uDB80\uDC6A", "\uDB80\uDC76"], "3": ["\uDB80\uDC6B", "\uDB80\uDC77"], "4": ["\uDB80\uDC6C", "\uDB80\uDC78"],
-      "5": ["\uDB80\uDC6D", "\uDB80\uDC79"], "6": ["\uDB80\uDC6E", "\uDB80\uDC7A"], "7": ["\uDB80\uDC6F", "\uDB80\uDC7B"], "8": ["\uDB80\uDC70", "\uDB80\uDC7C"],
-      "9": ["\uDB80\uDC71", "\uDB80\uDC7D"], "10": ["\uDB80\uDC72", "\uDB80\uDC7E"], "11": ["\uDB80\uDC73", "\uDB80\uDC7F"], "12": ["\uDB80\uDC74", "\uDB80\uDC80"],
-      "top": ["⎧", "⎫"], "bar": ["⎪", "⎪"], "mid": ["⎨", "⎬"], "bot": ["⎩", "⎭"]
-    },
-    "bbrace": {
-      "0": ["⦃", "⦄"],
-      "1": ["\uDB80\uDE02", "\uDB80\uDE06"], "2": ["\uDB80\uDE03", "\uDB80\uDE07"], "3": ["\uDB80\uDE04", "\uDB80\uDE08"], "4": ["\uDB80\uDE05", "\uDB80\uDE09"]
-    },
-    "vert": {
-      "0": ["|", "|"],
-      "bar": ["|", "|"]
-    },
-    "vvert": {
-      "0": ["‖", "‖"],
-      "bar": ["‖", "‖"]
-    },
-    "floor": {
-      "0": ["⌊", "⌋"],
-      "1": ["\uDB80\uDD99", "\uDB80\uDD9D"], "2": ["\uDB80\uDD9A", "\uDB80\uDD9E"], "3": ["\uDB80\uDD9B", "\uDB80\uDD9F"], "4": ["\uDB80\uDD9C", "\uDB80\uDDA0"]
-    },
-    "ceil": {
-      "0": ["⌈", "⌉"],
-      "1": ["\uDB80\uDD91", "\uDB80\uDD95"], "2": ["\uDB80\uDD92", "\uDB80\uDD96"], "3": ["\uDB80\uDD93", "\uDB80\uDD97"], "4": ["\uDB80\uDD94", "\uDB80\uDD98"]
-    },
-    "angle": {
-      "0": ["⟨", "⟩"],
-      "1": ["\uDB80\uDDF0", "\uDB80\uDDF4"], "2": ["\uDB80\uDDF1", "\uDB80\uDDF5"], "3": ["\uDB80\uDDF2", "\uDB80\uDDF6"], "4": ["\uDB80\uDDF3", "\uDB80\uDDF7"]
-    },
-    "aangle": {
-      "0": ["⟪", "⟫"],
-      "1": ["\uDB80\uDDF8", "\uDB80\uDDFC"], "2": ["\uDB80\uDDF9", "\uDB80\uDDFD"], "3": ["\uDB80\uDDFA", "\uDB80\uDDFE"], "4": ["\uDB80\uDDFB", "\uDB80\uDDFF"]
-    },
-    "tort": {
-      "0": ["❲", "❳"],
-      "1": ["\uDB80\uDDE0", "\uDB80\uDDE4"], "2": ["\uDB80\uDDE1", "\uDB80\uDDE5"], "3": ["\uDB80\uDDE2", "\uDB80\uDDE6"], "4": ["\uDB80\uDDE3", "\uDB80\uDDE7"]
-    }
+    "paren": [
+      {
+        "0": "(",
+        "1": "\uDB80\uDC39", "2": "\uDB80\uDC3A", "3": "\uDB80\uDC3B", "4": "\uDB80\uDC3C", "5": "\uDB80\uDC3D", "6": "\uDB80\uDC3E",
+        "7": "\uDB80\uDC3F", "8": "\uDB80\uDC40", "9": "\uDB80\uDC41", "10": "\uDB80\uDC42", "11": "\uDB80\uDC43", "12": "\uDB80\uDC44",
+        "top": "⎛", "bar": "⎜", "bot": "⎝"
+      },
+      {
+        "0": ")",
+        "1": "\uDB80\uDC45", "2": "\uDB80\uDC46", "3": "\uDB80\uDC47", "4": "\uDB80\uDC48", "5": "\uDB80\uDC49", "6": "\uDB80\uDC4A",
+        "7": "\uDB80\uDC4B", "8": "\uDB80\uDC4C", "9": "\uDB80\uDC4D", "10": "\uDB80\uDC4E", "11": "\uDB80\uDC4F", "12": "\uDB80\uDC50",
+        "top": "⎞", "bar":"⎟", "bot": "⎠"
+      }
+    ],
+    "pparen": [
+      {
+        "0": "⦅",
+        "1": "\uDB80\uDE0A", "2": "\uDB80\uDE0B", "3": "\uDB80\uDE0C", "4": "\uDB80\uDE0D"
+      },
+      {
+        "0": "⦆",
+        "1": "\uDB80\uDE0E", "2": "\uDB80\uDE0F", "3": "\uDB80\uDE10", "4": "\uDB80\uDE11"
+      }
+    ],
+    "bracket": [
+      {
+        "0": "[",
+        "1": "\uDB80\uDC51", "2": "\uDB80\uDC52", "3": "\uDB80\uDC53", "4": "\uDB80\uDC54", "5": "\uDB80\uDC55", "6": "\uDB80\uDC56",
+        "7": "\uDB80\uDC57", "8": "\uDB80\uDC58", "9": "\uDB80\uDC59", "10": "\uDB80\uDC5A", "11": "\uDB80\uDC5B", "12": "\uDB80\uDC5C",
+        "top": "⎡", "bar": "⎢", "bot": "⎣"
+      },
+      {
+        "0": "]",
+        "1": "\uDB80\uDC5D", "2": "\uDB80\uDC5E", "3": "\uDB80\uDC5F", "4": "\uDB80\uDC60", "5": "\uDB80\uDC61", "6": "\uDB80\uDC62",
+        "7": "\uDB80\uDC63", "8": "\uDB80\uDC64", "9": "\uDB80\uDC65", "10": "\uDB80\uDC66", "11": "\uDB80\uDC67", "12": "\uDB80\uDC68",
+        "top": "⎤", "bar": "⎥", "bot": "⎦"
+      }  
+    ],
+    "bbracket": [
+      {
+        "0": "⟦",
+        "1": "\uDB80\uDDE8", "2": "\uDB80\uDDE9", "3": "\uDB80\uDDEA", "4": "\uDB80\uDDEB"
+      },
+      {
+        "0": "⟧",
+        "1": "\uDB80\uDDEC", "2": "\uDB80\uDDED", "3": "\uDB80\uDDEE", "4": "\uDB80\uDDEF"
+      }  
+    ],
+    "brace": [
+      {
+        "0": "(",
+        "1": "\uDB80\uDC69", "2": "\uDB80\uDC6A", "3": "\uDB80\uDC6B", "4": "\uDB80\uDC6C", "5": "\uDB80\uDC6D", "6": "\uDB80\uDC6E",
+        "7": "\uDB80\uDC6F", "8": "\uDB80\uDC70", "9": "\uDB80\uDC71", "10": "\uDB80\uDC72", "11": "\uDB80\uDC73", "12": "\uDB80\uDC74",
+        "top": "⎧", "bar": "⎪", "mid": "⎨", "bot": "⎩"
+      },
+      {
+        "0": ")",
+        "1": "\uDB80\uDC75", "2": "\uDB80\uDC76", "3": "\uDB80\uDC77", "4": "\uDB80\uDC78", "5": "\uDB80\uDC79", "6": "\uDB80\uDC7A",
+        "7": "\uDB80\uDC7B", "8": "\uDB80\uDC7C", "9": "\uDB80\uDC7D", "10": "\uDB80\uDC7E", "11": "\uDB80\uDC7F", "12": "\uDB80\uDC80",
+        "top": "⎫", "bar": "⎪", "mid": "⎬", "bot": "⎭"
+      }
+    ],
+    "bbrace": [
+      {
+        "0": "⦃",
+        "1": "\uDB80\uDE02", "2": "\uDB80\uDE03", "3": "\uDB80\uDE04", "4": "\uDB80\uDE05"
+      },
+      {
+        "0": "⦄",
+        "1": "\uDB80\uDE06", "2": "\uDB80\uDE07", "3": "\uDB80\uDE08", "4": "\uDB80\uDE09"
+      }
+    ],
+    "vert": [
+      {
+        "0": "|",
+        "bar": "|"
+      },
+      {
+        "0": "|",
+        "bar": "|"
+      }
+    ],
+    "vvert": [
+      {
+        "0": "‖",
+        "bar": "‖"
+      },
+      {
+        "0": "‖",
+        "bar": "‖"
+      }
+    ],
+    "floor": [
+      {
+        "0": "⌊",
+        "1": "\uDB80\uDD99", "2": "\uDB80\uDD9A", "3": "\uDB80\uDD9B", "4": "\uDB80\uDD9C"
+      },
+      {
+        "0": "⌋",
+        "1": "\uDB80\uDD9D", "2": "\uDB80\uDD9E", "3": "\uDB80\uDD9F", "4": "\uDB80\uDDA0"
+      }
+    ],
+    "ceil": [
+      {
+        "0": "⌈",
+        "1": "\uDB80\uDD91", "2": "\uDB80\uDD92", "3": "\uDB80\uDD93", "4": "\uDB80\uDD94"
+      },
+      {
+        "0": "⌉",
+        "1": "\uDB80\uDD95", "2": "\uDB80\uDD96", "3": "\uDB80\uDD97", "4": "\uDB80\uDD98"
+      }
+    ],
+    "angle": [
+      {
+        "0": "⟨",
+        "1": "\uDB80\uDDF0", "2": "\uDB80\uDDF1", "3": "\uDB80\uDDF2", "4": "\uDB80\uDDF3"
+      },
+      {
+        "0": "⟩",
+        "1": "\uDB80\uDDF4", "2": "\uDB80\uDDF5", "3": "\uDB80\uDDF6", "4": "\uDB80\uDDF7"
+      }
+    ],
+    "aangle": [
+      {
+        "0": "⟪",
+        "1": "\uDB80\uDDF8", "2": "\uDB80\uDDF9", "3": "\uDB80\uDDFA", "4": "\uDB80\uDDFB"
+      },
+      {
+        "0": "⟫",
+        "1": "\uDB80\uDDFC", "2": "\uDB80\uDDFD", "3": "\uDB80\uDDFE", "4": "\uDB80\uDDFF"
+      }
+    ],
+    "tort": [
+      {
+        "0": "❲",
+        "1": "\uDB80\uDDE0", "2": "\uDB80\uDDE1", "3": "\uDB80\uDDE2", "4": "\uDB80\uDDE3"
+      },
+      {
+        "0": "❳",
+        "1": "\uDB80\uDDE4", "2": "\uDB80\uDDE5", "3": "\uDB80\uDDE6", "4": "\uDB80\uDDE7"
+      }
+    ]
   },
   "integral": {
     "int": ["∫", "\uDB80\uDD35"],

@@ -294,8 +294,8 @@ module ZenmathBuilder
 
   def self.fetch_paren_symbols(left_kind, right_kind, stretch_level)
     stretch_level ||= "0"
-    left_symbol = DATA.dig("paren", left_kind, "0", 0) || ""
-    right_symbol = DATA.dig("paren", right_kind, "0", 1) || ""
+    left_symbol = DATA.dig("paren", left_kind, 0, stretch_level) || ""
+    right_symbol = DATA.dig("paren", right_kind, 1, stretch_level) || ""
     return left_symbol, right_symbol
   end
 
