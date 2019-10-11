@@ -12,9 +12,20 @@ function calcWideKind(element) {
   return kind;
 }
 
-function calcWideStretchLevel(element, kind) {
+function calcWideMaxStretchLevel(kind, position) {
+  let keys = Object.keys(DATA["wide"][kind][position]);
+  let maxStretchLevel = 0;
+  for (let key of keys) {
+    if (key.match(/^\d+$/) && parseInt(key) > maxStretchLevel) {
+      maxStretchLevel = parseInt(key);
+    }
+  }
+  return maxStretchLevel;
+}
+
+function calcWideStretchLevel(element, kind, position) {
   let width = getWidth(element);
-  let maxStretchLevel = Object.keys(DATA["wide"][kind]).map((s) => s.match(/^\d+$/)).reduce((s, t) => Math.max(s, t));
+  let maxStretchLevel = calcWideMaxStretchLevel(kind, position);
   let stretchLevel = 0;
   if (width <= 0.79) {
     stretchLevel = 0;
@@ -27,7 +38,7 @@ function calcWideStretchLevel(element, kind) {
   } else if (width <= 2.61 && maxStretchLevel >= 4) {
     stretchLevel = 4;
   } else {
-    if (DATA["wide"][kind]["bar"]) {
+    if (DATA["wide"][kind][position]["bar"]) {
       stretchLevel = null;
     } else {
       stretchLevel = maxStretchLevel;
@@ -37,15 +48,15 @@ function calcWideStretchLevel(element, kind) {
 }
 
 function modifyWide(element) {
-  let baseWrapperElement = Array.from(element.children).find((s) => s.localName == "math-basewrap");
-  let overElement = Array.from(element.children).find((s) => s.localName == "math-over");
+  let baseWrapperElement = Array.from(element.children).find((element) => element.localName == "math-basewrap");
+  let overElement = Array.from(element.children).find((element) => element.localName == "math-over");
   let contentElement = baseWrapperElement.children[0];
   let parentElements = [baseWrapperElement.children[1], overElement];
   let kind = calcWideKind(element);
   for (let position of [0, 1]) {
     let parentElement = parentElements[position];
     if (parentElement) {
-      let stretchLevel = calcWideStretchLevel(contentElement, kind);
+      let stretchLevel = calcWideStretchLevel(contentElement, kind, position);
       if (stretchLevel != null) {
         modifyWideStretch(contentElement, parentElement, kind, stretchLevel, position);
       } else {
@@ -57,7 +68,7 @@ function modifyWide(element) {
 
 function modifyWideStretch(contentElement, parentElement, kind, stretchLevel, position) {
   let symbolElement = parentElement.children[0];
-  symbolElement.textContent = DATA["wide"][kind][stretchLevel][position];
+  symbolElement.textContent = DATA["wide"][kind][position][stretchLevel];
   parentElement.classList.add("s" + stretchLevel);
 }
 

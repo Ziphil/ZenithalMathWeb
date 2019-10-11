@@ -197,18 +197,30 @@
     "tildebelow": ["˷", null]
   },
   "wide": {
-    "widetilde": {
-      "0": [null, "\uDB80\uDCA1"], "1": [null, "\uDB80\uDCA2"], "2": [null, "\uDB80\uDCA3"], "3": [null, "\uDB80\uDCA4"], "4": [null, "\uDB80\uDCA5"]
-    },
-    "widehat": {
-      "0": [null, "\uDB80\uDC97"], "1": [null, "\uDB80\uDC98"], "2": [null, "\uDB80\uDC99"], "3": [null, "\uDB80\uDC9A"], "4": [null, "\uDB80\uDC9B"]
-    },
-    "widecheck": {
-      "0": [null, "\uDB80\uDC9C"], "1": [null, "\uDB80\uDC9D"], "2": [null, "\uDB80\uDC9E"], "3": [null, "\uDB80\uDC9F"], "4": [null, "\uDB80\uDCA0"]
-    },
-    "widetildebelow": {
-      "0": ["\uDB80\uDCA6", null], "1": ["\uDB80\uDCA7", null], "2": ["\uDB80\uDCA8", null], "3": ["\uDB80\uDCA9", null], "4": ["\uDB80\uDCAA", null]
-    }
+    "widetilde": [
+      null,
+      {
+        "0": "\uDB80\uDCA1", "1": "\uDB80\uDCA2", "2": "\uDB80\uDCA3", "3": "\uDB80\uDCA4", "4": "\uDB80\uDCA5"
+      }
+    ],
+    "widehat": [
+      null,
+      {
+        "0": "\uDB80\uDC97", "1": "\uDB80\uDC98", "2": "\uDB80\uDC99", "3": "\uDB80\uDC9A", "4": "\uDB80\uDC9B"
+      }
+    ],
+    "widecheck": [
+      null,
+      {
+        "0": "\uDB80\uDC9C", "1": "\uDB80\uDC9D", "2": "\uDB80\uDC9E", "3": "\uDB80\uDC9F", "4": "\uDB80\uDCA0"
+      }
+    ],
+    "widetildebelow": [
+      {
+        "0": "\uDB80\uDCA6", "1": "\uDB80\uDCA7", "2": "\uDB80\uDCA8", "3": "\uDB80\uDCA9", "4": "\uDB80\uDCAA"
+      },
+      null
+    ]
   },
   "function": [
     "sin", "cos", "tan", "cot", "sec", "csc", "sinh", "cosh", "tanh",

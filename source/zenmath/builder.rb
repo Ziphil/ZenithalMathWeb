@@ -128,12 +128,12 @@ module ZenmathBuilder
         end
       end
     when "c"
-      this << ZenmathBuilder.build_table_cell do |cell_this|
+      this << ZenmathBuilder.build_array_cell do |cell_this|
         cell_this << children_list[0]
       end
     when "cc"
       children_list.each do |children|
-        this << ZenmathBuilder.build_table_cell do |cell_this|
+        this << ZenmathBuilder.build_array_cell do |cell_this|
           cell_this << children
         end
       end
@@ -415,8 +415,8 @@ module ZenmathBuilder
 
   def self.fetch_wide_symbols(kind, stretch_level)
     stretch_level ||= "0"
-    under_symbol = DATA.dig("wide", kind, "0", 0) || nil
-    over_symbol = DATA.dig("wide", kind, "0", 1) || nil
+    under_symbol = DATA.dig("wide", kind, 0, stretch_level) || nil
+    over_symbol = DATA.dig("wide", kind, 1, stretch_level) || nil
     return under_symbol, over_symbol
   end
 
@@ -482,7 +482,7 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_table_cell(&block)
+  def self.build_array_cell(&block)
     this = Nodes[]
     cell_element = nil
     this << Element.build("math-cell") do |this|
