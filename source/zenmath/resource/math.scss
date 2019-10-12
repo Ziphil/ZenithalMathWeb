@@ -23,6 +23,14 @@ math-i {
     font-style: normal;
   }
 
+  &.rm {
+    font-style: normal;
+  }
+
+  &.bf {
+    font-weight: bold;
+  }
+
   &.alt {
     font-family: "Math";
     font-style: normal;
@@ -330,7 +338,7 @@ math-table {
 
 math-style {
 
-  &.bold {
+  &.bf {
     font-weight: bold;
   }
 

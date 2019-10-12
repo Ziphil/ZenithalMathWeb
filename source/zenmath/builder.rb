@@ -63,10 +63,10 @@ module ZenmathBuilder
         base_this << children_list[0]
       end
     when DATA["function"].method(:include?)
-      this << ZenmathBuilder.build_identifier(name, true)
+      this << ZenmathBuilder.build_identifier(name, ["fun"])
     when DATA["identifier"].method(:key?)
       char = ZenmathBuilder.fetch_identifier_char(name)
-      this << ZenmathBuilder.build_identifier(char, false)
+      this << ZenmathBuilder.build_identifier(char, [])
     when DATA["operator"].method(:key?)
       symbol, types = ZenmathBuilder.fetch_operator_symbol(name)
       this << ZenmathBuilder.build_operator(symbol, types)
@@ -148,22 +148,23 @@ module ZenmathBuilder
         content_this << children_list[0]
       end
     when "bf"
-      this << ZenmathBuilder.build_style(["bold"]) do |content_this|
+      this << ZenmathBuilder.build_style(["bf"]) do |content_this|
         content_this << children_list[0]
       end
     when "bb", "cal", "scr", "frak"
       raw_text = children_list[0].first.value
       text = ZenmathBuilder.fetch_alternative_identifier_text(name, raw_text)
-      this << ZenmathBuilder.build_identifier(text, false, true)
+      this << ZenmathBuilder.build_identifier(text, ["alt"])
     when "n"
-      number = children_list[0].first.to_s
-      this << ZenmathBuilder.build_number(number)
+      text = children_list[0].first.to_s
+      this << ZenmathBuilder.build_number(text)
     when "i"
-      name = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(name, false)
+      types = attributes["t"]&.split(/\s*,\s*/) || []
+      text = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(text, types)
     when "op"
-      name = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(name, true)
+      text = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(text, ["fun"])
     when "o"
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
       symbol = children_list[0].first.to_s
@@ -181,7 +182,7 @@ module ZenmathBuilder
       if char =~ /\d/
         this << ZenmathBuilder.build_number(char)
       elsif char =~ /[[:alpha:]]/
-        this << ZenmathBuilder.build_identifier(char, false)
+        this << ZenmathBuilder.build_identifier(char)
       elsif char !~ /\s/
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
         name = DATA["replacement"][name] || name
@@ -220,13 +221,10 @@ module ZenmathBuilder
     return text
   end
 
-  def self.build_identifier(text, function = false, alternative = false)
+  def self.build_identifier(text, types = [])
     this = Nodes[]
     this << Element.build("math-i") do |this|
-      classes = []
-      classes << "fun" if function
-      classes << "alt" if alternative
-      this["class"] = classes.join(" ")
+      this["class"] = types.join(" ")
       this << Text.new(text, true, nil, false)
     end
     return this
