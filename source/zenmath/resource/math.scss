@@ -54,8 +54,12 @@ math-o {
     line-height: 1.4em;
   }
 
+  &.acc {
+    padding-left: 0.45em !important;
+  }
+
   math-over >&.acc {
-    padding: 0.2em spacing(0) 0em spacing(0);
+    padding-top: 0.2em;
     margin-right: -0.15em;
   }
 
@@ -64,7 +68,7 @@ math-o {
   }
 
   math-under >&.acc {
-    padding: 0em spacing(0) 0.2em spacing(0);
+    padding-bottom: 0.2em;
     margin-left: -0.1em;
   }
 

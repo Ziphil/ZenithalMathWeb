@@ -185,17 +185,22 @@
     "height": [1486, 2002, 2523, 3100]
   },
   "accent": {
-    "bar": [null, "ˉ"],
-    "tilde": [null, "˜"],
-    "hat": [null, "ˆ"],
-    "check": [null, "ˇ"],
-    "acute": [null, "ˊ"],
-    "grave": [null, "ˋ"],
-    "breve": [null, "˘"],
-    "ring": [null, "˚"],
-    "dot": [null, "˙"],
-    "barbelow": ["ˍ", null],
-    "tildebelow": ["˷", null]
+    "bar": [null, "\u0304"],
+    "tilde": [null, "\u0303"],
+    "hat": [null, "\u0302"],
+    "check": [null, "\u030C"],
+    "acute": [null, "\u0301"],
+    "grave": [null, "\u0300"],
+    "breve": [null, "\u0306"],
+    "ring": [null, "\u030A"],
+    "vec": [null, "\u20D7"],
+    "invvec": [null, "\u20D6"],
+    "dot": [null, "\u0307"],
+    "ddot": [null, "\u0308"],
+    "dddot": [null, "\u20DB"],
+    "ddddot": [null, "\u20DC"],
+    "barbelow": ["\u0331", null],
+    "tildebelow": ["\u0330", null]
   },
   "wide": {
     "widetilde": [
