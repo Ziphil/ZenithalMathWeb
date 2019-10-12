@@ -15,7 +15,7 @@ function modifyAccent(element) {
 function modifyAccentPosition(contentElement, parentElement, position) {
   let charElement = contentElement.children[0];
   let string = charElement && charElement.textContent;
-  if (string && string.length == 1) {
+  if (string && string.length == 1 && contentElement.children.length == 1) {
     let char = string.substring(0, 1);
     let shift = DATA["shift"][position][char];
     if (shift) {
