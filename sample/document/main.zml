@@ -198,9 +198,27 @@
         &m<\widetilde<f \oplus> g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
       >
       \p<
-        Accents should be placed according to the height and the inclination of the letters to which they are attached, but it is hard to achieve on browsers.
-        MathJax, seems to achieve this by keeping all the information (such as height or italic inclination) of glyphs in advance.
-        This solution, however, severely restricts available fonts in Zotica, which ruins one of its selling points that it can be used with any font.
+        Accent position:
+        &m<\tilde<a>>, &m<\tilde<b>>, &m<\tilde<c>>, &m<\tilde<d>>, &m<\tilde<e>>, &m<\tilde<f>>, &m<\tilde<g>>,
+        &m<\tilde<h>>, &m<\tilde<i>>, &m<\tilde<j>>, &m<\tilde<k>>, &m<\tilde<l>>, &m<\tilde<m>>, &m<\tilde<n>>,
+        &m<\tilde<o>>, &m<\tilde<p>>, &m<\tilde<q>>, &m<\tilde<r>>, &m<\tilde<s>>, &m<\tilde<t>>, &m<\tilde<u>>,
+        &m<\tilde<v>>, &m<\tilde<w>>, &m<\tilde<x>>, &m<\tilde<y>>, &m<\tilde<z>>, 
+        &m<\tilde<α>>, &m<\tilde<β>>, &m<\tilde<γ>>, &m<\tilde<δ>>, &m<\tilde<ε>>, &m<\tilde<ζ>>, &m<\tilde<η>>, 
+        &m<\tilde<θ>>, &m<\tilde<ι>>, &m<\tilde<κ>>, &m<\tilde<λ>>, &m<\tilde<μ>>, &m<\tilde<ν>>, &m<\tilde<ξ>>, 
+        &m<\tilde<ο>>, &m<\tilde<π>>, &m<\tilde<ρ>>, &m<\tilde<σ>>, &m<\tilde<τ>>, &m<\tilde<υ>>, &m<\tilde<φ>>, 
+        &m<\tilde<χ>>, &m<\tilde<ψ>>, &m<\tilde<ω>>,
+        &m<\tildebelow<a>>, &m<\tildebelow<b>>, &m<\tildebelow<c>>, &m<\tildebelow<d>>, &m<\tildebelow<e>>, &m<\tildebelow<f>>, &m<\tildebelow<g>>,
+        &m<\tildebelow<h>>, &m<\tildebelow<i>>, &m<\tildebelow<j>>, &m<\tildebelow<k>>, &m<\tildebelow<l>>, &m<\tildebelow<m>>, &m<\tildebelow<n>>,
+        &m<\tildebelow<o>>, &m<\tildebelow<p>>, &m<\tildebelow<q>>, &m<\tildebelow<r>>, &m<\tildebelow<s>>, &m<\tildebelow<t>>, &m<\tildebelow<u>>,
+        &m<\tildebelow<v>>, &m<\tildebelow<w>>, &m<\tildebelow<x>>, &m<\tildebelow<y>>, &m<\tildebelow<z>>, 
+        &m<\tildebelow<α>>, &m<\tildebelow<β>>, &m<\tildebelow<γ>>, &m<\tildebelow<δ>>, &m<\tildebelow<ε>>, &m<\tildebelow<ζ>>, &m<\tildebelow<η>>, 
+        &m<\tildebelow<θ>>, &m<\tildebelow<ι>>, &m<\tildebelow<κ>>, &m<\tildebelow<λ>>, &m<\tildebelow<μ>>, &m<\tildebelow<ν>>, &m<\tildebelow<ξ>>, 
+        &m<\tildebelow<ο>>, &m<\tildebelow<π>>, &m<\tildebelow<ρ>>, &m<\tildebelow<σ>>, &m<\tildebelow<τ>>, &m<\tildebelow<υ>>, &m<\tildebelow<φ>>, 
+        &m<\tildebelow<χ>>, &m<\tildebelow<ψ>>, &m<\tildebelow<ω>>.
+      >
+      \p<
+        To put accent symbols where they should be, Zotica currently adopts an ad-hoc solution; accents are placed according to the pre-calculated height and depth of each letter.
+        This calculation is based exclusively on Times New Roman font, which means using a different font may cause a broken layout.
       >
       \h1<Matrices>
       \p<
