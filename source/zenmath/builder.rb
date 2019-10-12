@@ -22,11 +22,20 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, stretch_level) do |content_this|
         content_this << children_list[0]
       end
+    when "fence"
+      stretch_level = attributes["s"]
+      left_kind, right_kind = attributes["l"] || "paren", attributes["r"] || "paren"
+      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
+      this << ZenmathBuilder.build_paren(left_kind, right_kind, left_symbol, right_symbol, stretch_level) do |content_this|
+        content_this << children_list[0]
+      end
     when "set"
       stretch_level = attributes["s"]
-      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols("brace", "brace", stretch_level)
-      center_symbol, _ = ZenmathBuilder.fetch_paren_symbols("vert", nil, stretch_level)
-      this << ZenmathBuilder.build_set("brace", "brace", "vert", left_symbol, right_symbol, center_symbol, stretch_level) do |left_this, right_this|
+      left_kind, right_kind = attributes["l"] || "brace", attributes["r"] || "brace"
+      center_kind = attributes["c"] || "vert"
+      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(left_kind, right_kind, stretch_level)
+      center_symbol, _ = ZenmathBuilder.fetch_paren_symbols(center_kind, nil, stretch_level)
+      this << ZenmathBuilder.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, stretch_level) do |left_this, right_this|
         left_this << children_list[0]
         right_this << children_list[1]
       end
