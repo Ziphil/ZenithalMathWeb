@@ -90,7 +90,16 @@
         &m<\sbsp<\brace<\frac<1 + \frac<1 + \frac<1 + \frac<1><2>><2>><2>><2 + \frac<1 + \frac<1><2>><2>>>><Sb><Sp>>.
       >
       \p<
-        With a middle bar: not implemented.
+        With a middle bar:
+        &m<\set<a \in> A><f (a) \approx> g (a)>>
+        or
+        &m<\set<\frac<n><m> \in> \bb<Q>><n + m \leq> F (n, m)>>.
+        or
+        &m<\set<\frac<n><\frac<m><\frac<k><l>>> \in> \bb<B>><\frac<l + \frac<k><m>><n> \ggt> 0>>.
+      >
+      \p<
+        Asymmetric:
+        &m<\fence|l="paren",r="bracket"|<0, \frac<1><2>>>.
       >
       \h1<Superscripts and subscripts>
       \p<
@@ -264,7 +273,7 @@
             \cc<\nabla> \cdot> \bf<D>><=><`r>
             \cc<\nabla> \times> \bf<H> - \frac<\partial> \bf<D>><\partial> t>><=><\bf<j>>
           >
-        >
+        >.
       >
       \p<
         Cases:
@@ -274,7 +283,7 @@
             \cc<x><(x \geq> 0)>
             \cc<- x><(x `< 0)>
           >
-        >
+        >.
       >
       \h1<Functions>
       \p<
@@ -294,16 +303,32 @@
       >
       \h1<Miscellaneous>
       \p<
-        Greek variants: &m<(\varbeta>, `b) * (\varepsilon>, `e) * (\vartheta>, `u) * (\varkappa>, `k) * (\varpi>, `p) * (\varrho>, `r) * (\varphi>, `f) * (\varcapupsilon>, `Y)>.
+        Greek variants:
+        &m<(\varbeta>, `b)>, &m<(\varepsilon>, `e)>, &m<(\vartheta>, `u)>, &m<(\varkappa>, `k)>, &m<(\varpi>, `p)>, &m<(\varrho>, `r)>, &m<(\varphi>, `f)>, &m<(\varcapupsilon>, `Y)>
+        and
+        &m<(\capdigamma>, \digamma>)>, &m<(\capkoppa>, \koppa>)>, &m<(\capsampi>, \sampi>)>.
       >
       \p<
-        Archaic greek letters: &m<(\capdigamma>, \digamma>) * (\capkoppa>, \koppa>) * (\capsampi>, \sampi>)>.
+        Verious symbols:
+        &m<\hbar>>, &m<\sharp> \flat>>, &m<\crotchet> \quaver>>, &m<\bspade> \wheart>>, &m<\dagger>>, &m<\amp> \invamp>>.
       >
       \p<
-        Symbols: &m<\hbar> * \sharp> \flat> * \crotchet> \quaver> * \bspade> \wheart> * \dagger> * \amp> \invamp>>.
+        Combining negation symbol
+        &m<X \succrel>\not> Y>, &m<A \lls>\not> B>.
       >
       \p<
-        Combining negation symbol: &m<A \lls>\not> B>.
+        Grouping:
+        &m<M \g|t="bin"|<\sb<\otimes>><\bb<Z>>> N>
+        or
+        &m<\g|t="fun"|<\un<\lim>><n \to> \infty>>> \frac<\log> n><n> = 0>
+        or
+        &m<n = [-1]>.
+      >
+      \p<
+        Changing identifier styles:
+        &m<V \in> \sb<\i|t="rm,bf"|<Vect>><k>>
+        or
+        &m<\i|t="rm"|<vol> = `r \space|t="thin"|> \sin> `f \space|t="thin"|> d `r d `u d`f>.
       >
       \p<
         Texts as subformulae: &m<`{ x \in> X \mid> x \text< is very good> `}> or &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
@@ -338,7 +363,7 @@
         >
         Taking the square roots of both sides yields
         &mb<
-          x + \frac<b><2 a> = \frac<\pm> \sqrt<\sp<b><2> - 4 ac>><2 a>.
+          x + \frac<b><2 a> = [\pm> \frac<\sqrt<\sp<b><2> - 4 ac>><2 a>].
         >
         Transposing &m<b `/ 2 a> to the left finally gives the desired formula.
       >
@@ -376,6 +401,17 @@
           \sp<F><(n)> (z) = \frac<n !><2 `p i> \oint<C><> \frac<F (`z)><\sp<(`z - z)><n - 1>> d `z
         >
         と書けることが分かる。
+      >
+      \p|class="normal"|<
+        &m<\sp<\bb<C>><2 \times> 2>> の部分集合
+        &mb<
+          \array|align="rcl"|<
+            \c<\sb<\frak<sl>><2> (\bb<C>)> \c<\coloneqq>> \c<\set<\paren<\matrix<\cc<c><a>\cc<b><-c>>> \in> \sp<\bb<C>><2 \times> 2>><a, b, c \in> \bb<C>>> \br>
+            \c> \c<=> \c<\bb<C> \paren<\matrix<\cc<0><1>\cc<0><0>>> \oplus> \bb<C> \paren<\matrix<\cc<0><0>\cc<1><0>>> \oplus> \bb<C> \paren<\matrix<\cc<1><0>\cc<0><-1>>>>
+          >
+        >
+        は、通常の和と交換積によって Lie 代数になる。
+        これは、2 次の特殊線型 Lie 代数と呼ばれる。
       >
     >
 
