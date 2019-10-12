@@ -22,6 +22,14 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, stretch_level) do |content_this|
         content_this << children_list[0]
       end
+    when "set"
+      stretch_level = attributes["s"]
+      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols("brace", "brace", stretch_level)
+      center_symbol, _ = ZenmathBuilder.fetch_paren_symbols("vert", nil, stretch_level)
+      this << ZenmathBuilder.build_set("brace", "brace", "vert", left_symbol, right_symbol, center_symbol, stretch_level) do |left_this, right_this|
+        left_this << children_list[0]
+        right_this << children_list[1]
+      end
     when DATA["integral"].method(:key?)
       symbol = ZenmathBuilder.fetch_integral_symbol(name)
       this << ZenmathBuilder.build_integral(symbol) do |sub_this, super_this|
@@ -292,6 +300,12 @@ module ZenmathBuilder
     return this
   end
 
+  def self.fetch_paren_symbol(kind, stretch_level)
+    stretch_level ||= "0"
+    symbol = DATA.dig("paren", kind, 0, stretch_level) || ""
+    return symbol
+  end
+
   def self.fetch_paren_symbols(left_kind, right_kind, stretch_level)
     stretch_level ||= "0"
     left_symbol = DATA.dig("paren", left_kind, 0, stretch_level) || ""
@@ -303,7 +317,7 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
-      this["class"] = "mod left-#{left_kind} right-#{right_kind}" unless stretch_level
+      this["class"] = ["mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ") unless stretch_level
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "lp"
@@ -321,6 +335,40 @@ module ZenmathBuilder
       end
     end
     block&.call(content_element)
+    return this
+  end
+
+  def self.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, stretch_level, &block)
+    this = Nodes[]
+    left_element, right_element = nil
+    this << Element.build("math-paren") do |this|
+      this["class"] = ["mod", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ") unless stretch_level
+      this << Element.build("math-left") do |this|
+        this << Element.build("math-o") do |this|
+          this["class"] = "lp"
+          this << Text.new(left_symbol, true, nil, false)
+        end
+      end
+      this << Element.build("math-parencont") do |this|
+        left_element = this
+      end
+      this << Element.build("math-center") do |this|
+        this << Element.build("math-o") do |this|
+          this["class"] = "cp"
+          this << Text.new(right_symbol, true, nil, false)
+        end
+      end
+      this << Element.build("math-parencont") do |this|
+        right_element = this
+      end
+      this << Element.build("math-right") do |this|
+        this << Element.build("math-o") do |this|
+          this["class"] = "rp"
+          this << Text.new(right_symbol, true, nil, false)
+        end
+      end
+    end
+    block&.call(left_element, right_element)
     return this
   end
 

@@ -2,17 +2,20 @@
 
 
 function calcParenKinds(element) {
-  let left_kind = "paren";
-  let right_kind = "paren";
+  let leftKind = "paren";
+  let rightKind = "paren";
+  let centerKind = "paren";
   for (let clazz of element.classList) {
     let match;
     if (match = clazz.match(/^left-(\w*)$/)) {
-      left_kind = match[1];
+      leftKind = match[1];
     } else if (match = clazz.match(/^right-(\w*)$/)) {
-      right_kind = match[1];
+      rightKind = match[1];
+    } else if (match = clazz.match(/^center-(\w*)$/)) {
+      centerKind = match[1]
     }
   }
-  return [left_kind, right_kind];
+  return [leftKind, rightKind, centerKind];
 }
 
 function calcParenMaxStretchLevel(kind, position) {
@@ -26,8 +29,20 @@ function calcParenMaxStretchLevel(kind, position) {
   return maxStretchLevel;
 }
 
-function calcParenStretchLevel(element, kind, position) {
-  let heightAbs = getHeight(element) * 1000;
+function calcParenWholeHeight(elements) {
+  let upperHeights = [];
+  let lowerHeights = [];
+  for (let element of elements) {
+    upperHeights.push(getUpperHeight(element));
+    lowerHeights.push(getLowerHeight(element));
+  }
+  let maxUpperHeight = Math.max(...upperHeights);
+  let maxLowerHeight = Math.max(...lowerHeights);
+  return maxUpperHeight + maxLowerHeight;
+}
+
+function calcParenStretchLevel(elements, kind, position) {
+  let heightAbs = calcParenWholeHeight(elements) * 1000;
   let maxStretchLevel = calcParenMaxStretchLevel(kind, position);
   let stretchLevel = null;
   for (let i = 0 ; i <= maxStretchLevel ; i ++) {
@@ -42,13 +57,13 @@ function calcParenStretchLevel(element, kind, position) {
   return stretchLevel;
 }
 
-function calcParenShift(element) {
-  let shift = getHeight(element) / 2 - getLowerHeight(element);
+function calcParenShift(elements) {
+  let shift = calcParenWholeHeight(elements) / 2 - Math.max(...elements.map((element) => getLowerHeight(element)));
   return shift;
 }
 
-function calcParenBarHeight(element, topElement, bottomElement, middleElement) {
-  let wholeHeight = getHeight(element);
+function calcParenBarHeight(elements, topElement, bottomElement, middleElement) {
+  let wholeHeight = calcParenWholeHeight(elements);
   let topHeight = (topElement) ? getHeight(topElement) : 0;
   let bottomHeight = (bottomElement) ? getHeight(bottomElement) : 0;
   let middleHeight = (middleElement) ? getHeight(middleElement) : 0;
@@ -62,38 +77,44 @@ function calcParenBarHeight(element, topElement, bottomElement, middleElement) {
   return height;
 }
 
-function calcParenStretchShift(element) {
-  let shift = -getLowerHeight(element) + 0.25;
+function calcParenStretchShift(elements) {
+  let shift = -Math.max(...elements.map((element) => getLowerHeight(element))) + 0.25;
   return shift;
 }
 
 function modifyParen(element) {
-  let contentElement = element.children[1];
-  let parentElements = [element.children[0], element.children[2]];
+  let contentElements = Array.from(element.children).filter((element) => element.localName == "math-parencont");
+  let leftElement = Array.from(element.children).find((element) => element.localName == "math-left");
+  let rightElement = Array.from(element.children).find((element) => element.localName == "math-right");
+  let centerElement = Array.from(element.children).find((element) => element.localName == "math-center");
+  let parentElements = [leftElement, rightElement, centerElement];
   let kinds = calcParenKinds(element);
-  for (let position of [0, 1]) {
+  for (let position of [0, 1, 2]) {
     let parentElement = parentElements[position];
     let kind = kinds[position];
-    if (kind != "none") {
-      let stretchLevel = calcParenStretchLevel(contentElement, kind, position);
+    if (position == 2) {
+      position = 0;
+    }
+    if (parentElement && kind != "none") {
+      let stretchLevel = calcParenStretchLevel(contentElements, kind, position);
       if (stretchLevel != null) {
-        modifyParenStretch(contentElement, parentElement, kind, stretchLevel, position);
+        modifyParenStretch(contentElements, parentElement, kind, stretchLevel, position);
       } else {
-        appendParenStretch(contentElement, parentElement, kind, position);
+        appendParenStretch(contentElements, parentElement, kind, position);
       }
     }
   }
 }
 
-function modifyParenStretch(contentElement, parentElement, kind, stretchLevel, position) {
+function modifyParenStretch(contentElements, parentElement, kind, stretchLevel, position) {
   let symbolElement = parentElement.children[0];
-  let shift = calcParenShift(contentElement);
+  let shift = calcParenShift(contentElements);
   symbolElement.textContent = DATA["paren"][kind][position][stretchLevel];
   parentElement.style.verticalAlign = "" + shift + "em";
   parentElement.classList.add("s" + stretchLevel);
 }
 
-function appendParenStretch(contentElement, parentElement, kind, position) {
+function appendParenStretch(contentElements, parentElement, kind, position) {
   let stretchElement = document.createElement("math-vstretch");
   let hasTop = !!DATA["paren"][kind][position]["top"];
   let hasBottom = !!DATA["paren"][kind][position]["bot"];
@@ -120,8 +141,8 @@ function appendParenStretch(contentElement, parentElement, kind, position) {
   parentElement.removeChild(parentElement.children[0]);
   parentElement.appendChild(stretchElement);
   let barSize = (hasMiddle) ? 2 : 1;
-  let barHeight = calcParenBarHeight(contentElement, topElement, bottomElement, middleElement);
-  let stretchShift = calcParenStretchShift(contentElement);
+  let barHeight = calcParenBarHeight(contentElements, topElement, bottomElement, middleElement);
+  let stretchShift = calcParenStretchShift(contentElements);
   for (let i = 0 ; i < barSize ; i ++) { 
     let barElement = document.createElement("math-bar");
     let barContentElement = document.createElement("math-barcont");

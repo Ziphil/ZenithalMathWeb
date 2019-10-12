@@ -103,6 +103,10 @@ math-o {
     padding: 0em spacing(1) 0em spacing(0);
   }
 
+  &.cp {
+    padding: 0em spacing(5);
+  }
+
   math-sub &,
   math-sup &,
   math-under &,
@@ -272,6 +276,15 @@ math-underover {
 
   &.over {
     margin-top: -0.05em;
+  }
+
+}
+
+
+math-paren {
+
+  >math-center {
+    padding: 0em spacing(5);
   }
 
 }
