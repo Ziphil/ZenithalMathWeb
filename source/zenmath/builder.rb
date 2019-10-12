@@ -114,21 +114,18 @@ module ZenmathBuilder
         content_this << children_list[0]
       end
     when "matrix"
-      this << ZenmathBuilder.build_array(nil, false) do |table_this|
-        table_this["class"] = "matrix"
+      this << ZenmathBuilder.build_array("matrix", nil, false) do |table_this|
         table_this << children_list[0]
       end
     when "array"
       align_config = attributes["align"]
-      this << ZenmathBuilder.build_array(align_config, true) do |table_this|
-        table_this["class"] = "array"
+      this << ZenmathBuilder.build_array("array", align_config, true) do |table_this|
         table_this << children_list[0]
       end
     when "case"
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols("brace", "none", nil)
       this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, nil) do |this|
-        this << ZenmathBuilder.build_array("ll", false) do |table_this|
-          table_this["class"] = "case"
+        this << ZenmathBuilder.build_array("case", "ll", false) do |table_this|
           table_this << children_list[0]
         end
       end
@@ -548,11 +545,11 @@ module ZenmathBuilder
 
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
-  def self.build_array(align_config = nil, raw = false, &block)
+  def self.build_array(type = "array", align_config = nil, raw = false, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
-      this["class"] = "mat"
+      this["class"] = type
       table_element = this
     end
     block&.call(table_element)
