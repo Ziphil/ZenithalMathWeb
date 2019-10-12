@@ -32,7 +32,6 @@ math-i {
 
 
 math-o {
-  padding: 0em spacing(4);
   line-height: 0.8;
   font-family: "Math";
 
@@ -239,15 +238,6 @@ math-underover {
 }
 
 
-math-paren {
-
-  >math-center {
-    padding: 0em spacing(5);
-  }
-
-}
-
-
 math-vstretch {
 
   >math-top,
@@ -384,10 +374,6 @@ math-root {
     padding: 0em spacing(0);
   }
 
-  *.txt {
-    font-family: inherit;
-  }
-
   *.lp {
     padding: 0em spacing(0) 0em spacing(1);
   }
@@ -403,6 +389,10 @@ math-root {
 
   *.cp {
     padding: 0em spacing(5);
+  }
+
+  *.txt {
+    font-family: inherit;
   }
 
   *:not(.lpres) >*:first-child {

@@ -342,8 +342,12 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
-      this["class"] = ["mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ") unless stretch_level
+      this["class"] = ["lp", "rp"].join(" ")
+      unless stretch_level
+        this["class"] = [*this["class"].split(" "), "mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ")
+      end
       this << Element.build("math-left") do |this|
+        this["class"] = "lp"
         this << Element.build("math-o") do |this|
           this["class"] = "lp"
           this << Text.new(left_symbol, true, nil, false)
@@ -353,6 +357,7 @@ module ZenmathBuilder
         content_element = this
       end
       this << Element.build("math-right") do |this|
+        this["class"] = "rp"
         this << Element.build("math-o") do |this|
           this["class"] = "rp"
           this << Text.new(right_symbol, true, nil, false)
@@ -367,7 +372,10 @@ module ZenmathBuilder
     this = Nodes[]
     left_element, right_element = nil
     this << Element.build("math-paren") do |this|
-      this["class"] = ["mod", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ") unless stretch_level
+      this["class"] = ["lp", "rp"].join(" ")
+      unless stretch_level
+        this["class"] = [*this["class"].split(" "), "mod", "lp", "rp", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ")
+      end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
           this["class"] = "lp"
@@ -378,6 +386,7 @@ module ZenmathBuilder
         left_element = this
       end
       this << Element.build("math-center") do |this|
+        this["class"] = "cp"
         this << Element.build("math-o") do |this|
           this["class"] = "cp"
           this << Text.new(right_symbol, true, nil, false)
@@ -503,7 +512,9 @@ module ZenmathBuilder
     base_element = nil
     this << Element.build("math-underover") do |this|
       this["class"] = "wide"
-      this["class"] = [*this["class"].split(" "), "mod", "wide-#{kind}"].join(" ") unless stretch_level
+      unless stretch_level
+        this["class"] = [*this["class"].split(" "), "mod", "wide-#{kind}"].join(" ")
+      end
       this << Element.build("math-over") do |this|
         if over_symbol
           this << Element.build("math-o") do |this|
