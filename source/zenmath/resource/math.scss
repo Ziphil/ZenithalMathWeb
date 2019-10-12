@@ -59,9 +59,19 @@ math-o {
 
   math-over >&.acc {
     padding: 0.2em spacing(0) 0em spacing(0);
+    margin-right: -0.2em;
+  }
+
+  math-over >&.wide {
+    padding: 0.2em spacing(0) 0em spacing(0);
   }
 
   math-under >&.acc {
+    padding: 0em spacing(0) 0.2em spacing(0);
+    margin-left: -0.2em;
+  }
+
+  math-under >&.wide {
     padding: 0em spacing(0) 0.2em spacing(0);
   }
 

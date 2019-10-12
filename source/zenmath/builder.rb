@@ -429,7 +429,7 @@ module ZenmathBuilder
       this << Element.build("math-over") do |this|
         if over_symbol
           this << Element.build("math-o") do |this|
-            this["class"] = "acc"
+            this["class"] = "wide"
             this << Text.new(over_symbol, true, nil, false)
           end
         end
@@ -441,7 +441,7 @@ module ZenmathBuilder
         this << Element.build("math-under") do |this|
           if under_symbol
             this << Element.build("math-o") do |this|
-              this["class"] = "acc"
+              this["class"] = "wide"
               this << Text.new(under_symbol, true, nil, false)
             end
           end
