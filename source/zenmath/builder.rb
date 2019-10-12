@@ -52,7 +52,7 @@ module ZenmathBuilder
         over_this << children_list[1]
       end
     when DATA["accent"].method(:key?)
-      under_symbol, over_symbol = DATA.dig("accent", name) || [nil, nil]
+      under_symbol, over_symbol = ZenmathBuilder.fetch_accent_symbols(name)
       this << ZenmathBuilder.build_accent(under_symbol, over_symbol) do |base_this|
         base_this << children_list[0]
       end
@@ -65,23 +65,11 @@ module ZenmathBuilder
     when DATA["function"].method(:include?)
       this << ZenmathBuilder.build_identifier(name, true)
     when DATA["identifier"].method(:key?)
-      symbol = DATA["identifier"].fetch(name, "")
-      this << ZenmathBuilder.build_identifier(symbol, false)
+      char = ZenmathBuilder.fetch_identifier_char(name)
+      this << ZenmathBuilder.build_identifier(char, false)
     when DATA["operator"].method(:key?)
-      symbol, kinds = DATA.dig("operator", name) || [name, ["bin"]]
-      this << ZenmathBuilder.build_operator(symbol, kinds)
-    when "n"
-      number = children_list[0].first.to_s
-      this << ZenmathBuilder.build_number(number)
-    when "i"
-      name = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(name, false)
-    when "op"
-      name = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(name, true)
-    when "o"
-      name = children_list[0].first.to_s
-      this << ZenmathBuilder.build_operator(name, ["bin"])
+      symbol, types = ZenmathBuilder.fetch_operator_symbol(name)
+      this << ZenmathBuilder.build_operator(symbol, types)
     when "sb"
       this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
         base_this << children_list[0]
@@ -158,8 +146,8 @@ module ZenmathBuilder
     when "br"
       this << Element.new("math-sys-br")
     when "g"
-      type = attributes["t"] || "ord"
-      this << ZenmathBuilder.build_group(type) do |content_this|
+      types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
+      this << ZenmathBuilder.build_group(types) do |content_this|
         content_this << children_list[0]
       end
     when "bf"
@@ -170,6 +158,19 @@ module ZenmathBuilder
       alphabets = children_list[0].first.value
       symbol = alphabets.chars.map{|s| DATA.dig("alternative", name, s) || ""}.join
       this << ZenmathBuilder.build_identifier(symbol, false, true)
+    when "n"
+      number = children_list[0].first.to_s
+      this << ZenmathBuilder.build_number(number)
+    when "i"
+      name = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(name, false)
+    when "op"
+      name = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(name, true)
+    when "o"
+      types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
+      symbol = children_list[0].first.to_s
+      this << ZenmathBuilder.build_operator(symbol, types)
     when "text"
       text = children_list[0].first.value
       this << ZenmathBuilder.build_text(text)
@@ -212,22 +213,32 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_identifier(name, function = false, alternative = false)
+  def self.fetch_identifier_char(kind)
+    char = DATA["identifier"].dig(kind) || ""
+    return char
+  end
+
+  def self.build_identifier(identifier, function = false, alternative = false)
     this = Nodes[]
     this << Element.build("math-i") do |this|
       classes = []
       classes << "fun" if function
       classes << "alt" if alternative
       this["class"] = classes.join(" ")
-      this << Text.new(name, true, nil, false)
+      this << Text.new(identifier, true, nil, false)
     end
     return this
   end
 
-  def self.build_operator(symbol, kinds, &block)
+  def self.fetch_operator_symbol(kind)
+    symbol, types = DATA.dig("operator", kind) || ["", ["bin"]]
+    return symbol, types
+  end
+
+  def self.build_operator(symbol, types, &block)
     this = Nodes[]
     this << Element.build("math-o") do |this|
-      this["class"] = kinds.join(" ")
+      this["class"] = types.join(" ")
       this << Text.new(symbol, true, nil, false)
     end
     return this
@@ -386,8 +397,8 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_integral_symbol(name, size = :large)
-    size_index = (size == :large) ? 1 : 0
+  def self.fetch_integral_symbol(name, size = "large")
+    size_index = (size == "large") ? 1 : 0
     symbol = DATA.dig("integral", name, size_index) || ""
     return symbol
   end
@@ -414,8 +425,8 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_sum_symbol(name, size = :large)
-    size_index = (size == :large) ? 1 : 0
+  def self.fetch_sum_symbol(name, size = "large")
+    size_index = (size == "large") ? 1 : 0
     symbol = DATA.dig("sum", name, size_index) || ""
     return symbol
   end
@@ -473,6 +484,11 @@ module ZenmathBuilder
     end
     block&.call(base_element)
     return this
+  end
+
+  def self.fetch_accent_symbols(kind)
+    under_symbol, over_symbol = DATA.dig("accent", kind) || [nil, nil]
+    return under_symbol, over_symbol
   end
 
   def self.fetch_wide_symbols(kind, stretch_level)
@@ -559,22 +575,22 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_group(type, &block)
+  def self.build_group(types, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
-      this["class"] = type
+      this["class"] = types.join(" ")
       content_element = this
     end
     block&.call(content_element)
     return this
   end
 
-  def self.build_style(kinds, &block)
+  def self.build_style(types, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-style") do |this|
-      this["class"] = kinds.join(" ")
+      this["class"] = types.join(" ")
       content_element = this
     end
     block&.call(content_element)
