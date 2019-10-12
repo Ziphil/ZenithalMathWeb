@@ -345,6 +345,63 @@ math-style {
 }
 
 
+math-space {
+
+  &.asfun {
+    padding-left: spacing(3) !important;
+  }
+
+  &.asbin {
+    padding-left: spacing(4) !important;
+  }
+
+  &.asrel {
+    padding-left: spacing(5) !important;
+  }
+
+  &.superthin {
+    padding-left: spacing(1) !important;
+  }
+
+  &.verythin {
+    padding-left: spacing(2) !important;
+  }
+
+  &.thin {
+    padding-left: spacing(3) !important;
+  }
+
+  &.midium {
+    padding-left: spacing(4) !important;
+  }
+
+  &.thick {
+    padding-left: spacing(5) !important;
+  }
+
+  &.verythick {
+    padding-left: spacing(6) !important;
+  }
+
+  &.half {
+    padding-left: spacing(9) !important;
+  }
+
+  &.em {
+    padding-left: spacing(18) !important;
+  }
+
+  &.case {
+    padding-left: spacing(24) !important;
+  }
+
+  &.sesqui {
+    padding-left: spacing(27) !important;
+  }
+
+}
+
+
 math-text {
   white-space: pre;
 }

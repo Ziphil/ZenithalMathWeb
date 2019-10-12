@@ -147,6 +147,9 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_group(types) do |content_this|
         content_this << children_list[0]
       end
+    when "space"
+      type = attributes["t"] || "medium"
+      this << ZenmathBuilder.build_space(type)
     when "bf"
       this << ZenmathBuilder.build_style(["bf"]) do |content_this|
         content_this << children_list[0]
@@ -605,6 +608,14 @@ module ZenmathBuilder
       content_element = this
     end
     block&.call(content_element)
+    return this
+  end
+
+  def self.build_space(type)
+    this = Nodes[]
+    this << Element.build("math-space") do |this|
+      this["class"] = type
+    end
     return this
   end
 
