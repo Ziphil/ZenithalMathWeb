@@ -2,6 +2,7 @@
 
 
 function execute() {
+  document.querySelectorAll("math-underover.acc").forEach(modifyAccent);
   document.querySelectorAll("math-subsup").forEach(modifySubsuper);
   document.querySelectorAll("math-underover").forEach(modifyUnderover);
   document.querySelectorAll("math-sqrt.mod").forEach(modifyRadical);
