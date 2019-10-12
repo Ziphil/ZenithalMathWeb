@@ -157,6 +157,11 @@ module ZenmathBuilder
       this << Element.new("math-sys-br")
     when "br"
       this << Element.new("math-sys-br")
+    when "g"
+      type = attributes["t"] || "ord"
+      this << ZenmathBuilder.build_group(type) do |content_this|
+        content_this << children_list[0]
+      end
     when "bf"
       this << ZenmathBuilder.build_style(["bold"]) do |content_this|
         content_this << children_list[0]
@@ -551,6 +556,17 @@ module ZenmathBuilder
       cell_element = this
     end
     block&.call(cell_element)
+    return this
+  end
+
+  def self.build_group(type, &block)
+    this = Nodes[]
+    content_element = nil
+    this << Element.build("math-group") do |this|
+      this["class"] = type
+      content_element = this
+    end
+    block&.call(content_element)
     return this
   end
 

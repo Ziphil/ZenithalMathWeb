@@ -36,25 +36,15 @@ math-o {
   line-height: 0.8;
   font-family: "Math";
 
-  &.bin {
-    padding: 0em spacing(4);
-  }
-
-  &.rel {
-    padding: 0em spacing(5);
-  }
-
-  &.del {
-    padding: 0em spacing(5) 0em spacing(0);
-  }
-
-  &.not {
-    padding: 0em spacing(5);
-    margin: 0em spacing(0) 0em spacing(-10);
-  }
-
-  &.ord {
+  &.int {
     padding: 0em spacing(0);
+    height: 2.3em;
+    line-height: 2.3em;
+  }
+
+  &.sum {
+    padding: 0.1em spacing(0);
+    line-height: 1.4em;
   }
 
   math-over >&.acc {
@@ -73,38 +63,6 @@ math-o {
 
   math-under >&.wide {
     padding: 0em spacing(0) 0.2em spacing(0);
-  }
-
-  &.int {
-    padding: 0em spacing(0);
-    height: 2.3em;
-    line-height: 2.3em;
-  }
-
-  &.sum {
-    padding: 0.1em spacing(0);
-    line-height: 1.4em;
-  }
-
-  &.txt {
-    font-family: inherit;
-  }
-
-  &.lp {
-    padding: 0em spacing(0) 0em spacing(1);
-  }
-
-  math-i.fun +&.lp {
-    padding: 0em spacing(0) 0em spacing(1);
-    margin-left: spacing(-3);
-  }
-
-  &.rp {
-    padding: 0em spacing(1) 0em spacing(0);
-  }
-
-  &.cp {
-    padding: 0em spacing(5);
   }
 
   math-sub &,
@@ -403,6 +361,48 @@ math-root {
   * {
     display: inline-block;
     box-sizing: border-box;
+  }
+
+  *.bin {
+    padding: 0em spacing(4);
+  }
+
+  *.rel {
+    padding: 0em spacing(5);
+  }
+
+  *.del {
+    padding: 0em spacing(5) 0em spacing(0);
+  }
+
+  *.not {
+    padding: 0em spacing(5);
+    margin: 0em spacing(0) 0em spacing(-10);
+  }
+
+  *.ord {
+    padding: 0em spacing(0);
+  }
+
+  *.txt {
+    font-family: inherit;
+  }
+
+  *.lp {
+    padding: 0em spacing(0) 0em spacing(1);
+  }
+
+  math-i.fun +*.lp {
+    padding: 0em spacing(0) 0em spacing(1);
+    margin-left: spacing(-3);
+  }
+
+  *.rp {
+    padding: 0em spacing(1) 0em spacing(0);
+  }
+
+  *.cp {
+    padding: 0em spacing(5);
   }
 
   *:not(.lpres) >*:first-child {

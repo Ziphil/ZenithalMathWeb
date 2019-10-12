@@ -75,7 +75,7 @@ module ZenmathParserMethod
 
   def create_special_element(kind, children, options)
     if options[:math]
-      return create_math_elements("row", {}, [children])
+      return create_math_element("g", {}, [children])
     else
       return super
     end
