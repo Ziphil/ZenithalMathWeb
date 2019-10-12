@@ -155,9 +155,9 @@ module ZenmathBuilder
         content_this << children_list[0]
       end
     when "bb", "cal", "scr", "frak"
-      alphabets = children_list[0].first.value
-      symbol = alphabets.chars.map{|s| DATA.dig("alternative", name, s) || ""}.join
-      this << ZenmathBuilder.build_identifier(symbol, false, true)
+      raw_text = children_list[0].first.value
+      text = ZenmathBuilder.fetch_alternative_identifier_text(name, raw_text)
+      this << ZenmathBuilder.build_identifier(text, false, true)
     when "n"
       number = children_list[0].first.to_s
       this << ZenmathBuilder.build_number(number)
@@ -205,10 +205,10 @@ module ZenmathBuilder
 
   public
 
-  def self.build_number(number)
+  def self.build_number(text)
     this = Nodes[]
     this << Element.build("math-n") do |this|
-      this << Text.new(number, true, nil, false)
+      this << Text.new(text, true, nil, false)
     end
     return this
   end
@@ -217,15 +217,20 @@ module ZenmathBuilder
     char = DATA["identifier"].dig(kind) || ""
     return char
   end
+  
+  def self.fetch_alternative_identifier_text(kind, raw_text)
+    text = raw_text.chars.map{|s| DATA.dig("alternative", kind, s) || ""}.join
+    return text
+  end
 
-  def self.build_identifier(identifier, function = false, alternative = false)
+  def self.build_identifier(text, function = false, alternative = false)
     this = Nodes[]
     this << Element.build("math-i") do |this|
       classes = []
       classes << "fun" if function
       classes << "alt" if alternative
       this["class"] = classes.join(" ")
-      this << Text.new(identifier, true, nil, false)
+      this << Text.new(text, true, nil, false)
     end
     return this
   end
