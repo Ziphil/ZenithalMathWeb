@@ -27,7 +27,7 @@ Zotica の表示サンプルは[こちら](https://ziphil.github.io/ZenithalMath
 カスタム要素の仕様は以下の通りです。
 現在は試案段階なので、突然変更になる可能性があります。
 
-- バージョン 1.0 (準備中)
+- [バージョン 1.0](document/zotica/1.0.md) (執筆中)
 
 ### ZenMath
 Zenithal Math Markup Language (略称 ZenMath) は、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
@@ -108,8 +108,8 @@ end
 ## 注意点
 
 ### 数式フォントについて
-Zotica で用いられる数式フォントは、[STIX Two Math](https://www.stixfonts.org/) を改変したものになっています。
-改変後のフォントは `source/zenmath/resource/font.otf` に置いてあるので、オリジナルと同じ [SIL Open Font License](http://scripts.sil.org/OFL) のもと自由に使用していただいて構いません。
+Zotica で用いられる数式フォントは、[STIX Two Math](https://www.stixfonts.org/) を HTML での表示用に改変したものになっています。
+改変を行ったフォントは `source/zenmath/resource/font.otf` に置いてあるので、オリジナルと同じ [SIL Open Font License](http://scripts.sil.org/OFL) のもと自由に使用していただいて構いません。
 施した改変の内容は以下の通りです。
 
 まず、追加で登録されているグリフ (`.notdef` ～ `zeroinferior.per`) に専用のコードポイントを与えるため、これらのグリフを U+F0000 ～ U+F04DB にコピーします。
