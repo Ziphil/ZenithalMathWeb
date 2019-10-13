@@ -50,8 +50,8 @@ module ZenmathParserMethod
       children = children_list.first
       return children
     elsif name == @resource_macro_name
-      style_string = STYLE_STRING.gsub("__mathfonturl__", attributes["font-url"] || "font.otf")
-      script_string = SCRIPT_STRING
+      style_string = create_style_string(attributes["font_url"])
+      script_string = create_script_string
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
         element << Text.new(style_string, true, nil, true)
@@ -97,13 +97,16 @@ module ZenmathParserMethod
     end
   end
 
-  def self.create_style_string
+  public
+
+  def create_style_string(font_url = nil)
     path = File.expand_path("../" + STYLE_PATH, __FILE__)
     string = SassC::Engine.new(File.read(path), {:style => :compressed}).render
+    string.gsub!("__mathfonturl__", font_url || "font.otf")
     return string
   end
 
-  def self.create_script_string
+  def create_script_string
     dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
     string = "const DATA = "
     string << JSON.generate(DATA.slice("radical", "paren", "wide", "shift"))
@@ -115,9 +118,6 @@ module ZenmathParserMethod
     string << "window.onload = execute;"
     return string
   end
-
-  STYLE_STRING = self.create_style_string
-  SCRIPT_STRING = self.create_script_string
 
 end
 
