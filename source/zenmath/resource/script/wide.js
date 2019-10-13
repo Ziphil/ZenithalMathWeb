@@ -76,7 +76,6 @@ function modifyWide(element) {
 function modifyWideStretch(contentElement, parentElement, kind, stretchLevel, position) {
   let symbolElement = parentElement.children[0];
   symbolElement.textContent = DATA["wide"][kind][position][stretchLevel];
-  parentElement.classList.add("s" + stretchLevel);
 }
 
 function appendWideStretch(contentElement, parentElement, kind, position) {
@@ -102,7 +101,6 @@ function appendWideStretch(contentElement, parentElement, kind, position) {
     endElement.textContent = DATA["wide"][kind][position]["end"];
     stretchElement.append(endElement);
   }
-  parentElement.classList.add("sinf");
   parentElement.removeChild(parentElement.children[0]);
   parentElement.appendChild(stretchElement);
   let barSize = (hasMiddle) ? 2 : 1;

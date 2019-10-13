@@ -315,7 +315,6 @@ module ZenmathBuilder
     this << Element.build("math-sqrt") do |this|
       this["class"] = "mod" unless stretch_level
       this << Element.build("math-surd") do |this|
-        this["class"] = "s#{stretch_level}" if stretch_level
         this << Element.build("math-o") do |this|
           this << Text.new(symbol, true, nil, false)
         end
@@ -350,9 +349,7 @@ module ZenmathBuilder
         this["class"] = [*this["class"].split(" "), "mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ")
       end
       this << Element.build("math-left") do |this|
-        this["class"] = "lp"
         this << Element.build("math-o") do |this|
-          this["class"] = "lp"
           this << Text.new(left_symbol, true, nil, false)
         end
       end
@@ -360,9 +357,7 @@ module ZenmathBuilder
         content_element = this
       end
       this << Element.build("math-right") do |this|
-        this["class"] = "rp"
         this << Element.build("math-o") do |this|
-          this["class"] = "rp"
           this << Text.new(right_symbol, true, nil, false)
         end
       end
@@ -381,7 +376,6 @@ module ZenmathBuilder
       end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
-          this["class"] = "lp"
           this << Text.new(left_symbol, true, nil, false)
         end
       end
@@ -391,7 +385,6 @@ module ZenmathBuilder
       this << Element.build("math-center") do |this|
         this["class"] = "cp"
         this << Element.build("math-o") do |this|
-          this["class"] = "cp"
           this << Text.new(right_symbol, true, nil, false)
         end
       end
@@ -400,7 +393,6 @@ module ZenmathBuilder
       end
       this << Element.build("math-right") do |this|
         this << Element.build("math-o") do |this|
-          this["class"] = "rp"
           this << Text.new(right_symbol, true, nil, false)
         end
       end

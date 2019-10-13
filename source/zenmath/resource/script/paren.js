@@ -111,7 +111,6 @@ function modifyParenStretch(contentElements, parentElement, kind, stretchLevel, 
   let shift = calcParenShift(contentElements);
   symbolElement.textContent = DATA["paren"][kind][position][stretchLevel];
   parentElement.style.verticalAlign = "" + shift + "em";
-  parentElement.classList.add("s" + stretchLevel);
 }
 
 function appendParenStretch(contentElements, parentElement, kind, position) {
@@ -137,7 +136,6 @@ function appendParenStretch(contentElements, parentElement, kind, position) {
     bottomElement.textContent = DATA["paren"][kind][position]["bot"];
     stretchElement.append(bottomElement);
   }
-  parentElement.classList.add("sinf");
   parentElement.removeChild(parentElement.children[0]);
   parentElement.appendChild(stretchElement);
   let barSize = (hasMiddle) ? 2 : 1;

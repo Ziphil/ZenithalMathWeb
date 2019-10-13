@@ -21,6 +21,5 @@ function modifyRadical(element) {
   let surdSymbolElement = surdElement.children[0];
   let contentElement = element.children[1];
   let stretchLevel = calcRadicalStretchLevel(element);
-  surdElement.classList.add("s" + stretchLevel);
   surdSymbolElement.textContent = DATA["radical"][stretchLevel];
 }
