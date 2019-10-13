@@ -19,7 +19,6 @@ math-i {
   font-style: italic;
 
   &.fun {
-    padding: 0em spacing(3) 0em spacing(0);
     font-style: normal;
   }
 
@@ -42,6 +41,10 @@ math-i {
 math-o {
   line-height: 0.8;
   font-family: "Math";
+
+  &.txt {
+    font-family: inherit;
+  }
 
   &.int {
     padding: 0em spacing(0);
@@ -363,6 +366,14 @@ math-space {
     padding-left: spacing(5) !important;
   }
 
+  &.asmatrix {
+    padding-left: spacing(15) !important;
+  }
+
+  &.ascase {
+    padding-left: spacing(24) !important;
+  }
+
   &.superthin {
     padding-left: spacing(1) !important;
   }
@@ -375,7 +386,7 @@ math-space {
     padding-left: spacing(3) !important;
   }
 
-  &.midium {
+  &.medium {
     padding-left: spacing(4) !important;
   }
 
@@ -393,10 +404,6 @@ math-space {
 
   &.em {
     padding-left: spacing(18) !important;
-  }
-
-  &.case {
-    padding-left: spacing(24) !important;
   }
 
   &.sesqui {
@@ -434,20 +441,25 @@ math-root {
     padding: 0em spacing(5) 0em spacing(0);
   }
 
-  *.not {
-    padding: 0em spacing(5);
-    margin: 0em spacing(0) 0em spacing(-10);
+  *.fun {
+    padding: 0em spacing(3) 0em spacing(0);
+    font-style: normal;
   }
 
   *.ord {
     padding: 0em spacing(0);
   }
 
+  *.not {
+    padding: 0em spacing(5);
+    margin: 0em spacing(0) 0em spacing(-10);
+  }
+
   *.lp {
     padding: 0em spacing(0) 0em spacing(1);
   }
 
-  math-i.fun +*.lp {
+  *.fun +*.lp {
     padding: 0em spacing(0) 0em spacing(1);
     margin-left: spacing(-3);
   }
@@ -460,28 +472,12 @@ math-root {
     padding: 0em spacing(5);
   }
 
-  *.txt {
-    font-family: inherit;
-  }
-
   *:not(.lpres) >*:first-child {
     padding-left: spacing(0);
   }
 
   *:not(.rpres) >*:last-child {
     padding-right: spacing(0);
-  }
-
-  @for $i from 0 through 18 {
-    .l#{$i} {
-      padding-left: spacing($i);
-    }
-  }
-
-  @for $i from 0 through 18 {
-    .r#{$i} {
-      padding-right: spacing($i);
-    }
   }
 
 }
