@@ -56,12 +56,31 @@ gem install zenmath
 ## 使い方
 
 ### Ruby とか ZenML とかよく分からない場合
-Ruby とか ZenML とかよく分からないけど、とりあえず Zotica ＋ ZenMath で数式をレンダリングしてみたいという場合は、以下のドキュメントを参考にしてください。
+Ruby や ZenML はよく分からないが、とりあえず Zotica ＋ ZenMath で数式をレンダリングしてみたいという場合は、以下のドキュメントを参考にしてください。
 
 - [チュートリアル](document/tutorial.md)
 
+### Zotica を単独で使いたい場合
+上記の通り RubyGems から Zotica ＋ ZenMath をインストールします。
+
+Zotica で使用する CSS と JavaScript を生成するため、以下のスクリプトを実行してください。
+```ruby
+# ライブラリの読み込み
+require 'zenml'
+require 'zenmath'
+include Zenithal
+# CSS ファイルの作成 (フォントのファイル名は適宜変更してください)
+style_string = ZenmathParserMethod.create_style_string("font.otf")
+File.write("style.css", style_string)
+# JavaScript ファイルの作成
+script_string = ZenmathParserMethod.create_script_string
+File.write("script.js", script_string)
+```
+`style.css` と `script.js` の 2 つのファイルが生成されるので、これらを Zotica を利用したい HTML のヘッダーで読み込んでください。
+後は、HTML 中に Zotica のカスタム要素を書くだけです。
+
 ### すでに ZenML を使っている場合
-`ZenmathParser` インスタンスを作成します。
+`ZenithalParser` の代わりに `ZenmathParser` インスタンスを作成します。
 
 このクラスには `register_math_macro` メソッドが追加されており、引数の内容が ZenMath で書かれるマクロを登録することができます。
 このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された ZenMath の構造そのものではなく、それが Zotica に変換されたものになります。
@@ -81,7 +100,7 @@ include Zenithal
 source = File.read("sample.zml")
 parser = ZenmathParser.new(source)
 # ZenMath マクロの登録
-parser.register_math_macro("math") do |attributes, children_list|
+parser.register_math_macro("m") do |attributes, children_list|
   # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を Zotica に変換したものが渡される
   # ここではそれをそのまま返して HTML として表示させている
   next children_list.first
@@ -94,12 +113,12 @@ end
 \html<
   \head<
     ## 数式を正しく表示するための CSS と JavaScript を埋め込む
-    &math-style|url="font.otf"|>
+    &math-resource|url="font.otf"|>
   >
   \body<
     \p<
-      ## 登録した &math マクロ内に ZenMath が書ける
-      2 次方程式 &math<a \sp<x><2> + bx + c = 0> は &math<\sp<b><2> - 4ac = 0> のとき重解をもち･･･。
+      ## 登録したマクロ内に ZenMath が書ける
+      2 次方程式 &m<a \sp<x><2> + bx + c = 0> は &m<\sp<b><2> - 4ac = 0> のとき重解をもち･･･。
     >
   >
 >
