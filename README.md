@@ -27,7 +27,7 @@ Zotica の表示サンプルは[こちら](https://ziphil.github.io/ZenithalMath
 カスタム要素の仕様は以下の通りです。
 現在は試案段階なので、突然変更になる可能性があります。
 
-- [バージョン 1.0](document/zotica/1.0.md) (執筆中)
+- [バージョン 1.0](document/zotica/1.0.md)
 
 ### ZenMath
 Zenithal Math Markup Language (略称 ZenMath) は、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
@@ -136,7 +136,7 @@ Zotica で用いられる数式フォントは、[STIX Two Math](https://www.sti
 
 そのままでは一部の大型演算子が若干浮いて表示されてしまうため、U+F0187 ～ U+F018A, U+F0214 ～ U+F021D のグリフを下方向に 540 移動させます。
 
-根号の位置を調整します。
+CSS による調整なしで根号を正しく表示するため、根号のグリフの位置を変更します。
 U+F011D, U+F011E, U+F011F のグリフをそれぞれ下方向に 667, 1183, 1704 移動させます。
 
 ### 本文フォントについて
