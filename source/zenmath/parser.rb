@@ -97,11 +97,11 @@ module ZenmathParserMethod
     end
   end
 
-  public
+  module_function
 
-  def create_style_string(font_url = nil)
+  def create_style_string(font_url = nil, style = :compressed)
     path = File.expand_path("../" + STYLE_PATH, __FILE__)
-    string = SassC::Engine.new(File.read(path), {:style => :compressed}).render
+    string = SassC::Engine.new(File.read(path), {:style => style}).render
     string.gsub!("__mathfonturl__", font_url || "font.otf")
     return string
   end
