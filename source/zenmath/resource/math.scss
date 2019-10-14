@@ -438,24 +438,25 @@ math-root {
     margin: 0em spacing(0) 0em spacing(-10);
   }
 
-  *.lp {
+  *.par {
+    padding: 0em spacing(1) 0em spacing(1);
+  }
+
+  *.lpar {
     padding: 0em spacing(0) 0em spacing(1);
   }
 
-  *.fun +*.lp {
+  *.fun +*.par,
+  *.fun +*.lpar {
     padding: 0em spacing(0) 0em spacing(1);
     margin-left: spacing(-3);
   }
 
-  *.rp {
+  *.rpar {
     padding: 0em spacing(1) 0em spacing(0);
   }
 
-  *.lp.rp {
-    padding: 0em spacing(1) 0em spacing(1);
-  }
-
-  *.cp {
+  *.cpar {
     padding: 0em spacing(5);
   }
 

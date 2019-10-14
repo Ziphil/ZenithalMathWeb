@@ -225,7 +225,7 @@ module ZenmathBuilder
 
   public
 
-  SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lp", "rp", "cp"]
+  SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
 
   def self.determine_spacing(attributes)
     spacing = nil
@@ -388,7 +388,7 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
-      this["class"] = ["lp", "rp"].join(" ")
+      this["class"] = "par"
       if modify
         this["class"] = [*this["class"].split(" "), "mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ")
       end
@@ -415,9 +415,9 @@ module ZenmathBuilder
     this = Nodes[]
     left_element, right_element = nil
     this << Element.build("math-paren") do |this|
-      this["class"] = ["lp", "rp"].join(" ")
+      this["class"] = "par"
       if modify
-        this["class"] = [*this["class"].split(" "), "mod", "lp", "rp", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ")
+        this["class"] = [*this["class"].split(" "), "mod", "lpar", "rpar", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ")
       end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
@@ -428,7 +428,7 @@ module ZenmathBuilder
         left_element = this
       end
       this << Element.build("math-center") do |this|
-        this["class"] = "cp"
+        this["class"] = "cpar"
         this << Element.build("math-o") do |this|
           this << Text.new(right_symbol, true, nil, false)
         end
