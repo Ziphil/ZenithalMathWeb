@@ -19,25 +19,30 @@ module ZenmathBuilder
     case name
     when DATA["paren"].method(:key?)
       stretch_level = attributes["s"]
-      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
+      left_symbol = ZenmathBuilder.fetch_paren_symbol(name, 0, stretch_level)
+      right_symbol = ZenmathBuilder.fetch_paren_symbol(name, 1, stretch_level)
       modify = !stretch_level
       this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "fence"
       stretch_level = attributes["s"]
-      left_kind, right_kind = attributes["l"] || "paren", attributes["r"] || "paren"
-      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
+      left_kind = attributes["l"] || "paren"
+      right_kind = attributes["r"] || "paren"
+      left_symbol = ZenmathBuilder.fetch_paren_symbol(left_kind, 0, stretch_level)
+      right_symbol = ZenmathBuilder.fetch_paren_symbol(right_kind, 1, stretch_level)
       modify = !stretch_level
       this << ZenmathBuilder.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "set"
       stretch_level = attributes["s"]
-      left_kind, right_kind = attributes["l"] || "brace", attributes["r"] || "brace"
+      left_kind = attributes["l"] || "brace"
+      right_kind = attributes["r"] || "brace"
       center_kind = attributes["c"] || "vert"
-      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(left_kind, right_kind, stretch_level)
-      center_symbol, _ = ZenmathBuilder.fetch_paren_symbols(center_kind, nil, stretch_level)
+      left_symbol = ZenmathBuilder.fetch_paren_symbol(left_kind, 0, stretch_level)
+      right_symbol = ZenmathBuilder.fetch_paren_symbol(right_kind, 1, stretch_level)
+      center_symbol = ZenmathBuilder.fetch_paren_symbol(center_kind, 0, stretch_level)
       modify = !stretch_level
       this << ZenmathBuilder.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing) do |left_this, right_this|
         left_this << children_list[0]
@@ -56,13 +61,15 @@ module ZenmathBuilder
         over_this << children_list[1]
       end
     when DATA["accent"].method(:key?)
-      under_symbol, over_symbol = ZenmathBuilder.fetch_accent_symbols(name)
+      under_symbol = ZenmathBuilder.fetch_accent_symbol(name, 0)
+      over_symbol = ZenmathBuilder.fetch_accent_symbol(name, 1)
       this << ZenmathBuilder.build_accent(under_symbol, over_symbol, spacing) do |base_this|
         base_this << children_list[0]
       end
     when DATA["wide"].method(:key?)
       stretch_level = attributes["s"]
-      under_symbol, over_symbol = ZenmathBuilder.fetch_wide_symbols(name, stretch_level)
+      under_symbol = ZenmathBuilder.fetch_wide_symbol(name, 0, stretch_level)
+      over_symbol  = ZenmathBuilder.fetch_wide_symbol(name, 1, stretch_level)
       modify = !stretch_level
       this << ZenmathBuilder.build_wide(name, under_symbol, over_symbol, modify, spacing) do |base_this|
         base_this << children_list[0]
@@ -129,8 +136,9 @@ module ZenmathBuilder
         table_this << children_list[0]
       end
     when "case"
-      left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols("brace", "none", nil)
-      this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, nil, spacing) do |this|
+      left_symbol = ZenmathBuilder.fetch_paren_symbol("brace", 0, nil)
+      right_symbol = ZenmathBuilder.fetch_paren_symbol("none", 1, nil)
+      this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, true, spacing) do |this|
         this << ZenmathBuilder.build_array("case", "ll", false) do |table_this|
           table_this << children_list[0]
         end
@@ -370,17 +378,10 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_paren_symbol(kind, stretch_level)
+  def self.fetch_paren_symbol(kind, position, stretch_level)
     stretch_level ||= "0"
-    symbol = DATA.dig("paren", kind, 0, stretch_level) || ""
+    symbol = DATA.dig("paren", kind, position, stretch_level) || ""
     return symbol
-  end
-
-  def self.fetch_paren_symbols(left_kind, right_kind, stretch_level)
-    stretch_level ||= "0"
-    left_symbol = DATA.dig("paren", left_kind, 0, stretch_level) || ""
-    right_symbol = DATA.dig("paren", right_kind, 1, stretch_level) || ""
-    return left_symbol, right_symbol
   end
 
   def self.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, spacing = nil, &block)
@@ -538,16 +539,15 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_accent_symbols(kind)
-    under_symbol, over_symbol = DATA.dig("accent", kind) || [nil, nil]
-    return under_symbol, over_symbol
+  def self.fetch_accent_symbol(kind, position)
+    symbol = DATA.dig("accent", kind, position) || nil
+    return symbol
   end
 
-  def self.fetch_wide_symbols(kind, stretch_level)
+  def self.fetch_wide_symbol(kind, position, stretch_level)
     stretch_level ||= "0"
-    under_symbol = DATA.dig("wide", kind, 0, stretch_level) || nil
-    over_symbol = DATA.dig("wide", kind, 1, stretch_level) || nil
-    return under_symbol, over_symbol
+    symbol = DATA.dig("wide", kind, position, stretch_level) || nil
+    return symbol
   end
 
   def self.build_wide(kind, under_symbol, over_symbol, modify, spacing = nil, &block)
