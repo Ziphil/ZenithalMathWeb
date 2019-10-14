@@ -127,8 +127,8 @@ end
 ## 注意点
 
 ### 数式フォントについて
-Zotica で用いられる数式フォントは、[STIX Two Math](https://www.stixfonts.org/) を HTML での表示用に改変したものになっています。
-改変を行ったフォントは `source/zenmath/resource/font.otf` に置いてあるので、オリジナルと同じ [SIL Open Font License](http://scripts.sil.org/OFL) のもと自由に使用していただいて構いません。
+Zotica で用いられる数式フォントは、[STIX Two Math](https://www.stixfonts.org/) のバージョン 2.00 b137 を HTML での表示用に改変したものになっています。
+改変を行ったフォントは[ここ](source/zenmath/resource/font.otf)に置いてあるので、オリジナルと同じ [SIL Open Font License](http://scripts.sil.org/OFL) のもと自由に使用していただいて構いません。
 施した改変の内容は以下の通りです。
 
 追加で登録されているグリフ (`.notdef` ～ `zeroinferior.per`) に専用のコードポイントを与えるため、これらのグリフを U+F0000 ～ U+F04DB にコピーします。
