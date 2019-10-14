@@ -269,7 +269,7 @@
         &m<
           \array|align="rcl"|<
             \cc<\nabla> \cdot> \bf<B>><=><0>
-            \cc<\nabla> \times> \bf<E> + \frac<\partial> \bf<B>><\partial> t>><=><\bf<0>>
+            \cc<\nabla> \times> \bf<E> + \frac<\partial> \bf<B>><\partial> t>><=><\bfrm<0>>
             \cc<\nabla> \cdot> \bf<D>><=><`r>
             \cc<\nabla> \times> \bf<H> - \frac<\partial> \bf<D>><\partial> t>><=><\bf<j>>
           >
@@ -318,17 +318,23 @@
       >
       \p<
         Grouping:
-        &m<M \g|t="bin"|<\sb<\otimes>><\bb<Z>>> N>
+        &m<M \g|bin|<\sb<\otimes>><\bb<Z>>> N>
         or
-        &m<\g|t="fun"|<\un<\lim>><n \to> \infty>>> \frac<\log> n><n> = 0>
+        &m<\g|fun|<\un<\lim>><n \to> \infty>>> \frac<\log> n><n> = 0>
         or
         &m<n = [-1]>.
       >
       \p<
         Changing identifier styles:
-        &m<V \in> \sb<\i|t="rm,bf"|<Vect>><k>>
+        &m<V \in> \sb<\bfrm<Vect>><k>>
         or
-        &m<\i|t="rm"|<vol> = `r \space|t="thin"|> \sin> `f \space|t="thin"|> d `r d `u d`f>.
+        &m<\rm<Vol> = `r \space|t="thin"|> \sin> `f \space|t="thin"|> d `r d `u d`f>.
+      >
+      \p<
+        Changing spacing:
+        &m<f: A \rmulti> B>
+        and
+        &m<f \in> A \rmulti|bin|> B>.
       >
       \p<
         Texts as subformulae: &m<`{ x \in> X \mid> x \text< is very good> `}> or &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
