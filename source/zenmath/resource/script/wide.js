@@ -106,15 +106,15 @@ function appendWideStretch(contentElement, parentElement, kind, position) {
   let barSize = (hasMiddle) ? 2 : 1;
   let barWidth = calcWideBarWidth(contentElement, beginElement, endElement, middleElement);
   for (let i = 0 ; i < barSize ; i ++) { 
+    let barWrapperElement = document.createElement("math-barwrap");
     let barElement = document.createElement("math-bar");
-    let barContentElement = document.createElement("math-barcont");
-    barContentElement.textContent = DATA["wide"][kind][position]["bar"];
-    barElement.style.width = "" + barWidth + "em";
-    barElement.append(barContentElement);
+    barElement.textContent = DATA["wide"][kind][position]["bar"];
+    barWrapperElement.style.width = "" + barWidth + "em";
+    barWrapperElement.append(barElement);
     if (i == 0) {
-      stretchElement.insertBefore(barElement, stretchElement.children[(hasBegin) ? 1 : 0]);
+      stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasBegin) ? 1 : 0]);
     } else {
-      stretchElement.insertBefore(barElement, stretchElement.children[(hasBegin) ? 3 : 2]);
+      stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasBegin) ? 3 : 2]);
     }
   }
 }

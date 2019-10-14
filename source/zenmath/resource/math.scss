@@ -239,7 +239,7 @@ math-underover {
 math-vstretch {
 
   >math-top,
-  >math-bar >math-barcont,
+  >math-barwrap >math-bar,
   >math-mid,
   >math-bot {
     height: 1.25em;
@@ -253,11 +253,11 @@ math-vstretch {
     line-height: 3.4em;
   }
 
-  >math-bar {
+  >math-barwrap {
     overflow: hidden;
   }
 
-  >math-bar >math-barcont {
+  >math-barwrap >math-bar {
     transform: scale(1, 100);
   }
 
@@ -267,7 +267,7 @@ math-vstretch {
 math-hstretch {
 
   >math-beg,
-  >math-bar >math-barcont,
+  >math-barwrap >math-bar,
   >math-mid,
   >math-end {
     font-family: "Math";
@@ -275,7 +275,7 @@ math-hstretch {
   }
 
   math-over >& >math-beg,
-  math-over >& >math-bar,
+  math-over >& >math-barwrap,
   math-over >& >math-mid,
   math-over >& >math-end {
     padding-top: 0.3em;
@@ -283,18 +283,18 @@ math-hstretch {
   }
 
   math-under >& >math-beg,
-  math-under >& >math-bar,
+  math-under >& >math-barwrap,
   math-under >& >math-mid,
   math-under >& >math-end {
     padding-bottom: 0.3em;
     vertical-align: bottom;
   }
 
-  >math-bar {
+  >math-barwrap {
     overflow: hidden;
   }
 
-  >math-bar >math-barcont {
+  >math-barwrap >math-bar {
     transform: scale(100, 1);
   }
 

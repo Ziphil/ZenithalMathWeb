@@ -142,15 +142,15 @@ function appendParenStretch(contentElements, parentElement, kind, position) {
   let barHeight = calcParenBarHeight(contentElements, topElement, bottomElement, middleElement);
   let stretchShift = calcParenStretchShift(contentElements);
   for (let i = 0 ; i < barSize ; i ++) { 
+    let barWrapperElement = document.createElement("math-barwrap");
     let barElement = document.createElement("math-bar");
-    let barContentElement = document.createElement("math-barcont");
-    barContentElement.textContent = DATA["paren"][kind][position]["bar"];
-    barElement.style.height = "" + barHeight + "em";
-    barElement.append(barContentElement);
+    barElement.textContent = DATA["paren"][kind][position]["bar"];
+    barWrapperElement.style.height = "" + barHeight + "em";
+    barWrapperElement.append(barElement);
     if (i == 0) {
-      stretchElement.insertBefore(barElement, stretchElement.children[(hasTop) ? 1 : 0]);
+      stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasTop) ? 1 : 0]);
     } else {
-      stretchElement.insertBefore(barElement, stretchElement.children[(hasTop) ? 3 : 2]);
+      stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasTop) ? 3 : 2]);
     }
   }
   stretchElement.style.verticalAlign = "" + stretchShift + "em";
