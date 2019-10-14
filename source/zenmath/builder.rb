@@ -19,14 +19,16 @@ module ZenmathBuilder
     when DATA["paren"].method(:key?)
       stretch_level = attributes["s"]
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
-      this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, stretch_level) do |content_this|
+      modify = !stretch_level
+      this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, modify) do |content_this|
         content_this << children_list[0]
       end
     when "fence"
       stretch_level = attributes["s"]
       left_kind, right_kind = attributes["l"] || "paren", attributes["r"] || "paren"
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
-      this << ZenmathBuilder.build_paren(left_kind, right_kind, left_symbol, right_symbol, stretch_level) do |content_this|
+      modify = !stretch_level
+      this << ZenmathBuilder.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify) do |content_this|
         content_this << children_list[0]
       end
     when "set"
@@ -35,18 +37,19 @@ module ZenmathBuilder
       center_kind = attributes["c"] || "vert"
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(left_kind, right_kind, stretch_level)
       center_symbol, _ = ZenmathBuilder.fetch_paren_symbols(center_kind, nil, stretch_level)
-      this << ZenmathBuilder.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, stretch_level) do |left_this, right_this|
+      modify = !stretch_level
+      this << ZenmathBuilder.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify) do |left_this, right_this|
         left_this << children_list[0]
         right_this << children_list[1]
       end
     when DATA["integral"].method(:key?)
-      symbol = ZenmathBuilder.fetch_integral_symbol(name)
+      symbol = ZenmathBuilder.fetch_integral_symbol(name, "large")
       this << ZenmathBuilder.build_integral(symbol) do |sub_this, super_this|
         sub_this << children_list[0]
         super_this << children_list[1]
       end
     when DATA["sum"].method(:key?)
-      symbol = ZenmathBuilder.fetch_sum_symbol(name)
+      symbol = ZenmathBuilder.fetch_sum_symbol(name, "large")
       this << ZenmathBuilder.build_sum(symbol) do |under_this, over_this|
         under_this << children_list[0]
         over_this << children_list[1]
@@ -59,7 +62,8 @@ module ZenmathBuilder
     when DATA["wide"].method(:key?)
       stretch_level = attributes["s"]
       under_symbol, over_symbol = ZenmathBuilder.fetch_wide_symbols(name, stretch_level)
-      this << ZenmathBuilder.build_wide(name, under_symbol, over_symbol, stretch_level) do |base_this|
+      modify = !stretch_level
+      this << ZenmathBuilder.build_wide(name, under_symbol, over_symbol, modify) do |base_this|
         base_this << children_list[0]
       end
     when DATA["function"].method(:include?)
@@ -110,7 +114,8 @@ module ZenmathBuilder
     when "sqrt"
       stretch_level = attributes["s"]
       symbol = ZenmathBuilder.fetch_radical_symbol(stretch_level)
-      this << ZenmathBuilder.build_radical(symbol, stretch_level) do |content_this|
+      modify = !stretch_level
+      this << ZenmathBuilder.build_radical(symbol, modify) do |content_this|
         content_this << children_list[0]
       end
     when "matrix"
@@ -314,11 +319,13 @@ module ZenmathBuilder
     return symbol
   end
 
-  def self.build_radical(symbol, stretch_level, &block)
+  def self.build_radical(symbol, modify, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-sqrt") do |this|
-      this["class"] = "mod" unless stretch_level
+      if modify
+        this["class"] = "mod" 
+      end
       this << Element.build("math-surd") do |this|
         this << Element.build("math-o") do |this|
           this << Text.new(symbol, true, nil, false)
@@ -345,12 +352,12 @@ module ZenmathBuilder
     return left_symbol, right_symbol
   end
 
-  def self.build_paren(left_kind, right_kind, left_symbol, right_symbol, stretch_level, &block)
+  def self.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
       this["class"] = ["lp", "rp"].join(" ")
-      unless stretch_level
+      if modify
         this["class"] = [*this["class"].split(" "), "mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ")
       end
       this << Element.build("math-left") do |this|
@@ -371,12 +378,12 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, stretch_level, &block)
+  def self.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, &block)
     this = Nodes[]
     left_element, right_element = nil
     this << Element.build("math-paren") do |this|
       this["class"] = ["lp", "rp"].join(" ")
-      unless stretch_level
+      if modify
         this["class"] = [*this["class"].split(" "), "mod", "lp", "rp", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ")
       end
       this << Element.build("math-left") do |this|
@@ -406,7 +413,7 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_integral_symbol(name, size = "large")
+  def self.fetch_integral_symbol(name, size)
     size_index = (size == "large") ? 1 : 0
     symbol = DATA.dig("integral", name, size_index) || ""
     return symbol
@@ -434,7 +441,7 @@ module ZenmathBuilder
     return this
   end
 
-  def self.fetch_sum_symbol(name, size = "large")
+  def self.fetch_sum_symbol(name, size)
     size_index = (size == "large") ? 1 : 0
     symbol = DATA.dig("sum", name, size_index) || ""
     return symbol
@@ -507,12 +514,12 @@ module ZenmathBuilder
     return under_symbol, over_symbol
   end
 
-  def self.build_wide(kind, under_symbol, over_symbol, stretch_level, &block)
+  def self.build_wide(kind, under_symbol, over_symbol, modify, &block)
     this = Nodes[]
     base_element = nil
     this << Element.build("math-underover") do |this|
       this["class"] = "wide"
-      unless stretch_level
+      if modify
         this["class"] = [*this["class"].split(" "), "mod", "wide-#{kind}"].join(" ")
       end
       this << Element.build("math-over") do |this|
@@ -543,7 +550,7 @@ module ZenmathBuilder
 
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
-  def self.build_array(type = "array", align_config = nil, raw = false, &block)
+  def self.build_array(type, align_config, raw, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
