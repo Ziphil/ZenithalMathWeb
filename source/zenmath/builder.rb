@@ -150,10 +150,6 @@ module ZenmathBuilder
     when "space"
       type = attributes["t"] || "medium"
       this << ZenmathBuilder.build_space(type)
-    when "bf"
-      this << ZenmathBuilder.build_style(["bf"]) do |content_this|
-        content_this << children_list[0]
-      end
     when "bb", "cal", "scr", "frak"
       raw_text = children_list[0].first.value
       text = ZenmathBuilder.fetch_alternative_identifier_text(name, raw_text)
@@ -172,6 +168,15 @@ module ZenmathBuilder
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
       symbol = children_list[0].first.to_s
       this << ZenmathBuilder.build_operator(symbol, types)
+    when "bf"
+      text = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(text, ["bf"])
+    when "rm"
+      text = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(text, ["rm"])
+    when "bfrm"
+      text = children_list[0].first.to_s
+      this << ZenmathBuilder.build_identifier(text, ["bf", "rm"])
     when "text"
       text = children_list[0].first.value
       this << ZenmathBuilder.build_text(text)
