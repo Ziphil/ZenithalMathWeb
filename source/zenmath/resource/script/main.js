@@ -30,7 +30,7 @@ function getHeight(element) {
 
 function getLowerHeight(element) {
   let bottom = element.getBoundingClientRect().bottom + window.pageYOffset;
-  let locator = document.createElement("img");
+  let locator = document.createElement("math-sys-locator");
   element.appendChild(locator);
   locator.style.verticalAlign = "baseline";
   let baselineBottom = locator.getBoundingClientRect().bottom + window.pageYOffset;
