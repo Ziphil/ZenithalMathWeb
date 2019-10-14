@@ -187,9 +187,9 @@ module ZenmathBuilder
   def create_math_text(text)
     this = Nodes[]
     text.each_char do |char|
-      if char =~ /\d/
+      if char =~ /\p{Number}/
         this << ZenmathBuilder.build_number(char)
-      elsif char =~ /[[:alpha:]]/
+      elsif char =~ /\p{Letter}|\p{Mark}/
         this << ZenmathBuilder.build_identifier(char)
       elsif char !~ /\s/
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
