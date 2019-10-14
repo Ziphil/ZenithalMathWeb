@@ -15,12 +15,13 @@ module ZenmathBuilder
 
   def create_math_element(name, attributes, children_list)
     this = Nodes[]
+    spacing = ZenmathBuilder.determine_spacing(attributes)
     case name
     when DATA["paren"].method(:key?)
       stretch_level = attributes["s"]
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
       modify = !stretch_level
-      this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, modify) do |content_this|
+      this << ZenmathBuilder.build_paren(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "fence"
@@ -28,7 +29,7 @@ module ZenmathBuilder
       left_kind, right_kind = attributes["l"] || "paren", attributes["r"] || "paren"
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(name, name, stretch_level)
       modify = !stretch_level
-      this << ZenmathBuilder.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify) do |content_this|
+      this << ZenmathBuilder.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "set"
@@ -38,76 +39,76 @@ module ZenmathBuilder
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols(left_kind, right_kind, stretch_level)
       center_symbol, _ = ZenmathBuilder.fetch_paren_symbols(center_kind, nil, stretch_level)
       modify = !stretch_level
-      this << ZenmathBuilder.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify) do |left_this, right_this|
+      this << ZenmathBuilder.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing) do |left_this, right_this|
         left_this << children_list[0]
         right_this << children_list[1]
       end
     when DATA["integral"].method(:key?)
       symbol = ZenmathBuilder.fetch_integral_symbol(name, "large")
-      this << ZenmathBuilder.build_integral(symbol) do |sub_this, super_this|
+      this << ZenmathBuilder.build_integral(symbol, spacing) do |sub_this, super_this|
         sub_this << children_list[0]
         super_this << children_list[1]
       end
     when DATA["sum"].method(:key?)
       symbol = ZenmathBuilder.fetch_sum_symbol(name, "large")
-      this << ZenmathBuilder.build_sum(symbol) do |under_this, over_this|
+      this << ZenmathBuilder.build_sum(symbol, spacing) do |under_this, over_this|
         under_this << children_list[0]
         over_this << children_list[1]
       end
     when DATA["accent"].method(:key?)
       under_symbol, over_symbol = ZenmathBuilder.fetch_accent_symbols(name)
-      this << ZenmathBuilder.build_accent(under_symbol, over_symbol) do |base_this|
+      this << ZenmathBuilder.build_accent(under_symbol, over_symbol, spacing) do |base_this|
         base_this << children_list[0]
       end
     when DATA["wide"].method(:key?)
       stretch_level = attributes["s"]
       under_symbol, over_symbol = ZenmathBuilder.fetch_wide_symbols(name, stretch_level)
       modify = !stretch_level
-      this << ZenmathBuilder.build_wide(name, under_symbol, over_symbol, modify) do |base_this|
+      this << ZenmathBuilder.build_wide(name, under_symbol, over_symbol, modify, spacing) do |base_this|
         base_this << children_list[0]
       end
     when DATA["function"].method(:include?)
-      this << ZenmathBuilder.build_identifier(name, ["fun"])
+      this << ZenmathBuilder.build_identifier(name, ["fun"], spacing)
     when DATA["identifier"].method(:key?)
       char = ZenmathBuilder.fetch_identifier_char(name)
-      this << ZenmathBuilder.build_identifier(char, [])
+      this << ZenmathBuilder.build_identifier(char, [], spacing)
     when DATA["operator"].method(:key?)
       symbol, types = ZenmathBuilder.fetch_operator_symbol(name)
-      this << ZenmathBuilder.build_operator(symbol, types)
+      this << ZenmathBuilder.build_operator(symbol, types, spacing)
     when "sb"
-      this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+      this << ZenmathBuilder.build_subsuper(spacing) do |base_this, sub_this, super_this|
         base_this << children_list[0]
         sub_this << children_list[1]
       end
     when "sp"
-      this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+      this << ZenmathBuilder.build_subsuper(spacing) do |base_this, sub_this, super_this|
         base_this << children_list[0]
         super_this << children_list[1]
       end
     when "sbsp"
-      this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+      this << ZenmathBuilder.build_subsuper(spacing) do |base_this, sub_this, super_this|
         base_this << children_list[0]
         sub_this << children_list[1]
         super_this << children_list[2]
       end
     when "un"
-      this << ZenmathBuilder.build_underover do |base_this, under_this, over_this|
+      this << ZenmathBuilder.build_underover(spacing) do |base_this, under_this, over_this|
         base_this << children_list[0]
         under_this << children_list[1]
       end
     when "ov"
-      this << ZenmathBuilder.build_underover do |base_this, under_this, over_this|
+      this << ZenmathBuilder.build_underover(spacing) do |base_this, under_this, over_this|
         base_this << children_list[0]
         over_this << children_list[1]
       end
     when "unov"
-      this << ZenmathBuilder.build_underover do |base_this, under_this, over_this|
+      this << ZenmathBuilder.build_underover(spacing) do |base_this, under_this, over_this|
         base_this << children_list[0]
         under_this << children_list[1]
         over_this << children_list[2]
       end
     when "frac"
-      this << ZenmathBuilder.build_fraction do |numerator_this, denominator_this|
+      this << ZenmathBuilder.build_fraction(spacing) do |numerator_this, denominator_this|
         numerator_this << children_list[0]
         denominator_this << children_list[1]
       end
@@ -115,32 +116,32 @@ module ZenmathBuilder
       stretch_level = attributes["s"]
       symbol = ZenmathBuilder.fetch_radical_symbol(stretch_level)
       modify = !stretch_level
-      this << ZenmathBuilder.build_radical(symbol, modify) do |content_this|
+      this << ZenmathBuilder.build_radical(symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "matrix"
-      this << ZenmathBuilder.build_array("matrix", nil, false) do |table_this|
+      this << ZenmathBuilder.build_array("matrix", nil, false, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "array"
       align_config = attributes["align"]
-      this << ZenmathBuilder.build_array("array", align_config, true) do |table_this|
+      this << ZenmathBuilder.build_array("array", align_config, true, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "case"
       left_symbol, right_symbol = ZenmathBuilder.fetch_paren_symbols("brace", "none", nil)
-      this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, nil) do |this|
+      this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, nil, spacing) do |this|
         this << ZenmathBuilder.build_array("case", "ll", false) do |table_this|
           table_this << children_list[0]
         end
       end
     when "c"
-      this << ZenmathBuilder.build_array_cell do |cell_this|
+      this << ZenmathBuilder.build_array_cell(spacing) do |cell_this|
         cell_this << children_list[0]
       end
     when "cc"
       children_list.each do |children|
-        this << ZenmathBuilder.build_array_cell do |cell_this|
+        this << ZenmathBuilder.build_array_cell(spacing) do |cell_this|
           cell_this << children
         end
       end
@@ -149,42 +150,42 @@ module ZenmathBuilder
       this << Element.new("math-sys-br")
     when "g"
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
-      this << ZenmathBuilder.build_group(types) do |content_this|
+      this << ZenmathBuilder.build_group(types, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "space"
       type = attributes["t"] || "medium"
-      this << ZenmathBuilder.build_space(type)
+      this << ZenmathBuilder.build_space(type, spacing)
     when "bb", "cal", "scr", "frak"
       raw_text = children_list[0].first.value
       text = ZenmathBuilder.fetch_alternative_identifier_text(name, raw_text)
-      this << ZenmathBuilder.build_identifier(text, ["alt"])
+      this << ZenmathBuilder.build_identifier(text, ["alt"], spacing)
     when "n"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_number(text)
+      this << ZenmathBuilder.build_number(text, spacing)
     when "i"
       types = attributes["t"]&.split(/\s*,\s*/) || []
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, types)
+      this << ZenmathBuilder.build_identifier(text, types, spacing)
     when "op"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["fun"])
+      this << ZenmathBuilder.build_identifier(text, ["fun"], spacing)
     when "o"
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
       symbol = children_list[0].first.to_s
-      this << ZenmathBuilder.build_operator(symbol, types)
+      this << ZenmathBuilder.build_operator(symbol, types, spacing)
     when "bf"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["bf"])
+      this << ZenmathBuilder.build_identifier(text, ["bf"], spacing)
     when "rm"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["rm"])
+      this << ZenmathBuilder.build_identifier(text, ["rm"], spacing)
     when "bfrm"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["bf", "rm"])
+      this << ZenmathBuilder.build_identifier(text, ["bf", "rm"], spacing)
     when "text"
       text = children_list[0].first.value
-      this << ZenmathBuilder.build_text(text)
+      this << ZenmathBuilder.build_text(text, spacing)
     end
     return this
   end
@@ -195,7 +196,7 @@ module ZenmathBuilder
       if char =~ /\p{Number}/
         this << ZenmathBuilder.build_number(char)
       elsif char =~ /\p{Letter}|\p{Mark}/
-        this << ZenmathBuilder.build_identifier(char)
+        this << ZenmathBuilder.build_identifier(char, [])
       elsif char !~ /\s/
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
         name = DATA["replacement"][name] || name
@@ -216,11 +217,34 @@ module ZenmathBuilder
 
   public
 
-  def self.build_number(text)
+  SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lp", "rp", "cp"]
+
+  def self.determine_spacing(attributes)
+    spacing = nil
+    SPACINGS.each do |each_spacing|
+      if attributes[each_spacing]
+        spacing = each_spacing
+      end
+    end
+    return spacing
+  end
+
+  def self.add_spacing(nodes, spacing)
+    nodes.each do |node|
+      if node.is_a?(Element) && spacing
+        classes = node["class"].split(" ") - SPACINGS
+        classes << spacing
+        node["class"] = classes.join(" ")
+      end
+    end
+  end
+
+  def self.build_number(text, spacing = nil)
     this = Nodes[]
     this << Element.build("math-n") do |this|
       this << Text.new(text, true, nil, false)
     end
+    add_spacing(this, spacing)
     return this
   end
 
@@ -234,12 +258,14 @@ module ZenmathBuilder
     return text
   end
 
-  def self.build_identifier(text, types = [])
+  def self.build_identifier(text, types, spacing = nil)
     this = Nodes[]
     this << Element.build("math-i") do |this|
       this["class"] = types.join(" ")
+      this["class"] = [*this["class"].split(" "), spacing].join(" ")
       this << Text.new(text, true, nil, false)
     end
+    add_spacing(this, spacing)
     return this
   end
 
@@ -248,16 +274,17 @@ module ZenmathBuilder
     return symbol, types
   end
 
-  def self.build_operator(symbol, types, &block)
+  def self.build_operator(symbol, types, spacing = nil, &block)
     this = Nodes[]
     this << Element.build("math-o") do |this|
       this["class"] = types.join(" ")
       this << Text.new(symbol, true, nil, false)
     end
+    add_spacing(this, spacing)
     return this
   end
 
-  def self.build_subsuper(&block)
+  def self.build_subsuper(spacing = nil, &block)
     this = Nodes[]
     base_element, sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
@@ -271,11 +298,12 @@ module ZenmathBuilder
         super_element = this
       end
     end
+    add_spacing(this, spacing)
     block&.call(base_element, sub_element, super_element)
     return this
   end
 
-  def self.build_underover(&block)
+  def self.build_underover(spacing = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     this << Element.build("math-underover") do |this|
@@ -291,11 +319,12 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(base_element, under_element, over_element)
     return this
   end
 
-  def self.build_fraction(&block)
+  def self.build_fraction(spacing = nil, &block)
     this = Nodes[]
     numerator_element, denominator_element = nil
     this << Element.build("math-frac") do |this|
@@ -309,6 +338,7 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(numerator_element, denominator_element)
     return this
   end
@@ -319,7 +349,7 @@ module ZenmathBuilder
     return symbol
   end
 
-  def self.build_radical(symbol, modify, &block)
+  def self.build_radical(symbol, modify, spacing = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-sqrt") do |this|
@@ -335,6 +365,7 @@ module ZenmathBuilder
         content_element = this
       end
     end
+    add_spacing(this, spacing)
     block&.call(content_element)
     return this
   end
@@ -352,7 +383,7 @@ module ZenmathBuilder
     return left_symbol, right_symbol
   end
 
-  def self.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, &block)
+  def self.build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, spacing = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-paren") do |this|
@@ -374,11 +405,12 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(content_element)
     return this
   end
 
-  def self.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, &block)
+  def self.build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing = nil, &block)
     this = Nodes[]
     left_element, right_element = nil
     this << Element.build("math-paren") do |this|
@@ -409,6 +441,7 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(left_element, right_element)
     return this
   end
@@ -419,7 +452,7 @@ module ZenmathBuilder
     return symbol
   end
 
-  def self.build_integral(symbol, &block)
+  def self.build_integral(symbol, spacing = nil, &block)
     this = Nodes[]
     sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
@@ -437,6 +470,7 @@ module ZenmathBuilder
         super_element = this
       end
     end
+    add_spacing(this, spacing)
     block&.call(sub_element, super_element)
     return this
   end
@@ -447,7 +481,7 @@ module ZenmathBuilder
     return symbol
   end
 
-  def self.build_sum(symbol, &block)
+  def self.build_sum(symbol, spacing = nil, &block)
     this = Nodes[]
     under_element, over_element = nil
     this << Element.build("math-underover") do |this|
@@ -467,11 +501,12 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(under_element, over_element)
     return this
   end
 
-  def self.build_accent(under_symbol, over_symbol, &block)
+  def self.build_accent(under_symbol, over_symbol, spacing = nil, &block)
     this = Nodes[]
     base_element = nil
     this << Element.build("math-underover") do |this|
@@ -498,6 +533,7 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(base_element)
     return this
   end
@@ -514,7 +550,7 @@ module ZenmathBuilder
     return under_symbol, over_symbol
   end
 
-  def self.build_wide(kind, under_symbol, over_symbol, modify, &block)
+  def self.build_wide(kind, under_symbol, over_symbol, modify, spacing = nil, &block)
     this = Nodes[]
     base_element = nil
     this << Element.build("math-underover") do |this|
@@ -544,19 +580,21 @@ module ZenmathBuilder
         end
       end
     end
+    add_spacing(this, spacing)
     block&.call(base_element)
     return this
   end
 
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
-  def self.build_array(type, align_config, raw, &block)
+  def self.build_array(type, align_config, raw, spacing = nil, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
       this["class"] = type
       table_element = this
     end
+    add_spacing(this, spacing)
     block&.call(table_element)
     align_array = align_config&.chars
     column, row = 1, 1
@@ -583,51 +621,56 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_array_cell(&block)
+  def self.build_array_cell(spacing = nil, &block)
     this = Nodes[]
     cell_element = nil
     this << Element.build("math-cell") do |this|
       cell_element = this
     end
+    add_spacing(this, spacing)
     block&.call(cell_element)
     return this
   end
 
-  def self.build_group(types, &block)
+  def self.build_group(types, spacing = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
       this["class"] = types.join(" ")
       content_element = this
     end
+    add_spacing(this, spacing)
     block&.call(content_element)
     return this
   end
 
-  def self.build_style(types, &block)
+  def self.build_style(types, spacing = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-style") do |this|
       this["class"] = types.join(" ")
       content_element = this
     end
+    add_spacing(this, spacing)
     block&.call(content_element)
     return this
   end
 
-  def self.build_space(type)
+  def self.build_space(type, spacing = nil)
     this = Nodes[]
     this << Element.build("math-space") do |this|
       this["class"] = type
     end
+    add_spacing(this, spacing)
     return this
   end
 
-  def self.build_text(text, &block)
+  def self.build_text(text, spacing = nil, &block)
     this = Nodes[]
     this << Element.build("math-text") do |this|
       this << Text.new(text, true, nil, false)
     end
+    add_spacing(this, spacing)
     return this
   end
 
