@@ -157,8 +157,7 @@ module ZenmathBuilder
     when "br"
       this << Element.new("math-sys-br")
     when "g"
-      types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
-      this << ZenmathBuilder.build_group(types, spacing) do |content_this|
+      this << ZenmathBuilder.build_group(spacing) do |content_this|
         content_this << children_list[0]
       end
     when "space"
@@ -632,11 +631,10 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_group(types, spacing = nil, &block)
+  def self.build_group(spacing = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
-      this["class"] = types.join(" ")
       content_element = this
     end
     add_spacing(this, spacing)
