@@ -334,71 +334,79 @@ math-table {
 
 math-space {
 
-  &.asfun {
+  &.afun {
     padding-left: spacing(3) !important;
+  }
+
+  &.abin {
+    padding-left: spacing(4) !important;
+  }
+
+  &.arel {
+    padding-left: spacing(5) !important;
   }
 
   &.asbin {
-    padding-left: spacing(4) !important;
+    padding-left: spacing(8) !important;
   }
 
   &.asrel {
-    padding-left: spacing(5) !important;
-  }
-
-  &.assbin {
     padding-left: spacing(8) !important;
   }
 
-  &.assrel {
-    padding-left: spacing(8) !important;
-  }
-
-  &.asmatrix {
+  &.amatrix {
     padding-left: spacing(15) !important;
   }
 
-  &.ascase {
+  &.acase {
     padding-left: spacing(24) !important;
   }
 
-  &.superthin {
+  &.sthn {
     padding-left: spacing(1) !important;
   }
 
-  &.verythin {
+  &.vthn {
     padding-left: spacing(2) !important;
   }
 
-  &.thin {
+  &.thn {
     padding-left: spacing(3) !important;
   }
 
-  &.medium {
+  &.med {
     padding-left: spacing(4) !important;
   }
 
-  &.thick {
+  &.thk {
     padding-left: spacing(5) !important;
   }
 
-  &.verythick {
+  &.vthk {
     padding-left: spacing(6) !important;
   }
 
-  &.half {
+  &.sthk {
+    padding-left: spacing(7) !important;
+  }
+
+  &.uthk {
+    padding-left: spacing(8) !important;
+  }
+
+  &.hlf {
     padding-left: spacing(9) !important;
   }
 
-  &.em {
+  &.sgl {
     padding-left: spacing(18) !important;
   }
 
-  &.sesqui {
+  &.ssq {
     padding-left: spacing(27) !important;
   }
 
-  &.double {
+  &.dbl {
     padding-left: spacing(36) !important;
   }
 

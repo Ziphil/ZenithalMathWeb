@@ -10,7 +10,7 @@ include REXML
 module ZenmathBuilder
 
   DATA_PATH = "resource/math.json"
-  SPACE_ALTERNATIVES = {"sfun" => "asfun", "sbin" => "asbin", "srel" => "asrel", "scase" => "ascase", "quad" => "em", "qquad" => "double"}
+  SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scase" => "acase", "quad" => "sgl", "qquad" => "dbl"}
   PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
   SPACINGS = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
