@@ -610,7 +610,7 @@ module ZenmathBuilder
         if raw
           extra_class = []
           extra_class << "lpres" unless column == 1
-          extra_class << "rpres" unless table_element.elements[i + 1]&.name == "math-sys-br"
+          extra_class << "rpres" unless table_element.elements[i]&.name == "math-sys-br"
           child["class"] = (child["class"].split(" ") + extra_class).join(" ")
         end
         child["style"] += "grid-row: #{row}; grid-column: #{column};"
