@@ -10,6 +10,9 @@ include REXML
 module ZenmathBuilder
 
   DATA_PATH = "resource/math.json"
+  SPACE_ALTERNATIVES = {"sfun" => "asfun", "sbin" => "asbin", "srel" => "asrel", "scase" => "ascase", "quad" => "em", "qquad" => "double"}
+  SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
+  ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
   private
 
@@ -160,8 +163,11 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_group(spacing) do |content_this|
         content_this << children_list[0]
       end
-    when "space"
+    when "s"
       type = attributes["t"] || "medium"
+      this << ZenmathBuilder.build_space(type, spacing)
+    when SPACE_ALTERNATIVES.method(:key?)
+      type = SPACE_ALTERNATIVES[name]
       this << ZenmathBuilder.build_space(type, spacing)
     when "bb", "cal", "scr", "frak"
       raw_text = children_list[0].first.value
@@ -223,8 +229,6 @@ module ZenmathBuilder
   end
 
   public
-
-  SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
 
   def self.determine_spacing(attributes)
     spacing = nil
@@ -583,8 +587,6 @@ module ZenmathBuilder
     block&.call(base_element)
     return this
   end
-
-  ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
   def self.build_array(type, align_config, raw, spacing = nil, &block)
     this = Nodes[]
