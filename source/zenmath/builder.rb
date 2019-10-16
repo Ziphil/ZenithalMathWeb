@@ -12,7 +12,7 @@ module ZenmathBuilder
   DATA_PATH = "resource/math.json"
   SPACE_ALTERNATIVES = {"sfun" => "asfun", "sbin" => "asbin", "srel" => "asrel", "scase" => "ascase", "quad" => "em", "qquad" => "double"}
   PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
-  SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
+  SPACINGS = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
   private
