@@ -323,11 +323,11 @@ math-table {
   }
 
   &.array {
-    gap: spacing(6) spacing(0);
+    gap: spacing(8) spacing(0);
   }
 
   &.case {
-    gap: spacing(6) spacing(24);
+    gap: spacing(8) spacing(24);
   }
 
   >math-cell {
