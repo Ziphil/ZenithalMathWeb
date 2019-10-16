@@ -604,13 +604,14 @@ module ZenmathBuilder
     add_spacing(this, spacing)
     block&.call(table_element)
     align_array = align_config&.chars
+    cell_elements = table_element.elements.to_a
     column, row = 1, 1
-    table_element.elements.each_with_index do |child, i|
+    cell_elements.each_with_index do |child, i|
       if child.name == "math-cell"
         if raw
           extra_class = []
           extra_class << "lpres" unless column == 1
-          extra_class << "rpres" unless table_element.elements[i]&.name == "math-sys-br"
+          extra_class << "rpres" unless cell_elements[i + 1]&.name == "math-sys-br"
           child["class"] = (child["class"].split(" ") + extra_class).join(" ")
         end
         child["style"] += "grid-row: #{row}; grid-column: #{column};"
