@@ -11,6 +11,7 @@ module ZenmathBuilder
 
   DATA_PATH = "resource/math.json"
   SPACE_ALTERNATIVES = {"sfun" => "asfun", "sbin" => "asbin", "srel" => "asrel", "scase" => "ascase", "quad" => "em", "qquad" => "double"}
+  PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
   SPACINGS = ["bin", "rel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
@@ -166,6 +167,11 @@ module ZenmathBuilder
     when "s"
       type = attributes["t"] || "medium"
       this << ZenmathBuilder.build_space(type, spacing)
+    when "ph", "vph", "hph"
+      type = PHANTOM_TYPES[name]
+      this << ZenmathBuilder.build_phantom(type, spacing) do |content_this|
+        content_this << children_list[0]
+      end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
       this << ZenmathBuilder.build_space(type, spacing)
@@ -662,6 +668,21 @@ module ZenmathBuilder
       this["class"] = type
     end
     add_spacing(this, spacing)
+    return this
+  end
+
+  def self.build_phantom(type, spacing = nil, &block)
+    this = Nodes[]
+    content_element = nil
+    this << Element.build("math-phantom") do |this|
+      this["class"] = ["lpres", "rpres"].join(" ")
+      if type
+        this["class"] = [*this["class"].split(" "), type].join(" ")
+      end
+      content_element = this
+    end
+    add_spacing(this, spacing)
+    block&.call(content_element)
     return this
   end
 

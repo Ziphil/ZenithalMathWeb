@@ -405,6 +405,20 @@ math-space {
 }
 
 
+math-phantom {
+  visibility: hidden;
+
+  &.hor {
+    height: 0em !important;
+  }
+
+  &.ver {
+    width: 0em !important;
+  }
+
+}
+
+
 math-text {
   white-space: pre;
 }
