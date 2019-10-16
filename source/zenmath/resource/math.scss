@@ -46,6 +46,11 @@ math-o {
     font-family: inherit;
   }
 
+  &.sml {
+    font-family: inherit;
+    font-variant: all-small-caps;
+  }
+
   &.int {
     padding: 0em spacing(0);
     height: 2.3em;
@@ -341,6 +346,14 @@ math-space {
     padding-left: spacing(5) !important;
   }
 
+  &.assbin {
+    padding-left: spacing(8) !important;
+  }
+
+  &.assrel {
+    padding-left: spacing(8) !important;
+  }
+
   &.asmatrix {
     padding-left: spacing(15) !important;
   }
@@ -414,6 +427,14 @@ math-root {
 
   *.rel {
     padding: 0em spacing(5);
+  }
+
+  *.sbin {
+    padding: 0em spacing(8);
+  }
+
+  *.srel {
+    padding: 0em spacing(8);
   }
 
   *.del {
