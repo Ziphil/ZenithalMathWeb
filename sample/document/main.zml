@@ -310,7 +310,9 @@
       >
       \p<
         Verious symbols:
-        &m<\hbar>>, &m<\sharp> \flat>>, &m<\crotchet> \quaver>>, &m<\bspade> \wheart>>, &m<\dagger>>, &m<\amp> \invamp>>.
+        &m<\hbar>>, &m<\sharp> \flat>>, &m<\crotchet> \quaver>>, &m<\bspade> \wheart>>, &m<\dagger>>, &m<\amp> \invamp>>
+        and
+        &m<m \in> M \iff> f (m) \nin> \sp<M><\natural>> \scand> g (m) \nin> G>.
       >
       \p<
         Combining negation symbol
@@ -337,7 +339,23 @@
         &m<f \in> A \rmulti|bin|> B>.
       >
       \p<
-        Texts as subformulae: &m<`{ x \in> X \mid> x \text< is very good> `}> or &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
+        Phantoms:
+        &m<
+          \array|align="rr"|<
+            \cc<A a + B b + C c + D d>
+            \cc<A \ph<a> + B b \ph<+ C c> + D d>
+          >
+        >
+        or
+        &m<
+          \paren<a + 1 \vph<\frac<1><2>>> \paren<a + \frac<1><2>>
+        >.
+      >
+      \p<
+        Texts as subformulae:
+        &m<`{ x \in> X \mid> x \text< is very good> `}>
+        or
+        &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
       >
       \h1<Commutative diagrams>
       \p<
