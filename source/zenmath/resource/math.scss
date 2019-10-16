@@ -33,20 +33,25 @@ math-i {
   &.alt {
     font-family: "Math";
     font-style: normal;
+    padding-top: 0.12em;
+    line-height: 0.9;
   }
 
 }
 
 
 math-o {
-  line-height: 0.8;
+  padding-top: 0.12em;
+  line-height: 0.9;
   font-family: "Math";
 
   &.txt {
+    padding-top: 0em;
     font-family: inherit;
   }
 
   &.sml {
+    padding-top: 0em;
     font-family: inherit;
     font-variant: all-small-caps;
   }
@@ -63,6 +68,7 @@ math-o {
   }
 
   &.acc {
+    padding-top: 0em;
     padding-left: 0.45em !important;
   }
 
@@ -138,7 +144,7 @@ math-sqrt {
   margin-top: 0.1em;
 
   >math-surd {
-    margin: 0.26em 0em 0em 0em;
+    margin: 0.13em 0em 0em 0em;
     vertical-align: top;
   }
 
@@ -444,59 +450,71 @@ math-root {
   }
 
   *.bin {
-    padding: 0em spacing(4);
+    padding-left: spacing(4);
+    padding-right: spacing(4);
   }
 
   *.rel {
-    padding: 0em spacing(5);
+    padding-left: spacing(5);
+    padding-right: spacing(5);
   }
 
   *.sbin {
-    padding: 0em spacing(8);
+    padding-left: spacing(8);
+    padding-right: spacing(8);
   }
 
   *.srel {
-    padding: 0em spacing(8);
+    padding-left: spacing(8);
+    padding-right: spacing(8);
   }
 
   *.del {
-    padding: 0em spacing(5) 0em spacing(0);
+    padding-left: spacing(0);
+    padding-right: spacing(5);
   }
 
   *.fun {
-    padding: 0em spacing(3) 0em spacing(0);
+    padding-left: spacing(0);
+    padding-right: spacing(3);
     font-style: normal;
   }
 
   *.ord {
-    padding: 0em spacing(0);
+    padding-left: spacing(0);
+    padding-right: spacing(0);
   }
 
   *.not {
-    padding: 0em spacing(5);
-    margin: 0em spacing(0) 0em spacing(-10);
+    padding-left: spacing(5);
+    padding-right: spacing(5);
+    margin-left: spacing(-10);
+    margin-right: spacing(0);
   }
 
   *.par {
-    padding: 0em spacing(1) 0em spacing(1);
+    padding-left: spacing(1);
+    padding-right: spacing(1);
   }
 
   *.lpar {
-    padding: 0em spacing(0) 0em spacing(1);
+    padding-left: spacing(1);
+    padding-right: spacing(0);
   }
 
   *.fun +*.par,
   *.fun +*.lpar {
-    padding: 0em spacing(0) 0em spacing(1);
     margin-left: spacing(-3);
   }
 
   *.rpar {
-    padding: 0em spacing(1) 0em spacing(0);
+    padding-left: spacing(0);
+    padding-right: spacing(1);
   }
 
   *.cpar {
-    padding: 0em spacing(5);
+    padding-left: spacing(5);
+    padding-right: spacing(5);
   }
 
   *:not(.lpres) >*:first-child {
