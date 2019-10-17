@@ -8,6 +8,7 @@ function execute() {
   document.querySelectorAll("math-sqrt.mod").forEach(modifyRadical);
   document.querySelectorAll("math-paren.mod").forEach(modifyParen);
   document.querySelectorAll("math-underover.wide.mod").forEach(modifyWide);
+  document.querySelectorAll("math-diagram").forEach(modifyDiagram);
 }
 
 function getFontSize(element) {
@@ -16,27 +17,44 @@ function getFontSize(element) {
   return fontSize;
 }
 
-function getWidth(element) {
+function getWidthPx(element) {
   let width = element.getBoundingClientRect().width;
-  let widthEm = width / getFontSize(element);
-  return widthEm;
+  return width;
+}
+
+function getWidth(element) {
+  let width = getWidthPx(element) / getFontSize(element);
+  return width;
+}
+
+function getHeightPx(element) {
+  let height = element.getBoundingClientRect().height;
+  return height;
 }
 
 function getHeight(element) {
-  let height = element.getBoundingClientRect().height;
-  let heightEm = height / getFontSize(element);
-  return heightEm;
+  let height = getHeightPx(element) / getFontSize(element);
+  return height;
 }
 
-function getLowerHeight(element) {
+function getLowerHeightPx(element) {
   let bottom = element.getBoundingClientRect().bottom + window.pageYOffset;
   let locator = document.createElement("math-sys-locator");
   element.appendChild(locator);
   locator.style.verticalAlign = "baseline";
   let baselineBottom = locator.getBoundingClientRect().bottom + window.pageYOffset;
+  let height = bottom - baselineBottom + getFontSize(element) * 0.3;
   element.removeChild(locator);
-  let heightPx = bottom - baselineBottom;
-  let height = heightPx / getFontSize(element) + 0.3;
+  return height;
+}
+
+function getLowerHeight(element) {
+  let height = getLowerHeightPx(element) / getFontSize(element);
+  return height;
+}
+
+function getUpperHeightPx(element) {
+  let height = getHeightPx(element) - getLowerHeightPx(element);
   return height;
 }
 
