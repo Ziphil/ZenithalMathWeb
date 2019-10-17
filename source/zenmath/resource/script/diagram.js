@@ -75,14 +75,15 @@ function calcDiagramDimension(graphic, element) {
   let width = getWidthPx(element);
   let height = getHeightPx(element);
   let lowerHeight = getLowerHeightPx(element);
-  dimension.northWest = [left, top];
-  dimension.north = [left + width / 2, top];
-  dimension.northEast = [left + width, top];
-  dimension.west = [left, top + height - lowerHeight];
+  let margin = getFontSize(element) / 18 * 3;
+  dimension.northWest = [left - margin, top - margin];
+  dimension.north = [left + width / 2, top - margin];
+  dimension.northEast = [left + width + margin, top - margin];
+  dimension.west = [left - margin, top + height - lowerHeight];
   dimension.center = [left + width / 2, top + height - lowerHeight];
-  dimension.east = [left + width, top + height - lowerHeight];
-  dimension.southWest = [left, top + height];
-  dimension.south = [left + width / 2, top + height];
-  dimension.southEast = [left + width, top + height];
+  dimension.east = [left + width + margin, top + height - lowerHeight];
+  dimension.southWest = [left - margin, top + height + margin];
+  dimension.south = [left + width / 2, top + height + margin];
+  dimension.southEast = [left + width + margin, top + height + margin];
   return dimension;
 }
