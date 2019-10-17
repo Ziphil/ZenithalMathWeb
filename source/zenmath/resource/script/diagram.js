@@ -1,6 +1,10 @@
 //
 
 
+const ARROW_TIP_SPECS = {
+  normal: {refX: 5, refY: 3, width: 10, height: 6, command: "M 0 0 L 5 3 L 0 6"}
+}
+
 function modifyDiagram(element) {
   cellElements = Array.from(element.children).filter((element) => element.localName == "math-cell");
   arrowElements = Array.from(element.children).filter((element) => element.localName == "math-arrow");
@@ -27,6 +31,7 @@ function createDiagramArrow(graphic, startElement, endElement, startPosition, en
   let endCoords = endDimension[endPosition];
   let arrow = createSvgElement("path");
   arrow.setAttribute("d", "M " + startCoords[0] + " " + startCoords[1] + " L " + endCoords[0] + " " + endCoords[1]);
+  arrow.setAttribute("marker-end", "url(#tip-normal)");
   return arrow;
 }
 
@@ -37,6 +42,22 @@ function createDiagramGraphic(element) {
   graphic.setAttribute("width", width + "px");
   graphic.setAttribute("height", height + "px");
   graphic.setAttribute("viewBox", "0 0 " + width + " " + height);
+  let definitionElement = createSvgElement("defs");
+  let tipSpecKeys = Object.keys(ARROW_TIP_SPECS);
+  for (let tipSpecKey of tipSpecKeys) {
+    let tipSpec = ARROW_TIP_SPECS[tipSpecKey];
+    let markerElement = createSvgElement("marker");
+    let markerPathElement = createSvgElement("path");
+    markerElement.setAttribute("id", "tip-" + tipSpecKey);
+    markerElement.setAttribute("refX", tipSpec.refX);
+    markerElement.setAttribute("refY", tipSpec.refY);
+    markerElement.setAttribute("markerWidth", tipSpec.width);
+    markerElement.setAttribute("markerHeight", tipSpec.height);
+    markerPathElement.setAttribute("d", tipSpec.command);
+    markerElement.appendChild(markerPathElement);
+    definitionElement.appendChild(markerElement);
+  }
+  graphic.appendChild(definitionElement);
   return graphic;
 }
 

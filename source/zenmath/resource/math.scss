@@ -360,9 +360,10 @@ math-diagram {
     left: 0px;
   }
 
-  >svg >path {
+  >svg path {
     stroke: currentcolor;
     stroke-width: 1px;
+    fill: none;
   }
   
 }
