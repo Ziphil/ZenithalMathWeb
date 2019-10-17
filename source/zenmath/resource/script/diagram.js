@@ -14,19 +14,39 @@ function modifyDiagram(element) {
   for (let arrowElement of arrowElements) {
     let placeConfig = arrowElement.getAttribute("data-place");
     let match;
-    if (match = placeConfig.match(/(\d+)-(\d+)/)) {
-      let startPlace = match[1];
-      let endPlace = match[2];
-      let startElement = cellElements[parseInt(startPlace) - 1];
-      let endElement = cellElements[parseInt(endPlace) - 1];
+    if (match = placeConfig.match(/(\d+)(?:\.(\w+))?-(\d+)(?:\.(\w+))?/)) {
+      let startElement = cellElements[parseInt(match[1]) - 1];
+      let endElement = cellElements[parseInt(match[3]) - 1];
       let startDimension = calcDiagramDimension(graphic, startElement);
       let endDimension = calcDiagramDimension(graphic, endElement);
-      let startPosition = determineDiagramPosition(startDimension, endDimension);
-      let endPosition = determineDiagramPosition(endDimension, startDimension);
+      let startPosition = parseDiagramPosition(match[2]) || determineDiagramPosition(startDimension, endDimension);
+      let endPosition = parseDiagramPosition(match[4]) || determineDiagramPosition(endDimension, startDimension);
       let arrow = createDiagramArrow(startDimension, endDimension, startPosition, endPosition);
       graphic.appendChild(arrow);
     }
   }
+}
+
+function parseDiagramPosition(string) {
+  let position = null;
+  if (string == "west" || string == "w") {
+    position = "west";
+  } else if (string == "southwest" || string == "sw") {
+    position = "southWest";
+  } else if (string == "south" || string == "s") {
+    position = "south";
+  } else if (string == "southeast" || string == "se") {
+    position = "southEast";
+  } else if (string == "east" || string == "e") {
+    position = "east";
+  } else if (string == "northeast" || string == "ne") {
+    position = "northEast";
+  } else if (string == "north" || string == "n") {
+    position = "north";
+  } else if (string == "northwest" || string == "nw") {
+    position = "northWest";
+  }
+  return position;
 }
 
 function determineDiagramPosition(baseDimension, destinationDimension) {
