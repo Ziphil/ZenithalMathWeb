@@ -78,6 +78,7 @@ function createDiagramGraphic(element) {
     markerElement.setAttribute("refY", tipSpec.refY);
     markerElement.setAttribute("markerWidth", tipSpec.width);
     markerElement.setAttribute("markerHeight", tipSpec.height);
+    markerElement.setAttribute("orient", "auto");
     markerPathElement.setAttribute("d", tipSpec.command);
     markerElement.appendChild(markerPathElement);
     definitionElement.appendChild(markerElement);
