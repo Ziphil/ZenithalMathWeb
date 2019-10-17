@@ -332,9 +332,39 @@ math-table {
 
   >math-cell {
     text-align: center;
-    vertical-align: baseline;
   }
 
+}
+
+
+math-diagram {
+  gap: spacing(45) spacing(54);
+  vertical-align: middle;
+  display: inline-grid !important;
+  align-items: baseline;
+  position: relative;
+
+  >math-cell {
+    text-align: center;
+  }
+
+  >math-arrow {
+    position: absolute;
+  }
+
+  >svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+  >svg >path {
+    stroke: currentcolor;
+    stroke-width: 1px;
+  }
+  
 }
 
 

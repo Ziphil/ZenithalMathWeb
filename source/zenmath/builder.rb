@@ -147,6 +147,10 @@ module ZenmathBuilder
           table_this << children_list[0]
         end
       end
+    when "diag"
+      this << ZenmathBuilder.build_diagram(spacing) do |table_this|
+        table_this << children_list[0]
+      end
     when "c"
       this << ZenmathBuilder.build_array_cell(spacing) do |cell_this|
         cell_this << children_list[0]
@@ -158,6 +162,9 @@ module ZenmathBuilder
         end
       end
       this << Element.new("math-sys-br")
+    when "ar"
+      place_config = attributes["p"]
+      this << ZenmathBuilder.build_arrow(place_config, spacing)
     when "br"
       this << Element.new("math-sys-br")
     when "g"
@@ -603,8 +610,25 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(table_element)
+    modify_array(table_element, align_config, raw)
+    return this
+  end
+
+  def self.build_diagram(spacing = nil, &block)
+    this = Nodes[]
+    table_element = nil
+    this << Element.build("math-diagram") do |this|
+      table_element = this
+    end
+    add_spacing(this, spacing)
+    block&.call(table_element)
+    modify_array(table_element, nil, false)
+    return this
+  end
+
+  def self.modify_array(element, align_config, raw)
     align_array = align_config&.chars
-    cell_elements = table_element.elements.to_a
+    cell_elements = element.elements.to_a
     column, row = 1, 1
     cell_elements.each_with_index do |child, i|
       if child.name == "math-cell"
@@ -621,12 +645,11 @@ module ZenmathBuilder
         end
         column += 1
       elsif child.name == "math-sys-br"
-        table_element.delete_element(child)
+        element.delete_element(child)
         row += 1
         column = 1
       end
     end
-    return this
   end
 
   def self.build_array_cell(spacing = nil, &block)
@@ -637,6 +660,18 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(cell_element)
+    return this
+  end
+
+  def self.build_arrow(place_config, spacing = nil, &block)
+    this = Nodes[]
+    arrow_element = nil
+    this << Element.build("math-arrow") do |this|
+      this["data-place"] = place_config
+      arrow_element = this
+    end
+    add_spacing(this, spacing)
+    block&.call(arrow_element)
     return this
   end
 
