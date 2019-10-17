@@ -359,7 +359,14 @@
       >
       \h1<Commutative diagrams>
       \p<
-        To be implemented.
+        &m<
+          \diag<
+            \c<X> \c<1> \c<Y> \br>
+            \c<Z> \c<X \oplus> Z> \c<X \otimes> Y>
+            \ar|p="1-2"|> \ar|p="1-4"|> \ar|p="1-5"|> \ar|p="1.se-6.nw"|>
+            \ar|p="2-3"|> \ar|p="3-6"|> \ar|p="4-5"|>
+          >
+        >.
       >
       \h1<Some practical examples>
       \p|class="normal"|<
