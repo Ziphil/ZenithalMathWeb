@@ -1,6 +1,7 @@
 //
 
 
+const DIRECTIONS = ["west", "southWest", "south", "southEast", "east", "northEast", "north", "northWest"];
 const ARROW_TIP_SPECS = {
   normal: {refX: 5, refY: 3, width: 10, height: 6, command: "M 0 0 L 5 3 L 0 6"}
 }
@@ -18,15 +19,39 @@ function modifyDiagram(element) {
       let endPlace = match[2];
       let startElement = cellElements[parseInt(startPlace) - 1];
       let endElement = cellElements[parseInt(endPlace) - 1];
-      let arrow = createDiagramArrow(graphic, startElement, endElement, "east", "west");
+      let startDimension = calcDiagramDimension(graphic, startElement);
+      let endDimension = calcDiagramDimension(graphic, endElement);
+      let startPosition = determineDiagramPosition(startDimension, endDimension);
+      let endPosition = determineDiagramPosition(endDimension, startDimension);
+      let arrow = createDiagramArrow(startDimension, endDimension, startPosition, endPosition);
       graphic.appendChild(arrow);
     }
   }
 }
 
-function createDiagramArrow(graphic, startElement, endElement, startPosition, endPosition) {
-  let startDimension = calcDiagramDimension(graphic, startElement);
-  let endDimension = calcDiagramDimension(graphic, endElement);
+function determineDiagramPosition(baseDimension, destinationDimension) {
+  let angle = calcAngle(baseDimension.center, destinationDimension.center);
+  let position = "west";
+  for (let i = 0 ; i < 8 ; i ++) {
+    let firstAngle = (i == 0) ? -Math.PI : calcAngle(baseDimension.center, baseDimension[DIRECTIONS[i]]);
+    let secondAngle = (i == 7) ? Math.PI : calcAngle(baseDimension.center, baseDimension[DIRECTIONS[i + 1]]);
+    let maxAngle = (firstAngle + secondAngle) / 2;
+    if (angle <= maxAngle) {
+      position = DIRECTIONS[i];
+      break;
+    }
+  }
+  return position;
+}
+
+function calcAngle(baseCoords, destinationCoords) {
+  let x = destinationCoords[0] - baseCoords[0];
+  let y = destinationCoords[1] - baseCoords[1];
+  let angle = -Math.atan2(y, x);
+  return angle;
+}
+
+function createDiagramArrow(startDimension, endDimension, startPosition, endPosition) {
   let startCoords = startDimension[startPosition];
   let endCoords = endDimension[endPosition];
   let arrow = createSvgElement("path");
