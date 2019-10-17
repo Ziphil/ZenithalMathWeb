@@ -361,8 +361,8 @@
       \p<
         &m<
           \diag<
-            \c<X> \c<1> \c<Y> \br>
-            \c<Z> \c<X \oplus> Z> \c<X \otimes> Y>
+            \v<X> \v<1> \v<Y> \br>
+            \v<Z> \v<X \oplus> Z> \v<X \otimes> Y>
             \ar|p="1-2"|> \ar|p="1-4"|> \ar|p="1-5"|> \ar|p="1.se-6.nw"|>
             \ar|p="2-3"|> \ar|p="3-6"|> \ar|p="4-5"|>
           >
