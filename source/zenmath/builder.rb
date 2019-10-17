@@ -162,6 +162,17 @@ module ZenmathBuilder
         end
       end
       this << Element.new("math-sys-br")
+    when "v"
+      this << ZenmathBuilder.build_diagram_vertex(spacing) do |vertex_this|
+        vertex_this << children_list[0]
+      end
+    when "vv"
+      children_list.each do |children|
+        this << ZenmathBuilder.build_diagram_vertex(spacing) do |vertex_this|
+          vertex_this << children
+        end
+      end
+      this << Element.new("math-sys-br")
     when "ar"
       place_config = attributes["p"]
       this << ZenmathBuilder.build_arrow(place_config, spacing)
@@ -631,7 +642,7 @@ module ZenmathBuilder
     cell_elements = element.elements.to_a
     column, row = 1, 1
     cell_elements.each_with_index do |child, i|
-      if child.name == "math-cell"
+      if child.name == "math-cell" || child.name == "math-cellwrap"
         if raw
           extra_class = []
           extra_class << "lpres" unless column == 1
@@ -660,6 +671,19 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(cell_element)
+    return this
+  end
+
+  def self.build_diagram_vertex(spacing = nil, &block)
+    this = Nodes[]
+    vertex_element = nil
+    this << Element.build("math-cellwrap") do |this|
+      this << Element.build("math-cell") do |this|
+        vertex_element = this
+      end
+    end
+    add_spacing(this, spacing)
+    block&.call(vertex_element)
     return this
   end
 

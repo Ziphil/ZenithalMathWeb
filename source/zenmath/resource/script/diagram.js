@@ -7,7 +7,7 @@ const ARROW_TIP_SPECS = {
 }
 
 function modifyDiagram(element) {
-  cellElements = Array.from(element.children).filter((element) => element.localName == "math-cell");
+  cellElements = Array.from(element.children).filter((element) => element.localName == "math-cellwrap").map((element) => element.children[0]);
   arrowElements = Array.from(element.children).filter((element) => element.localName == "math-arrow");
   let graphic = createDiagramGraphic(element);
   element.appendChild(graphic);
