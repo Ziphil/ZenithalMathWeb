@@ -79,7 +79,7 @@ class DiagramModifier extends Modifier {
   }
 
   calcLabelPoint(basePoint, labelDimension, angle) {
-    let distance = 3 / 18;
+    let distance = 5 / 18;
     let epsilon = Math.PI / 90;
     let position = "realEast";
     if (angle <= -Math.PI + epsilon) {
