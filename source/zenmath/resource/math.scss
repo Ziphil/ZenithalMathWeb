@@ -93,7 +93,8 @@ math-o {
   math-sub &,
   math-sup &,
   math-under &,
-  math-over & {
+  math-over &,
+  math-arrow & {
     padding-left: spacing(0) !important;
     padding-right: spacing(0) !important;
   }
@@ -349,6 +350,7 @@ math-diagram {
   }
 
   >math-arrow {
+    font-size: 80%;
     position: absolute;
   }
 

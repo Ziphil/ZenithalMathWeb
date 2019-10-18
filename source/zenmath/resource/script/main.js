@@ -14,8 +14,8 @@ class Modifier {
     return width;
   }
 
-  getWidth(element) {
-    let width = this.getWidthPx(element) / this.getFontSize(element);
+  getWidth(element, fontElement) {
+    let width = this.getWidthPx(element) / this.getFontSize(fontElement || element);
     return width;
   }
 
@@ -24,8 +24,8 @@ class Modifier {
     return height;
   }
 
-  getHeight(element) {
-    let height = this.getHeightPx(element) / this.getFontSize(element);
+  getHeight(element, fontElement) {
+    let height = this.getHeightPx(element) / this.getFontSize(fontElement || element);
     return height;
   }
 
@@ -40,8 +40,8 @@ class Modifier {
     return height;
   }
 
-  getLowerHeight(element) {
-    let height = this.getLowerHeightPx(element) / this.getFontSize(element);
+  getLowerHeight(element, fontElement) {
+    let height = this.getLowerHeightPx(element) / this.getFontSize(fontElement || element);
     return height;
   }
 
@@ -50,8 +50,8 @@ class Modifier {
     return height;
   }
 
-  getUpperHeight(element) {
-    let height = this.getHeight(element) - this.getLowerHeight(element);
+  getUpperHeight(element, fontElement) {
+    let height = this.getHeight(element, fontElement) - this.getLowerHeight(element, fontElement);
     return height;
   }
 

@@ -26,6 +26,17 @@ class DiagramModifier extends Modifier {
         let endPosition = this.parsePosition(match[4]) || this.determinePosition(endDimension, startDimension);
         let arrow = this.createArrow(startDimension, endDimension, startPosition, endPosition);
         graphic.appendChild(arrow);
+        let arrowDimension = this.calcDimension(graphic, arrowElement, graphic);
+        let startPoint = startDimension[startPosition];
+        let endPoint = endDimension[endPosition];
+        let basePoint = [(startPoint[0] + endPoint[0]) / 2, (startPoint[1] + endPoint[1]) / 2];
+        let angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
+        if (angle > Math.PI) {
+          angle -= Math.PI * 2;
+        }
+        let point = this.calcLabelPoint(basePoint, arrowDimension, angle);
+        arrowElement.style.top = "" + (point.top / 0.8) + "em";
+        arrowElement.style.left = "" + (point.left / 0.8) + "em";
       }
     }
   }
@@ -65,6 +76,34 @@ class DiagramModifier extends Modifier {
       }
     }
     return position;
+  }
+
+  calcLabelPoint(basePoint, labelDimension, angle) {
+    let distance = 3 / 18;
+    let epsilon = Math.PI / 90;
+    let position = "realEast";
+    if (angle <= -Math.PI + epsilon) {
+      position = "realEast";
+    } else if (angle <= -Math.PI / 2 - epsilon) {
+      position = "realNorthEast";
+    } else if (angle <= -Math.PI / 2 + epsilon) {
+      position = "realNorth";
+    } else if (angle <= -epsilon) {
+      position = "realNorthWest";
+    } else if (angle <= epsilon) {
+      position = "realWest";
+    } else if (angle <= Math.PI / 2 - epsilon) {
+      position = "realSouthWest";
+    } else if (angle <= Math.PI / 2 + epsilon) {
+      position = "realSouth";
+    } else if (angle <= Math.PI - epsilon) {
+      position = "realSouthEast";
+    } else {
+      position = "realEast";
+    }
+    let top = basePoint[1] - Math.sin(angle) * distance + labelDimension.realNorthWest[1] - labelDimension[position][1];
+    let left = basePoint[0] + Math.cos(angle) * distance + labelDimension.realNorthWest[0] - labelDimension[position][0];
+    return {top, left};
   }
 
   calcAngle(baseCoords, destinationCoords) {
@@ -113,16 +152,16 @@ class DiagramModifier extends Modifier {
     return element;
   }
 
-  calcDimension(graphic, element) {
+  calcDimension(graphic, element, fontElement) {
     let dimension = {};
-    let fontSize = this.getFontSize(element)
+    let fontSize = this.getFontSize(fontElement || element)
     let graphicTop = graphic.getBoundingClientRect().top + window.pageYOffset;
     let graphicLeft = graphic.getBoundingClientRect().left + window.pageXOffset;
     let top = (element.getBoundingClientRect().top + window.pageYOffset - graphicTop) / fontSize;
     let left = (element.getBoundingClientRect().left + window.pageXOffset - graphicLeft) / fontSize;
-    let width = this.getWidth(element);
-    let height = this.getHeight(element);
-    let lowerHeight = this.getLowerHeight(element);
+    let width = this.getWidth(element, fontElement);
+    let height = this.getHeight(element, fontElement);
+    let lowerHeight = this.getLowerHeight(element, fontElement);
     let margin = 5 / 18;
     dimension.northWest = [left - margin, top - margin];
     dimension.north = [left + width / 2, top - margin];
@@ -133,6 +172,15 @@ class DiagramModifier extends Modifier {
     dimension.southWest = [left - margin, top + height + margin];
     dimension.south = [left + width / 2, top + height + margin];
     dimension.southEast = [left + width + margin, top + height + margin];
+    dimension.realNorthWest = [left, top];
+    dimension.realNorth = [left + width / 2, top];
+    dimension.realNorthEast = [left + width, top];
+    dimension.realWest = [left, top + height - lowerHeight];
+    dimension.realCenter = [left + width / 2, top + height - lowerHeight];
+    dimension.realEast = [left + width, top + height - lowerHeight];
+    dimension.realSouthWest = [left, top + height];
+    dimension.realSouth = [left + width / 2, top + height];
+    dimension.realSouthEast = [left + width, top + height];
     return dimension;
   }
 
