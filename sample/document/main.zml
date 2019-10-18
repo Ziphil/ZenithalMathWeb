@@ -363,8 +363,8 @@
           \diag<
             \v<X> \v<1> \v<Y> \br>
             \v<Z> \v<X \oplus> Z> \v<X \otimes> Y>
-            \ar|p="1-2"|> \ar|p="1-4"|> \ar|p="1-5"|> \ar|p="1.se-6.nw"|>
-            \ar|p="2-3"|> \ar|p="3-6"|> \ar|p="4-5"|>
+            \ar|p="1-2"|<f> \ar|p="1-4"|<g> \ar|p="1-5",inv|<h> \ar|p="1.se-6.nw"|<k + \sb<p><\text<long>>>
+            \ar|p="2-3"|<\sb<`v><Y>> \ar|p="3-6"|<`r> \ar|p="4-5",inv|<\sb<`r><2>>
           >
         >.
       >
