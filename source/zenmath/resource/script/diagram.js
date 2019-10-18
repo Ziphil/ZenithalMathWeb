@@ -33,19 +33,21 @@ class DiagramModifier extends Modifier {
       let endElement = cellElements[parseInt(match[3]) - 1];
       let startDimension = this.calcDimension(graphic, startElement);
       let endDimension = this.calcDimension(graphic, endElement);
+      let bendAngle = undefined;
+      let bendAngleConfig = arrowElement.getAttribute("data-bend");
+      if (bendAngleConfig) {
+        bendAngle = parseFloat(bendAngleConfig) * Math.PI / 180;
+        spec.bendAngle = bendAngle;
+      }
       if (match[2]) {
         spec.startPoint = startDimension[this.parseDirection(match[2])];
       } else {
-        spec.startPoint = this.calcEdgePoint(startDimension, endDimension);
+        spec.startPoint = this.calcEdgePoint(startDimension, endDimension, bendAngle);
       }
       if (match[4]) {
         spec.endPoint = endDimension[this.parseDirection(match[4])];
       } else {
-        spec.endPoint = this.calcEdgePoint(endDimension, startDimension);
-      }
-      let bendAngleConfig = arrowElement.getAttribute("data-bend");
-      if (bendAngleConfig) {
-        spec.bendAngle = parseFloat(bendAngleConfig) * Math.PI / 180;
+        spec.endPoint = this.calcEdgePoint(endDimension, startDimension, -bendAngle);
       }
     } else {
       spec.startPoint = [0, 0];
@@ -77,22 +79,21 @@ class DiagramModifier extends Modifier {
     if (labelElement.getAttribute("data-inv")) {
       angle += Math.PI;
     }
-    if (angle > Math.PI) {
-      angle -= Math.PI * 2;
-    }
+    angle = this.normalizeAngle(angle);
     let point = this.calcLabelPoint(basePoint, labelDimension, angle);
     return point;
   }
 
-  calcEdgePoint(baseDimension, destinationDimension) {
+  calcEdgePoint(baseDimension, destinationDimension, bendAngle) {
     let margin = 5 / 18;
-    let angle = this.calcAngle(baseDimension.center, destinationDimension.center);
+    let angle = this.calcAngle(baseDimension.center, destinationDimension.center) + (bendAngle || 0);
     let southWestAngle = this.calcAngle(baseDimension.center, baseDimension.southWest);
     let southEastAngle = this.calcAngle(baseDimension.center, baseDimension.southEast);
     let northEastAngle = this.calcAngle(baseDimension.center, baseDimension.northEast);
     let northWestAngle = this.calcAngle(baseDimension.center, baseDimension.northWest);
     let x = 0;
     let y = 0;
+    angle = this.normalizeAngle(angle);
     if (angle >= southWestAngle && angle <= southEastAngle) {
       x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.south[1]) / Math.tan(angle);
       y = baseDimension.south[1] + margin;
@@ -164,6 +165,11 @@ class DiagramModifier extends Modifier {
     let y = destinationPoint[1] - basePoint[1];
     let angle = -Math.atan2(y, x);
     return angle;
+  }
+
+  normalizeAngle(angle) {
+    let normalizedAngle = (angle + Math.PI) % (Math.PI * 2) - Math.PI;
+    return normalizedAngle;
   }
 
   createArrow(arrowSpec) {
