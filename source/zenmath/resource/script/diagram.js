@@ -31,6 +31,9 @@ class DiagramModifier extends Modifier {
         let endPoint = endDimension[endPosition];
         let basePoint = [(startPoint[0] + endPoint[0]) / 2, (startPoint[1] + endPoint[1]) / 2];
         let angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
+        if (arrowElement.getAttribute("inv")) {
+          angle += Math.PI;
+        }
         if (angle > Math.PI) {
           angle -= Math.PI * 2;
         }
