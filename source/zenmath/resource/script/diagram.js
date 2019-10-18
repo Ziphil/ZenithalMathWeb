@@ -58,7 +58,7 @@ class DiagramModifier extends Modifier {
     let endPoint = arrowSpec.endPoint;
     let basePoint = [(startPoint[0] + endPoint[0]) / 2, (startPoint[1] + endPoint[1]) / 2];
     let angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
-    if (labelElement.getAttribute("inv")) {
+    if (labelElement.getAttribute("data-inv")) {
       angle += Math.PI;
     }
     if (angle > Math.PI) {

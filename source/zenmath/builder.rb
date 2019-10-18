@@ -696,7 +696,7 @@ module ZenmathBuilder
     this << Element.build("math-arrow") do |this|
       this["data-place"] = place_config
       if invert
-        this["inv"] = "inv"
+        this["data-inv"] = "data-inv"
       end
       label_element = this
     end
