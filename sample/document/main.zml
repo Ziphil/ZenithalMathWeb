@@ -363,8 +363,28 @@
           \diag<
             \v<X> \v<1> \v<Y> \br>
             \v<Z> \v<X \oplus> Z> \v<X \otimes> Y>
-            \ar|p="1-2"|<f> \ar|p="1-4"|<g> \ar|p="1-5",inv|<h> \ar|p="1.se-6.nw"|<k + \sb<p><\text<long>>>
-            \ar|p="2-3"|<\sb<`v><Y>> \ar|p="3-6"|<`r> \ar|p="4-5",inv|<\sb<`r><2>>
+            \ar|p="1-2"|<f> \ar|p="1-4",inv|<g> \ar|p="1-5",inv|<h> \ar|p="1-6"|<k + \sb<p><\text<long>>>
+            \ar|p="2-3"|<\sb<`v><Y>> \ar|p="3-6"|<`r> \ar|p="4-5",inv|<\sb<`r><2>> \ar|p="5-3"|>
+          >
+        >
+        or
+        &m<
+          \diag<
+            \v<X> \v> \v> \br>
+            \v> \v<\sp<f><*> M> \v<M> \br>
+            \v> \v<S> \v<T>
+            \ar|p="8-9",inv|<f> \ar|p="5-6"|>
+            \ar|p="6-9"|<m> \ar|p="5-8",inv|<\sp<f><*> m>
+            \ar|p="1-6",b="30"|<p> \ar|p="1-8",b="-30",inv|<q>
+            \ar|p="1-5"|<!>
+          >
+        >
+        or
+        &m<
+          \diag<
+            \v<\bfrm<Set> \vph<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>>> \v<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>> \v<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)> 
+            \ar|p="1.ne-2.nw",b="40"|<`D> \ar|p="2.sw-1.se",b="40"|<`G>
+            \ar|p="2.ne-3.nw",b="40"|<\bf<a>> \ar|p="3.sw-2.se",b="40"|<\bf<i>>           
           >
         >.
       >
