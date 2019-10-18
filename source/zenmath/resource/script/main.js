@@ -116,4 +116,8 @@ function execute() {
   document.querySelectorAll("math-diagram").forEach((element) => {
     DiagramModifier.execute(element);
   });
+  document.querySelectorAll("debug").forEach((element) => {
+    let modifier = new Modifier();
+    modifier.renderDebug(element);
+  });
 }
