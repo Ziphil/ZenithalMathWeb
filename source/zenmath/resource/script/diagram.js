@@ -1,7 +1,6 @@
 //
 
 
-const DIRECTIONS = ["west", "southWest", "south", "southEast", "east", "northEast", "north", "northWest"];
 const ARROW_TIP_SPECS = {
   normal: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"}
 }
@@ -33,10 +32,18 @@ class DiagramModifier extends Modifier {
       let endElement = cellElements[parseInt(match[3]) - 1];
       let startDimension = this.calcDimension(graphic, startElement);
       let endDimension = this.calcDimension(graphic, endElement);
-      let startDirection = this.parseDirection(match[2]) || this.determineDirection(startDimension, endDimension);
-      let endDirection = this.parseDirection(match[4]) || this.determineDirection(endDimension, startDimension);
-      let startPoint = startDimension[startDirection];
-      let endPoint = endDimension[endDirection];
+      let startPoint = null;
+      let endPoint = null;
+      if (match[2]) {
+        startPoint = startDimension[this.parseDirection(match[2])];
+      } else {
+        startPoint = this.calcEdgePoint(startDimension, endDimension);
+      }
+      if (match[4]) {
+        endPoint = endDimension[this.parseDirection(match[4])];
+      } else {
+        endPoint = this.calcEdgePoint(endDimension, startDimension);
+      }
       return {startPoint, endPoint};
     } else {
       let startPoint = [0, 0];
@@ -61,31 +68,56 @@ class DiagramModifier extends Modifier {
     return point;
   }
 
+  calcEdgePoint(baseDimension, destinationDimension) {
+    let margin = 5 / 18;
+    let angle = this.calcAngle(baseDimension.center, destinationDimension.center);
+    let southWestAngle = this.calcAngle(baseDimension.center, baseDimension.southWest);
+    let southEastAngle = this.calcAngle(baseDimension.center, baseDimension.southEast);
+    let northEastAngle = this.calcAngle(baseDimension.center, baseDimension.northEast);
+    let northWestAngle = this.calcAngle(baseDimension.center, baseDimension.northWest);
+    let x = 0;
+    let y = 0;
+    if (angle >= southWestAngle && angle <= southEastAngle) {
+      x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.south[1]) / Math.tan(angle);
+      y = baseDimension.south[1] + margin;
+    } else if (angle >= southEastAngle && angle <= northEastAngle) {
+      x = baseDimension.east[0] + margin;
+      y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.east[0]) * Math.tan(angle);
+    } else if (angle >= northEastAngle && angle <= northWestAngle) {
+      x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.north[1]) / Math.tan(angle);
+      y = baseDimension.north[1] - margin;
+    } else if (angle >= northWestAngle || angle <= southWestAngle) {
+      x = baseDimension.west[0] - margin;
+      y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.west[0]) * Math.tan(angle);
+    }
+    return [x, y];
+  }
+
   calcLabelPoint(basePoint, labelDimension, angle) {
     let distance = 5 / 18;
     let epsilon = Math.PI / 90;
-    let direction = "realEast";
+    let direction = "east";
     if (angle <= -Math.PI + epsilon) {
-      direction = "realEast";
+      direction = "east";
     } else if (angle <= -Math.PI / 2 - epsilon) {
-      direction = "realNorthEast";
+      direction = "northEast";
     } else if (angle <= -Math.PI / 2 + epsilon) {
-      direction = "realNorth";
+      direction = "north";
     } else if (angle <= -epsilon) {
-      direction = "realNorthWest";
+      direction = "northWest";
     } else if (angle <= epsilon) {
-      direction = "realWest";
+      direction = "west";
     } else if (angle <= Math.PI / 2 - epsilon) {
-      direction = "realSouthWest";
+      direction = "southWest";
     } else if (angle <= Math.PI / 2 + epsilon) {
-      direction = "realSouth";
+      direction = "south";
     } else if (angle <= Math.PI - epsilon) {
-      direction = "realSouthEast";
+      direction = "southEast";
     } else {
-      direction = "realEast";
+      direction = "east";
     }
-    let x = basePoint[0] + Math.cos(angle) * distance + labelDimension.realNorthWest[0] - labelDimension[direction][0];
-    let y = basePoint[1] - Math.sin(angle) * distance + labelDimension.realNorthWest[1] - labelDimension[direction][1];
+    let x = basePoint[0] + Math.cos(angle) * distance + labelDimension.northWest[0] - labelDimension[direction][0];
+    let y = basePoint[1] - Math.sin(angle) * distance + labelDimension.northWest[1] - labelDimension[direction][1];
     return [x, y];
   }
 
@@ -111,24 +143,9 @@ class DiagramModifier extends Modifier {
     return direction;
   }
 
-  determineDirection(baseDimension, destinationDimension) {
-    let angle = this.calcAngle(baseDimension.center, destinationDimension.center);
-    let direction = "west";
-    for (let i = 0 ; i < 8 ; i ++) {
-      let firstAngle = (i == 0) ? -Math.PI : this.calcAngle(baseDimension.center, baseDimension[DIRECTIONS[i]]);
-      let secondAngle = (i == 7) ? Math.PI : this.calcAngle(baseDimension.center, baseDimension[DIRECTIONS[i + 1]]);
-      let maxAngle = (firstAngle + secondAngle) / 2;
-      if (angle <= maxAngle) {
-        direction = DIRECTIONS[i];
-        break;
-      }
-    }
-    return direction;
-  }
-
-  calcAngle(baseCoords, destinationCoords) {
-    let x = destinationCoords[0] - baseCoords[0];
-    let y = destinationCoords[1] - baseCoords[1];
+  calcAngle(basePoint, destinationPoint) {
+    let x = destinationPoint[0] - basePoint[0];
+    let y = destinationPoint[1] - basePoint[1];
     let angle = -Math.atan2(y, x);
     return angle;
   }
@@ -182,25 +199,15 @@ class DiagramModifier extends Modifier {
     let width = this.getWidth(element, graphic);
     let height = this.getHeight(element, graphic);
     let lowerHeight = this.getLowerHeight(element, graphic);
-    let margin = 5 / 18;
-    dimension.northWest = [left - margin, top - margin];
-    dimension.north = [left + width / 2, top - margin];
-    dimension.northEast = [left + width + margin, top - margin];
-    dimension.west = [left - margin, top + height - lowerHeight];
+    dimension.northWest = [left, top];
+    dimension.north = [left + width / 2, top];
+    dimension.northEast = [left + width, top];
+    dimension.west = [left, top + height - lowerHeight];
     dimension.center = [left + width / 2, top + height - lowerHeight];
-    dimension.east = [left + width + margin, top + height - lowerHeight];
-    dimension.southWest = [left - margin, top + height + margin];
-    dimension.south = [left + width / 2, top + height + margin];
-    dimension.southEast = [left + width + margin, top + height + margin];
-    dimension.realNorthWest = [left, top];
-    dimension.realNorth = [left + width / 2, top];
-    dimension.realNorthEast = [left + width, top];
-    dimension.realWest = [left, top + height - lowerHeight];
-    dimension.realCenter = [left + width / 2, top + height - lowerHeight];
-    dimension.realEast = [left + width, top + height - lowerHeight];
-    dimension.realSouthWest = [left, top + height];
-    dimension.realSouth = [left + width / 2, top + height];
-    dimension.realSouthEast = [left + width, top + height];
+    dimension.east = [left + width, top + height - lowerHeight];
+    dimension.southWest = [left, top + height];
+    dimension.south = [left + width / 2, top + height];
+    dimension.southEast = [left + width, top + height];
     return dimension;
   }
 
