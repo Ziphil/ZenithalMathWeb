@@ -25,6 +25,7 @@ class DiagramModifier extends Modifier {
   }
 
   determineArrowSpec(graphic, arrowElement, cellElements) {
+    let spec = {};
     let placeConfig = arrowElement.getAttribute("data-place");
     let match = placeConfig.match(/(\d+)(?:\.(\w+))?-(\d+)(?:\.(\w+))?/);
     if (match) {
@@ -32,32 +33,47 @@ class DiagramModifier extends Modifier {
       let endElement = cellElements[parseInt(match[3]) - 1];
       let startDimension = this.calcDimension(graphic, startElement);
       let endDimension = this.calcDimension(graphic, endElement);
-      let startPoint = null;
-      let endPoint = null;
       if (match[2]) {
-        startPoint = startDimension[this.parseDirection(match[2])];
+        spec.startPoint = startDimension[this.parseDirection(match[2])];
       } else {
-        startPoint = this.calcEdgePoint(startDimension, endDimension);
+        spec.startPoint = this.calcEdgePoint(startDimension, endDimension);
       }
       if (match[4]) {
-        endPoint = endDimension[this.parseDirection(match[4])];
+        spec.endPoint = endDimension[this.parseDirection(match[4])];
       } else {
-        endPoint = this.calcEdgePoint(endDimension, startDimension);
+        spec.endPoint = this.calcEdgePoint(endDimension, startDimension);
       }
-      return {startPoint, endPoint};
+      let bendAngleConfig = arrowElement.getAttribute("data-bend");
+      if (bendAngleConfig) {
+        spec.bendAngle = parseFloat(bendAngleConfig) * Math.PI / 180;
+      }
     } else {
-      let startPoint = [0, 0];
-      let endPoint = [0, 0];
-      return {startPoint, endPoint};
+      spec.startPoint = [0, 0];
+      spec.endPoint = [0, 0];
     }
+    return spec;
   }
 
   determineLabelPoint(graphic, labelElement, arrowSpec) {
     let labelDimension = this.calcDimension(graphic, labelElement);
     let startPoint = arrowSpec.startPoint;
     let endPoint = arrowSpec.endPoint;
-    let basePoint = [(startPoint[0] + endPoint[0]) / 2, (startPoint[1] + endPoint[1]) / 2];
-    let angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
+    let bendAngle = arrowSpec.bendAngle;
+    let position = 0.5;
+    let basePoint = [0, 0];
+    let angle = 0;
+    if (bendAngle != undefined) {
+      let controlPoint = this.calcControlPoint(startPoint, endPoint, bendAngle);
+      let basePointX = (1 - position) * (1 - position) * startPoint[0] + 2 * (1 - position) * position * controlPoint[0] + position * position * endPoint[0];
+      let basePointY = (1 - position) * (1 - position) * startPoint[1] + 2 * (1 - position) * position * controlPoint[1] + position * position * endPoint[1];
+      let speedX = -2 * (1 - position) * startPoint[0] + 2 * (1 - 2 * position) * controlPoint[0] + 2 * position * endPoint[0];
+      let speedY = -2 * (1 - position) * startPoint[1] + 2 * (1 - 2 * position) * controlPoint[1] + 2 * position * endPoint[1];
+      basePoint = [basePointX, basePointY];
+      angle = this.calcAngle([0, 0], [speedX, speedY]) + Math.PI / 2;
+    } else {
+      basePoint = [(startPoint[0] + endPoint[0]) / 2, (startPoint[1] + endPoint[1]) / 2];
+      angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
+    }
     if (labelElement.getAttribute("data-inv")) {
       angle += Math.PI;
     }
@@ -153,10 +169,24 @@ class DiagramModifier extends Modifier {
   createArrow(arrowSpec) {
     let startPoint = arrowSpec.startPoint;
     let endPoint = arrowSpec.endPoint;
+    let bendAngle = arrowSpec.bendAngle;
+    let command = "M " + startPoint[0] + " " + startPoint[1];
+    if (bendAngle != undefined) {
+      let controlPoint = this.calcControlPoint(startPoint, endPoint, bendAngle)
+      command += " Q " + controlPoint[0] + " " + controlPoint[1] + ", " + endPoint[0] + " " + endPoint[1];
+    } else {
+      command += " L " + endPoint[0] + " " + endPoint[1];
+    }
     let arrow = this.createSvgElement("path");
-    arrow.setAttribute("d", "M " + startPoint[0] + " " + startPoint[1] + " L " + endPoint[0] + " " + endPoint[1]);
+    arrow.setAttribute("d", command);
     arrow.setAttribute("marker-end", "url(#tip-normal)");
     return arrow;
+  }
+
+  calcControlPoint(startPoint, endPoint, bendAngle) {
+    let x = (endPoint[0] + startPoint[0] + (endPoint[1] - startPoint[1]) * Math.tan(bendAngle)) / 2;
+    let y = (endPoint[1] + startPoint[1] - (endPoint[0] - startPoint[0]) * Math.tan(bendAngle)) / 2;
+    return [x, y];
   }
 
   createGraphic(element) {

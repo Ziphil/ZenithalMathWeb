@@ -175,8 +175,9 @@ module ZenmathBuilder
       this << Element.new("math-sys-br")
     when "ar"
       place_config = attributes["p"]
+      bend_angle = attributes["b"]
       invert = attributes["inv"]
-      this << ZenmathBuilder.build_arrow(place_config, invert, spacing) do |label_this|
+      this << ZenmathBuilder.build_arrow(place_config, bend_angle, invert, spacing) do |label_this|
         label_this << children_list[0]
       end
     when "br"
@@ -690,11 +691,14 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_arrow(place_config, invert, spacing = nil, &block)
+  def self.build_arrow(place_config, bend_angle, invert, spacing = nil, &block)
     this = Nodes[]
     label_element = nil
     this << Element.build("math-arrow") do |this|
       this["data-place"] = place_config
+      if bend_angle
+        this["data-bend"] = bend_angle
+      end
       if invert
         this["data-inv"] = "data-inv"
       end
