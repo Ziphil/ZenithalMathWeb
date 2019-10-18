@@ -111,9 +111,13 @@ module ZenmathParserMethod
     string = "const DATA = "
     string << JSON.generate(DATA.slice("radical", "paren", "wide", "shift"))
     string << ";\n"
+    string << File.read(dir + "/main.js")
+    string << "\n"
     Dir.each_child(dir) do |entry|
-      string << File.read(dir + "/" + entry)
-      string << "\n"
+      unless entry == "main.js"
+        string << File.read(dir + "/" + entry)
+        string << "\n"
+      end
     end
     string << "window.onload = execute;"
     return string
