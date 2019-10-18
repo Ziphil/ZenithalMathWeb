@@ -3,7 +3,7 @@
 
 const DIRECTIONS = ["west", "southWest", "south", "southEast", "east", "northEast", "north", "northWest"];
 const ARROW_TIP_SPECS = {
-  normal: {refX: 5, refY: 3, width: 10, height: 6, command: "M 0 0 L 5 3 L 0 6"}
+  normal: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"}
 }
 
 
@@ -84,11 +84,9 @@ class DiagramModifier extends Modifier {
   }
 
   createGraphic(element) {
-    let width = this.getWidthPx(element);
-    let height = this.getHeightPx(element);
+    let width = this.getWidth(element);
+    let height = this.getHeight(element);
     let graphic = this.createSvgElement("svg");
-    graphic.setAttribute("width", width + "px");
-    graphic.setAttribute("height", height + "px");
     graphic.setAttribute("viewBox", "0 0 " + width + " " + height);
     let definitionElement = this.createSvgElement("defs");
     let tipSpecKeys = Object.keys(ARROW_TIP_SPECS);
@@ -117,14 +115,15 @@ class DiagramModifier extends Modifier {
 
   calcDimension(graphic, element) {
     let dimension = {};
+    let fontSize = this.getFontSize(element)
     let graphicTop = graphic.getBoundingClientRect().top + window.pageYOffset;
     let graphicLeft = graphic.getBoundingClientRect().left + window.pageXOffset;
-    let top = element.getBoundingClientRect().top + window.pageYOffset - graphicTop;
-    let left = element.getBoundingClientRect().left + window.pageXOffset - graphicLeft;
-    let width = this.getWidthPx(element);
-    let height = this.getHeightPx(element);
-    let lowerHeight = this.getLowerHeightPx(element);
-    let margin = this.getFontSize(element) / 18 * 3;
+    let top = (element.getBoundingClientRect().top + window.pageYOffset - graphicTop) / fontSize;
+    let left = (element.getBoundingClientRect().left + window.pageXOffset - graphicLeft) / fontSize;
+    let width = this.getWidth(element);
+    let height = this.getHeight(element);
+    let lowerHeight = this.getLowerHeight(element);
+    let margin = 5 / 18;
     dimension.northWest = [left - margin, top - margin];
     dimension.north = [left + width / 2, top - margin];
     dimension.northEast = [left + width + margin, top - margin];

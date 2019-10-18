@@ -126,8 +126,8 @@ math-frac {
     margin: 0em spacing(-2);
     padding: 0em spacing(2) !important;
     width: 100%;
-    height: 1px;
-    border-top: 1px solid;
+    height: 0.06em;
+    border-top: 0.06em solid;
     box-sizing: content-box;
   }
 
@@ -144,13 +144,13 @@ math-sqrt {
   margin-top: 0.1em;
 
   >math-surd {
-    margin: 0.13em 0em 0em 0em;
+    margin: 0.09em 0em 0em 0em;
     vertical-align: top;
   }
 
   >math-sqrtcont {
     padding: 0.1em spacing(1) 0em spacing(0);
-    border-top: 1px solid;
+    border-top: 0.06em solid;
   }
 
 }
@@ -362,8 +362,12 @@ math-diagram {
 
   >svg path {
     stroke: currentcolor;
-    stroke-width: 1px;
+    stroke-width: 0.06;
     fill: none;
+  }
+
+  >svg marker path {
+    stroke-width: 1;
   }
   
 }
