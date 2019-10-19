@@ -44,11 +44,15 @@ class DiagramModifier extends Modifier {
       let endDimension = this.calcDimension(graphic, endElement);
       let bendAngleString = arrowElement.getAttribute("data-bend");
       let shiftString = arrowElement.getAttribute("data-shift");
+      let labelPositionString = arrowElement.getAttribute("data-pos");
       if (bendAngleString) {
         spec.bendAngle = parseFloat(bendAngleString) * Math.PI / 180;
       }
       if (shiftString) {
         spec.shift = parseFloat(shiftString) * UNIT;
+      }
+      if (labelPositionString) {
+        spec.labelPosition = parseFloat(labelPositionString) / 100;
       }
       if (startConfig.direction) {
         spec.startPoint = startDimension[startConfig.direction];
@@ -72,7 +76,7 @@ class DiagramModifier extends Modifier {
     let startPoint = arrowSpec.startPoint;
     let endPoint = arrowSpec.endPoint;
     let bendAngle = arrowSpec.bendAngle;
-    let position = 0.5;
+    let position = (arrowSpec.labelPosition == undefined) ? 0.5 : arrowSpec.labelPosition;
     let basePoint = [0, 0];
     let angle = 0;
     if (bendAngle != undefined) {
@@ -84,7 +88,9 @@ class DiagramModifier extends Modifier {
       basePoint = [basePointX, basePointY];
       angle = this.calcAngle([0, 0], [speedX, speedY]) + Math.PI / 2;
     } else {
-      basePoint = [(startPoint[0] + endPoint[0]) / 2, (startPoint[1] + endPoint[1]) / 2];
+      let basePointX = (1 - position) * startPoint[0] + position * endPoint[0];
+      let basePointY = (1 - position) * startPoint[1] + position * endPoint[1];
+      basePoint = [basePointX, basePointY];
       angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
     }
     if (labelElement.getAttribute("data-inv")) {
