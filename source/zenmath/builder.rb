@@ -181,8 +181,8 @@ module ZenmathBuilder
       configs[:bend_angle] = attributes["bend"]
       configs[:shift] = attributes["shift"]
       configs[:line_count] = attributes["line"]
-      configs[:label_position] = attributes["pos"]
       configs[:dashed] = attributes["dash"]
+      configs[:label_position] = attributes["pos"]
       configs[:invert] = attributes["inv"]
       this << ZenmathBuilder.build_arrow(configs, spacing) do |label_this|
         label_this << children_list[0]
@@ -716,11 +716,11 @@ module ZenmathBuilder
       if configs[:line_count]
         this["data-line"] = configs[:line_count]
       end
-      if configs[:label_position]
-        this["data-pos"] = configs[:label_position]
-      end
       if configs[:dashed]
         this["data-dash"] = "data-dash"
+      end
+      if configs[:label_position]
+        this["data-pos"] = configs[:label_position]
       end
       if configs[:invert]
         this["data-inv"] = "data-inv"
