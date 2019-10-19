@@ -23,6 +23,12 @@ class DiagramModifier extends Modifier {
       arrowElement.style.left = "" + (labelPoint[0] * fontRatio) + "em";
       arrowElement.style.top = "" + (labelPoint[1] * fontRatio) + "em";
     }
+    let pathElements = Array.from(graphic.children).filter((child) => child.localName == "path");
+    let extrusion = this.calcExtrusion(graphic, arrowElements.concat(pathElements));
+    element.style.marginTop = "" + extrusion.top + "em";
+    element.style.marginBottom = "" + extrusion.bottom + "em";
+    element.style.marginLeft = "" + extrusion.left + "em";
+    element.style.marginRight = "" + extrusion.right + "em";
   }
 
   determineArrowSpec(graphic, arrowElement, cellElements) {
@@ -216,6 +222,38 @@ class DiagramModifier extends Modifier {
     let x = (endPoint[0] + startPoint[0] + (endPoint[1] - startPoint[1]) * Math.tan(bendAngle)) / 2;
     let y = (endPoint[1] + startPoint[1] - (endPoint[0] - startPoint[0]) * Math.tan(bendAngle)) / 2;
     return [x, y];
+  }
+
+  calcExtrusion(graphic, elements) {
+    let fontSize = this.getFontSize(graphic);
+    let xOffset =  window.pageXOffset;
+    let yOffset =  window.pageYOffset;
+    let graphicRect = graphic.getBoundingClientRect();
+    let graphicTop = graphicRect.top + yOffset
+    let graphicBottom = graphicRect.bottom + yOffset;
+    let graphicLeft = graphicRect.left + xOffset;
+    let graphicRight = graphicRect.right + xOffset;
+    let extrusion = {top: 0, bottom: 0, left: 0, right: 0};
+    for (let element of elements) {
+      let rect = element.getBoundingClientRect();
+      let topExtrusion = -(rect.top + yOffset - graphicTop) / fontSize;
+      let bottomExtrusion = (rect.bottom + yOffset - graphicBottom) / fontSize;
+      let leftExtrusion = -(rect.left + xOffset - graphicLeft) / fontSize;
+      let rightExtrusion = (rect.right + xOffset - graphicRight) / fontSize;
+      if (topExtrusion > extrusion.top) {
+        extrusion.top = topExtrusion;
+      }
+      if (bottomExtrusion > extrusion.bottom) {
+        extrusion.bottom = bottomExtrusion;
+      }
+      if (leftExtrusion > extrusion.left) {
+        extrusion.left = leftExtrusion;
+      }
+      if (rightExtrusion > extrusion.right) {
+        extrusion.right = rightExtrusion;
+      }
+    }
+    return extrusion;
   }
 
   createGraphic(element) {
