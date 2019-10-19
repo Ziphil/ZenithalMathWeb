@@ -7,6 +7,18 @@
 }
 
 
+@mixin math-font {
+  padding-top: 0.12em;
+  line-height: 0.9;
+  font-family: "Math";
+}
+
+@mixin normal-font {
+  padding-top: 0em;
+  font-family: inherit;
+}
+
+
 math-n {
   padding: 0em spacing(0);
   line-height: 1;
@@ -31,28 +43,22 @@ math-i {
   }
 
   &.alt {
-    font-family: "Math";
+    @include math-font;
     font-style: normal;
-    padding-top: 0.12em;
-    line-height: 0.9;
   }
 
 }
 
 
 math-o {
-  padding-top: 0.12em;
-  line-height: 0.9;
-  font-family: "Math";
+  @include math-font;
 
   &.txt {
-    padding-top: 0em;
-    font-family: inherit;
+    @include normal-font;
   }
 
   &.sml {
-    padding-top: 0em;
-    font-family: inherit;
+    @include normal-font;
     font-variant: all-small-caps;
   }
 
