@@ -36,13 +36,13 @@ class DiagramModifier extends Modifier {
     let spec = {};
     let startConfigString = arrowElement.getAttribute("data-start");
     let endConfigString = arrowElement.getAttribute("data-end");
-    let startConfig = this.parseEdgeConfig(startConfigString, cellElements);
-    let endConfig = this.parseEdgeConfig(endConfigString, cellElements);
+    let startConfig = this.parseEdgeConfig(startConfigString, graphic, cellElements);
+    let endConfig = this.parseEdgeConfig(endConfigString, graphic, cellElements);
     if (startConfig && endConfig) {
       let startElement = startConfig.element;
       let endElement = endConfig.element;
-      let startDimension = this.calcDimension(graphic, startElement);
-      let endDimension = this.calcDimension(graphic, endElement);
+      let startDimension = startConfig.dimension;
+      let endDimension = endConfig.dimension;
       let bendAngleString = arrowElement.getAttribute("data-bend");
       let shiftString = arrowElement.getAttribute("data-shift");
       let labelPositionString = arrowElement.getAttribute("data-pos");
@@ -55,13 +55,13 @@ class DiagramModifier extends Modifier {
       if (labelPositionString) {
         spec.labelPosition = parseFloat(labelPositionString) / 100;
       }
-      if (startConfig.direction) {
-        spec.startPoint = startDimension[startConfig.direction];
+      if (startConfig.point) {
+        spec.startPoint = startConfig.point;
       } else {
         spec.startPoint = this.calcEdgePoint(startDimension, endDimension, spec.bendAngle, spec.shift);
       }
-      if (endConfig.direction) {
-        spec.endPoint = endDimension[endConfig.direction];
+      if (endConfig.point) {
+        spec.endPoint = endConfig.point;
       } else {
         spec.endPoint = this.calcEdgePoint(endDimension, startDimension, -spec.bendAngle, -spec.shift);
       }
@@ -164,19 +164,20 @@ class DiagramModifier extends Modifier {
     return [x, y];
   }
 
-  parseEdgeConfig(string, cellElements) {
+  parseEdgeConfig(string, graphic, cellElements) {
     let match = string.match(/(\d+)(?:\.(\w+))?/);
     if (match) {
       let number = parseInt(match[1]) - 1;
-      let direction = this.parseDirection(match[2]);
       let element = cellElements[number];
-      return {element, direction};
+      let dimension = this.calcDimension(graphic, element);
+      let point = this.parsePoint(match[2], dimension);
+      return {element, dimension, point};
     } else {
       return null;
     }
   }
 
-  parseDirection(string) {
+  parsePoint(string, dimension) {
     let direction = null;
     if (string == "west" || string == "w") {
       direction = "west";
@@ -195,7 +196,11 @@ class DiagramModifier extends Modifier {
     } else if (string == "northwest" || string == "nw") {
       direction = "northWest";
     }
-    return direction;
+    let point = null;
+    if (direction) {
+      point = dimension[direction];
+    }
+    return point;
   }
 
   calcAngle(basePoint, destinationPoint) {
