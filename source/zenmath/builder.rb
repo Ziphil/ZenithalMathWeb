@@ -180,6 +180,7 @@ module ZenmathBuilder
       configs[:tip_kinds] = attributes["tip"]
       configs[:bend_angle] = attributes["bend"]
       configs[:shift] = attributes["shift"]
+      configs[:line_count] = attributes["line"]
       configs[:label_position] = attributes["pos"]
       configs[:dashed] = attributes["dash"]
       configs[:invert] = attributes["inv"]
@@ -711,6 +712,9 @@ module ZenmathBuilder
       end
       if configs[:shift]
         this["data-shift"] = configs[:shift]
+      end
+      if configs[:line_count]
+        this["data-line"] = configs[:line_count]
       end
       if configs[:label_position]
         this["data-pos"] = configs[:label_position]

@@ -13,8 +13,8 @@ class DiagramModifier extends Modifier {
     element.appendChild(graphic);
     for (let arrowElement of arrowElements) {
       let arrowSpec = this.determineArrowSpec(graphic, arrowElement, cellElements);
-      let arrow = this.createArrow(arrowSpec);
-      graphic.appendChild(arrow);
+      let arrows = this.createArrows(arrowSpec);
+      graphic.append(...arrows);
       let labelPoint = this.determineLabelPoint(graphic, arrowElement, arrowSpec);
       let fontRatio = this.getFontSize(graphic) / this.getFontSize(arrowElement);
       arrowElement.style.left = "" + (labelPoint[0] * fontRatio) + "em";
@@ -35,26 +35,18 @@ class DiagramModifier extends Modifier {
     let startConfig = this.parseEdgeConfig(startConfigString, graphic, cellElements);
     let endConfig = this.parseEdgeConfig(endConfigString, graphic, cellElements);
     if (startConfig && endConfig) {
+      let bendAngleString = arrowElement.getAttribute("data-bend");
+      if (bendAngleString) {
+        spec.bendAngle = parseFloat(bendAngleString) * Math.PI / 180;
+      }
+      let shiftString = arrowElement.getAttribute("data-shift");
+      if (shiftString) {
+        spec.shift = parseFloat(shiftString) * UNIT;
+      }
       let startElement = startConfig.element;
       let endElement = endConfig.element;
       let startDimension = startConfig.dimension;
       let endDimension = endConfig.dimension;
-      let bendAngleString = arrowElement.getAttribute("data-bend");
-      let shiftString = arrowElement.getAttribute("data-shift");
-      let labelPositionString = arrowElement.getAttribute("data-pos");
-      let dashed = !!arrowElement.getAttribute("data-dash");
-      if (bendAngleString) {
-        spec.bendAngle = parseFloat(bendAngleString) * Math.PI / 180;
-      }
-      if (shiftString) {
-        spec.shift = parseFloat(shiftString) * UNIT;
-      }
-      if (labelPositionString) {
-        spec.labelPosition = parseFloat(labelPositionString) / 100;
-      }
-      if (dashed) {
-        spec.dashed = true;
-      }
       if (startConfig.point) {
         spec.startPoint = startConfig.point;
       } else {
@@ -69,8 +61,20 @@ class DiagramModifier extends Modifier {
       spec.startPoint = [0, 0];
       spec.endPoint = [0, 0];
     }
+    let labelPositionString = arrowElement.getAttribute("data-pos");
+    if (labelPositionString) {
+      spec.labelPosition = parseFloat(labelPositionString) / 100;
+    }
+    let lineCountString = arrowElement.getAttribute("data-line");
+    if (lineCountString) {
+      spec.lineCount = parseInt(lineCountString);
+    }
+    let dashed = !!arrowElement.getAttribute("data-dash");
+    if (dashed) {
+      spec.dashed = true;
+    }
     let tipKindsString = arrowElement.getAttribute("data-tip");
-    spec.tipKinds = this.parseTipKinds(tipKindsString);
+    spec.tipKinds = this.parseTipKinds(tipKindsString, spec.lineCount);
     spec.startPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.tipKinds.start);
     spec.endPoint = this.calcIntrudedPoint(spec.endPoint, spec.startPoint, -spec.bendAngle, spec.tipKinds.end);
     return spec;
@@ -102,7 +106,7 @@ class DiagramModifier extends Modifier {
       angle += Math.PI;
     }
     angle = this.normalizeAngle(angle);
-    let point = this.calcLabelPoint(basePoint, labelDimension, angle);
+    let point = this.calcLabelPoint(basePoint, labelDimension, angle, arrowSpec.lineCount);
     return point;
   }
 
@@ -141,7 +145,7 @@ class DiagramModifier extends Modifier {
   calcIntrudedPoint(basePoint, destinationPoint, bendAngle, tipKind) {
     if (tipKind != "none") {
       let angle = this.calcAngle(basePoint, destinationPoint) + (bendAngle || 0);
-      let distance = DATA["arrow"][tipKind]["extrusion"] * 0.06;
+      let distance = DATA["arrow"][tipKind]["extrusion"];
       angle = this.normalizeAngle(angle);
       let intrudedPointX = basePoint[0] + distance * Math.cos(angle);
       let intrudedPointY = basePoint[1] - distance * Math.sin(angle);
@@ -152,8 +156,8 @@ class DiagramModifier extends Modifier {
     }
   }
 
-  calcLabelPoint(basePoint, labelDimension, angle) {
-    let distance = 5 / 18;
+  calcLabelPoint(basePoint, labelDimension, angle, lineCount) {
+    let distance = 5 / 18 + ((lineCount || 1) - 1) * 0.09;
     let epsilon = Math.PI / 90;
     let direction = "east";
     if (angle <= -Math.PI + epsilon) {
@@ -219,7 +223,7 @@ class DiagramModifier extends Modifier {
     return point;
   }
 
-  parseTipKinds(string) {
+  parseTipKinds(string, lineCount) {
     let tipKinds = {start: "none", end: "normal"};
     if (string != null) {
       let specifiedTipKinds = string.split(/\s*,\s*/);
@@ -231,6 +235,21 @@ class DiagramModifier extends Modifier {
         if (specifiedTipKind == "none") {
           tipKinds.end = "none";
         }
+      }
+    }
+    if (lineCount == 2) {
+      if (tipKinds.start != "none") {
+        tipKinds.start = "d" + tipKinds.start;
+      }
+      if (tipKinds.end != "none") {
+        tipKinds.end = "d" + tipKinds.end;
+      }
+    } else if (lineCount == 3) {
+      if (tipKinds.start != "none") {
+        tipKinds.start = "t" + tipKinds.start;
+      }
+      if (tipKinds.end != "none") {
+        tipKinds.end = "t" + tipKinds.end;
       }
     }
     return tipKinds;
@@ -248,10 +267,11 @@ class DiagramModifier extends Modifier {
     return normalizedAngle;
   }
 
-  createArrow(arrowSpec) {
+  createArrows(arrowSpec) {
     let startPoint = arrowSpec.startPoint;
     let endPoint = arrowSpec.endPoint;
     let bendAngle = arrowSpec.bendAngle;
+    let lineCount = arrowSpec.lineCount || 1;
     let command = "M " + startPoint[0] + " " + startPoint[1];
     if (bendAngle != undefined) {
       let controlPoint = this.calcControlPoint(startPoint, endPoint, bendAngle)
@@ -259,18 +279,34 @@ class DiagramModifier extends Modifier {
     } else {
       command += " L " + endPoint[0] + " " + endPoint[1];
     }
-    let arrow = this.createSvgElement("path");
-    arrow.setAttribute("d", command);
-    if (arrowSpec.tipKinds.start != "none") {
-      arrow.setAttribute("marker-start", "url(#tip-" + arrowSpec.tipKinds.start +")");
+    let arrows = [];
+    for (let i = 0 ; i < lineCount ; i ++) {
+      let arrow = this.createSvgElement("path");
+      arrow.setAttribute("d", command);
+      if (arrowSpec.tipKinds.start != "none") {
+        arrow.setAttribute("marker-start", "url(#tip-" + arrowSpec.tipKinds.start +")");
+      }
+      if (arrowSpec.tipKinds.end != "none") {
+        arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.tipKinds.end + ")");
+      }
+      if (arrowSpec.dashed) {
+        arrow.classList.add("dashed");
+      }
+      if (i == 0) {
+        arrow.classList.add("base");
+      } else if (i == 1) {
+        arrow.classList.add("cover");
+      } else if (i == 2) {
+        arrow.classList.add("front");
+      }
+      if (lineCount == 2) {
+        arrow.classList.add("double");
+      } else if (lineCount == 3) {
+        arrow.classList.add("triple");
+      }
+      arrows.push(arrow);
     }
-    if (arrowSpec.tipKinds.end != "none") {
-      arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.tipKinds.end + ")");
-    }
-    if (arrowSpec.dashed) {
-      arrow.classList.add("dashed");
-    }
-    return arrow;
+    return arrows;
   }
 
   calcControlPoint(startPoint, endPoint, bendAngle) {
@@ -327,6 +363,7 @@ class DiagramModifier extends Modifier {
       markerElement.setAttribute("refY", tipSpec["y"]);
       markerElement.setAttribute("markerWidth", tipSpec["width"]);
       markerElement.setAttribute("markerHeight", tipSpec["height"]);
+      markerElement.setAttribute("markerUnits", "userSpaceOnUse");
       markerElement.setAttribute("orient", "auto");
       markerPathElement.setAttribute("d", tipSpec["command"]);
       markerElement.appendChild(markerPathElement);

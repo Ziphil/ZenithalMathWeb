@@ -350,17 +350,35 @@ math-diagram {
   }
 
   >svg path {
-    stroke: currentcolor;
     stroke-width: 0.06;
+    stroke: currentcolor;
     fill: none;
+  }
+
+  >svg path.double.base {
+    stroke-width: 0.24;
+  }
+
+  >svg path.double.cover {
+    stroke-width: 0.12;
+    stroke: white;
+  }
+
+  >svg path.triple.base {
+    stroke-width: 0.42;
+  }
+
+  >svg path.triple.cover {
+    stroke-width: 0.3;
+    stroke: white;
+  }
+
+  >svg path.triple.front {
+    stroke-width: 0.06;
   }
 
   >svg path.dashed {
     stroke-dasharray: 0.2 0.2;
-  }
-
-  >svg marker path {
-    stroke-width: 1;
   }
   
 }
