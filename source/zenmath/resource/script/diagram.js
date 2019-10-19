@@ -1,7 +1,11 @@
 //
 
 
+const ANGLE_EPSILON = Math.PI / 90;
+
 const UNIT = 1 / 18;
+const ARROW_MARGIN = 5 * UNIT;
+const LABEL_DISTANCE = 5 * UNIT;
 
 
 class DiagramModifier extends Modifier {
@@ -111,7 +115,7 @@ class DiagramModifier extends Modifier {
   }
 
   calcEdgePoint(baseDimension, destinationDimension, bendAngle, shift) {
-    let margin = 5 / 18;
+    let margin = ARROW_MARGIN;
     let angle = this.calcAngle(baseDimension.center, destinationDimension.center) + (bendAngle || 0);
     let shiftAngle = angle + Math.PI / 2;
     let southWestAngle = this.calcAngle(baseDimension.center, baseDimension.southWest);
@@ -157,24 +161,23 @@ class DiagramModifier extends Modifier {
   }
 
   calcLabelPoint(basePoint, labelDimension, angle, lineCount) {
-    let distance = 5 / 18 + ((lineCount || 1) - 1) * 0.09;
-    let epsilon = Math.PI / 90;
+    let distance = LABEL_DISTANCE + ((lineCount || 1) - 1) * 0.09;
     let direction = "east";
-    if (angle <= -Math.PI + epsilon) {
+    if (angle <= -Math.PI + ANGLE_EPSILON) {
       direction = "east";
-    } else if (angle <= -Math.PI / 2 - epsilon) {
+    } else if (angle <= -Math.PI / 2 - ANGLE_EPSILON) {
       direction = "northEast";
-    } else if (angle <= -Math.PI / 2 + epsilon) {
+    } else if (angle <= -Math.PI / 2 + ANGLE_EPSILON) {
       direction = "north";
-    } else if (angle <= -epsilon) {
+    } else if (angle <= -ANGLE_EPSILON) {
       direction = "northWest";
-    } else if (angle <= epsilon) {
+    } else if (angle <= ANGLE_EPSILON) {
       direction = "west";
-    } else if (angle <= Math.PI / 2 - epsilon) {
+    } else if (angle <= Math.PI / 2 - ANGLE_EPSILON) {
       direction = "southWest";
-    } else if (angle <= Math.PI / 2 + epsilon) {
+    } else if (angle <= Math.PI / 2 + ANGLE_EPSILON) {
       direction = "south";
-    } else if (angle <= Math.PI - epsilon) {
+    } else if (angle <= Math.PI - ANGLE_EPSILON) {
       direction = "southEast";
     } else {
       direction = "east";
