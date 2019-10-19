@@ -49,6 +49,7 @@ class DiagramModifier extends Modifier {
       let bendAngleString = arrowElement.getAttribute("data-bend");
       let shiftString = arrowElement.getAttribute("data-shift");
       let labelPositionString = arrowElement.getAttribute("data-pos");
+      let dashed = !!arrowElement.getAttribute("data-dash");
       if (bendAngleString) {
         spec.bendAngle = parseFloat(bendAngleString) * Math.PI / 180;
       }
@@ -57,6 +58,9 @@ class DiagramModifier extends Modifier {
       }
       if (labelPositionString) {
         spec.labelPosition = parseFloat(labelPositionString) / 100;
+      }
+      if (dashed) {
+        spec.dashed = true;
       }
       if (startConfig.point) {
         spec.startPoint = startConfig.point;
@@ -252,6 +256,9 @@ class DiagramModifier extends Modifier {
     }
     if (arrowSpec.endTipKind != "none") {
       arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.endTipKind +")");
+    }
+    if (arrowSpec.dashed) {
+      arrow.classList.add("dashed");
     }
     return arrow;
   }

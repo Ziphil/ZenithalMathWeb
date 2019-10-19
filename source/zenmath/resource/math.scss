@@ -355,6 +355,10 @@ math-diagram {
     fill: none;
   }
 
+  >svg path.dashed {
+    stroke-dasharray: 0.2 0.2;
+  }
+
   >svg marker path {
     stroke-width: 1;
   }
