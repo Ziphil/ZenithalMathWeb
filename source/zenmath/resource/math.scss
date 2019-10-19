@@ -73,21 +73,21 @@ math-o {
   }
 
   math-over >&.acc {
-    padding-top: 0.2em;
+    padding-top: 0.1em;
     margin-right: -0.15em;
   }
 
   math-over >&.wide {
-    padding: 0.2em spacing(0) 0em spacing(0);
+    padding: 0.1em spacing(0) 0em spacing(0);
   }
 
   math-under >&.acc {
-    padding-bottom: 0.2em;
+    padding-bottom: 0.1em;
     margin-left: -0.1em;
   }
 
   math-under >&.wide {
-    padding: 0em spacing(0) 0.2em spacing(0);
+    padding: 0em spacing(0) 0.1em spacing(0);
   }
 
   math-sub &,
@@ -165,12 +165,14 @@ math-subsup {
 
   >math-sub {
     padding: 0em spacing(0);
+    margin-bottom: -0.05em;
     vertical-align: -0.36em;
     font-size: 80%;
   }
 
   >math-sup {
     padding: 0em spacing(0);
+    margin-top: -0.05em;
     vertical-align: 0.51em;
     font-size: 80%;
   }
@@ -179,36 +181,28 @@ math-subsup {
     margin: 0em spacing(0);
   }
 
-  &.sub {
-    margin-bottom: -0.05em;
-  }
-
-  &.sup {
-    margin-top: -0.05em;
-  }
-
 }
 
 
 math-underover {
 
   >math-over {
-    margin: 0em 0em;
+    margin-top: -0.05em;
     font-size: 80%;
     text-align: center;
     display: block;
   }
 
   &.acc >math-over {
-    margin: 0em 0em -0.73em 0em;
+    margin-bottom: -0.73em;
     font-size: 100%;
   }
 
   &.wide >math-over {
-    margin: 0em 0em -0.73em 0em;
+    margin-bottom: -0.73em;
     font-size: 100%;
   }
-
+  
   >math-basewrap {
     margin: 0em 0em;
     width: 100%;
@@ -222,28 +216,20 @@ math-underover {
   }
 
   >math-basewrap >math-under {
-    margin: 0em 0em;
+    margin-bottom: -0.05em;
     font-size: 80%;
     text-align: center;
     display: block;
   }
 
   &.acc >math-basewrap >math-under {
-    margin: -0.8em 0em 0em 0em;
+    margin-top: -0.8em;
     font-size: 100%;
   }
 
   &.wide >math-basewrap >math-under {
-    margin: -0.7em 0em 0em 0em;
+    margin-top: -0.7em;
     font-size: 100%;
-  }
-
-  &.under {
-    margin-bottom: -0.05em;
-  }
-
-  &.over {
-    margin-top: -0.05em;
   }
 
 }
@@ -291,7 +277,7 @@ math-hstretch {
   math-over >& >math-barwrap,
   math-over >& >math-mid,
   math-over >& >math-end {
-    padding-top: 0.3em;
+    padding-top: 0.2em;
     vertical-align: top;
   }
 
@@ -299,7 +285,7 @@ math-hstretch {
   math-under >& >math-barwrap,
   math-under >& >math-mid,
   math-under >& >math-end {
-    padding-bottom: 0.3em;
+    padding-bottom: 0.2em;
     vertical-align: bottom;
   }
 
