@@ -3,7 +3,8 @@
 
 const UNIT = 1 / 18;
 const ARROW_TIP_SPECS = {
-  normal: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"}
+  normal: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"},
+  tail: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"}
 }
 
 
@@ -68,6 +69,8 @@ class DiagramModifier extends Modifier {
       spec.startPoint = [0, 0];
       spec.endPoint = [0, 0];
     }
+    spec.startTipKind = arrowElement.getAttribute("data-start-tip") || "none";
+    spec.endTipKind = arrowElement.getAttribute("data-end-tip") || "normal";
     return spec;
   }
 
@@ -220,7 +223,12 @@ class DiagramModifier extends Modifier {
     }
     let arrow = this.createSvgElement("path");
     arrow.setAttribute("d", command);
-    arrow.setAttribute("marker-end", "url(#tip-normal)");
+    if (arrowSpec.startTipKind != "none") {
+      arrow.setAttribute("marker-start", "url(#tip-" + arrowSpec.startTipKind +")");
+    }
+    if (arrowSpec.endTipKind != "none") {
+      arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.endTipKind +")");
+    }
     return arrow;
   }
 
