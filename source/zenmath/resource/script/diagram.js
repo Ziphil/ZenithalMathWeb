@@ -1,6 +1,7 @@
 //
 
 
+const UNIT = 1 / 18;
 const ARROW_TIP_SPECS = {
   normal: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"}
 }
@@ -36,18 +37,22 @@ class DiagramModifier extends Modifier {
       let startDimension = this.calcDimension(graphic, startElement);
       let endDimension = this.calcDimension(graphic, endElement);
       let bendAngleString = arrowElement.getAttribute("data-bend");
+      let shiftString = arrowElement.getAttribute("data-shift");
       if (bendAngleString) {
         spec.bendAngle = parseFloat(bendAngleString) * Math.PI / 180;
+      }
+      if (shiftString) {
+        spec.shift = parseFloat(shiftString) * UNIT;
       }
       if (startConfig.direction) {
         spec.startPoint = startDimension[startConfig.direction];
       } else {
-        spec.startPoint = this.calcEdgePoint(startDimension, endDimension, spec.bendAngle);
+        spec.startPoint = this.calcEdgePoint(startDimension, endDimension, spec.bendAngle, spec.shift);
       }
       if (endConfig.direction) {
         spec.endPoint = endDimension[endConfig.direction];
       } else {
-        spec.endPoint = this.calcEdgePoint(endDimension, startDimension, -spec.bendAngle);
+        spec.endPoint = this.calcEdgePoint(endDimension, startDimension, -spec.bendAngle, -spec.shift);
       }
     } else {
       spec.startPoint = [0, 0];
@@ -84,9 +89,10 @@ class DiagramModifier extends Modifier {
     return point;
   }
 
-  calcEdgePoint(baseDimension, destinationDimension, bendAngle) {
+  calcEdgePoint(baseDimension, destinationDimension, bendAngle, shift) {
     let margin = 5 / 18;
     let angle = this.calcAngle(baseDimension.center, destinationDimension.center) + (bendAngle || 0);
+    let shiftAngle = angle + Math.PI / 2;
     let southWestAngle = this.calcAngle(baseDimension.center, baseDimension.southWest);
     let southEastAngle = this.calcAngle(baseDimension.center, baseDimension.southEast);
     let northEastAngle = this.calcAngle(baseDimension.center, baseDimension.northEast);
@@ -94,6 +100,7 @@ class DiagramModifier extends Modifier {
     let x = 0;
     let y = 0;
     angle = this.normalizeAngle(angle);
+    shiftAngle = this.normalizeAngle(shiftAngle);
     if (angle >= southWestAngle && angle <= southEastAngle) {
       x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.south[1]) / Math.tan(angle);
       y = baseDimension.south[1] + margin;
@@ -106,6 +113,10 @@ class DiagramModifier extends Modifier {
     } else if (angle >= northWestAngle || angle <= southWestAngle) {
       x = baseDimension.west[0] - margin;
       y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.west[0]) * Math.tan(angle);
+    }
+    if (shift) {
+      x += Math.cos(shiftAngle) * shift;
+      y -= Math.sin(shiftAngle) * shift;
     }
     return [x, y];
   }

@@ -178,6 +178,7 @@ module ZenmathBuilder
       configs[:start_config] = attributes["s"]
       configs[:end_config] = attributes["e"]
       configs[:bend_angle] = attributes["bend"]
+      configs[:shift] = attributes["shift"]
       configs[:invert] = attributes["inv"]
       this << ZenmathBuilder.build_arrow(configs, spacing) do |label_this|
         label_this << children_list[0]
@@ -701,6 +702,9 @@ module ZenmathBuilder
       this["data-end"] = configs[:end_config]
       if configs[:bend_angle]
         this["data-bend"] = configs[:bend_angle]
+      end
+      if configs[:shift]
+        this["data-shift"] = configs[:shift]
       end
       if configs[:invert]
         this["data-inv"] = "data-inv"
