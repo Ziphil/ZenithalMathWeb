@@ -330,7 +330,7 @@
         Changing identifier styles:
         &m<V \in> \sb<\bfrm<Vect>><k>>
         or
-        &m<\rm<Vol> = `r \space|t="thin"|> \sin> `f \space|t="thin"|> d `r d `u d`f>.
+        &m<\rm<Vol> = `r \sfun> \sin> `f \sfun> d `r d `u d`f>.
       >
       \p<
         Changing spacing:
@@ -359,34 +359,90 @@
       >
       \h1<Commutative diagrams>
       \p<
+        Standard:
         &m<
           \diag<
             \v<X> \v<1> \v<Y> \br>
             \v<Z> \v<X \oplus> Z> \v<X \otimes> Y>
-            \ar|p="1-2"|<f> \ar|p="1-4",inv|<g> \ar|p="1-5",inv|<h> \ar|p="1-6"|<k + \sb<p><\text<long>>>
-            \ar|p="2-3"|<\sb<`v><Y>> \ar|p="3-6"|<`r> \ar|p="4-5",inv|<\sb<`r><2>> \ar|p="5-3"|>
+            \ar|s="1",e="2"|<f> \ar|s="1",e="4",inv|<g> \ar|s="1",e="5",inv|<h> \ar|s="1",e="6"|<k + \sb<p><\text<long>>>
+            \ar|s="2",e="3"|<\sb<`v><Y>> \ar|s="3",e="6"|<`r> \ar|s="4",e="5",inv|<\sb<`r><2>> \ar|s="5",e="3"|>
           >
-        >
-        or
+        >.
+      >
+      \p<
+        Bent arrows:
         &m<
           \diag<
             \v<X> \v> \v> \br>
             \v> \v<\sp<f><*> M> \v<M> \br>
             \v> \v<S> \v<T>
-            \ar|p="8-9",inv|<f> \ar|p="5-6"|>
-            \ar|p="6-9"|<m> \ar|p="5-8",inv|<\sp<f><*> m>
-            \ar|p="1-6",b="30"|<p> \ar|p="1-8",b="-30",inv|<q>
-            \ar|p="1-5"|<!>
+            \ar|s="8",e="9",inv|<f> \ar|s="5",e="6"|>
+            \ar|s="6",e="9",tip="tail"|<m> \ar|s="5",e="8",tip="tail",inv|<\sp<f><*> m>
+            \ar|s="1",e="6",bend="30"|<p> \ar|s="1",e="8",bend="-30",inv|<q>
+            \ar|s="1",e="5"|<!>
           >
         >
-        or
+        and
         &m<
           \diag<
             \v<\bfrm<Set> \vph<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>>> \v<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>> \v<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)> 
-            \ar|p="1.ne-2.nw",b="40"|<`D> \ar|p="2.sw-1.se",b="40"|<`G>
-            \ar|p="2.ne-3.nw",b="40"|<\bf<a>> \ar|p="3.sw-2.se",b="40"|<\bf<i>>           
+            \ar|s="1.ne",e="2.nw",bend="40"|<`D> \ar|s="2.sw",e="1.se",bend="40"|<`G>
+            \ar|s="2.ne",e="3.nw",bend="40"|<\bf<a>> \ar|s="3.sw",e="2.se",bend="40"|<\bf<i>>           
           >
         >.
+      >
+      \p<
+        Shifted arrows:
+        &m<
+          \diag<
+            \v<\op<Eq> (A, B)> \v<A> \v<B> \br>
+            \v<K> \v> \v>
+            \ar|s="1",e="2"|<e> \ar|s="4",e="2",inv|<k> \ar|s="4",e="1"|>
+            \ar|s="2",e="3",shift="3"|<f> \ar|s="2",e="3",shift="-3",inv|<g>
+          >
+        >.
+      >
+      \p<
+        Changing label positions:
+        &m<
+          \diag<
+            \v<1> \v<2> \v<3> \v<4> \br>
+            \ar|s="1",e="2",pos="10"|<A>
+            \ar|s="2",e="3",pos="30"|<B>
+            \ar|s="3",e="4",pos="90"|<C>
+            \ar|s="1",e="3",bend="-30",pos="20",inv|<D>
+            \ar|s="2",e="4",bend="-30",pos="80",inv|<E>
+          >
+        >.
+      >
+      \p<
+        Changing arrow tips:
+        &m<
+          \diag<
+            \v<1> \v<2> \br>
+            \v<3> \v<4>
+            \ar|s="1",e="2",tip="hook",shift="3"|>
+            \ar|s="1",e="2",shift="-3"|>
+            \ar|s="3",e="4",tip="varhook,head",shift="-3"|>
+            \ar|s="3",e="4",shift="3"|>
+            \ar|s="2",e="4",tip="tail,none",shift="-3"|>
+            \ar|s="2",e="4",shift="3"|>
+            \ar|s="1",e="3",tip="bar",dash|>
+          >
+        >,
+        compare with &m<\to>>, &m<\headrarr>>, &m<\hookrarr>>.
+      >
+      \p<
+        Double and triple arrows:
+        &m<
+          \diag<
+            \v> \v<2> \v> \br>
+            \v<4> \v<5> \v<6>
+            \ar|s="2",e="5",line="2",dash|> \ar|s="5",e="6",line="2",inv|<Y> \ar|s="2",e="4",bend="-30",line="2"|>
+            \ar|s="4",e="5",line="3",inv|<Z> \ar|s="2",e="6",bend="30",line="3",dash|>
+          >
+        >,
+        compare with &m<\to>>, &m<\raarr>>, &m<\raaarr>>.
       >
       \h1<Some practical examples>
       \p|class="normal"|<
