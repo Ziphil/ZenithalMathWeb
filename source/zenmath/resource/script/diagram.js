@@ -3,11 +3,11 @@
 
 const UNIT = 1 / 18;
 const ARROW_TIP_SPECS = {
-  normal: {refX: 6, refY: 4, width: 7, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7"},
-  head: {refX: 10, refY: 4, width: 11, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7 M 5 1 L 10 4 L 5 7"},
-  tail: {refX: 6, refY: 4, width: 7, height: 8, extrusion: 5, command: "M 1 1 L 6 4 L 1 7"},
-  hook: {refX: 3, refY: 6, width: 6, height: 7, extrusion: 2.5, command: "M 4 1 L 3 1 A 2.5 2.5 0 0 0 3 6"},
-  varhook: {refX: 3, refY: 1, width: 6, height: 7, extrusion: 2.5, command: "M 3 1 A 2.5 2.5 0 0 0 3 6 L 4 6"},
+  normal: {edge: "end", refX: 6, refY: 4, width: 7, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7"},
+  head: {edge: "end", refX: 10, refY: 4, width: 11, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7 M 5 1 L 10 4 L 5 7"},
+  tail: {edge: "start", refX: 6, refY: 4, width: 7, height: 8, extrusion: 5, command: "M 1 1 L 6 4 L 1 7"},
+  hook: {edge: "start", refX: 3, refY: 6, width: 6, height: 7, extrusion: 2.5, command: "M 4 1 L 3 1 A 2.5 2.5 0 0 0 3 6"},
+  varhook: {edge: "start", refX: 3, refY: 1, width: 6, height: 7, extrusion: 2.5, command: "M 3 1 A 2.5 2.5 0 0 0 3 6 L 4 6"},
 }
 
 
@@ -76,10 +76,10 @@ class DiagramModifier extends Modifier {
       spec.startPoint = [0, 0];
       spec.endPoint = [0, 0];
     }
-    spec.startTipKind = arrowElement.getAttribute("data-start-tip") || "none";
-    spec.endTipKind = arrowElement.getAttribute("data-end-tip") || "normal";
-    spec.startPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.startTipKind);
-    spec.endPoint = this.calcIntrudedPoint(spec.endPoint, spec.startPoint, -spec.bendAngle, spec.endTipKind);
+    let tipKindsString = arrowElement.getAttribute("data-tip");
+    spec.tipKinds = this.parseTipKinds(tipKindsString);
+    spec.startPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.tipKinds.start);
+    spec.endPoint = this.calcIntrudedPoint(spec.endPoint, spec.startPoint, -spec.bendAngle, spec.tipKinds.end);
     return spec;
   }
 
@@ -226,6 +226,24 @@ class DiagramModifier extends Modifier {
     return point;
   }
 
+  parseTipKinds(string) {
+    let tipKinds = {start: "none", end: "normal"};
+    if (string != null) {
+      let specifiedTipKinds = string.split(/\s*,\s*/);
+      console.log(specifiedTipKinds);
+      for (let specifiedTipKind of specifiedTipKinds) {
+        let spec = ARROW_TIP_SPECS[specifiedTipKind];
+        if (spec) {
+          tipKinds[spec.edge] = specifiedTipKind;
+        }
+        if (specifiedTipKind == "none") {
+          tipKinds.end = "none";
+        }
+      }
+    }
+    return tipKinds;
+  }
+
   calcAngle(basePoint, destinationPoint) {
     let x = destinationPoint[0] - basePoint[0];
     let y = destinationPoint[1] - basePoint[1];
@@ -251,11 +269,11 @@ class DiagramModifier extends Modifier {
     }
     let arrow = this.createSvgElement("path");
     arrow.setAttribute("d", command);
-    if (arrowSpec.startTipKind != "none") {
-      arrow.setAttribute("marker-start", "url(#tip-" + arrowSpec.startTipKind +")");
+    if (arrowSpec.tipKinds.start != "none") {
+      arrow.setAttribute("marker-start", "url(#tip-" + arrowSpec.tipKinds.start +")");
     }
-    if (arrowSpec.endTipKind != "none") {
-      arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.endTipKind +")");
+    if (arrowSpec.tipKinds.end != "none") {
+      arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.tipKinds.end + ")");
     }
     if (arrowSpec.dashed) {
       arrow.classList.add("dashed");

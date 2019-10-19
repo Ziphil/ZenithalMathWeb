@@ -177,8 +177,7 @@ module ZenmathBuilder
       configs = {}
       configs[:start_config] = attributes["s"]
       configs[:end_config] = attributes["e"]
-      configs[:start_tip_kind] = attributes["stip"]
-      configs[:end_tip_kind] = attributes["etip"]
+      configs[:tip_kinds] = attributes["tip"]
       configs[:bend_angle] = attributes["bend"]
       configs[:shift] = attributes["shift"]
       configs[:label_position] = attributes["pos"]
@@ -704,11 +703,8 @@ module ZenmathBuilder
     this << Element.build("math-arrow") do |this|
       this["data-start"] = configs[:start_config]
       this["data-end"] = configs[:end_config]
-      if configs[:start_tip_kind]
-        this["data-start-tip"] = configs[:start_tip_kind]
-      end
-      if configs[:end_tip_kind]
-        this["data-end-tip"] = configs[:end_tip_kind]
+      if configs[:tip_kinds]
+        this["data-tip"] = configs[:tip_kinds]
       end
       if configs[:bend_angle]
         this["data-bend"] = configs[:bend_angle]
