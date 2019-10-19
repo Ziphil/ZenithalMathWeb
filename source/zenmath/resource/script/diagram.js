@@ -286,13 +286,13 @@ class DiagramModifier extends Modifier {
     for (let i = 0 ; i < lineCount ; i ++) {
       let arrow = this.createSvgElement("path");
       arrow.setAttribute("d", command);
-      if (arrowSpec.tipKinds.start != "none") {
+      if (arrowSpec.tipKinds.start != "none" && i == lineCount - 1) {
         arrow.setAttribute("marker-start", "url(#tip-" + arrowSpec.tipKinds.start +")");
       }
-      if (arrowSpec.tipKinds.end != "none") {
+      if (arrowSpec.tipKinds.end != "none" && i == lineCount - 1) {
         arrow.setAttribute("marker-end", "url(#tip-" + arrowSpec.tipKinds.end + ")");
       }
-      if (arrowSpec.dashed) {
+      if (arrowSpec.dashed && i % 2 == 0) {
         arrow.classList.add("dashed");
       }
       if (i == 0) {
