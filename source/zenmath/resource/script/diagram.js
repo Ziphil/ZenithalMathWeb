@@ -2,13 +2,6 @@
 
 
 const UNIT = 1 / 18;
-const ARROW_TIP_SPECS = {
-  normal: {edge: "end", refX: 6, refY: 4, width: 7, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7"},
-  head: {edge: "end", refX: 10, refY: 4, width: 11, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7 M 5 1 L 10 4 L 5 7"},
-  tail: {edge: "start", refX: 6, refY: 4, width: 7, height: 8, extrusion: 5, command: "M 1 1 L 6 4 L 1 7"},
-  hook: {edge: "start", refX: 3, refY: 6, width: 6, height: 7, extrusion: 2.5, command: "M 4 1 L 3 1 A 2.5 2.5 0 0 0 3 6"},
-  varhook: {edge: "start", refX: 3, refY: 1, width: 6, height: 7, extrusion: 2.5, command: "M 3 1 A 2.5 2.5 0 0 0 3 6 L 4 6"},
-}
 
 
 class DiagramModifier extends Modifier {
@@ -148,7 +141,7 @@ class DiagramModifier extends Modifier {
   calcIntrudedPoint(basePoint, destinationPoint, bendAngle, tipKind) {
     if (tipKind != "none") {
       let angle = this.calcAngle(basePoint, destinationPoint) + (bendAngle || 0);
-      let distance = ARROW_TIP_SPECS[tipKind].extrusion * 0.06;
+      let distance = DATA["arrow"][tipKind]["extrusion"] * 0.06;
       angle = this.normalizeAngle(angle);
       let intrudedPointX = basePoint[0] + distance * Math.cos(angle);
       let intrudedPointY = basePoint[1] - distance * Math.sin(angle);
@@ -232,7 +225,7 @@ class DiagramModifier extends Modifier {
       let specifiedTipKinds = string.split(/\s*,\s*/);
       console.log(specifiedTipKinds);
       for (let specifiedTipKind of specifiedTipKinds) {
-        let spec = ARROW_TIP_SPECS[specifiedTipKind];
+        let spec = DATA["arrow"][specifiedTipKind];
         if (spec) {
           tipKinds[spec.edge] = specifiedTipKind;
         }
@@ -325,18 +318,18 @@ class DiagramModifier extends Modifier {
     let graphic = this.createSvgElement("svg");
     graphic.setAttribute("viewBox", "0 0 " + width + " " + height);
     let definitionElement = this.createSvgElement("defs");
-    let tipSpecKeys = Object.keys(ARROW_TIP_SPECS);
+    let tipSpecKeys = Object.keys(DATA["arrow"]);
     for (let tipSpecKey of tipSpecKeys) {
-      let tipSpec = ARROW_TIP_SPECS[tipSpecKey];
+      let tipSpec = DATA["arrow"][tipSpecKey];
       let markerElement = this.createSvgElement("marker");
       let markerPathElement = this.createSvgElement("path");
       markerElement.setAttribute("id", "tip-" + tipSpecKey);
-      markerElement.setAttribute("refX", tipSpec.refX);
-      markerElement.setAttribute("refY", tipSpec.refY);
-      markerElement.setAttribute("markerWidth", tipSpec.width);
-      markerElement.setAttribute("markerHeight", tipSpec.height);
+      markerElement.setAttribute("refX", tipSpec["x"]);
+      markerElement.setAttribute("refY", tipSpec["y"]);
+      markerElement.setAttribute("markerWidth", tipSpec["width"]);
+      markerElement.setAttribute("markerHeight", tipSpec["height"]);
       markerElement.setAttribute("orient", "auto");
-      markerPathElement.setAttribute("d", tipSpec.command);
+      markerPathElement.setAttribute("d", tipSpec["command"]);
       markerElement.appendChild(markerPathElement);
       definitionElement.appendChild(markerElement);
     }
