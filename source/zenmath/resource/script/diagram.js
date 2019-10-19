@@ -26,28 +26,28 @@ class DiagramModifier extends Modifier {
 
   determineArrowSpec(graphic, arrowElement, cellElements) {
     let spec = {};
-    let placeConfig = arrowElement.getAttribute("data-place");
-    let match = placeConfig.match(/(\d+)(?:\.(\w+))?-(\d+)(?:\.(\w+))?/);
-    if (match) {
-      let startElement = cellElements[parseInt(match[1]) - 1];
-      let endElement = cellElements[parseInt(match[3]) - 1];
+    let startConfigString = arrowElement.getAttribute("data-start");
+    let endConfigString = arrowElement.getAttribute("data-end");
+    let startConfig = this.parseEdgeConfig(startConfigString, cellElements);
+    let endConfig = this.parseEdgeConfig(endConfigString, cellElements);
+    if (startConfig && endConfig) {
+      let startElement = startConfig.element;
+      let endElement = endConfig.element;
       let startDimension = this.calcDimension(graphic, startElement);
       let endDimension = this.calcDimension(graphic, endElement);
-      let bendAngle = undefined;
-      let bendAngleConfig = arrowElement.getAttribute("data-bend");
-      if (bendAngleConfig) {
-        bendAngle = parseFloat(bendAngleConfig) * Math.PI / 180;
-        spec.bendAngle = bendAngle;
+      let bendAngleString = arrowElement.getAttribute("data-bend");
+      if (bendAngleString) {
+        spec.bendAngle = parseFloat(bendAngleString) * Math.PI / 180;
       }
-      if (match[2]) {
-        spec.startPoint = startDimension[this.parseDirection(match[2])];
+      if (startConfig.direction) {
+        spec.startPoint = startDimension[startConfig.direction];
       } else {
-        spec.startPoint = this.calcEdgePoint(startDimension, endDimension, bendAngle);
+        spec.startPoint = this.calcEdgePoint(startDimension, endDimension, spec.bendAngle);
       }
-      if (match[4]) {
-        spec.endPoint = endDimension[this.parseDirection(match[4])];
+      if (endConfig.direction) {
+        spec.endPoint = endDimension[endConfig.direction];
       } else {
-        spec.endPoint = this.calcEdgePoint(endDimension, startDimension, -bendAngle);
+        spec.endPoint = this.calcEdgePoint(endDimension, startDimension, -spec.bendAngle);
       }
     } else {
       spec.startPoint = [0, 0];
@@ -136,6 +136,18 @@ class DiagramModifier extends Modifier {
     let x = basePoint[0] + Math.cos(angle) * distance + labelDimension.northWest[0] - labelDimension[direction][0];
     let y = basePoint[1] - Math.sin(angle) * distance + labelDimension.northWest[1] - labelDimension[direction][1];
     return [x, y];
+  }
+
+  parseEdgeConfig(string, cellElements) {
+    let match = string.match(/(\d+)(?:\.(\w+))?/);
+    if (match) {
+      let number = parseInt(match[1]) - 1;
+      let direction = this.parseDirection(match[2]);
+      let element = cellElements[number];
+      return {element, direction};
+    } else {
+      return null;
+    }
   }
 
   parseDirection(string) {
