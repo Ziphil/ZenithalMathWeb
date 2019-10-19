@@ -3,8 +3,11 @@
 
 const UNIT = 1 / 18;
 const ARROW_TIP_SPECS = {
-  normal: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"},
-  tail: {refX: 6, refY: 4, width: 7, height: 8, command: "M 1 1 L 6 4 L 1 7"}
+  normal: {refX: 6, refY: 4, width: 7, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7"},
+  head: {refX: 10, refY: 4, width: 11, height: 8, extrusion: 0, command: "M 1 1 L 6 4 L 1 7 M 5 1 L 10 4 L 5 7"},
+  tail: {refX: 6, refY: 4, width: 7, height: 8, extrusion: 5, command: "M 1 1 L 6 4 L 1 7"},
+  hook: {refX: 3, refY: 6, width: 6, height: 7, extrusion: 2.5, command: "M 4 1 L 3 1 A 2.5 2.5 0 0 0 3 6"},
+  varhook: {refX: 3, refY: 1, width: 6, height: 7, extrusion: 2.5, command: "M 3 1 A 2.5 2.5 0 0 0 3 6 L 4 6"},
 }
 
 
@@ -71,6 +74,8 @@ class DiagramModifier extends Modifier {
     }
     spec.startTipKind = arrowElement.getAttribute("data-start-tip") || "none";
     spec.endTipKind = arrowElement.getAttribute("data-end-tip") || "normal";
+    spec.startPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.startTipKind);
+    spec.endPoint = this.calcIntrudedPoint(spec.endPoint, spec.startPoint, -spec.bendAngle, spec.endTipKind);
     return spec;
   }
 
@@ -134,6 +139,20 @@ class DiagramModifier extends Modifier {
       y -= Math.sin(shiftAngle) * shift;
     }
     return [x, y];
+  }
+
+  calcIntrudedPoint(basePoint, destinationPoint, bendAngle, tipKind) {
+    if (tipKind != "none") {
+      let angle = this.calcAngle(basePoint, destinationPoint) + (bendAngle || 0);
+      let distance = ARROW_TIP_SPECS[tipKind].extrusion * 0.06;
+      angle = this.normalizeAngle(angle);
+      let intrudedPointX = basePoint[0] + distance * Math.cos(angle);
+      let intrudedPointY = basePoint[1] - distance * Math.sin(angle);
+      let intrudedPoint = [intrudedPointX, intrudedPointY];
+      return intrudedPoint;
+    } else {
+      return basePoint;
+    }
   }
 
   calcLabelPoint(basePoint, labelDimension, angle) {
