@@ -223,7 +223,6 @@ class DiagramModifier extends Modifier {
     let tipKinds = {start: "none", end: "normal"};
     if (string != null) {
       let specifiedTipKinds = string.split(/\s*,\s*/);
-      console.log(specifiedTipKinds);
       for (let specifiedTipKind of specifiedTipKinds) {
         let spec = DATA["arrow"][specifiedTipKind];
         if (spec) {
