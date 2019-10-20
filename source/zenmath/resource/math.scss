@@ -312,7 +312,7 @@ math-table {
   align-items: baseline;
 
   &.std {
-    gap: spacing(8) spacing(0);
+    gap: spacing(9) spacing(0);
   }
 
   &.stk {
@@ -324,7 +324,7 @@ math-table {
   }
 
   &.cas {
-    gap: spacing(8) spacing(24);
+    gap: spacing(9) spacing(24);
   }
 
   >math-cell {
