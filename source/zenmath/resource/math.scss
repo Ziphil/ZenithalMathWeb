@@ -173,14 +173,14 @@ math-subsup {
     padding: 0em spacing(0);
     margin-bottom: -0.05em;
     vertical-align: -0.36em;
-    font-size: 80%;
+    font-size: 70%;
   }
 
   >math-sup {
     padding: 0em spacing(0);
     margin-top: -0.05em;
     vertical-align: 0.51em;
-    font-size: 80%;
+    font-size: 70%;
   }
 
   &.int {
@@ -194,7 +194,7 @@ math-underover {
 
   >math-over {
     margin-top: -0.05em;
-    font-size: 80%;
+    font-size: 70%;
     text-align: center;
     display: block;
   }
@@ -223,7 +223,7 @@ math-underover {
 
   >math-basewrap >math-under {
     margin-bottom: -0.05em;
-    font-size: 80%;
+    font-size: 70%;
     text-align: center;
     display: block;
   }
@@ -362,7 +362,7 @@ math-diagram {
   }
 
   >math-arrow {
-    font-size: 80%;
+    font-size: 70%;
     position: absolute;
   }
 
