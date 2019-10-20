@@ -4,7 +4,7 @@
 const ANGLE_EPSILON = Math.PI / 90;
 
 const UNIT = 1 / 18;
-const ARROW_MARGIN = 5 * UNIT;
+const ARROW_MARGIN = 8 * UNIT;
 const LABEL_DISTANCE = 4 * UNIT;
 
 
