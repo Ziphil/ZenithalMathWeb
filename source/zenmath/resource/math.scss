@@ -335,11 +335,60 @@ math-table {
 
 
 math-diagram {
-  gap: spacing(54) spacing(72);
+  row-gap: spacing(54);
+  column-gap: spacing(72);
   vertical-align: middle;
   display: inline-grid !important;
   align-items: baseline;
   position: relative;
+
+  &.vvthn {
+    row-gap: spacing(18);
+  }
+
+  &.vthn {
+    row-gap: spacing(36);
+  }
+
+  &.vmed {
+    row-gap: spacing(54);
+  }
+
+  &.vthk {
+    row-gap: spacing(72);
+  }
+
+  &.vvthk {
+    row-gap: spacing(90);
+  }
+
+  &.hvthn {
+    column-gap: spacing(24);
+  }
+
+  &.hthn {
+    column-gap: spacing(48);
+  }
+
+  &.hmed {
+    column-gap: spacing(72);
+  }
+
+  &.hthk {
+    column-gap: spacing(96);
+  }
+
+  &.hvthk {
+    column-gap: spacing(120);
+  }
+
+  &.hsthk {
+    column-gap: spacing(144);
+  }
+
+  &.huthk {
+    column-gap: spacing(168);
+  }
 
   >math-cellwrap {
     text-align: center;

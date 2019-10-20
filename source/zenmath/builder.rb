@@ -152,7 +152,9 @@ module ZenmathBuilder
         end
       end
     when "diag"
-      this << ZenmathBuilder.build_diagram(spacing) do |table_this|
+      vertical_margin = attributes["ver"]
+      horizontal_margin = attributes["hor"]
+      this << ZenmathBuilder.build_diagram(vertical_margin, horizontal_margin, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "c"
@@ -666,8 +668,8 @@ module ZenmathBuilder
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
-      this["class"] = type
       table_element = this
+      this["class"] = type
     end
     add_spacing(this, spacing)
     block&.call(table_element)
@@ -675,11 +677,25 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_diagram(spacing = nil, &block)
+  def self.build_diagram(vertical_margin, horizontal_margin, spacing = nil, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-diagram") do |this|
       table_element = this
+      if vertical_margin
+        if vertical_margin =~ /^\d+$/
+          this["style"] += "row-gap: #{vertical_margin.to_f / 18}em; "
+        else
+          this["class"] = [*this["class"].split(" "), "v#{vertical_margin}"].join(" ")
+        end
+      end
+      if horizontal_margin
+        if horizontal_margin =~ /^\d+$/
+          this["style"] += "column-gap: #{horizontal_margin.to_f / 18}em; "
+        else
+          this["class"] = [*this["class"].split(" "), "h#{horizontal_margin}"].join(" ")
+        end
+      end
     end
     add_spacing(this, spacing)
     block&.call(table_element)
