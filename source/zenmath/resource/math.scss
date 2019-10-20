@@ -342,52 +342,19 @@ math-diagram {
   align-items: baseline;
   position: relative;
 
-  &.vvthn {
-    row-gap: spacing(18);
+  $row-gaps: (non: 0, sthn: 9, vthn: 18, thn: 36, med: 54, thk: 72, vthk: 90, sthk: 108, uthk: 126);
+  $column-gaps: (non: 0, sthn: 12, vthn: 24, thn: 48, med: 72, thk: 96, vthk: 120, sthk: 144, uthk: 168);
+
+  @each $name, $gap in $row-gaps {
+    &.v#{$name} {
+      row-gap: spacing($gap);
+    }
   }
 
-  &.vthn {
-    row-gap: spacing(36);
-  }
-
-  &.vmed {
-    row-gap: spacing(54);
-  }
-
-  &.vthk {
-    row-gap: spacing(72);
-  }
-
-  &.vvthk {
-    row-gap: spacing(90);
-  }
-
-  &.hvthn {
-    column-gap: spacing(24);
-  }
-
-  &.hthn {
-    column-gap: spacing(48);
-  }
-
-  &.hmed {
-    column-gap: spacing(72);
-  }
-
-  &.hthk {
-    column-gap: spacing(96);
-  }
-
-  &.hvthk {
-    column-gap: spacing(120);
-  }
-
-  &.hsthk {
-    column-gap: spacing(144);
-  }
-
-  &.huthk {
-    column-gap: spacing(168);
+  @each $name, $gap in $column-gaps {
+    &.h#{$name} {
+      column-gap: spacing($gap);
+    }
   }
 
   >math-cellwrap {
@@ -445,80 +412,15 @@ math-diagram {
 
 math-space {
 
-  &.afun {
-    padding-left: spacing(3) !important;
-  }
+  $paddings: (
+    afun: 3, abin: 4, arel: 5, asbin: 8, asrel: 8, amat: 15, acas: 24,
+    sthn: 1, vthn: 2, thn: 3, med: 4, thk: 5, vthk: 6, sthk: 7, uthk: 8, hlf: 9, sgl: 18, ssq: 27, dbl: 36
+  );
 
-  &.abin {
-    padding-left: spacing(4) !important;
-  }
-
-  &.arel {
-    padding-left: spacing(5) !important;
-  }
-
-  &.asbin {
-    padding-left: spacing(8) !important;
-  }
-
-  &.asrel {
-    padding-left: spacing(8) !important;
-  }
-
-  &.amat {
-    padding-left: spacing(15) !important;
-  }
-
-  &.acas {
-    padding-left: spacing(24) !important;
-  }
-
-  &.sthn {
-    padding-left: spacing(1) !important;
-  }
-
-  &.vthn {
-    padding-left: spacing(2) !important;
-  }
-
-  &.thn {
-    padding-left: spacing(3) !important;
-  }
-
-  &.med {
-    padding-left: spacing(4) !important;
-  }
-
-  &.thk {
-    padding-left: spacing(5) !important;
-  }
-
-  &.vthk {
-    padding-left: spacing(6) !important;
-  }
-
-  &.sthk {
-    padding-left: spacing(7) !important;
-  }
-
-  &.uthk {
-    padding-left: spacing(8) !important;
-  }
-
-  &.hlf {
-    padding-left: spacing(9) !important;
-  }
-
-  &.sgl {
-    padding-left: spacing(18) !important;
-  }
-
-  &.ssq {
-    padding-left: spacing(27) !important;
-  }
-
-  &.dbl {
-    padding-left: spacing(36) !important;
+  @each $name, $padding in $paddings {
+    &.#{$name} {
+      padding-left: spacing($padding) !important;
+    }
   }
 
 }
@@ -554,57 +456,17 @@ math-root {
     box-sizing: border-box;
   }
 
-  *.bin {
-    padding-left: spacing(4);
-    padding-right: spacing(4);
-  }
+  $paddings: (bin: 4 4, rel: 5 5, sbin: 8 8, srel: 8 8, del: 0 5, fun: 0 3, ord: 0 0, par: 1 1, lpar: 1 0, rpar: 0 1, cpar: 5 5);
 
-  *.rel {
-    padding-left: spacing(5);
-    padding-right: spacing(5);
-  }
-
-  *.sbin {
-    padding-left: spacing(8);
-    padding-right: spacing(8);
-  }
-
-  *.srel {
-    padding-left: spacing(8);
-    padding-right: spacing(8);
-  }
-
-  *.del {
-    padding-left: spacing(0);
-    padding-right: spacing(5);
+  @each $name, $padding in $paddings {
+    *.#{$name} {
+      padding-left: spacing(nth($padding, 1));
+      padding-right: spacing(nth($padding, 2));
+    }
   }
 
   *.fun {
-    padding-left: spacing(0);
-    padding-right: spacing(3);
     font-style: normal;
-  }
-
-  *.ord {
-    padding-left: spacing(0);
-    padding-right: spacing(0);
-  }
-
-  *.not {
-    padding-left: spacing(5);
-    padding-right: spacing(5);
-    margin-left: spacing(-10);
-    margin-right: spacing(0);
-  }
-
-  *.par {
-    padding-left: spacing(1);
-    padding-right: spacing(1);
-  }
-
-  *.lpar {
-    padding-left: spacing(1);
-    padding-right: spacing(0);
   }
 
   *.fun +*.par,
@@ -612,14 +474,11 @@ math-root {
     margin-left: spacing(-3);
   }
 
-  *.rpar {
-    padding-left: spacing(0);
-    padding-right: spacing(1);
-  }
-
-  *.cpar {
+  *.not {
     padding-left: spacing(5);
     padding-right: spacing(5);
+    margin-left: spacing(-10);
+    margin-right: spacing(0);
   }
 
   *:not(.lpres) >*:first-child {
