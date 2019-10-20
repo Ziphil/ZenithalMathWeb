@@ -10,7 +10,9 @@ class AccentModifier extends Modifier {
     let parentElements = [baseWrapperElement.children[1], overElement];
     for (let position of [0, 1]) {
       let parentElement = parentElements[position];
-      this.modifyPosition(contentElement, parentElement, position);
+      if (parentElement) {
+        this.modifyPosition(contentElement, parentElement, position);
+      }
     }
   }
 
