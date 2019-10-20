@@ -135,6 +135,10 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_array("std", align_config, true, spacing) do |table_this|
         table_this << children_list[0]
       end
+    when "stack"
+      this << ZenmathBuilder.build_array("stk", nil, true, spacing) do |table_this|
+        table_this << children_list[0]
+      end
     when "matrix"
       this << ZenmathBuilder.build_array("mat", nil, false, spacing) do |table_this|
         table_this << children_list[0]

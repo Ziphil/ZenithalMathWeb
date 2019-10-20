@@ -315,6 +315,10 @@ math-table {
     gap: spacing(8) spacing(0);
   }
 
+  &.stk {
+    gap: spacing(0) spacing(0);
+  }
+
   &.mat {
     gap: spacing(6) spacing(15);
   }
