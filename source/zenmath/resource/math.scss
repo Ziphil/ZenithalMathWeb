@@ -83,7 +83,7 @@ math-o {
     margin-right: -0.15em;
   }
 
-  math-over >&.wide {
+  math-over >&.wid {
     padding: 0.1em spacing(0) 0em spacing(0);
   }
 
@@ -92,7 +92,7 @@ math-o {
     margin-left: -0.1em;
   }
 
-  math-under >&.wide {
+  math-under >&.wid {
     padding: 0em spacing(0) 0.1em spacing(0);
   }
 
@@ -204,7 +204,7 @@ math-underover {
     font-size: 100%;
   }
 
-  &.wide >math-over {
+  &.wid >math-over {
     margin-bottom: -0.73em;
     font-size: 100%;
   }
@@ -233,7 +233,7 @@ math-underover {
     font-size: 100%;
   }
 
-  &.wide >math-basewrap >math-under {
+  &.wid >math-basewrap >math-under {
     margin-top: -0.7em;
     font-size: 100%;
   }
@@ -243,17 +243,17 @@ math-underover {
 
 math-vstretch {
 
-  >math-top,
+  >math-start,
   >math-barwrap >math-bar,
-  >math-mid,
-  >math-bot {
+  >math-middle,
+  >math-end {
     height: 1.25em;
     line-height: 2em;
     font-family: "Math";
     display: block;
   }
 
-  >math-mid {
+  >math-middle {
     height: 1.9em;
     line-height: 3.4em;
   }
@@ -271,25 +271,25 @@ math-vstretch {
 
 math-hstretch {
 
-  >math-beg,
+  >math-start,
   >math-barwrap >math-bar,
-  >math-mid,
+  >math-middle,
   >math-end {
     font-family: "Math";
     line-height: 0.8em;
   }
 
-  math-over >& >math-beg,
+  math-over >& >math-start,
   math-over >& >math-barwrap,
-  math-over >& >math-mid,
+  math-over >& >math-middle,
   math-over >& >math-end {
     padding-top: 0.2em;
     vertical-align: top;
   }
 
-  math-under >& >math-beg,
+  math-under >& >math-start,
   math-under >& >math-barwrap,
-  math-under >& >math-mid,
+  math-under >& >math-middle,
   math-under >& >math-end {
     padding-bottom: 0.2em;
     vertical-align: bottom;
@@ -311,15 +311,15 @@ math-table {
   display: inline-grid !important;
   align-items: baseline;
 
-  &.matrix {
-    gap: spacing(6) spacing(15);
-  }
-
-  &.array {
+  &.std {
     gap: spacing(8) spacing(0);
   }
 
-  &.case {
+  &.mat {
+    gap: spacing(6) spacing(15);
+  }
+
+  &.cas {
     gap: spacing(8) spacing(24);
   }
 
@@ -412,11 +412,11 @@ math-space {
     padding-left: spacing(8) !important;
   }
 
-  &.amatrix {
+  &.amat {
     padding-left: spacing(15) !important;
   }
 
-  &.acase {
+  &.acas {
     padding-left: spacing(24) !important;
   }
 

@@ -36,31 +36,31 @@ class ParenModifier extends Modifier {
 
   appendStretch(contentElements, parentElement, kind, position) {
     let stretchElement = document.createElement("math-vstretch");
-    let hasTop = !!DATA["paren"][kind][position]["top"];
-    let hasBottom = !!DATA["paren"][kind][position]["bot"];
-    let hasMiddle = !!DATA["paren"][kind][position]["mid"];
-    let topElement = null;
-    let bottomElement = null;
+    let hasStart = !!DATA["paren"][kind][position]["start"];
+    let hasEnd = !!DATA["paren"][kind][position]["end"];
+    let hasMiddle = !!DATA["paren"][kind][position]["middle"];
+    let startElement = null;
+    let endElement = null;
     let middleElement = null;
-    if (hasTop) {
-      topElement = document.createElement("math-top");
-      topElement.textContent = DATA["paren"][kind][position]["top"];
-      stretchElement.append(topElement);
+    if (hasStart) {
+      startElement = document.createElement("math-start");
+      startElement.textContent = DATA["paren"][kind][position]["start"];
+      stretchElement.append(startElement);
     }
     if (hasMiddle) {
-      middleElement = document.createElement("math-mid");
-      middleElement.textContent = DATA["paren"][kind][position]["mid"];
+      middleElement = document.createElement("math-middle");
+      middleElement.textContent = DATA["paren"][kind][position]["middle"];
       stretchElement.append(middleElement);
     }
-    if (hasBottom) {
-      bottomElement = document.createElement("math-bot");
-      bottomElement.textContent = DATA["paren"][kind][position]["bot"];
-      stretchElement.append(bottomElement);
+    if (hasEnd) {
+      endElement = document.createElement("math-end");
+      endElement.textContent = DATA["paren"][kind][position]["end"];
+      stretchElement.append(endElement);
     }
     parentElement.removeChild(parentElement.children[0]);
     parentElement.appendChild(stretchElement);
     let barSize = (hasMiddle) ? 2 : 1;
-    let barHeight = this.calcBarHeight(contentElements, topElement, bottomElement, middleElement);
+    let barHeight = this.calcBarHeight(contentElements, startElement, endElement, middleElement);
     let stretchShift = this.calcStretchShift(contentElements);
     for (let i = 0 ; i < barSize ; i ++) { 
       let barWrapperElement = document.createElement("math-barwrap");
@@ -69,9 +69,9 @@ class ParenModifier extends Modifier {
       barWrapperElement.style.height = "" + barHeight + "em";
       barWrapperElement.append(barElement);
       if (i == 0) {
-        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasTop) ? 1 : 0]);
+        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasStart) ? 1 : 0]);
       } else {
-        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasTop) ? 3 : 2]);
+        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasStart) ? 3 : 2]);
       }
     }
     stretchElement.style.verticalAlign = "" + stretchShift + "em";
@@ -81,15 +81,14 @@ class ParenModifier extends Modifier {
     let leftKind = "paren";
     let rightKind = "paren";
     let centerKind = "paren";
-    for (let clazz of element.classList) {
-      let match;
-      if (match = clazz.match(/^left-(\w*)$/)) {
-        leftKind = match[1];
-      } else if (match = clazz.match(/^right-(\w*)$/)) {
-        rightKind = match[1];
-      } else if (match = clazz.match(/^center-(\w*)$/)) {
-        centerKind = match[1]
-      }
+    if (element.getAttribute("data-left")) {
+      leftKind = element.getAttribute("data-left");
+    }
+    if (element.getAttribute("data-right")) {
+      rightKind = element.getAttribute("data-right");
+    }
+    if (element.getAttribute("data-center")) {
+      centerKind = element.getAttribute("data-center");
     }
     return [leftKind, rightKind, centerKind];
   }
@@ -138,12 +137,12 @@ class ParenModifier extends Modifier {
     return shift;
   }
 
-  calcBarHeight(elements, topElement, bottomElement, middleElement) {
+  calcBarHeight(elements, startElement, endElement, middleElement) {
     let wholeHeight = this.calcWholeHeight(elements);
-    let topHeight = (topElement) ? this.getHeight(topElement) : 0;
-    let bottomHeight = (bottomElement) ? this.getHeight(bottomElement) : 0;
+    let startHeight = (startElement) ? this.getHeight(startElement) : 0;
+    let endHeight = (endElement) ? this.getHeight(endElement) : 0;
     let middleHeight = (middleElement) ? this.getHeight(middleElement) : 0;
-    let height = wholeHeight - topHeight - bottomHeight - middleHeight;
+    let height = wholeHeight - startHeight - endHeight - middleHeight;
     if (middleElement) {
       height = height / 2;
     }

@@ -110,7 +110,7 @@ function execute() {
   document.querySelectorAll("math-paren.mod").forEach((element) => {
     ParenModifier.execute(element);
   });
-  document.querySelectorAll("math-underover.wide.mod").forEach((element) => {
+  document.querySelectorAll("math-underover.wid.mod").forEach((element) => {
     WideModifier.execute(element);
   });
   document.querySelectorAll("math-diagram").forEach((element) => {

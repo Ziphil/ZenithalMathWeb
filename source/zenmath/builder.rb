@@ -10,7 +10,7 @@ include REXML
 module ZenmathBuilder
 
   DATA_PATH = "resource/math.json"
-  SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scase" => "acase", "quad" => "sgl", "qquad" => "dbl"}
+  SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scas" => "acas", "quad" => "sgl", "qquad" => "dbl"}
   PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
   SPACINGS = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
@@ -130,20 +130,20 @@ module ZenmathBuilder
       this << ZenmathBuilder.build_radical(symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
-    when "matrix"
-      this << ZenmathBuilder.build_array("matrix", nil, false, spacing) do |table_this|
-        table_this << children_list[0]
-      end
     when "array"
       align_config = attributes["align"]
-      this << ZenmathBuilder.build_array("array", align_config, true, spacing) do |table_this|
+      this << ZenmathBuilder.build_array("std", align_config, true, spacing) do |table_this|
+        table_this << children_list[0]
+      end
+    when "matrix"
+      this << ZenmathBuilder.build_array("mat", nil, false, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "case"
       left_symbol = ZenmathBuilder.fetch_paren_symbol("brace", 0, nil)
       right_symbol = ZenmathBuilder.fetch_paren_symbol("none", 1, nil)
       this << ZenmathBuilder.build_paren("brace", "none", left_symbol, right_symbol, true, spacing) do |this|
-        this << ZenmathBuilder.build_array("case", "ll", false) do |table_this|
+        this << ZenmathBuilder.build_array("cas", "ll", false) do |table_this|
           table_this << children_list[0]
         end
       end
@@ -428,7 +428,9 @@ module ZenmathBuilder
     this << Element.build("math-paren") do |this|
       this["class"] = "par"
       if modify
-        this["class"] = [*this["class"].split(" "), "mod", "left-#{left_kind}", "right-#{right_kind}"].join(" ")
+        this["class"] = [*this["class"].split(" "), "mod"].join(" ")
+        this["data-left"] = left_kind
+        this["data-right"] = right_kind
       end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
@@ -455,7 +457,10 @@ module ZenmathBuilder
     this << Element.build("math-paren") do |this|
       this["class"] = "par"
       if modify
-        this["class"] = [*this["class"].split(" "), "mod", "lpar", "rpar", "left-#{left_kind}", "right-#{right_kind}", "center-#{center_kind}"].join(" ")
+        this["class"] = [*this["class"].split(" "), "mod"].join(" ")
+        this["data-left"] = left_kind
+        this["data-right"] = right_kind
+        this["data-center"] = center_kind
       end
       this << Element.build("math-left") do |this|
         this << Element.build("math-o") do |this|
@@ -592,9 +597,10 @@ module ZenmathBuilder
     this = Nodes[]
     base_element = nil
     this << Element.build("math-underover") do |this|
-      this["class"] = "wide"
+      this["class"] = "wid"
       if modify
-        this["class"] = [*this["class"].split(" "), "mod", "wide-#{kind}"].join(" ")
+        this["class"] = [*this["class"].split(" "), "mod"].join(" ")
+        this["data-kind"] = kind
       end
       this << Element.build("math-over") do |this|
         if over_symbol
@@ -611,7 +617,7 @@ module ZenmathBuilder
         this << Element.build("math-under") do |this|
           if under_symbol
             this << Element.build("math-o") do |this|
-              this["class"] = "wide"
+              this["class"] = "wid"
               this << Text.new(under_symbol, true, nil, false)
             end
           end
@@ -736,18 +742,6 @@ module ZenmathBuilder
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
-      content_element = this
-    end
-    add_spacing(this, spacing)
-    block&.call(content_element)
-    return this
-  end
-
-  def self.build_style(types, spacing = nil, &block)
-    this = Nodes[]
-    content_element = nil
-    this << Element.build("math-style") do |this|
-      this["class"] = types.join(" ")
       content_element = this
     end
     add_spacing(this, spacing)

@@ -15,13 +15,13 @@
         "0": "(",
         "1": "\uDB80\uDC39", "2": "\uDB80\uDC3A", "3": "\uDB80\uDC3B", "4": "\uDB80\uDC3C", "5": "\uDB80\uDC3D", "6": "\uDB80\uDC3E",
         "7": "\uDB80\uDC3F", "8": "\uDB80\uDC40", "9": "\uDB80\uDC41", "10": "\uDB80\uDC42", "11": "\uDB80\uDC43", "12": "\uDB80\uDC44",
-        "top": "⎛", "bar": "⎜", "bot": "⎝"
+        "start": "⎛", "bar": "⎜", "end": "⎝"
       },
       {
         "0": ")",
         "1": "\uDB80\uDC45", "2": "\uDB80\uDC46", "3": "\uDB80\uDC47", "4": "\uDB80\uDC48", "5": "\uDB80\uDC49", "6": "\uDB80\uDC4A",
         "7": "\uDB80\uDC4B", "8": "\uDB80\uDC4C", "9": "\uDB80\uDC4D", "10": "\uDB80\uDC4E", "11": "\uDB80\uDC4F", "12": "\uDB80\uDC50",
-        "top": "⎞", "bar":"⎟", "bot": "⎠"
+        "start": "⎞", "bar":"⎟", "end": "⎠"
       }
     ],
     "pparen": [
@@ -39,13 +39,13 @@
         "0": "[",
         "1": "\uDB80\uDC51", "2": "\uDB80\uDC52", "3": "\uDB80\uDC53", "4": "\uDB80\uDC54", "5": "\uDB80\uDC55", "6": "\uDB80\uDC56",
         "7": "\uDB80\uDC57", "8": "\uDB80\uDC58", "9": "\uDB80\uDC59", "10": "\uDB80\uDC5A", "11": "\uDB80\uDC5B", "12": "\uDB80\uDC5C",
-        "top": "⎡", "bar": "⎢", "bot": "⎣"
+        "start": "⎡", "bar": "⎢", "end": "⎣"
       },
       {
         "0": "]",
         "1": "\uDB80\uDC5D", "2": "\uDB80\uDC5E", "3": "\uDB80\uDC5F", "4": "\uDB80\uDC60", "5": "\uDB80\uDC61", "6": "\uDB80\uDC62",
         "7": "\uDB80\uDC63", "8": "\uDB80\uDC64", "9": "\uDB80\uDC65", "10": "\uDB80\uDC66", "11": "\uDB80\uDC67", "12": "\uDB80\uDC68",
-        "top": "⎤", "bar": "⎥", "bot": "⎦"
+        "start": "⎤", "bar": "⎥", "end": "⎦"
       }  
     ],
     "bbracket": [
@@ -63,13 +63,13 @@
         "0": "{",
         "1": "\uDB80\uDC69", "2": "\uDB80\uDC6A", "3": "\uDB80\uDC6B", "4": "\uDB80\uDC6C", "5": "\uDB80\uDC6D", "6": "\uDB80\uDC6E",
         "7": "\uDB80\uDC6F", "8": "\uDB80\uDC70", "9": "\uDB80\uDC71", "10": "\uDB80\uDC72", "11": "\uDB80\uDC73", "12": "\uDB80\uDC74",
-        "top": "⎧", "bar": "⎪", "mid": "⎨", "bot": "⎩"
+        "start": "⎧", "bar": "⎪", "middle": "⎨", "end": "⎩"
       },
       {
         "0": "}",
         "1": "\uDB80\uDC75", "2": "\uDB80\uDC76", "3": "\uDB80\uDC77", "4": "\uDB80\uDC78", "5": "\uDB80\uDC79", "6": "\uDB80\uDC7A",
         "7": "\uDB80\uDC7B", "8": "\uDB80\uDC7C", "9": "\uDB80\uDC7D", "10": "\uDB80\uDC7E", "11": "\uDB80\uDC7F", "12": "\uDB80\uDC80",
-        "top": "⎫", "bar": "⎪", "mid": "⎬", "bot": "⎭"
+        "start": "⎫", "bar": "⎪", "middle": "⎬", "end": "⎭"
       }
     ],
     "bbrace": [
@@ -250,7 +250,7 @@
       null,
       {
         "0": "⏞", "1": "\uDB80\uDDC7", "2": "\uDB80\uDDC8", "3": "\uDB80\uDDC9", "4": "\uDB80\uDDCA", "5": "\uDB80\uDDCB",
-        "beg": "\uDB80\uDDC4", "bar": "\uDB80\uDDAA", "mid": "\uDB80\uDDC5", "end": "\uDB80\uDDC6",
+        "start": "\uDB80\uDDC4", "bar": "\uDB80\uDDAA", "middle": "\uDB80\uDDC5", "end": "\uDB80\uDDC6",
         "width": [1000, 1500, 1770, 2180, 2600, 2850]
       }
     ],
@@ -278,14 +278,14 @@
     "underlarr": [
       {
         "0": "",
-        "beg": "\uDB80\uDCF9", "bar": "\uDB80\uDCFE"
+        "start": "\uDB80\uDCF9", "bar": "\uDB80\uDCFE"
       },
       null
     ],
     "underbrace": [
       {
         "0": "⏟", "1": "\uDB80\uDDCF", "2": "\uDB80\uDDD0", "3": "\uDB80\uDDD1", "4": "\uDB80\uDDD2", "5": "\uDB80\uDDD3",
-        "beg": "\uDB80\uDDCC", "bar": "\uDB80\uDDB2", "mid": "\uDB80\uDDCD", "end": "\uDB80\uDDCE",
+        "start": "\uDB80\uDDCC", "bar": "\uDB80\uDDB2", "middle": "\uDB80\uDDCD", "end": "\uDB80\uDDCE",
         "width": [1000, 1500, 1770, 2180, 2600, 2850]
       },
       null

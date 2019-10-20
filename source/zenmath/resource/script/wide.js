@@ -29,20 +29,20 @@ class WideModifier extends Modifier {
 
   appendStretch(contentElement, parentElement, kind, position) {
     let stretchElement = document.createElement("math-hstretch");
-    let hasBegin = !!DATA["wide"][kind][position]["beg"];
+    let hasStart = !!DATA["wide"][kind][position]["start"];
     let hasEnd = !!DATA["wide"][kind][position]["end"];
-    let hasMiddle = !!DATA["wide"][kind][position]["mid"];
-    let beginElement = null;
+    let hasMiddle = !!DATA["wide"][kind][position]["middle"];
+    let startElement = null;
     let endElement = null;
     let middleElement = null;
-    if (hasBegin) {
-      beginElement = document.createElement("math-beg");
-      beginElement.textContent = DATA["wide"][kind][position]["beg"];
-      stretchElement.append(beginElement);
+    if (hasStart) {
+      startElement = document.createElement("math-start");
+      startElement.textContent = DATA["wide"][kind][position]["start"];
+      stretchElement.append(startElement);
     }
     if (hasMiddle) {
-      middleElement = document.createElement("math-mid");
-      middleElement.textContent = DATA["wide"][kind][position]["mid"];
+      middleElement = document.createElement("math-middle");
+      middleElement.textContent = DATA["wide"][kind][position]["middle"];
       stretchElement.append(middleElement);
     }
     if (hasEnd) {
@@ -53,7 +53,7 @@ class WideModifier extends Modifier {
     parentElement.removeChild(parentElement.children[0]);
     parentElement.appendChild(stretchElement);
     let barSize = (hasMiddle) ? 2 : 1;
-    let barWidth = this.calcBarWidth(contentElement, beginElement, endElement, middleElement);
+    let barWidth = this.calcBarWidth(contentElement, startElement, endElement, middleElement);
     for (let i = 0 ; i < barSize ; i ++) { 
       let barWrapperElement = document.createElement("math-barwrap");
       let barElement = document.createElement("math-bar");
@@ -61,20 +61,17 @@ class WideModifier extends Modifier {
       barWrapperElement.style.width = "" + barWidth + "em";
       barWrapperElement.append(barElement);
       if (i == 0) {
-        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasBegin) ? 1 : 0]);
+        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasStart) ? 1 : 0]);
       } else {
-        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasBegin) ? 3 : 2]);
+        stretchElement.insertBefore(barWrapperElement, stretchElement.children[(hasStart) ? 3 : 2]);
       }
     }
   }
 
   calcKind(element) {
     let kind = "widetilde";
-    for (let clazz of element.classList) {
-      let match;
-      if (match = clazz.match(/^wide-(\w*)$/)) {
-        kind = match[1];
-      }
+    if (element.getAttribute("data-kind")) {
+      kind = element.getAttribute("data-kind");
     }
     return kind;
   }
@@ -106,12 +103,12 @@ class WideModifier extends Modifier {
     return stretchLevel;
   }
 
-  calcBarWidth(element, beginElement, endElement, middleElement) {
+  calcBarWidth(element, startElement, endElement, middleElement) {
     let wholeWidth = this.getWidth(element);
-    let beginWidth = (beginElement) ? this.getWidth(beginElement) : 0;
+    let startWidth = (startElement) ? this.getWidth(startElement) : 0;
     let endWidth = (endElement) ? this.getWidth(endElement) : 0;
     let middleWidth = (middleElement) ? this.getWidth(middleElement) : 0;
-    let width = wholeWidth - beginWidth - endWidth - middleWidth;
+    let width = wholeWidth - startWidth - endWidth - middleWidth;
     if (middleElement) {
       width = width / 2;
     }
