@@ -118,26 +118,26 @@ class DiagramModifier extends Modifier {
     let margin = ARROW_MARGIN;
     let angle = this.calcAngle(baseDimension.center, destinationDimension.center) + (bendAngle || 0);
     let shiftAngle = angle + Math.PI / 2;
-    let southWestAngle = this.calcAngle(baseDimension.center, baseDimension.southWest);
-    let southEastAngle = this.calcAngle(baseDimension.center, baseDimension.southEast);
-    let northEastAngle = this.calcAngle(baseDimension.center, baseDimension.northEast);
-    let northWestAngle = this.calcAngle(baseDimension.center, baseDimension.northWest);
+    let southWestAngle = this.calcAngle(baseDimension.center, baseDimension.southWestMargined);
+    let southEastAngle = this.calcAngle(baseDimension.center, baseDimension.southEastMargined);
+    let northEastAngle = this.calcAngle(baseDimension.center, baseDimension.northEastMargined);
+    let northWestAngle = this.calcAngle(baseDimension.center, baseDimension.northWestMargined);
     let x = 0;
     let y = 0;
     angle = this.normalizeAngle(angle);
     shiftAngle = this.normalizeAngle(shiftAngle);
     if (angle >= southWestAngle && angle <= southEastAngle) {
-      x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.south[1]) / Math.tan(angle);
-      y = baseDimension.south[1] + margin;
+      x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.southMargined[1]) / Math.tan(angle);
+      y = baseDimension.southMargined[1];
     } else if (angle >= southEastAngle && angle <= northEastAngle) {
-      x = baseDimension.east[0] + margin;
-      y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.east[0]) * Math.tan(angle);
+      x = baseDimension.eastMargined[0];
+      y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.eastMargined[0]) * Math.tan(angle);
     } else if (angle >= northEastAngle && angle <= northWestAngle) {
-      x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.north[1]) / Math.tan(angle);
-      y = baseDimension.north[1] - margin;
+      x = baseDimension.center[0] + (baseDimension.center[1] - baseDimension.northMargined[1]) / Math.tan(angle);
+      y = baseDimension.northMargined[1];
     } else if (angle >= northWestAngle || angle <= southWestAngle) {
-      x = baseDimension.west[0] - margin;
-      y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.west[0]) * Math.tan(angle);
+      x = baseDimension.westMargined[0];
+      y = baseDimension.center[1] + (baseDimension.center[0] - baseDimension.westMargined[0]) * Math.tan(angle);
     }
     if (shift) {
       x += Math.cos(shiftAngle) * shift;
@@ -204,58 +204,49 @@ class DiagramModifier extends Modifier {
   }
 
   parsePoint(string, dimension) {
-    let margin = ARROW_MARGIN;
-    let pointX = null;
-    let pointY = null;
+    let point = null;
     let match;
     if (match = string.match(/^n(|w|e)|s(|w|e)|w|e$/)) {
       if (string == "nw") {
-        pointX = dimension.northWest[0] - margin;
-        pointY = dimension.northWest[1] - margin;
+        point = dimension.northWestMargined;
       } else if (string == "n") {
-        pointX = dimension.north[0];
-        pointY = dimension.north[1] - margin;
+        point = dimension.northMargined;
       } else if (string == "ne") {
-        pointX = dimension.northEast[0] + margin;
-        pointY = dimension.northEast[1] - margin;
+        point = dimension.northEastMargined;
       } else if (string == "e") {
-        pointX = dimension.east[0] + margin;
-        pointY = dimension.east[1];
+        point = dimension.eastMargined;
       } else if (string == "se") {
-        pointX = dimension.southEast[0] + margin;
-        pointY = dimension.east[1] + margin;
+        point = dimension.southEastMargined;
       } else if (string == "s") {
-        pointX = dimension.south[0];
-        pointY = dimension.south[1] + margin;
+        point = dimension.southMargined;
       } else if (string == "sw") {
-        pointX = dimension.southWest[0] - margin;
-        pointY = dimension.southWest[1] + margin;
+        point = dimension.southWestMargined;
       } else if (string == "w") {
-        pointX = dimension.west[0] - margin;
-        pointY = dimension.west[1];
+        point = dimension.westMargined;
       }
     } else if (match = string.match(/^(t|r|b|l)([\d.]+)$/)) {
       let direction = match[1];
       let position = parseFloat(match[2]) / 100;
+      let pointX = null;
+      let pointY = null;
       if (direction == "t") {
-        pointX = (1 - position) * dimension.northWest[0] + position * dimension.northEast[0];
-        pointY = dimension.north[1] - margin;
+        pointX = (1 - position) * dimension.northWestMargined[0] + position * dimension.northEastMargined[0];
+        pointY = dimension.northMargined[1];
       } else if (direction == "r") {
-        pointX = dimension.east[0] + margin;
-        pointY = (1 - position) * dimension.northEast[1] + position * dimension.southEast[1];
+        pointX = dimension.eastMargined[0];
+        pointY = (1 - position) * dimension.northEastMargined[1] + position * dimension.southEastMargined[1];
       } else if (direction == "b") {
-        pointX = (1 - position) * dimension.southWest[0] + position * dimension.southEast[0];
-        pointY = dimension.south[1] + margin;
+        pointX = (1 - position) * dimension.southWestMargined[0] + position * dimension.southEastMargined[0];
+        pointY = dimension.southMargined[1];
       } else if (direction == "l") {
-        pointX = dimension.west[0] - margin;
-        pointY = (1 - position) * dimension.northWest[1] + position * dimension.southWest[1];
+        pointX = dimension.westMargined[0];
+        pointY = (1 - position) * dimension.northWestMargined[1] + position * dimension.southWestMargined[1];
+      }
+      if (pointX != null && pointY != null) {
+        point = [pointX, pointY];
       }
     }
-    if (pointX != null && pointY != null) {
-      return [pointX, pointY];
-    } else {
-      return null;
-    }
+    return point;
   }
 
   parseTipKinds(string, lineCount) {
@@ -415,6 +406,7 @@ class DiagramModifier extends Modifier {
 
   calcDimension(graphic, element) {
     let dimension = {};
+    let margin = ARROW_MARGIN;
     let fontSize = this.getFontSize(graphic)
     let graphicTop = graphic.getBoundingClientRect().top + window.pageYOffset;
     let graphicLeft = graphic.getBoundingClientRect().left + window.pageXOffset;
@@ -432,6 +424,15 @@ class DiagramModifier extends Modifier {
     dimension.southWest = [left, top + height];
     dimension.south = [left + width / 2, top + height];
     dimension.southEast = [left + width, top + height];
+    dimension.northWestMargined = [left - margin, top - margin];
+    dimension.northMargined = [left + width / 2, top - margin];
+    dimension.northEastMargined = [left + width + margin, top - margin];
+    dimension.westMargined = [left - margin, top + height - lowerHeight];
+    dimension.centerMargined = [left + width / 2, top + height - lowerHeight];
+    dimension.eastMargined = [left + width + margin, top + height - lowerHeight];
+    dimension.southWestMargined = [left - margin, top + height + margin];
+    dimension.southMargined = [left + width / 2, top + height + margin];
+    dimension.southEastMargined = [left + width + margin, top + height + margin];
     return dimension;
   }
 
