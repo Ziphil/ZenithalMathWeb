@@ -564,12 +564,12 @@
     },
     "hook": {
       "edge": "start",
-      "x": 0.18, "y": 0.36, "width": 0.36, "height": 0.42, "extrusion": 0.15,
+      "x": 0.18, "y": 0.36, "width": 0.36, "height": 0.42, "extrusion": 0.18,
       "command": "M 0.24 0.06 L 0.18 0.06 A 0.15 0.15 0 0 0 0.18 0.36"
     },
     "varhook": {
       "edge": "start",
-      "x": 0.18, "y": 0.06, "width": 0.36, "height": 0.42, "extrusion": 0.15,
+      "x": 0.18, "y": 0.06, "width": 0.36, "height": 0.42, "extrusion": 0.18,
       "command": "M 0.18 0.06 A 0.15 0.15 0 0 0 0.18 0.36 L 0.24 0.36"
     }
   },
