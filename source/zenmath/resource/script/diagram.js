@@ -274,7 +274,7 @@ class DiagramModifier extends Modifier {
     let startPoint = arrowSpec.startPoint;
     let endPoint = arrowSpec.endPoint;
     let bendAngle = arrowSpec.bendAngle;
-    let lineCount = arrowSpec.lineCount || 1;
+    let lineCount = (arrowSpec.lineCount == undefined) ? 1 : arrowSpec.lineCount;
     let command = "M " + startPoint[0] + " " + startPoint[1];
     if (bendAngle != undefined) {
       let controlPoint = this.calcControlPoint(startPoint, endPoint, bendAngle)
