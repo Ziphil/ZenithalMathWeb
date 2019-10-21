@@ -193,7 +193,10 @@ class DiagramModifier extends Modifier {
       let number = parseInt(match[1]) - 1;
       let element = cellElements[number];
       let dimension = this.calcDimension(graphic, element);
-      let point = this.parsePoint(match[2], dimension);
+      let point = null;
+      if (match[2]) {
+        point = this.parsePoint(match[2], dimension);
+      }
       return {element, dimension, point};
     } else {
       return null;
@@ -201,29 +204,58 @@ class DiagramModifier extends Modifier {
   }
 
   parsePoint(string, dimension) {
-    let direction = null;
-    if (string == "west" || string == "w") {
-      direction = "west";
-    } else if (string == "southwest" || string == "sw") {
-      direction = "southWest";
-    } else if (string == "south" || string == "s") {
-      direction = "south";
-    } else if (string == "southeast" || string == "se") {
-      direction = "southEast";
-    } else if (string == "east" || string == "e") {
-      direction = "east";
-    } else if (string == "northeast" || string == "ne") {
-      direction = "northEast";
-    } else if (string == "north" || string == "n") {
-      direction = "north";
-    } else if (string == "northwest" || string == "nw") {
-      direction = "northWest";
+    let margin = ARROW_MARGIN;
+    let pointX = null;
+    let pointY = null;
+    let match;
+    if (match = string.match(/^n(|w|e)|s(|w|e)|w|e$/)) {
+      if (string == "nw") {
+        pointX = dimension.northWest[0] - margin;
+        pointY = dimension.northWest[1] - margin;
+      } else if (string == "n") {
+        pointX = dimension.north[0];
+        pointY = dimension.north[1] - margin;
+      } else if (string == "ne") {
+        pointX = dimension.northEast[0] + margin;
+        pointY = dimension.northEast[1] - margin;
+      } else if (string == "e") {
+        pointX = dimension.east[0] + margin;
+        pointY = dimension.east[1];
+      } else if (string == "se") {
+        pointX = dimension.southEast[0] + margin;
+        pointY = dimension.east[1] + margin;
+      } else if (string == "s") {
+        pointX = dimension.south[0];
+        pointY = dimension.south[1] + margin;
+      } else if (string == "sw") {
+        pointX = dimension.southWest[0] - margin;
+        pointY = dimension.southWest[1] + margin;
+      } else if (string == "w") {
+        pointX = dimension.west[0] - margin;
+        pointY = dimension.west[1];
+      }
+    } else if (match = string.match(/^(t|r|b|l)([\d.]+)$/)) {
+      let direction = match[1];
+      let position = parseFloat(match[2]) / 100;
+      if (direction == "t") {
+        pointX = (1 - position) * dimension.northWest[0] + position * dimension.northEast[0];
+        pointY = dimension.north[1] - margin;
+      } else if (direction == "r") {
+        pointX = dimension.east[0] + margin;
+        pointY = (1 - position) * dimension.northEast[1] + position * dimension.southEast[1];
+      } else if (direction == "b") {
+        pointX = (1 - position) * dimension.southWest[0] + position * dimension.southEast[0];
+        pointY = dimension.south[1] + margin;
+      } else if (direction == "l") {
+        pointX = dimension.west[0] - margin;
+        pointY = (1 - position) * dimension.northWest[1] + position * dimension.southWest[1];
+      }
     }
-    let point = null;
-    if (direction) {
-      point = dimension[direction];
+    if (pointX != null && pointY != null) {
+      return [pointX, pointY];
+    } else {
+      return null;
     }
-    return point;
   }
 
   parseTipKinds(string, lineCount) {
