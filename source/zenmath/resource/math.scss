@@ -361,6 +361,18 @@ math-diagram {
     text-align: center;
   }
 
+  @each $name, $gap in $row-gaps {
+    >math-cellwrap.v#{$name} {
+      margin-top: spacing($gap);
+    }
+  }
+
+  @each $name, $gap in $column-gaps {
+    >math-cellwrap.h#{$name} {
+      margin-left: spacing($gap);
+    }
+  }
+
   >math-arrow {
     font-size: 80%;
     position: absolute;

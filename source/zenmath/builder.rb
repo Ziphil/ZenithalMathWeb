@@ -152,9 +152,9 @@ module ZenmathBuilder
         end
       end
     when "diag"
-      vertical_margin = attributes["ver"]
-      horizontal_margin = attributes["hor"]
-      this << ZenmathBuilder.build_diagram(vertical_margin, horizontal_margin, spacing) do |table_this|
+      vertical_gaps_string = attributes["ver"]
+      horizontal_gaps_string = attributes["hor"]
+      this << ZenmathBuilder.build_diagram(vertical_gaps_string, horizontal_gaps_string, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "c"
@@ -677,54 +677,78 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_diagram(vertical_margin, horizontal_margin, spacing = nil, &block)
+  def self.build_diagram(vertical_gaps_string, horizontal_gaps_string, spacing = nil, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-diagram") do |this|
       table_element = this
-      if vertical_margin
-        if vertical_margin =~ /^\d+$/
-          this["style"] += "row-gap: #{vertical_margin.to_f / 18}em; "
-        else
-          this["class"] = [*this["class"].split(" "), "v#{vertical_margin}"].join(" ")
-        end
+      if vertical_gaps_string
+        this["class"] = [*this["class"].split(" "), "vnon"].join(" ")
       end
-      if horizontal_margin
-        if horizontal_margin =~ /^\d+$/
-          this["style"] += "column-gap: #{horizontal_margin.to_f / 18}em; "
-        else
-          this["class"] = [*this["class"].split(" "), "h#{horizontal_margin}"].join(" ")
-        end
+      if horizontal_gaps_string
+        this["class"] = [*this["class"].split(" "), "hnon"].join(" ")
       end
     end
     add_spacing(this, spacing)
     block&.call(table_element)
+    modify_diagram(table_element, vertical_gaps_string, horizontal_gaps_string)
     modify_array(table_element, nil, false)
     return this
+  end
+
+  def self.modify_diagram(element, vertical_gaps_string, horizontal_gaps_string)
+    cell_elements = element.elements.to_a
+    vertical_gaps = vertical_gaps_string&.split(/\s*,\s*/)
+    horizontal_gaps = horizontal_gaps_string&.split(/\s*,\s*/)
+    column, row = 0, 0
+    cell_elements.each_with_index do |child, i|
+      if child.name == "math-cellwrap"
+        vertical_gap = vertical_gaps&.fetch(row - 1, vertical_gaps.last)
+        horizontal_gap = horizontal_gaps&.fetch(column - 1, horizontal_gaps.last)
+        if vertical_gap && row > 0
+          if vertical_gap =~ /^\d+$/
+            child["style"] += "margin-top: #{vertical_gap.to_f / 18}em; "
+          else
+            child["class"] = [*child["class"].split(" "), "v#{vertical_gap}"].join(" ")
+          end
+        end
+        if horizontal_gap && column > 0
+          if horizontal_gap =~ /^\d+$/
+            child["style"] += "margin-left: #{horizontal_gap.to_f / 18}em; "
+          else
+            child["class"] = [*child["class"].split(" "), "h#{horizontal_gap}"].join(" ")
+          end
+        end
+        column += 1
+      elsif child.name == "math-sys-br"
+        row += 1
+        column = 0
+      end
+    end
   end
 
   def self.modify_array(element, align_config, raw)
     align_array = align_config&.chars
     cell_elements = element.elements.to_a
-    column, row = 1, 1
+    column, row = 0, 0
     cell_elements.each_with_index do |child, i|
       if child.name == "math-cell" || child.name == "math-cellwrap"
         if raw
           extra_class = []
-          extra_class << "lpres" unless column == 1
+          extra_class << "lpres" unless column == 0
           extra_class << "rpres" unless cell_elements[i + 1]&.name == "math-sys-br"
           child["class"] = (child["class"].split(" ") + extra_class).join(" ")
         end
-        child["style"] += "grid-row: #{row}; grid-column: #{column};"
+        child["style"] += "grid-row: #{row + 1}; grid-column: #{column + 1};"
         if align_array
-          align = ALIGNS[align_array[column - 1]]
+          align = ALIGNS[align_array[column]]
           child["style"] += "text-align: #{align};" 
         end
         column += 1
       elsif child.name == "math-sys-br"
         element.delete_element(child)
         row += 1
-        column = 1
+        column = 0
       end
     end
   end
