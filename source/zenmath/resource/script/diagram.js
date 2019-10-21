@@ -188,7 +188,7 @@ class DiagramModifier extends Modifier {
   }
 
   parseEdgeConfig(string, graphic, cellElements) {
-    let match = string.match(/(\d+)(?:\.(\w+))?/);
+    let match = string.match(/(\d+)(?:\:(\w+))?/);
     if (match) {
       let number = parseInt(match[1]) - 1;
       let element = cellElements[number];
