@@ -437,12 +437,33 @@
         &m<
           \diag<
             \v> \v<2> \v> \br>
-            \v<4> \v<5> \v<6>
+            \v<4> \v<5> \v<6> \v<7>
             \ar|s="2",e="5",line="2",dash|> \ar|s="5",e="6",line="2",inv|<Y> \ar|s="2",e="4",bend="-30",line="2"|>
             \ar|s="4",e="5",line="3",inv|<Z> \ar|s="2",e="6",bend="30",line="3",dash|>
+            \ar|s="6",e="7",line="0"|<N>
           >
         >,
         compare with &m<\to>>, &m<\raarr>>, &m<\raaarr>>.
+      >
+      \p<
+        Changing margin:
+        &m<
+          \diag|hor="sthk",ver="vthn"|<
+            \v<V> \v> \v> \br>
+            \v> \v<T> \v<S> \br>
+            \v<R> \v> \v>
+            \ar|s="1",e="7",inv|<x> \ar|s="1",e="5"|<y> \ar|s="7",e="5",inv|<`c>
+            \ar|s="5",e="6",inv|<\sb<V><\text<verylong>> + \sb<W><\text<longlong>>>
+          >
+        >
+        or
+        &m<
+          \diag|hor="80",ver="40"|<
+            \v<1> \v<2> \br>
+            \v<3> \v<4>
+            \ar|s="1",e="2"|> \ar|s="1",e="3"|> \ar|s="2",e="4"|> \ar|s="3",e="4"|>
+          >
+        >.
       >
       \h1<Some practical examples>
       \p|class="normal"|<
