@@ -385,9 +385,11 @@
         and
         &m<
           \diag<
-            \v<\bfrm<Set> \vph<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>>> \v<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>> \v<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)> 
-            \ar|s="1.ne",e="2.nw",bend="40"|<`D> \ar|s="2.sw",e="1.se",bend="40"|<`G>
-            \ar|s="2.ne",e="3.nw",bend="40"|<\bf<a>> \ar|s="3.sw",e="2.se",bend="40"|<\bf<i>>           
+            \v<\bfrm<Set> \vph<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)>>
+            \v<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>> \vph<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)>>
+            \v<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)> 
+            \ar|s="1:r40",e="2:l40",bend="40"|<`D> \ar|s="2:l60",e="1:r60",bend="40"|<`G>
+            \ar|s="2:r40",e="3:l40",bend="40"|<\bf<a>> \ar|s="3:l60",e="2:r60",bend="40"|<\bf<i>>           
           >
         >.
       >
@@ -440,7 +442,7 @@
             \v<4> \v<5> \v<6> \v<7>
             \ar|s="2",e="5",line="2",dash|> \ar|s="5",e="6",line="2",inv|<Y> \ar|s="2",e="4",bend="-30",line="2"|>
             \ar|s="4",e="5",line="3",inv|<Z> \ar|s="2",e="6",bend="30",line="3",dash|>
-            \ar|s="6",e="7",line="0"|<N>
+            \ar|s="6",e="7"|<M> \ar|s="6",e="7",line="0",inv|<R> \ar|s="6",e="7",line="0",pos="10"|<S> \ar|s="6",e="7",line="0",pos="90"|<E>
           >
         >,
         compare with &m<\to>>, &m<\raarr>>, &m<\raaarr>>.
@@ -448,7 +450,7 @@
       \p<
         Changing margin:
         &m<
-          \diag|hor="sthk",ver="vthn"|<
+          \diag|hor="med,sthk",ver="vthn"|<
             \v<V> \v> \v> \br>
             \v> \v<T> \v<S> \br>
             \v<R> \v> \v>
@@ -458,12 +460,75 @@
         >
         or
         &m<
-          \diag|hor="80",ver="40"|<
-            \v<1> \v<2> \br>
-            \v<3> \v<4>
-            \ar|s="1",e="2"|> \ar|s="1",e="3"|> \ar|s="2",e="4"|> \ar|s="3",e="4"|>
+          \diag|hor="thn,med,thk,36"|<
+            \v<1> \v<2> \v<3> \v<4> \v<5> \br>
+            \v<6> \v<7> \v<8> \v<9> \v<10> \br>
+            \v<11> \v<12> \v<13> \v<14> \v<15> \br>
+            \ar|s="1",e="2"|> \ar|s="2",e="3"|> \ar|s="3",e="4"|> \ar|s="4",e="5"|>
+            \ar|s="6",e="7"|> \ar|s="7",e="8"|> \ar|s="8",e="9"|> \ar|s="9",e="10"|>
+            \ar|s="11",e="12"|> \ar|s="12",e="13"|> \ar|s="13",e="14"|> \ar|s="14",e="15"|>
+            \ar|s="1",e="6"|> \ar|s="6",e="11"|>
+            \ar|s="2",e="7"|> \ar|s="7",e="12"|>
+            \ar|s="3",e="8"|> \ar|s="8",e="13"|>
+            \ar|s="4",e="9"|> \ar|s="9",e="14"|>
+            \ar|s="5",e="10"|> \ar|s="10",e="15"|>
           >
         >.
+      >
+      \h1<More complicated examples>
+      \p<
+        1:
+        &mb<
+          \frac<`p><2>
+          = \sum<k = 0><\infty>> \frac<(2 k)!><\sp<2><2 k> \sfun> \sp<(k!)><2>> \sfun> \frac<1><2 k + 1>
+          = \prod<k = 1><\infty>> \frac<4 \sp<k><2>><4 \sp<k><2> - 1>
+          = \sp<\paren<\int<0><\infty>> \frac<\sin> x><\sqrt<x>> dx>><2>
+        >
+      >
+      \p<
+        2:
+        &mb<
+          \array|align="rrcl"|<
+            \c<`C:> \c<\set<\paren<\matrix<\cc<a><- b> \cc<b><a>>> \in> \sb<\op<GL>><2> (\bb<R>)><\sp<a><2> + \sp<b><2> = 1>> \c<\longto>> \c<\sp<\bb<S>><1>> \br>
+            \c> \c<\paren<\matrix<\cc<a><- b> \cc<b><a>>>> \c<\longmapsto>> \c<a + b \sqrt<- 1>>
+          >
+        >
+      >
+      \p<
+        3:
+        &mb<
+          \diag<
+            \v<P \sb|bin|<\otimes>><R> \sb<\bracket<P, \bigoplus<i \in> I><> \sb<`[ P, \sb<Y><i> `]><T>>><T>>
+            \v<\bigoplus<i \in> I><> \sb<`[ P, \sb<Y><i> `]><T>> \br>
+            \v<P \sb|bin|<\otimes>><R> \sb<\bracket<P, \sb<\bracket<P, \bigoplus<i \in> I><> \sb<Y><i>>><T>>><T>>
+            \v<\sb<\bracket<P, \bigoplus<i \in> I><> \sb<Y><i>>><T>>
+            \ar|s="1",e="2",line="2",tip="none"|> \ar|s="3",e="4",line="2",tip="none"|>
+            \ar|s="1",e="3",inv|<`[ \rm<id>, \rm<id> \otimes> `l `]> \ar|s="2",e="4"|<`l>
+          >
+        >
+      >
+      \p<
+        4:
+        &mb<
+          \diag<
+            \v<\sb<D><0>> \v<\sb<D><1>> \v<\sb<D><2>> \v<\cdots>> \v<\sb<D><n>> \v<\sb<D><n + 1>> \v<\cdots>> \v<\sb<D><\infty>>>
+            \ar|s="1",e="2",shift="3",pos="70"|<\sbsp<`F><1><0>> \ar|s="2",e="1",shift="3",pos="30"|<\sbsp<`F><0><1>>
+            \ar|s="2",e="3",shift="3",pos="70"|<\sbsp<`F><2><1>> \ar|s="3",e="2",shift="3",pos="30"|<\sbsp<`F><1><2>>
+            \ar|s="3",e="4",shift="3"|> \ar|s="4",e="3",shift="3"|> \ar|s="4",e="5",shift="3"|> \ar|s="5",e="4",shift="3"|>
+            \ar|s="5",e="6",shift="3",pos="70"|<\sbsp<`F><n + 1><n>> \ar|s="6",e="5",shift="3",pos="30"|<\sbsp<`F><n><n + 1>>
+            \ar|s="6",e="7",shift="3"|> \ar|s="7",e="6",shift="3"|>
+            \ar|s="1",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><0>>
+            \ar|s="2",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><1>>
+            \ar|s="3",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><2>>
+            \ar|s="5",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><n>>
+            \ar|s="6",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><n + 1>>
+            \ar|s="8",e="1",bend="40",pos="85"|<\sbsp<`F><0><\infty>>>
+            \ar|s="8",e="2",bend="40",pos="85"|<\sbsp<`F><1><\infty>>>
+            \ar|s="8",e="3",bend="40",pos="85"|<\sbsp<`F><2><\infty>>>
+            \ar|s="8",e="5",bend="40",pos="85"|<\sbsp<`F><n><\infty>>>
+            \ar|s="8",e="6",bend="40",pos="85"|<\sbsp<`F><n + 1><\infty>>>
+          >
+        >
       >
       \h1<Some practical examples>
       \p|class="normal"|<
