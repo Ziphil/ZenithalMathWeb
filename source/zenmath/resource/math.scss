@@ -406,6 +406,10 @@ math-diagram {
   >svg path.dashed {
     stroke-dasharray: 0.2 0.2;
   }
+
+  >svg marker {
+    overflow: visible;
+  }
   
 }
 

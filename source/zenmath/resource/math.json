@@ -539,38 +539,38 @@
   "arrow": {
     "normal": {
       "edge": "end",
-      "x": 0.36, "y": 0.24, "width": 0.42, "height": 0.48, "extrusion": 0,
-      "command": "M 0.06 0.06 L 0.36 0.24 L 0.06 0.42"
+      "x": 0.3, "y": 0.18, "width": 0.3, "height": 0.36, "extrusion": 0,
+      "command": "M 0 0 L 0.3 0.18 L 0 0.36"
     },
     "dnormal": {
       "edge": "end",
-      "x": 0.27, "y": 0.33, "width": 0.42, "height": 0.66, "extrusion": 0.09,
-      "command": "M 0.06 0.06 L 0.36 0.33 L 0.06 0.6"
+      "x": 0.21, "y": 0.27, "width": 0.3, "height": 0.54, "extrusion": 0.09,
+      "command": "M 0 0 L 0.3 0.27 L 0 0.54"
     },
     "tnormal": {
       "edge": "end",
-      "x": 0.21, "y": 0.42, "width": 0.42, "height": 0.84, "extrusion": 0.15,
-      "command": "M 0.06 0.06 L 0.36 0.42 L 0.06 0.78 M 0.21 0.42 L 0.36 0.42"
+      "x": 0.15, "y": 0.36, "width": 0.3, "height": 0.72, "extrusion": 0.15,
+      "command": "M 0 0 L 0.3 0.36 L 0 0.72 M 0.15 0.36 L 0.3 0.36"
     },
     "head": {
       "edge": "end",
-      "x": 0.6, "y": 0.24, "width": 0.66, "height": 0.48, "extrusion": 0,
-      "command": "M 0.06 0.06 L 0.36 0.24 L 0.06 0.42 M 0.3 0.06 L 0.6 0.24 L 0.3 0.42"
+      "x": 0.54, "y": 0.18, "width": 0.54, "height": 0.36, "extrusion": 0,
+      "command": "M 0 0 L 0.3 0.18 L 0 0.36 M 0.24 0 L 0.54 0.18 L 0.24 0.36"
     },
     "tail": {
       "edge": "start",
-      "x": 0.36, "y": 0.24, "width": 0.42, "height": 0.48, "extrusion": 0.3,
-      "command": "M 0.06 0.06 L 0.36 0.24 L 0.06 0.42"
+      "x": 0.3, "y": 0.18, "width": 0.3, "height": 0.36, "extrusion": 0.3,
+      "command": "M 0 0 L 0.3 0.18 L 0 0.36"
     },
     "hook": {
       "edge": "start",
-      "x": 0.18, "y": 0.36, "width": 0.36, "height": 0.42, "extrusion": 0.18,
-      "command": "M 0.24 0.06 L 0.18 0.06 A 0.15 0.15 0 0 0 0.18 0.36"
+      "x": 0.12, "y": 0.3, "width": 0.24, "height": 0.3, "extrusion": 0.18,
+      "command": "M 0.18 0 L 0.12 0 A 0.15 0.15 0 0 0 0.12 0.3"
     },
     "varhook": {
       "edge": "start",
-      "x": 0.18, "y": 0.06, "width": 0.36, "height": 0.42, "extrusion": 0.18,
-      "command": "M 0.18 0.06 A 0.15 0.15 0 0 0 0.18 0.36 L 0.24 0.36"
+      "x": 0.12, "y": 0, "width": 0.24, "height": 0.3, "extrusion": 0.18,
+      "command": "M 0.12 0 A 0.15 0.15 0 0 0 0.12 0.3 L 0.18 0.3"
     }
   },
   "alternative": {
