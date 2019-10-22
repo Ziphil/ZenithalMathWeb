@@ -27,10 +27,9 @@ TeX と同程度の品質の数式を組めることと、自動生成にあり�
 
 以下のような数式をブラウザ上で描画することができます (キャプチャ画像です)。
 
-- ![サンプル 1](document/image/normal.png)
-- ![サンプル 2](document/image/array.png)
-- ![サンプル 3](document/image/diagram.png)
-- ![サンプル 4](document/image/complex_diagram.png)
+<div align="center">
+<img src="document/image/sample.png">
+</div>
 
 もしくは、描画サンプルページをご覧ください。
 
