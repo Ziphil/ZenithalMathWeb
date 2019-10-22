@@ -215,7 +215,7 @@ class DiagramModifier extends Modifier {
   parsePoint(string, dimension) {
     let point = null;
     let match;
-    if (match = string.match(/^n(|w|e)|s(|w|e)|w|e$/)) {
+    if (match = string.match(/^n(|w|e)|s(|w|e)|w|e|c$/)) {
       if (string == "nw") {
         point = dimension.northWestMargined;
       } else if (string == "n") {
@@ -232,6 +232,8 @@ class DiagramModifier extends Modifier {
         point = dimension.southWestMargined;
       } else if (string == "w") {
         point = dimension.westMargined;
+      } else if (string == "c") {
+        point = dimension.center;
       }
     } else if (match = string.match(/^(t|r|b|l)([\d.]+)$/)) {
       let direction = match[1];
