@@ -475,6 +475,28 @@
           >
         >.
       >
+      \p<
+        Specifying a node by its name:
+        &m<
+          \diag<
+            \v|name="a"|<a> \v|name="c"|<c> \br>
+            \v|name="b"|<b> \v> \br>
+            \ar|s="a",e="b",inv|<\sb<F><ab>> \ar|s="a",e="c"|<\sb<F><ac>> \ar|s="c",e="b"|<\sb<F><cb>>
+          >
+        >
+        or
+        &m<
+          \diag|hor="vthk"|<
+            \v<\scr<C>> \v<\scr<D>>
+            \ar|s="1",e="2",bend="40"|<F> \ar|s="1",e="2",bend="-40",inv|<G>
+            \ar|s="1",e="2",bend="40",pos="30",line="0",name="fl",inv|> \ar|s="1",e="2",bend="-40",pos="30",line="0",name="gl"|>
+            \ar|s="1",e="2",bend="40",pos="70",line="0",name="fr",inv|> \ar|s="1",e="2",bend="-40",pos="70",line="0",name="gr"|>
+            \ar|s="fl:c",e="gl:c",line="2",inv|<`a> \ar|s="fr:c",e="gr:c",line="2"|<`b>
+            \ar|s="fl:c",e="gl:c",line="0",name="a"|> \ar|s="fr:c",e="gr:c",line="0",name="b",inv|>
+            \ar|s="a:c",e="b:c",line="3"|<`J>
+          >
+        >.
+      >
       \h1<More complicated examples>
       \p<
         1:
