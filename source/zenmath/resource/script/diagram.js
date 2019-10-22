@@ -16,7 +16,7 @@ class DiagramModifier extends Modifier {
     let graphic = this.createGraphic(element);
     element.appendChild(graphic);
     for (let arrowElement of arrowElements) {
-      let arrowSpec = this.determineArrowSpec(graphic, arrowElement, cellElements);
+      let arrowSpec = this.determineArrowSpec(graphic, arrowElement, cellElements, arrowElements);
       let arrows = this.createArrows(arrowSpec);
       graphic.append(...arrows);
       let labelPoint = this.determineLabelPoint(graphic, arrowElement, arrowSpec);
@@ -32,12 +32,12 @@ class DiagramModifier extends Modifier {
     element.style.marginRight = "" + extrusion.right + "em";
   }
 
-  determineArrowSpec(graphic, arrowElement, cellElements) {
+  determineArrowSpec(graphic, arrowElement, cellElements, arrowElements) {
     let spec = {};
     let startConfigString = arrowElement.getAttribute("data-start");
     let endConfigString = arrowElement.getAttribute("data-end");
-    let startConfig = this.parseEdgeConfig(startConfigString, graphic, cellElements);
-    let endConfig = this.parseEdgeConfig(endConfigString, graphic, cellElements);
+    let startConfig = this.parseEdgeConfig(startConfigString, graphic, cellElements, arrowElements);
+    let endConfig = this.parseEdgeConfig(endConfigString, graphic, cellElements, arrowElements);
     if (startConfig && endConfig) {
       let bendAngleString = arrowElement.getAttribute("data-bend");
       if (bendAngleString) {
@@ -187,20 +187,29 @@ class DiagramModifier extends Modifier {
     return [x, y];
   }
 
-  parseEdgeConfig(string, graphic, cellElements) {
-    let match = string.match(/(\d+)(?:\:(\w+))?/);
+  parseEdgeConfig(string, graphic, cellElements, arrowElements) {
+    let config = null;
+    let match = string.match(/(?:(\d+)|([A-Za-z]\w*))(?:\:(\w+))?/);
     if (match) {
-      let number = parseInt(match[1]) - 1;
-      let element = cellElements[number];
-      let dimension = this.calcDimension(graphic, element);
-      let point = null;
-      if (match[2]) {
-        point = this.parsePoint(match[2], dimension);
+      let element = null;
+      if (match[1]) {
+        let number = parseInt(match[1]) - 1;
+        element = cellElements[number];
+      } else if (match[2]) {
+        let candidates = cellElements.map((candidate) => candidate.parentNode).concat(arrowElements);
+        let name = match[2];
+        element = candidates.find((candidate) => candidate.getAttribute("data-name") == name);
       }
-      return {element, dimension, point};
-    } else {
-      return null;
+      if (element) {
+        let dimension = this.calcDimension(graphic, element);
+        let point = null;
+        if (match[3]) {
+          point = this.parsePoint(match[3], dimension);
+        }
+        config = {element, dimension, point};
+      }
     }
+    return config;
   }
 
   parsePoint(string, dimension) {

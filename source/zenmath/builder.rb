@@ -169,7 +169,8 @@ module ZenmathBuilder
       end
       this << Element.new("math-sys-br")
     when "v"
-      this << ZenmathBuilder.build_diagram_vertex(spacing) do |vertex_this|
+      name = attributes["name"]
+      this << ZenmathBuilder.build_diagram_vertex(name, spacing) do |vertex_this|
         vertex_this << children_list[0]
       end
     when "vv"
@@ -190,6 +191,7 @@ module ZenmathBuilder
       configs[:dashed] = attributes["dash"]
       configs[:label_position] = attributes["pos"]
       configs[:invert] = attributes["inv"]
+      configs[:name] = attributes["name"]
       this << ZenmathBuilder.build_arrow(configs, spacing) do |label_this|
         label_this << children_list[0]
       end
@@ -764,10 +766,13 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_diagram_vertex(spacing = nil, &block)
+  def self.build_diagram_vertex(name, spacing = nil, &block)
     this = Nodes[]
     vertex_element = nil
     this << Element.build("math-cellwrap") do |this|
+      if name
+        this["data-name"] = name
+      end
       this << Element.build("math-cell") do |this|
         vertex_element = this
       end
@@ -803,6 +808,9 @@ module ZenmathBuilder
       end
       if configs[:invert]
         this["data-inv"] = "data-inv"
+      end
+      if configs[:name]
+        this["data-name"] = configs[:name]
       end
       label_element = this
     end
