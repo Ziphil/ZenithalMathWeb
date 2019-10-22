@@ -94,15 +94,30 @@ class Modifier {
 }
 
 
+function getDepth(element) {
+  let currentElement = element;
+  let depth = 0;
+  while (currentElement) {
+    currentElement = currentElement.parentNode;
+    depth += 1;
+  }
+  return depth;
+}
+
+function byDepthDescending(first, second) {
+  return getDepth(second) - getDepth(first);
+}
+
 function execute() {
-  document.querySelectorAll("math-underover.acc").forEach((element) => {
-    AccentModifier.execute(element);
-  });
-  document.querySelectorAll("math-subsup").forEach((element) => {
-    SubsuperModifier.execute(element);
-  });
-  document.querySelectorAll("math-underover").forEach((element) => {
-    UnderoverModifier.execute(element);
+  Array.from(document.querySelectorAll("math-subsup, math-underover")).sort(byDepthDescending).forEach((element) => {
+    if (element.localName == "math-subsup") {
+      SubsuperModifier.execute(element);
+    } else if (element.localName == "math-underover") {
+      if (element.classList.contains("acc")) {
+        AccentModifier.execute(element);
+      }
+      UnderoverModifier.execute(element);
+    }
   });
   document.querySelectorAll("math-sqrt.mod").forEach((element) => {
     RadicalModifier.execute(element);
