@@ -13,11 +13,12 @@ class DiagramModifier extends Modifier {
   modify(element) {
     let arrowElements = Array.from(element.children).filter((child) => child.localName == "math-arrow");
     let cellElements = Array.from(element.children).filter((child) => child.localName == "math-cellwrap").map((child) => child.children[0]);
+    let backgroundColor = this.getBackgroundColor(element);
     let graphic = this.createGraphic(element);
     element.appendChild(graphic);
     for (let arrowElement of arrowElements) {
       let arrowSpec = this.determineArrowSpec(graphic, arrowElement, cellElements, arrowElements);
-      let arrows = this.createArrows(arrowSpec);
+      let arrows = this.createArrows(arrowSpec, backgroundColor);
       graphic.append(...arrows);
       let labelPoint = this.determineLabelPoint(graphic, arrowElement, arrowSpec);
       let fontRatio = this.getFontSize(graphic) / this.getFontSize(arrowElement);
@@ -311,7 +312,7 @@ class DiagramModifier extends Modifier {
     return normalizedAngle;
   }
 
-  createArrows(arrowSpec) {
+  createArrows(arrowSpec, backgroundColor) {
     let startPoint = arrowSpec.startPoint;
     let endPoint = arrowSpec.endPoint;
     let bendAngle = arrowSpec.bendAngle;
@@ -340,6 +341,7 @@ class DiagramModifier extends Modifier {
         arrow.classList.add("base");
       } else if (i == 1) {
         arrow.classList.add("cover");
+        arrow.style.stroke = backgroundColor;
       } else if (i == 2) {
         arrow.classList.add("front");
       }
@@ -452,6 +454,20 @@ class DiagramModifier extends Modifier {
     dimension.southMargined = [left + width / 2, top + height + margin];
     dimension.southEastMargined = [left + width + margin, top + height + margin];
     return dimension;
+  }
+
+  getBackgroundColor(element) {
+    let currentElement = element;
+    let color = "white";
+    while (currentElement && currentElement instanceof Element) {
+      let currentColor = window.getComputedStyle(currentElement).backgroundColor;
+      if (currentColor != "rgba(0, 0, 0, 0)") {
+        color = currentColor;
+        break;
+      }
+      currentElement = currentElement.parentNode;
+    }
+    return color;
   }
 
 }
