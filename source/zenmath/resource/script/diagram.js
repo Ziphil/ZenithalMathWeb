@@ -78,6 +78,14 @@ class DiagramModifier extends Modifier {
     if (dashed) {
       spec.dashed = true;
     }
+    let inverted = !!arrowElement.getAttribute("data-inv");
+    if (inverted) {
+      spec.inverted = true;
+    }
+    let mark = !!arrowElement.getAttribute("data-mark");
+    if (mark) {
+      spec.mark = true;
+    }
     let tipKindsString = arrowElement.getAttribute("data-tip");
     spec.tipKinds = this.parseTipKinds(tipKindsString, spec.lineCount);
     spec.intrudedStartPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.tipKinds.start);
@@ -107,12 +115,12 @@ class DiagramModifier extends Modifier {
       basePoint = [basePointX, basePointY];
       angle = this.calcAngle(startPoint, endPoint) + Math.PI / 2;
     }
-    if (labelElement.getAttribute("data-inv")) {
+    if (arrowSpec.inverted) {
       angle += Math.PI;
     }
     angle = this.normalizeAngle(angle);
     let point;
-    if (labelElement.getAttribute("data-mark")) {
+    if (arrowSpec.mark) {
       let pointX = basePoint[0] + labelDimension.northWest[0] - labelDimension.center[0];
       let pointY = basePoint[1] + labelDimension.northWest[0] - labelDimension.center[1];
       point = [pointX, pointY];

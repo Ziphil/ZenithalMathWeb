@@ -190,7 +190,7 @@ module ZenmathBuilder
       configs[:line_count] = attributes["line"]
       configs[:dashed] = attributes["dash"]
       configs[:label_position] = attributes["pos"]
-      configs[:invert] = attributes["inv"]
+      configs[:inverted] = attributes["inv"]
       configs[:mark] = attributes["mark"]
       arrow_name = attributes["name"]
       this << ZenmathBuilder.build_arrow(arrow_name, configs, spacing) do |label_this|
@@ -813,7 +813,7 @@ module ZenmathBuilder
       if configs[:label_position]
         this["data-pos"] = configs[:label_position]
       end
-      if configs[:invert]
+      if configs[:inverted]
         this["data-inv"] = "data-inv"
       end
       if configs[:mark]
