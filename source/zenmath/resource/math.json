@@ -420,6 +420,7 @@
     "ddashv": ["⫤", ["rel"]],
     "mid": ["∣", ["rel"]], "nmid": ["∤", ["rel"]],
     "parallel": ["∥", ["rel"]], "nparallel": ["∦", ["rel"]],
+    "perp": ["⟂", ["rel"]],
     "propto": ["∝", ["rel"]],
     "similarto": ["∽", ["rel"]],
     "rarr": ["→", ["rel"]], "to": ["→", ["rel"]], 
