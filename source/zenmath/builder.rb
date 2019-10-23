@@ -169,8 +169,8 @@ module ZenmathBuilder
       end
       this << Element.new("math-sys-br")
     when "v"
-      name = attributes["name"]
-      this << ZenmathBuilder.build_diagram_vertex(name, spacing) do |vertex_this|
+      vertex_name = attributes["name"]
+      this << ZenmathBuilder.build_diagram_vertex(vertex_name, spacing) do |vertex_this|
         vertex_this << children_list[0]
       end
     when "vv"
@@ -192,8 +192,8 @@ module ZenmathBuilder
       configs[:label_position] = attributes["pos"]
       configs[:invert] = attributes["inv"]
       configs[:mark] = attributes["mark"]
-      configs[:name] = attributes["name"]
-      this << ZenmathBuilder.build_arrow(configs, spacing) do |label_this|
+      arrow_name = attributes["name"]
+      this << ZenmathBuilder.build_arrow(arrow_name, configs, spacing) do |label_this|
         label_this << children_list[0]
       end
     when "br"
@@ -789,7 +789,7 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_arrow(configs, spacing = nil, &block)
+  def self.build_arrow(name, configs, spacing = nil, &block)
     this = Nodes[]
     label_element = nil
     this << Element.build("math-arrow") do |this|
@@ -819,8 +819,8 @@ module ZenmathBuilder
       if configs[:mark]
         this["data-mark"] = "data-mark"
       end
-      if configs[:name]
-        this["data-name"] = configs[:name]
+      if name
+        this["data-name"] = name
       end
       label_element = this
     end
