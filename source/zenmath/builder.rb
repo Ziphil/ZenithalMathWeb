@@ -198,7 +198,9 @@ module ZenmathBuilder
     when "br"
       this << Element.new("math-sys-br")
     when "g"
-      this << ZenmathBuilder.build_group(spacing) do |content_this|
+      transform_configs = {}
+      transform_configs[:rotate] = attributes["rotate"]
+      this << ZenmathBuilder.build_group(transform_configs, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "s"
@@ -208,6 +210,10 @@ module ZenmathBuilder
       type = PHANTOM_TYPES[name]
       this << ZenmathBuilder.build_phantom(type, spacing) do |content_this|
         content_this << children_list[0]
+      end
+    when "strut"
+      this << ZenmathBuilder.build_phantom("ver", spacing) do |content_this|
+        content_this << ~"1"
       end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
@@ -819,10 +825,17 @@ module ZenmathBuilder
     return this
   end
 
-  def self.build_group(spacing = nil, &block)
+  def self.build_group(transform_configs, spacing = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
+      transforms = []
+      if transform_configs[:rotate]
+        transforms << "rotate(#{transform_configs[:rotate]}deg)"
+      end
+      unless transforms.empty?
+        this["style"] += "transform: " + transforms.join(" ") + ";"
+      end
       content_element = this
     end
     add_spacing(this, spacing)
