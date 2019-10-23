@@ -80,8 +80,8 @@ class DiagramModifier extends Modifier {
     }
     let tipKindsString = arrowElement.getAttribute("data-tip");
     spec.tipKinds = this.parseTipKinds(tipKindsString, spec.lineCount);
-    spec.startPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.tipKinds.start);
-    spec.endPoint = this.calcIntrudedPoint(spec.endPoint, spec.startPoint, -spec.bendAngle, spec.tipKinds.end);
+    spec.intrudedStartPoint = this.calcIntrudedPoint(spec.startPoint, spec.endPoint, spec.bendAngle, spec.tipKinds.start);
+    spec.intrudedEndPoint = this.calcIntrudedPoint(spec.endPoint, spec.startPoint, -spec.bendAngle, spec.tipKinds.end);
     return spec;
   }
 
@@ -313,8 +313,8 @@ class DiagramModifier extends Modifier {
   }
 
   createArrows(arrowSpec, backgroundColor) {
-    let startPoint = arrowSpec.startPoint;
-    let endPoint = arrowSpec.endPoint;
+    let startPoint = arrowSpec.intrudedStartPoint;
+    let endPoint = arrowSpec.intrudedEndPoint;
     let bendAngle = arrowSpec.bendAngle;
     let lineCount = (arrowSpec.lineCount == undefined) ? 1 : arrowSpec.lineCount;
     let command = "M " + startPoint[0] + " " + startPoint[1];
