@@ -430,6 +430,7 @@
             \ar|s="2",e="4",tip="tail,none",shift="-3"|>
             \ar|s="2",e="4",shift="3"|>
             \ar|s="1",e="3",tip="bar",dash|>
+            \ar|s="1",e="4",line="0",mark|<\circlelarr>>
           >
         >,
         compare with &m<\to>>, &m<\headrarr>>, &m<\hookrarr>>.
