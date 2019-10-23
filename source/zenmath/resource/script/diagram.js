@@ -110,7 +110,14 @@ class DiagramModifier extends Modifier {
       angle += Math.PI;
     }
     angle = this.normalizeAngle(angle);
-    let point = this.calcLabelPoint(basePoint, labelDimension, angle, arrowSpec.lineCount);
+    let point;
+    if (labelElement.getAttribute("data-mark")) {
+      let pointX = basePoint[0] + labelDimension.northWest[0] - labelDimension.center[0];
+      let pointY = basePoint[1] + labelDimension.northWest[0] - labelDimension.center[1];
+      point = [pointX, pointY];
+    } else {
+      point = this.calcLabelPoint(basePoint, labelDimension, angle, arrowSpec.lineCount);
+    }
     return point;
   }
 

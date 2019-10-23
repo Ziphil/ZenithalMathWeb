@@ -191,6 +191,7 @@ module ZenmathBuilder
       configs[:dashed] = attributes["dash"]
       configs[:label_position] = attributes["pos"]
       configs[:invert] = attributes["inv"]
+      configs[:mark] = attributes["mark"]
       configs[:name] = attributes["name"]
       this << ZenmathBuilder.build_arrow(configs, spacing) do |label_this|
         label_this << children_list[0]
@@ -814,6 +815,9 @@ module ZenmathBuilder
       end
       if configs[:invert]
         this["data-inv"] = "data-inv"
+      end
+      if configs[:mark]
+        this["data-mark"] = "data-mark"
       end
       if configs[:name]
         this["data-name"] = configs[:name]
