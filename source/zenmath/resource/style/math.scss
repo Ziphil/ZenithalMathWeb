@@ -28,15 +28,17 @@ math-n {
 
 
 math-i {
-  margin: 0em spacing(0);
+  margin-right: spacing(1);
   line-height: 1;
   font-style: italic;
 
   &.fun {
+    margin-right: spacing(0);
     font-style: normal;
   }
 
   &.rm {
+    margin-right: spacing(0);
     font-style: normal;
   }
 
@@ -46,6 +48,7 @@ math-i {
 
   &.alt {
     @include math-font;
+    margin-right: spacing(0);
     font-style: normal;
   }
 

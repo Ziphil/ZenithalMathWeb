@@ -324,6 +324,7 @@ module ZenmathBuilder
     this << Element.build("math-i") do |this|
       this["class"] = types.join(" ")
       this["class"] = [*this["class"].split(" "), spacing].join(" ")
+      this["data-cont"] = text
       this << Text.new(text, true, nil, false)
     end
     add_spacing(this, spacing)

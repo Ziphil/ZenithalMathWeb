@@ -24,3 +24,13 @@ math-underover {
   }
 
 }
+
+
+math-i {
+
+  &:not(.fun):not(.rm)[data-cont="f"] {
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+  }
+
+}
