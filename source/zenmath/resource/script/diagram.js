@@ -469,7 +469,7 @@ class DiagramModifier extends Modifier {
     let color = "white";
     while (currentElement && currentElement instanceof Element) {
       let currentColor = window.getComputedStyle(currentElement).backgroundColor;
-      if (currentColor != "rgba(0, 0, 0, 0)") {
+      if (currentColor != "rgba(0, 0, 0, 0)" && currentColor != "transparent") {
         color = currentColor;
         break;
       }
