@@ -9,8 +9,8 @@ include REXML
 
 module ZenmathParserMethod
 
-  COMMON_STYLE_PATH = "resource/math.scss"
-  SPECIALIZED_STYLE_PATH = "resource/times.scss"
+  COMMON_STYLE_PATH = "resource/style/math.scss"
+  SPECIALIZED_STYLE_PATH = "resource/style/times.scss"
   SCRIPT_DIR = "resource/script"
 
   include ZenmathBuilder
