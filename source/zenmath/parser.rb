@@ -9,7 +9,8 @@ include REXML
 
 module ZenmathParserMethod
 
-  STYLE_PATH = "resource/math.scss"
+  COMMON_STYLE_PATH = "resource/math.scss"
+  SPECIALIZED_STYLE_PATH = "resource/times.scss"
   SCRIPT_DIR = "resource/script"
 
   include ZenmathBuilder
@@ -100,9 +101,12 @@ module ZenmathParserMethod
   module_function
 
   def create_style_string(font_url = nil, style = :compressed)
-    path = File.expand_path("../" + STYLE_PATH, __FILE__)
-    string = SassC::Engine.new(File.read(path), {:style => style}).render
-    string.gsub!("__mathfonturl__", font_url || "font.otf")
+    common_path = File.expand_path("../" + COMMON_STYLE_PATH, __FILE__)
+    common_string = SassC::Engine.new(File.read(common_path), {:style => style}).render
+    common_string.gsub!("__mathfonturl__", font_url || "font.otf")
+    specialized_path = File.expand_path("../" + SPECIALIZED_STYLE_PATH, __FILE__)
+    specialized_string = SassC::Engine.new(File.read(specialized_path), {:style => style}).render
+    string = common_string + specialized_string
     return string
   end
 

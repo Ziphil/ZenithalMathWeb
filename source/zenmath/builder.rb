@@ -591,7 +591,9 @@ module ZenmathBuilder
   def self.build_accent(under_symbol, over_symbol, spacing = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
+    underover_element = nil
     this << Element.build("math-underover") do |this|
+      underover_element = this
       this["class"] = "acc"
       this << Element.build("math-over") do |this|
         over_element = this
@@ -619,8 +621,21 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element)
+    modify_accent(underover_element, base_element)
     modify_underover(under_element, over_element)
     return this
+  end
+
+  def self.modify_accent(underover_element, base_element)
+    children = base_element.children
+    if children.size == 1 && children.first.name == "math-i"
+      text = children.first.inner_text
+      if text.length == 1
+        underover_element["data-under-type"] = DATA.dig("height", 0, text)
+        underover_element["data-over-type"] = DATA.dig("height", 1, text)
+        underover_element["data-cont"] = text
+      end
+    end
   end
 
   def self.fetch_accent_symbol(kind, position)

@@ -113,9 +113,6 @@ function execute() {
     if (element.localName == "math-subsup") {
       SubsuperModifier.execute(element);
     } else if (element.localName == "math-underover") {
-      if (element.classList.contains("acc")) {
-        AccentModifier.execute(element);
-      }
       UnderoverModifier.execute(element);
     }
   });
