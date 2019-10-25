@@ -214,7 +214,7 @@ module ZenmathBuilder
       end
     when "strut"
       this << ZenmathBuilder.build_phantom("ver", spacing) do |content_this|
-        content_this << ~"1"
+        content_this << ZenmathBuilder.build_number("1")
       end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
@@ -260,6 +260,14 @@ module ZenmathBuilder
         this << ZenmathBuilder.build_number(char)
       elsif char =~ /\p{Letter}|\p{Mark}/
         this << ZenmathBuilder.build_identifier(char, [])
+      elsif char == "'"
+        symbol, types = ZenmathBuilder.fetch_operator_symbol("pr")
+        this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
+          base_this << ZenmathBuilder.build_phantom("ver") do |content_this|
+            content_this << ZenmathBuilder.build_number("1")
+          end
+          super_this << ZenmathBuilder.build_operator(symbol, types)
+        end
       elsif char !~ /\s/
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
         name = DATA["replacement"][name] || name
