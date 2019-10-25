@@ -122,8 +122,12 @@
         &m<\sbsp<a><k><n>>.
       >
       \p<
+        Nested:
+        &m<\sp<1><\sp<2><\sp<3><\sp<4><\sp<5><6>>>>>>.
+      >
+      \p<
         Primes are kinds of superscripts:
-        &m<\sp<A><\pr>> \setminus> \sp<B><\ppr>>>.
+        &m<A' * \sp<B><\pr>> * \sp<C><\ppr>>>.
       >
       \h1<Integrals>
       \p<
