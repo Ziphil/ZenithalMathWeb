@@ -495,7 +495,7 @@ math-root {
 
   *.fun +*.par,
   *.fun +*.lpar {
-    margin-left: spacing(- nth(map-get($margins, fun), 2));
+    margin-left: spacing(- nth(map-get($margins, fun), 2)) !important;
   }
 
   *.not {
