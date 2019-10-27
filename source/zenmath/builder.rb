@@ -667,26 +667,26 @@ module ZenmathBuilder
         this["data-kind"] = kind
       end
       this << Element.build("math-over") do |this|
-        over_element = this
         if over_symbol
           this << Element.build("math-o") do |this|
             this["class"] = "wide"
             this << Text.new(over_symbol, true, nil, false)
           end
         end
+        over_element = this
       end
       this << Element.build("math-basewrap") do |this|
         this << Element.build("math-base") do |this|
           base_element = this
         end
         this << Element.build("math-under") do |this|
-          under_element = this
           if under_symbol
             this << Element.build("math-o") do |this|
               this["class"] = "wid"
               this << Text.new(under_symbol, true, nil, false)
             end
           end
+          under_element = this
         end
       end
     end
@@ -700,8 +700,8 @@ module ZenmathBuilder
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
-      table_element = this
       this["class"] = type
+      table_element = this
     end
     add_spacing(this, spacing)
     block&.call(table_element)
@@ -713,13 +713,13 @@ module ZenmathBuilder
     this = Nodes[]
     table_element = nil
     this << Element.build("math-diagram") do |this|
-      table_element = this
       if vertical_gaps_string
         this["class"] = [*this["class"].split(" "), "vnon"].join(" ")
       end
       if horizontal_gaps_string
         this["class"] = [*this["class"].split(" "), "hnon"].join(" ")
       end
+      table_element = this
     end
     add_spacing(this, spacing)
     block&.call(table_element)
