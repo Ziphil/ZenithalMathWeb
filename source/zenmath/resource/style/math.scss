@@ -8,15 +8,15 @@
 
 
 @mixin math-font {
-  padding-top: 0.12em;
-  padding-bottom: 0em;
+  margin-top: 0.12em;
+  margin-bottom: 0em;
   line-height: 0.9;
   font-family: "Math";
 }
 
 @mixin normal-font {
-  padding-top: 0em;
-  padding-bottom: 0em;
+  margin-top: 0em;
+  margin-bottom: 0em;
   font-family: inherit;
 }
 
@@ -68,40 +68,38 @@ math-o {
   }
 
   &.int {
-    padding-top: 0em;
-    padding-bottom: 0em;
-    height: 2.3em;
-    line-height: 2.3em;
+    margin-top: 0.65em;
+    margin-bottom: 0.7em;
   }
 
   &.sum {
-    padding-top: 0.1em;
-    padding-bottom: 0.1em;
-    line-height: 1.4em;
+    margin-top: 0.24em;
+    margin-bottom: 0.24em;
   }
 
   &.acc {
-    padding-top: 0em;
+    margin-top: 0em;
+    margin-bottom: 0em;
   }
 
   math-over >&.acc {
-    padding-top: 0.1em;
+    margin-top: 0.1em;
     margin-right: -0.15em !important;
   }
 
   math-under >&.acc {
-    padding-bottom: 0.1em;
+    margin-bottom: 0.1em;
     margin-left: -0.1em !important;
   }
 
   math-over >&.wid {
-    padding-top: 0.1em;
-    padding-bottom: 0em;
+    margin-top: 0.1em;
+    margin-bottom: 0em;
   }
 
   math-under >&.wid {
-    padding-top: 0em;
-    padding-bottom: 0.1em;
+    margin-top: 0em;
+    margin-bottom: 0.1em;
   }
 
   math-sub &,
@@ -123,7 +121,7 @@ math-o {
 
 math-frac {
   margin: 0em spacing(2) !important;
-  vertical-align: 0.15em;
+  vertical-align: -0.01em;
 
   >math-num {
     margin-bottom: -0.1em;
@@ -132,13 +130,13 @@ math-frac {
   }
 
   >math-denwrap {
-    margin: 0em 0em;
+    margin: 0.2em 0em 0em 0em;
     width: 100%;
     display: inline-table;
   }
 
   >math-denwrap >math-line {
-    margin: 0em spacing(-2) !important;
+    margin: 0em spacing(-2) 0.18em spacing(-2) !important;
     padding: 0em spacing(2) !important;
     width: 100%;
     height: 0.06em;
@@ -156,7 +154,7 @@ math-frac {
 
 
 math-sqrt {
-  margin-top: 0.05em;
+  margin-top: 0em;
 
   >math-surd {
     margin-top: 0.09em;
@@ -165,7 +163,7 @@ math-sqrt {
 
   >math-sqrtcont {
     margin: 0em spacing(1) 0em spacing(0);
-    padding-top: 0.1em;
+    padding-top: 0.25em;
     border-top: 0.06em solid;
   }
 
@@ -179,14 +177,14 @@ math-subsup {
   }
 
   >math-sub {
-    margin-bottom: -0.05em;
+    margin-bottom: -0em;
     vertical-align: -0.36em;
     font-size: 80%;
     text-align: left;
   }
 
   >math-sup {
-    margin-top: -0.05em;
+    margin-top: -0em;
     vertical-align: 0.51em;
     font-size: 80%;
     text-align: left;
@@ -202,19 +200,20 @@ math-subsup {
 math-underover {
 
   >math-over {
-    margin-top: -0.05em;
+    margin-bottom: spacing(4);
+    margin-top: -0em;
     font-size: 80%;
     text-align: center;
     display: block;
   }
 
   &.acc >math-over {
-    margin-bottom: -0.8em;
+    margin-bottom: -0.6em;
     font-size: 100%;
   }
 
   &.wid >math-over {
-    margin-bottom: -0.8em;
+    margin-bottom: -0.65em;
     font-size: 100%;
   }
   
@@ -231,19 +230,20 @@ math-underover {
   }
 
   >math-basewrap >math-under {
-    margin-bottom: -0.05em;
+    margin-top: spacing(4);
+    margin-bottom: -0em;
     font-size: 80%;
     text-align: center;
     display: block;
   }
 
   &.acc >math-basewrap >math-under {
-    margin-top: -0.8em;
+    margin-top: -0.65em;
     font-size: 100%;
   }
 
   &.wid >math-basewrap >math-under {
-    margin-top: -0.7em;
+    margin-top: -0.75em;
     font-size: 100%;
   }
 
@@ -321,15 +321,15 @@ math-table {
   align-items: baseline;
 
   &.std {
-    gap: spacing(9) spacing(0);
+    gap: spacing(12) spacing(0);
   }
 
   &.stk {
-    gap: spacing(0) spacing(0);
+    gap: spacing(3) spacing(0);
   }
 
   &.mat {
-    gap: spacing(6) spacing(15);
+    gap: spacing(9) spacing(15);
   }
 
   &.cas {

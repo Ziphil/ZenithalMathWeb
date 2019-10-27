@@ -5,7 +5,7 @@ const ANGLE_EPSILON = Math.PI / 90;
 
 const UNIT = 1 / 18;
 const ARROW_MARGIN = 8 * UNIT;
-const LABEL_DISTANCE = 4 * UNIT;
+const LABEL_DISTANCE = 5 * UNIT;
 
 
 class DiagramModifier extends Modifier {

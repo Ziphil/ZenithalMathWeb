@@ -17,6 +17,7 @@ module ZenmathBuilder
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
   MAIN_FONT = TTFunk::File.open(File.expand_path("../resource/font/italic.ttf", __FILE__))
+  MATH_FONT = TTFunk::File.open(File.expand_path("../resource/font/math.ttf", __FILE__))
 
   private
 
@@ -319,7 +320,7 @@ module ZenmathBuilder
       element = this
     end
     add_spacing(this, spacing)
-    modify_vertical_margins(element)
+    modify_vertical_margins(element, "main")
     return this
   end
 
@@ -343,7 +344,7 @@ module ZenmathBuilder
       element = this
     end
     add_spacing(this, spacing)
-    modify_vertical_margins(element)
+    modify_vertical_margins(element, "main")
     return this
   end
 
@@ -354,24 +355,33 @@ module ZenmathBuilder
 
   def self.build_operator(symbol, types, spacing = nil, &block)
     this = Nodes[]
+    element = nil
     this << Element.build("math-o") do |this|
       this["class"] = types.join(" ")
       this << Text.new(symbol, true, nil, false)
+      element = this
     end
     add_spacing(this, spacing)
+    modify_vertical_margins(element, "math")
     return this
   end
 
-  def self.modify_vertical_margins(element)
+  def self.modify_vertical_margins(element, font)
     text = element.inner_text
     max_top_margin, max_bottom_margin = -2, -2
     text.each_char do |char|
       codepoint = char.unpack1("U*")
-      glyph_id = MAIN_FONT.cmap.unicode.first[codepoint]
-      glyph = MAIN_FONT.glyph_outlines.for(glyph_id)
-      em, ascent, descent = 2048, 1638 + 78, -410 + 78
-      top_margin = (glyph.y_max - ascent) / em.to_f + 0.176
-      bottom_margin = (-glyph.y_min + descent) / em.to_f + 0.162
+      if font == "main"
+        glyph_id = MAIN_FONT.cmap.unicode.first[codepoint]
+        glyph = MAIN_FONT.glyph_outlines.for(glyph_id)
+        em, ascent, descent = 2048, 1638 + 78, -410 + 78
+      else
+        glyph_id = MATH_FONT.cmap.unicode.first[codepoint]
+        glyph = MATH_FONT.glyph_outlines.for(glyph_id)
+        em, ascent, descent = 1000, 762, -238
+      end
+      top_margin = (glyph.y_max - ascent) / em.to_f
+      bottom_margin = (-glyph.y_min + descent) / em.to_f
       if top_margin > max_top_margin
         max_top_margin = top_margin
       end
@@ -381,6 +391,30 @@ module ZenmathBuilder
     end
     element["style"] += "margin-top: #{max_top_margin}em; "
     element["style"] += "margin-bottom: #{max_bottom_margin}em; "
+  end
+
+  def self.build_strut(type, spacing = nil)
+    this = Nodes[]
+    this << Element.build("math-phantom") do |this|
+      this["class"] = "ver"
+      if type == "upper"
+        this["style"] += "margin-bottom: -0.5em;"
+      elsif type == "dlower" || type == "dfull"
+        this["style"] += "margin-bottom: -0em;"
+      else
+        this["style"] += "margin-bottom: -0.1621em;"
+      end
+      if type == "lower" || type == "dlower"
+        this["style"] += "margin-top: -0.5em;"
+      else
+        this["style"] += "margin-top: -0.1606em;"
+      end
+      this << Element.build("math-text") do |this|
+        this << ~" "
+      end
+    end
+    add_spacing(this, spacing)
+    return this
   end
 
   def self.build_subsuper(spacing = nil, &block)
@@ -400,16 +434,20 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element, sub_element, super_element)
-    modify_subsuper(sub_element, super_element)
+    modify_subsuper(base_element, sub_element, super_element)
     return this
   end
 
-  def self.modify_subsuper(sub_element, super_element)
+  def self.modify_subsuper(base_element, sub_element, super_element)
     if sub_element.children.size <= 0
       sub_element.remove
+    else
+      base_element << ZenmathBuilder.build_strut("dlower")
     end
     if super_element.children.size <= 0
       super_element.remove
+    else
+      base_element << ZenmathBuilder.build_strut("upper")
     end
   end
 
@@ -460,7 +498,13 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(numerator_element, denominator_element)
+    modify_fraction(numerator_element, denominator_element)
     return this
+  end
+
+  def self.modify_fraction(numerator_element, denominator_element)
+    numerator_element << ZenmathBuilder.build_strut("dlower")
+    denominator_element << ZenmathBuilder.build_strut("upper")
   end
 
   def self.fetch_radical_symbol(stretch_level)
@@ -487,7 +531,12 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(content_element)
+    modify_radical(content_element)
     return this
+  end
+
+  def self.modify_radical(content_element)
+    content_element << ZenmathBuilder.build_strut("upper")
   end
 
   def self.fetch_paren_symbol(kind, position, stretch_level)
@@ -572,10 +621,11 @@ module ZenmathBuilder
 
   def self.build_integral(symbol, spacing = nil, &block)
     this = Nodes[]
-    sub_element, super_element = nil
+    base_element, sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
       this["class"] = "int"
       this << Element.build("math-base") do |this|
+        base_element = this
         this << Element.build("math-o") do |this|
           this["class"] = "int"
           this << Text.new(symbol, true, nil, false)
@@ -590,7 +640,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(sub_element, super_element)
-    modify_subsuper(sub_element, super_element)
+    modify_subsuper(base_element, sub_element, super_element)
     return this
   end
 
@@ -805,6 +855,7 @@ module ZenmathBuilder
           align = ALIGNS[align_array[column]]
           child["style"] += "text-align: #{align};" 
         end
+        child << ZenmathBuilder.build_strut("dfull")
         column += 1
       elsif child.name == "math-sys-br"
         element.delete_element(child)

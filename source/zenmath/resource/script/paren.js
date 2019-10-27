@@ -134,6 +134,9 @@ class ParenModifier extends Modifier {
 
   calcShift(elements) {
     let shift = this.calcWholeHeight(elements) / 2 - Math.max(...elements.map((element) => this.getLowerHeight(element)));
+    if (Math.abs(shift) < 0.1) {
+      shift = 0;
+    }
     return shift;
   }
 
