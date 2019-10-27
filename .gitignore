@@ -1,5 +1,6 @@
 out
 sample/out
+source/zenmath/resource/font
 mathjax.html
 .vscode
 *.gem
