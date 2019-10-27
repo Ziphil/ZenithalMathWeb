@@ -4,6 +4,7 @@
 require 'json'
 require 'pp'
 require 'rexml/document'
+require 'ttfunk'
 include REXML
 
 
@@ -14,6 +15,8 @@ module ZenmathBuilder
   PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
   SPACINGS = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
+
+  MAIN_FONT = TTFunk::File.open(File.expand_path("../resource/font/italic.ttf", __FILE__))
 
   private
 
@@ -310,10 +313,13 @@ module ZenmathBuilder
 
   def self.build_number(text, spacing = nil)
     this = Nodes[]
+    element = nil
     this << Element.build("math-n") do |this|
       this << Text.new(text, true, nil, false)
+      element = this
     end
     add_spacing(this, spacing)
+    modify_vertical_margins(element)
     return this
   end
 
@@ -329,12 +335,15 @@ module ZenmathBuilder
 
   def self.build_identifier(text, types, spacing = nil)
     this = Nodes[]
+    element = nil
     this << Element.build("math-i") do |this|
       this["class"] = types.join(" ")
       this["data-cont"] = text
       this << Text.new(text, true, nil, false)
+      element = this
     end
     add_spacing(this, spacing)
+    modify_vertical_margins(element)
     return this
   end
 
@@ -351,6 +360,27 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     return this
+  end
+
+  def self.modify_vertical_margins(element)
+    text = element.inner_text
+    max_top_margin, max_bottom_margin = -2, -2
+    text.each_char do |char|
+      codepoint = char.unpack1("U*")
+      glyph_id = MAIN_FONT.cmap.unicode.first[codepoint]
+      glyph = MAIN_FONT.glyph_outlines.for(glyph_id)
+      em, ascent, descent = 2048, 1638 + 78, -410 + 78
+      top_margin = (glyph.y_max - ascent) / em.to_f + 0.176
+      bottom_margin = (-glyph.y_min + descent) / em.to_f + 0.162
+      if top_margin > max_top_margin
+        max_top_margin = top_margin
+      end
+      if bottom_margin > max_bottom_margin
+        max_bottom_margin = bottom_margin
+      end
+    end
+    element["style"] += "margin-top: #{max_top_margin}em; "
+    element["style"] += "margin-bottom: #{max_bottom_margin}em; "
   end
 
   def self.build_subsuper(spacing = nil, &block)
@@ -629,7 +659,6 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element)
-    modify_accent(underover_element, base_element)
     modify_underover(under_element, over_element)
     return this
   end
