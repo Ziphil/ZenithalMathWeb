@@ -774,7 +774,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(table_element)
-    modify_array(table_element, align_config, raw)
+    modify_array(table_element, type, align_config, raw)
     return this
   end
 
@@ -793,7 +793,7 @@ module ZenmathBuilder
     add_spacing(this, spacing)
     block&.call(table_element)
     modify_diagram(table_element, vertical_gaps_string, horizontal_gaps_string)
-    modify_array(table_element, nil, false)
+    modify_array(table_element, "diag", nil, false)
     return this
   end
 
@@ -828,7 +828,7 @@ module ZenmathBuilder
     end
   end
 
-  def modify_array(element, align_config, raw)
+  def modify_array(element, type, align_config, raw)
     align_array = align_config&.chars
     cell_elements = element.elements.to_a
     column, row = 0, 0
@@ -845,7 +845,7 @@ module ZenmathBuilder
           align = ALIGNS[align_array[column]]
           child["style"] += "text-align: #{align};" 
         end
-        if child.name == "math-cell"
+        unless type == "stk" || type == "diag"
           child[0, 0] = build_strut("dfull").first
         end
         column += 1
