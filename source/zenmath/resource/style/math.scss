@@ -222,6 +222,20 @@ math-underover {
     margin-bottom: -0.65em;
     font-size: 100%;
   }
+
+  &.wid[data-kind="overbrace"] >math-over {
+    margin-bottom: -0.6em;
+    margin-top: 0.05em;
+  }
+
+  &.wid[data-kind="overline"] >math-over {
+    margin-top: -0.1em;
+  }
+
+  &.wid[data-kind="overrarr"] >math-over,
+  &.wid[data-kind="overlarr"] >math-over {
+    margin-top: -0.05em;
+  }
   
   >math-basewrap {
     margin: 0em 0em;
@@ -251,6 +265,20 @@ math-underover {
   &.wid >math-basewrap >math-under {
     margin-top: -0.75em;
     font-size: 100%;
+  }
+
+  &.wid[data-kind="underbrace"] >math-basewrap >math-under {
+    margin-top: -0.6em;
+    margin-bottom: 0.05em;
+  }
+
+  &.wid[data-kind="underline"] >math-basewrap >math-under {
+    margin-bottom: -0.15em;
+  }
+
+  &.wid[data-kind="underrarr"] >math-basewrap >math-under,
+  &.wid[data-kind="underlarr"] >math-basewrap >math-under {
+    margin-bottom: -0.1em;
   }
 
 }
@@ -476,7 +504,7 @@ math-strut {
 
 
 math-text {
-  line-height: 1;
+  line-height: 0.8;
   white-space: pre;
 }
 

@@ -399,6 +399,7 @@ module ZenmathBuilder
         this["style"] += "margin-top: #{top_margin}em;"
       end
       this << Element.build("math-text") do |this|
+        this["style"] += "line-height: 1;"
         this << ~" "
       end
     end
