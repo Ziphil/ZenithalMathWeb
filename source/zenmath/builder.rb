@@ -381,8 +381,7 @@ module ZenmathBuilder
 
   def build_strut(type, spacing = nil)
     this = Nodes[]
-    this << Element.build("math-phantom") do |this|
-      this["class"] = "ver"
+    this << Element.build("math-strut") do |this|
       if type == "upper"
         this["style"] += "margin-bottom: -0.5em;"
       elsif type == "dlower" || type == "dfull"
@@ -432,12 +431,12 @@ module ZenmathBuilder
     if sub_element.children.size <= 0
       sub_element.remove
     else
-      base_element << build_strut("dlower")
+      base_element[0, 0] = build_strut("dlower").first
     end
     if super_element.children.size <= 0
       super_element.remove
     else
-      base_element << build_strut("upper")
+      base_element[0, 0] = build_strut("upper").first
     end
   end
 
@@ -493,8 +492,8 @@ module ZenmathBuilder
   end
 
   def modify_fraction(numerator_element, denominator_element)
-    numerator_element << build_strut("dlower")
-    denominator_element << build_strut("upper")
+    numerator_element[0, 0] = build_strut("dlower").first
+    denominator_element[0, 0] = build_strut("upper").first
   end
 
   def fetch_radical_symbol(stretch_level)
@@ -526,7 +525,7 @@ module ZenmathBuilder
   end
 
   def modify_radical(content_element)
-    content_element << build_strut("upper")
+    content_element[0, 0] = build_strut("upper").first
   end
 
   def fetch_paren_symbol(kind, position, stretch_level)
@@ -845,7 +844,9 @@ module ZenmathBuilder
           align = ALIGNS[align_array[column]]
           child["style"] += "text-align: #{align};" 
         end
-        child << build_strut("dfull")
+        if child.name == "math-cell"
+          child[0, 0] = build_strut("dfull").first
+        end
         column += 1
       elsif child.name == "math-sys-br"
         element.delete_element(child)

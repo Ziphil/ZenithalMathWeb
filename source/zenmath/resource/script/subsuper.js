@@ -7,14 +7,14 @@ class SubsuperModifier extends Modifier {
     let baseElement = Array.from(element.children).find((child) => child.localName == "math-base");
     let subElement = Array.from(element.children).find((child) => child.localName == "math-sub");
     let superElement = Array.from(element.children).find((child) => child.localName == "math-sup");
-    let baseSymbolElement = baseElement.children[0];
+    let baseSymbolElement = Array.from(baseElement.children).find((child) => child.localName == "math-o");
     let subWidth = (subElement) ? this.getWidth(subElement) : 0;
     let superWidth = (superElement) ? this.getWidth(superElement) : 0;
     let subShift = (subElement) ? this.calcSubShift(baseElement, subElement) : 0;
     let superShift = (superElement) ? this.calcSuperShift(baseElement, superElement) : 0;
     let subMargin = 0;
     let superMargin = (subElement) ? -this.getWidth(subElement) : 0;
-    if (baseSymbolElement && baseSymbolElement.classList.contains("int")) {
+    if (baseSymbolElement && element.classList.contains("int")) {
       subWidth -= 0.6;
       subMargin -= 0.6;
       superMargin += 0.6;

@@ -111,7 +111,8 @@ math-o {
     margin-right: spacing(0) !important;
   }
 
-  *:not(.lpres) >&:first-child {
+  *:not(.lpres) >&:first-child,
+  *:not(.lpres) >math-strut +& {
     margin-left: spacing(0);
     margin-right: spacing(0);
   }
@@ -468,6 +469,12 @@ math-phantom {
 }
 
 
+math-strut {
+  width: 0em !important;
+  visibility: hidden;
+}
+
+
 math-text {
   line-height: 1;
   white-space: pre;
@@ -506,7 +513,8 @@ math-root {
     margin-right: spacing(0);
   }
 
-  *:not(.lpres) >*:first-child {
+  *:not(.lpres) >*:first-child,
+  *:not(.lpres) >math-strut +* {
     margin-left: spacing(0);
   }
 
