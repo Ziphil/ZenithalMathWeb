@@ -4,7 +4,6 @@
 require 'json'
 require 'pp'
 require 'rexml/document'
-require 'ttfunk'
 include REXML
 
 
@@ -16,13 +15,11 @@ module ZenmathBuilder
   SPACINGS = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
-  MAIN_FONT = TTFunk::File.open(File.expand_path("../resource/font/italic.ttf", __FILE__))
-  MATH_FONT = TTFunk::File.open(File.expand_path("../resource/font/math.ttf", __FILE__))
-
   private
 
   def create_math_element(name, attributes, children_list)
     this = Nodes[]
+    fonts = @fonts
     spacing = ZenmathBuilder.determine_spacing(attributes)
     case name
     when DATA["paren"].method(:key?)
@@ -83,13 +80,13 @@ module ZenmathBuilder
         base_this << children_list[0]
       end
     when DATA["function"].method(:include?)
-      this << ZenmathBuilder.build_identifier(name, ["fun"], spacing)
+      this << ZenmathBuilder.build_identifier(name, ["fun"], fonts, spacing)
     when DATA["identifier"].method(:key?)
       char = ZenmathBuilder.fetch_identifier_char(name)
-      this << ZenmathBuilder.build_identifier(char, [], spacing)
+      this << ZenmathBuilder.build_identifier(char, [], fonts, spacing)
     when DATA["operator"].method(:key?)
       symbol, types = ZenmathBuilder.fetch_operator_symbol(name)
-      this << ZenmathBuilder.build_operator(symbol, types, spacing)
+      this << ZenmathBuilder.build_operator(symbol, types, fonts, spacing)
     when "sb"
       this << ZenmathBuilder.build_subsuper(spacing) do |base_this, sub_this, super_this|
         base_this << children_list[0]
@@ -218,7 +215,7 @@ module ZenmathBuilder
       end
     when "strut"
       this << ZenmathBuilder.build_phantom("ver", spacing) do |content_this|
-        content_this << ZenmathBuilder.build_number("1")
+        content_this << ZenmathBuilder.build_number("1", fonts)
       end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
@@ -226,30 +223,30 @@ module ZenmathBuilder
     when "bb", "cal", "scr", "frak"
       raw_text = children_list[0].first.value
       text = ZenmathBuilder.fetch_alternative_identifier_text(name, raw_text)
-      this << ZenmathBuilder.build_identifier(text, ["alt"], spacing)
+      this << ZenmathBuilder.build_identifier(text, ["alt"], fonts, spacing)
     when "n"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_number(text, spacing)
+      this << ZenmathBuilder.build_number(text, fonts, spacing)
     when "i"
       types = attributes["t"]&.split(/\s*,\s*/) || []
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, types, spacing)
+      this << ZenmathBuilder.build_identifier(text, types, fonts, spacing)
     when "op"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["fun"], spacing)
+      this << ZenmathBuilder.build_identifier(text, ["fun"], fonts, spacing)
     when "o"
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
       symbol = children_list[0].first.to_s
-      this << ZenmathBuilder.build_operator(symbol, types, spacing)
+      this << ZenmathBuilder.build_operator(symbol, types, fonts, spacing)
     when "bf"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["bf"], spacing)
+      this << ZenmathBuilder.build_identifier(text, ["bf"], fonts, spacing)
     when "rm"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["rm"], spacing)
+      this << ZenmathBuilder.build_identifier(text, ["rm"], fonts, spacing)
     when "bfrm"
       text = children_list[0].first.to_s
-      this << ZenmathBuilder.build_identifier(text, ["bf", "rm"], spacing)
+      this << ZenmathBuilder.build_identifier(text, ["bf", "rm"], fonts, spacing)
     when "text"
       text = children_list[0].first.value
       this << ZenmathBuilder.build_text(text, spacing)
@@ -259,24 +256,22 @@ module ZenmathBuilder
 
   def create_math_text(text)
     this = Nodes[]
+    fonts = @fonts
     text.each_char do |char|
       if char =~ /\p{Number}/
-        this << ZenmathBuilder.build_number(char)
+        this << ZenmathBuilder.build_number(char, fonts)
       elsif char =~ /\p{Letter}|\p{Mark}/
-        this << ZenmathBuilder.build_identifier(char, [])
+        this << ZenmathBuilder.build_identifier(char, [], fonts)
       elsif char == "'"
         symbol, types = ZenmathBuilder.fetch_operator_symbol("pr")
         this << ZenmathBuilder.build_subsuper do |base_this, sub_this, super_this|
-          base_this << ZenmathBuilder.build_phantom("ver") do |content_this|
-            content_this << ZenmathBuilder.build_number("1")
-          end
-          super_this << ZenmathBuilder.build_operator(symbol, types)
+          super_this << ZenmathBuilder.build_operator(symbol, types, fonts)
         end
       elsif char !~ /\s/
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
         name = DATA["replacement"][name] || name
         symbol, kinds = DATA["operator"][name] || [name, ["bin"]]
-        this << ZenmathBuilder.build_operator(symbol, kinds)
+        this << ZenmathBuilder.build_operator(symbol, kinds, fonts)
       end
     end
     return this
@@ -312,15 +307,15 @@ module ZenmathBuilder
     end
   end
 
-  def self.build_number(text, spacing = nil)
+  def self.build_number(text, fonts, spacing = nil)
     this = Nodes[]
     element = nil
     this << Element.build("math-n") do |this|
-      this << Text.new(text, true, nil, false)
+      this << ~text
       element = this
     end
     add_spacing(this, spacing)
-    modify_vertical_margins(element, "main")
+    modify_vertical_margins(element, fonts, "main")
     return this
   end
 
@@ -334,17 +329,18 @@ module ZenmathBuilder
     return text
   end
 
-  def self.build_identifier(text, types, spacing = nil)
+  def self.build_identifier(text, types, fonts, spacing = nil)
     this = Nodes[]
     element = nil
+    font_type = (types.include?("alt")) ? "math" : "main"
     this << Element.build("math-i") do |this|
       this["class"] = types.join(" ")
       this["data-cont"] = text
-      this << Text.new(text, true, nil, false)
+      this << ~text
       element = this
     end
     add_spacing(this, spacing)
-    modify_vertical_margins(element, "main")
+    modify_vertical_margins(element, fonts, font_type)
     return this
   end
 
@@ -353,35 +349,26 @@ module ZenmathBuilder
     return symbol, types
   end
 
-  def self.build_operator(symbol, types, spacing = nil, &block)
+  def self.build_operator(symbol, types, fonts, spacing = nil, &block)
     this = Nodes[]
     element = nil
+    font_type = (types.include?("txt")) ? "main" : "math"
     this << Element.build("math-o") do |this|
       this["class"] = types.join(" ")
-      this << Text.new(symbol, true, nil, false)
+      this << ~symbol
       element = this
     end
     add_spacing(this, spacing)
-    modify_vertical_margins(element, "math")
+    modify_vertical_margins(element, fonts, font_type)
     return this
   end
 
-  def self.modify_vertical_margins(element, font)
+  def self.modify_vertical_margins(element, fonts, font_type)
     text = element.inner_text
     max_top_margin, max_bottom_margin = -2, -2
     text.each_char do |char|
       codepoint = char.unpack1("U*")
-      if font == "main"
-        glyph_id = MAIN_FONT.cmap.unicode.first[codepoint]
-        glyph = MAIN_FONT.glyph_outlines.for(glyph_id)
-        em, ascent, descent = 2048, 1638 + 78, -410 + 78
-      else
-        glyph_id = MATH_FONT.cmap.unicode.first[codepoint]
-        glyph = MATH_FONT.glyph_outlines.for(glyph_id)
-        em, ascent, descent = 1000, 762, -238
-      end
-      top_margin = (glyph.y_max - ascent) / em.to_f
-      bottom_margin = (-glyph.y_min + descent) / em.to_f
+      bottom_margin, top_margin = fonts.dig(font_type.intern, codepoint.to_s) || [0, 0]
       if top_margin > max_top_margin
         max_top_margin = top_margin
       end
@@ -389,6 +376,7 @@ module ZenmathBuilder
         max_bottom_margin = bottom_margin
       end
     end
+    element["style"] += "line-height: 1; "
     element["style"] += "margin-top: #{max_top_margin}em; "
     element["style"] += "margin-bottom: #{max_bottom_margin}em; "
   end

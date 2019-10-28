@@ -157,8 +157,13 @@ math-sqrt {
   margin-top: 0em;
 
   >math-surd {
-    margin-top: 0.09em;
+    margin-top: 0.21em;
     vertical-align: top;
+  }
+
+  >math-surd >math-o {
+    margin-top: 0em;
+    margin-bottom: 0em;
   }
 
   >math-sqrtcont {
