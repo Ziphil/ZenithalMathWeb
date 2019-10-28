@@ -29,7 +29,7 @@ class ParenModifier extends Modifier {
 
   modifyStretch(contentElements, parentElement, kind, stretchLevel, position) {
     let symbolElement = parentElement.children[0];
-    let shift = this.calcShift(contentElements);
+    let shift = this.calcShift(contentElements, stretchLevel);
     symbolElement.textContent = DATA["paren"][kind][position][stretchLevel];
     parentElement.style.verticalAlign = "" + shift + "em";
   }
@@ -132,9 +132,9 @@ class ParenModifier extends Modifier {
     return stretchLevel;
   }
 
-  calcShift(elements) {
+  calcShift(elements, stretchLevel) {
     let shift = this.calcWholeHeight(elements) / 2 - Math.max(...elements.map((element) => this.getLowerHeight(element)));
-    if (Math.abs(shift) < 0.1) {
+    if (stretchLevel == 0) {
       shift = 0;
     }
     return shift;
