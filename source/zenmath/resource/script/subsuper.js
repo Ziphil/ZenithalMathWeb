@@ -40,7 +40,7 @@ class SubsuperModifier extends Modifier {
 
   calcSuperShift(baseElement, superElement) {
     let fontRatio = this.getFontSize(baseElement) / this.getFontSize(superElement);
-    let shift = (this.getUpperHeight(baseElement) - 0) * fontRatio;
+    let shift = (this.getUpperHeight(baseElement) - 0.12) * fontRatio;
     return shift;
   }
 

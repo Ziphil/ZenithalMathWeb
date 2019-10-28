@@ -392,7 +392,7 @@ module ZenmathBuilder
       end
       if type == "lower"
         this["style"] += "margin-top: -0.5em;"
-      elsif type == "dupper"
+      elsif type == "dupper" || type == "dfull"
         this["style"] += "margin-top: -0em;"
       else
         top_margin = @fonts.dig(:main, "72", 1)
@@ -436,7 +436,7 @@ module ZenmathBuilder
     if super_element.children.size <= 0
       super_element.remove
     else
-      base_element[0, 0] = build_strut("upper").first
+      base_element[0, 0] = build_strut("dupper").first
     end
   end
 
