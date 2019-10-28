@@ -1,31 +1,6 @@
 @charset "utf-8";
 
 
-math-underover {
-
-  &.acc[data-over-type="small"] >math-over {
-    margin-bottom: -1em;
-  }
-
-  &.acc[data-over-type="half"] >math-over {
-    margin-bottom: -0.92em;
-  }
-
-  &.acc[data-over-type="dot"] >math-over {
-    margin-bottom: -0.83em;
-  }
-
-  &.acc[data-under-type="full"] >math-basewrap >math-under {
-    margin-top: -0.6em;
-  }
-
-  &.acc[data-under-type="half"] >math-basewrap >math-under {
-    margin-top: -0.65em;
-  }
-
-}
-
-
 math-i {
 
   &:not(.fun):not(.rm)[data-cont="f"] {
