@@ -737,7 +737,7 @@ module ZenmathBuilder
       this << Element.build("math-over") do |this|
         if over_symbol
           this << Element.build("math-o") do |this|
-            this["class"] = "wide"
+            this["class"] = "wid"
             this << Text.new(over_symbol, true, nil, false)
           end
         end
