@@ -428,6 +428,7 @@ math-diagram {
     top: 0px;
     left: 0px;
     overflow: visible;
+    pointer-events: none;
   }
 
   >svg path {
