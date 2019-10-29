@@ -166,7 +166,7 @@ module ZenmathParserMethod
         end
       end
     end
-    string << "}"
+    string << "\n}"
     return string
   end
 
