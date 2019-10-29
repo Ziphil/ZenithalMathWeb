@@ -38,7 +38,11 @@ class SubsuperModifier extends Modifier {
     if (superElement || baseElement.parentNode.classList.contains("int")) {
       shiftConst = -0.2
     }
-    let shift = (this.getLowerHeight(baseElement) + shiftConst) * fontRatio;
+    let height = this.getLowerHeight(baseElement);
+    if (height < 0.4875) {
+      height = 0.4875;
+    }
+    let shift = (height + shiftConst) * fontRatio;
     return -shift;
   }
 
@@ -48,7 +52,12 @@ class SubsuperModifier extends Modifier {
     if (subElement || baseElement.parentNode.classList.contains("int")) {
       shiftConst = -0.1
     }
-    let shift = (this.getUpperHeight(baseElement) + shiftConst) * fontRatio;
+    let height = this.getUpperHeight(baseElement);
+    console.log({sup: height});
+    if (height < 0.5125) {
+      height = 0.5125;
+    }
+    let shift = (height + shiftConst) * fontRatio;
     return shift;
   }
 

@@ -431,13 +431,9 @@ module ZenmathBuilder
   def modify_subsuper(base_element, sub_element, super_element)
     if sub_element.children.size <= 0
       sub_element.remove
-    else
-      base_element[0, 0] = build_strut("dlower").first
     end
     if super_element.children.size <= 0
       super_element.remove
-    else
-      base_element[0, 0] = build_strut("dupper").first
     end
   end
 
