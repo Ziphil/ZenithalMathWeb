@@ -10,8 +10,8 @@ class SubsuperModifier extends Modifier {
     let baseSymbolElement = Array.from(baseElement.children).find((child) => child.localName == "math-o");
     let subWidth = (subElement) ? this.getWidth(subElement) : 0;
     let superWidth = (superElement) ? this.getWidth(superElement) : 0;
-    let subShift = (subElement) ? this.calcSubShift(baseElement, subElement) : 0;
-    let superShift = (superElement) ? this.calcSuperShift(baseElement, superElement) : 0;
+    let subShift = (subElement) ? this.calcSubShift(baseElement, subElement, superElement) : 0;
+    let superShift = (superElement) ? this.calcSuperShift(baseElement, superElement, subElement) : 0;
     let subMargin = 0;
     let superMargin = (subElement) ? -this.getWidth(subElement) : 0;
     if (baseSymbolElement && element.classList.contains("int")) {
@@ -32,15 +32,23 @@ class SubsuperModifier extends Modifier {
     }
   }
 
-  calcSubShift(baseElement, subElement) {
+  calcSubShift(baseElement, subElement, superElement) {
     let fontRatio = this.getFontSize(baseElement) / this.getFontSize(subElement);
-    let shift = (this.getLowerHeight(baseElement) - 0.18) * fontRatio;
+    let shiftConst = -0.3
+    if (superElement || baseElement.parentNode.classList.contains("int")) {
+      shiftConst = -0.2
+    }
+    let shift = (this.getLowerHeight(baseElement) + shiftConst) * fontRatio;
     return -shift;
   }
 
-  calcSuperShift(baseElement, superElement) {
+  calcSuperShift(baseElement, superElement, subElement) {
     let fontRatio = this.getFontSize(baseElement) / this.getFontSize(superElement);
-    let shift = (this.getUpperHeight(baseElement) - 0.12) * fontRatio;
+    let shiftConst = -0.2;
+    if (subElement || baseElement.parentNode.classList.contains("int")) {
+      shiftConst = -0.1
+    }
+    let shift = (this.getUpperHeight(baseElement) + shiftConst) * fontRatio;
     return shift;
   }
 
