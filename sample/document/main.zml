@@ -27,13 +27,13 @@
       >
       \h1<Fractions>
       \p<
-        &m<\frac<A><B>, \frac<c><e>>
+        &m<\frac<A><B>>, &m<\frac<c><e> - &m<\frac<p><k>>>
         or more complicated
         &m<\bb<4> \pitchfork> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smash> \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
-        &m<\sqrt<A>, \sqrt<c>>
+        &m<\sqrt<A>>, &m<\sqrt<c>>, &m<\sqrt<q>>
         or
         &m<\sqrt<\frac<1><i \wedgewedge> j> + \frac<1><j \veevee> i>>>
         or
@@ -161,7 +161,7 @@
       >
       \p<
         Wide:
-        &m<\widetilde<ABap>>, &m<\widehat<ABap>>, &m<\widecheck<ABap>>, &m<\widetildebelow<ABap>>.
+        &m<\widetilde<ABap>>, &m<\widetilde<ap>>, &m<\widehat<ABap>>, &m<\widehat<ap>>, &m<\widecheck<ABap>>, &m<\widetildebelow<ABap>>, &m<\widetildebelow<Ee>>, &m<\widetildebelow<Pp>>.
       >
       \p<
         Sizes:
@@ -210,7 +210,9 @@
       >
       \p<
         Other examples:
-        &m<\widetilde<f \oplus> g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>, &m<\un<\underbrace<A \times> A \times> \cdots> \times> A>><n + 2 \text< times>>>, &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
+        &m<\widetilde<f \oplus> g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>,
+        &m<\ov<\overbrace<A \times> A \times> \cdots> \times> A>><k \text< times>>>, &m<\un<\underbrace<B \times> B \times> \cdots> \times> B>><n + 2 \text< times>>>,
+        &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
       >
       \p<
         Accent position:
@@ -260,7 +262,7 @@
             \c<\vdots>> \c<\vdots>> \c<\vdots>> \c<\ddots>> \c<\vdots>> \br>
             \c<1> \c<\sb<X><n>> \c<\sp<\sb<X><n>><2>> \c<\cdots>> \c<\sp<\sb<X><n>><n - 1>>
           >>
-          = \prod<1 \leq> i `< j \leq> n><> (\sb<X><j> - \sb<X><i>)
+          = \prod<\stack<\cc<1 \leq> i \leq> n> \cc<1 \leq> j \leq> n> \cc<i `< j>>><> (\sb<X><j> - \sb<X><i>)
         >.
       >
       \h1<Arrays>
@@ -370,7 +372,7 @@
           \diag<
             \v<X> \v<1> \v<Y> \br>
             \v<Z> \v<X \oplus> Z> \v<X \otimes> Y>
-            \ar|s="1",e="2"|<f> \ar|s="1",e="4",inv|<g> \ar|s="1",e="5",inv|<h> \ar|s="1",e="6"|<k + \sb<p><\text<long>>>
+            \ar|s="1",e="2"|<f> \ar|s="1",e="4",inv|<g> \ar|s="1",e="5",inv|<h> \ar|s="1",e="6"|<k + long>
             \ar|s="2",e="3"|<\sb<`v><Y>> \ar|s="3",e="6"|<`r> \ar|s="4",e="5",inv|<\sb<`r><2>> \ar|s="5",e="3"|>
           >
         >.
