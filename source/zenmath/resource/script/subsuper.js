@@ -53,7 +53,6 @@ class SubsuperModifier extends Modifier {
       shiftConst = -0.1
     }
     let height = this.getUpperHeight(baseElement);
-    console.log({sup: height});
     if (height < 0.5125) {
       height = 0.5125;
     }
