@@ -382,7 +382,7 @@ module ZenmathBuilder
   def build_strut(type, spacing = nil)
     this = Nodes[]
     this << Element.build("math-strut") do |this|
-      if type == "upper"
+      if type == "upper" || type == "dupper"
         this["style"] += "margin-bottom: -0.5em;"
       elsif type == "dlower" || type == "dfull"
         this["style"] += "margin-bottom: -0em;"
@@ -390,7 +390,7 @@ module ZenmathBuilder
         bottom_margin = @fonts.dig(:main, "72", 0)
         this["style"] += "margin-bottom: #{bottom_margin}em;"
       end
-      if type == "lower"
+      if type == "lower" || type == "dlower"
         this["style"] += "margin-top: -0.5em;"
       elsif type == "dupper" || type == "dfull"
         this["style"] += "margin-top: -0em;"
