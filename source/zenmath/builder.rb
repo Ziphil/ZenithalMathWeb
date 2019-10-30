@@ -249,6 +249,13 @@ module ZenmathBuilder
     when "text"
       text = children_list[0].first.value
       this << build_text(text, spacing)
+    else
+      this << Element.build(name) do |this|
+        attributes.each do |key, value|
+          this[key] = value
+        end
+        this << children_list[0]
+      end
     end
     return this
   end
