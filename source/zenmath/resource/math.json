@@ -479,6 +479,7 @@
     "period": [".", ["ord", "txt"]],
     "excl": ["!", ["ord", "txt"]],
     "ques": ["?", ["ord", "txt"]],
+    "hyphen": ["-", ["ord", "txt"]],
     "pr": ["\uDB80\uDF98", ["ord"]],
     "ppr": ["\uDB80\uDF99", ["ord"]],
     "pppr": ["\uDB80\uDF9A", ["ord"]],
