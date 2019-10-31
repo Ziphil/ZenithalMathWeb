@@ -129,6 +129,12 @@
         Primes are kinds of superscripts:
         &m<A' * \sp<B><\pr>> * \sp<C><\ppr>>>.
       >
+      \p<
+        Left scripts:
+        &m<\multi<A><B><C><D><E>>, &m<\multi<\rm<SO>><4><2-><16><35>>, &m<\multi<\rm<P>><r><><n><>>,
+        &m<\multi<X><abc><ab><><abcd>>,
+        &m<\multi<\paren<\matrix<\cc<a><b> \cc<c><d>>>><><><><\rm<t>>>.
+      >
       \h1<Integrals>
       \p<
         &m<\int<A><B> C>
@@ -234,6 +240,10 @@
         &m<\tildebelow<χ>>, &m<\tildebelow<ψ>>, &m<\tildebelow<ω>>.
       >
       \p<
+        Accented symbols:
+        &m<\ring<0>>, &m<\tilde<\bf<K>>>, &m<2 \dot|bin|<-> 3>, &m<A \hat|bin|<\oplus>> B>, &m<`a: D \ddot|rel|<\to>> E>.
+      >
+      \p<
         To put accent symbols where they should be, Zotica currently adopts an ad-hoc solution; accents are placed according to the pre-calculated height and depth of each letter.
         This calculation is based exclusively on Times New Roman, which means using a different font may cause a broken layout.
       >
@@ -319,6 +329,8 @@
       \p<
         Verious symbols:
         &m<\hbar>>, &m<\sharp> \flat>>, &m<\crotchet> \quaver>>, &m<\bspade> \wheart>>, &m<\dagger>>, &m<\amp> \invamp>>
+        and
+        &m<\op<Hom> (V, \hyphen>)>
         and
         &m<m \in> M \iff> f (m) \nin> \sp<M><\natural>> \scand> g (m) \nin> G>.
       >
