@@ -731,7 +731,7 @@ module ZenmathBuilder
     children = base_element.children
     if children.size == 1
       child = children.first
-      if child.name == "math-i" && (child["class"].split(" ") & ["fun", "rm", "bf", "alt"]).empty?
+      if child.name == "math-i" && (child["class"].split(" ") & ["fun", "rm", "alt"]).empty?
         under_symbol_element = under_element.children.first
         over_symbol_element = over_element.children.first
         if under_symbol_element
