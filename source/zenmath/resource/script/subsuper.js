@@ -26,7 +26,7 @@ class SubsuperModifier extends Modifier {
       let difference = (element.classList.contains("inl")) ? 0.3 : 0.6
       subWidth -= difference;
       subMargin -= difference;
-      if (superElement) {
+      if (subElement) {
         superMargin += difference;
       }
     }
