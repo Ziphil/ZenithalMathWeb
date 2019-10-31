@@ -84,11 +84,17 @@ math-o {
 
   math-over >&.acc {
     margin-top: 0.1em;
+  }
+
+  math-over >&.acc.it {
     margin-right: -0.15em !important;
   }
 
   math-under >&.acc {
     margin-bottom: 0.1em;
+  }
+
+  math-under >&.acc.it {
     margin-left: -0.1em !important;
   }
 

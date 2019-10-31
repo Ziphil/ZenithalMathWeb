@@ -723,17 +723,23 @@ module ZenmathBuilder
     add_spacing(this, spacing)
     block&.call(base_element)
     modify_underover(under_element, over_element)
+    modify_accent(base_element, under_element, over_element)
     return this
   end
 
-  def modify_accent(underover_element, base_element)
+  def modify_accent(base_element, under_element, over_element)
     children = base_element.children
-    if children.size == 1 && children.first.name == "math-i"
-      text = children.first.inner_text
-      if text.length == 1
-        underover_element["data-under-type"] = DATA.dig("height", 0, text)
-        underover_element["data-over-type"] = DATA.dig("height", 1, text)
-        underover_element["data-cont"] = text
+    if children.size == 1
+      child = children.first
+      if child.name == "math-i" && (child["class"].split(" ") & ["fun", "rm", "bf", "alt"]).empty?
+        under_symbol_element = under_element.children.first
+        over_symbol_element = over_element.children.first
+        if under_symbol_element
+          under_symbol_element["class"] = [*under_symbol_element["class"].split(" "), "it"].join(" ")
+        end
+        if over_symbol_element
+          over_symbol_element["class"] = [*over_symbol_element["class"].split(" "), "it"].join(" ")
+        end
       end
     end
   end
