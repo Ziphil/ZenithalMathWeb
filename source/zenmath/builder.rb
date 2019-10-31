@@ -87,20 +87,28 @@ module ZenmathBuilder
       symbol, types = fetch_operator_symbol(name)
       this << build_operator(symbol, types, spacing)
     when "sb"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this|
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
         base_this << children_list[0]
         sub_this << children_list[1]
       end
     when "sp"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this|
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
         base_this << children_list[0]
         super_this << children_list[1]
       end
     when "sbsp"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this|
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
         base_this << children_list[0]
         sub_this << children_list[1]
         super_this << children_list[2]
+      end
+    when "multi"
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_this, left_super_this|
+        base_this << children_list[0]
+        sub_this << children_list[1]
+        super_this << children_list[2]
+        left_sub_this << children_list[3]
+        left_super_this << children_list[4]
       end
     when "un"
       this << build_underover(spacing) do |base_this, under_this, over_this|
@@ -416,9 +424,15 @@ module ZenmathBuilder
 
   def build_subsuper(spacing = nil, &block)
     this = Nodes[]
-    base_element, sub_element, super_element = nil
+    base_element, sub_element, super_element, left_sub_element, left_super_element = nil
     this << Element.build("math-subsup") do |this|
       subsuper_element = this
+      this << Element.build("math-lsub") do |this|
+        left_sub_element = this
+      end
+      this << Element.build("math-lsup") do |this|
+        left_super_element = this
+      end
       this << Element.build("math-base") do |this|
         base_element = this
       end
@@ -430,17 +444,23 @@ module ZenmathBuilder
       end
     end
     add_spacing(this, spacing)
-    block&.call(base_element, sub_element, super_element)
-    modify_subsuper(base_element, sub_element, super_element)
+    block&.call(base_element, sub_element, super_element, left_sub_element, left_super_element)
+    modify_subsuper(base_element, sub_element, super_element, left_sub_element, left_super_element)
     return this
   end
 
-  def modify_subsuper(base_element, sub_element, super_element)
+  def modify_subsuper(base_element, sub_element, super_element, left_sub_element, left_super_element)
     if sub_element.children.size <= 0
       sub_element.remove
     end
     if super_element.children.size <= 0
       super_element.remove
+    end
+    if left_sub_element && left_sub_element.children.size <= 0
+      left_sub_element.remove
+    end
+    if left_super_element && left_super_element.children.size <= 0
+      left_super_element.remove
     end
   end
 
@@ -633,7 +653,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(sub_element, super_element)
-    modify_subsuper(base_element, sub_element, super_element)
+    modify_subsuper(base_element, sub_element, super_element, nil, nil)
     return this
   end
 

@@ -7,13 +7,21 @@ class SubsuperModifier extends Modifier {
     let baseElement = Array.from(element.children).find((child) => child.localName == "math-base");
     let subElement = Array.from(element.children).find((child) => child.localName == "math-sub");
     let superElement = Array.from(element.children).find((child) => child.localName == "math-sup");
+    let leftSubElement = Array.from(element.children).find((child) => child.localName == "math-lsub");
+    let leftSuperElement = Array.from(element.children).find((child) => child.localName == "math-lsup");
     let baseSymbolElement = Array.from(baseElement.children).find((child) => child.localName == "math-o");
     let subWidth = (subElement) ? this.getWidth(subElement) : 0;
     let superWidth = (superElement) ? this.getWidth(superElement) : 0;
+    let leftSubWidth = (leftSubElement) ? this.getWidth(leftSubElement) : 0;
+    let leftSuperWidth = (leftSuperElement) ? this.getWidth(leftSuperElement) : 0;
     let subShift = (subElement) ? this.calcSubShift(baseElement, subElement, superElement) : 0;
     let superShift = (superElement) ? this.calcSuperShift(baseElement, superElement, subElement) : 0;
+    let leftSubShift = (leftSubElement) ? this.calcSubShift(baseElement, leftSubElement, leftSuperElement) : 0;
+    let leftSuperShift = (leftSuperElement) ? this.calcSuperShift(baseElement, leftSuperElement, leftSubElement) : 0;
     let subMargin = 0;
     let superMargin = (subElement) ? -this.getWidth(subElement) : 0;
+    let leftSubMargin = (leftSuperElement) ? -this.getWidth(leftSuperElement) : 0;
+    let leftSuperMargin = 0;
     if (baseSymbolElement && element.classList.contains("int")) {
       subWidth -= 0.6;
       subMargin -= 0.6;
@@ -27,8 +35,19 @@ class SubsuperModifier extends Modifier {
       superElement.style.verticalAlign = "" + superShift + "em";
       superElement.style.marginLeft = "" + superMargin + "em";
     }
+    if (leftSubElement) {
+      leftSubElement.style.verticalAlign = "" + leftSubShift + "em";
+      leftSubElement.style.marginRight = "" + leftSubMargin + "em";
+    }
+    if (leftSuperElement) {
+      leftSuperElement.style.verticalAlign = "" + leftSuperShift + "em";
+      leftSuperElement.style.marginRight = "" + leftSuperMargin + "em";
+    }
     if (superElement && subWidth > superWidth) {
       superElement.style.width = "" + subWidth + "em";
+    }
+    if (leftSubElement && leftSuperWidth > leftSubWidth) {
+      leftSubElement.style.width = "" + leftSuperWidth + "em";
     }
   }
 

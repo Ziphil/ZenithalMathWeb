@@ -104,6 +104,8 @@ math-o {
 
   math-sub &,
   math-sup &,
+  math-lsub &,
+  math-lsup &,
   math-under &,
   math-over &,
   math-arrow & {
@@ -182,18 +184,28 @@ math-subsup {
     margin: 0em spacing(0);
   }
 
-  >math-sub {
+  >math-sub,
+  >math-lsub {
     margin-bottom: -0em;
     vertical-align: -0.2344em;
     font-size: 80%;
     text-align: left;
   }
 
-  >math-sup {
+  >math-lsub {
+    text-align: right;
+  }
+
+  >math-sup,
+  >math-lsup {
     margin-top: -0em;
     vertical-align: 0.3906em;
     font-size: 80%;
     text-align: left;
+  }
+
+  >math-lsup {
+    text-align: right;
   }
 
   &.int {
