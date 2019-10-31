@@ -53,8 +53,9 @@ module ZenmathBuilder
         right_this << children_list[1]
       end
     when DATA["integral"].method(:key?)
-      symbol = fetch_integral_symbol(name, "large")
-      this << build_integral(symbol, spacing) do |sub_this, super_this|
+      size = (attributes["s"]) ? "inl" : "lrg"
+      symbol = fetch_integral_symbol(name, size)
+      this << build_integral(symbol, size, spacing) do |sub_this, super_this|
         sub_this << children_list[0]
         super_this << children_list[1]
       end
@@ -627,20 +628,26 @@ module ZenmathBuilder
   end
 
   def fetch_integral_symbol(name, size)
-    size_index = (size == "large") ? 1 : 0
+    size_index = (size == "lrg") ? 1 : 0
     symbol = DATA.dig("integral", name, size_index) || ""
     return symbol
   end
 
-  def build_integral(symbol, spacing = nil, &block)
+  def build_integral(symbol, size, spacing = nil, &block)
     this = Nodes[]
     base_element, sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
       this["class"] = "int"
+      unless size == "lrg"
+        this["class"] = [*this["class"].split(" "), size].join(" ")
+      end
       this << Element.build("math-base") do |this|
         base_element = this
         this << Element.build("math-o") do |this|
           this["class"] = "int"
+          unless size == "lrg"
+            this["class"] = [*this["class"].split(" "), size].join(" ")
+          end
           this << Text.new(symbol, true, nil, false)
         end
       end

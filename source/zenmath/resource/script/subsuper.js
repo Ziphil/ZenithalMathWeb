@@ -23,9 +23,12 @@ class SubsuperModifier extends Modifier {
     let leftSubMargin = (leftSuperElement) ? -this.getWidth(leftSuperElement) : 0;
     let leftSuperMargin = 0;
     if (baseSymbolElement && element.classList.contains("int")) {
-      subWidth -= 0.6;
-      subMargin -= 0.6;
-      superMargin += 0.6;
+      let difference = (element.classList.contains("inl")) ? 0.3 : 0.6
+      subWidth -= difference;
+      subMargin -= difference;
+      if (superElement) {
+        superMargin += difference;
+      }
     }
     if (subElement) {
       subElement.style.verticalAlign = "" + subShift + "em";
@@ -54,7 +57,7 @@ class SubsuperModifier extends Modifier {
   calcSubShift(baseElement, subElement, superElement) {
     let fontRatio = this.getFontSize(baseElement) / this.getFontSize(subElement);
     let shiftConst = -0.3
-    if (superElement || baseElement.parentNode.classList.contains("int")) {
+    if (superElement || (baseElement.parentNode.classList.contains("int") && !baseElement.parentNode.classList.contains("inl"))) {
       shiftConst = -0.2
     }
     let height = this.getLowerHeight(baseElement);
@@ -68,7 +71,7 @@ class SubsuperModifier extends Modifier {
   calcSuperShift(baseElement, superElement, subElement) {
     let fontRatio = this.getFontSize(baseElement) / this.getFontSize(superElement);
     let shiftConst = -0.2;
-    if (subElement || baseElement.parentNode.classList.contains("int")) {
+    if (subElement || (baseElement.parentNode.classList.contains("int") && !baseElement.parentNode.classList.contains("inl"))) {
       shiftConst = -0.1
     }
     let height = this.getUpperHeight(baseElement);
