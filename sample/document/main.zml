@@ -141,6 +141,10 @@
         or
         &m<\fint<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
       >
+      \p<
+        Small:
+        &m<\int|s|<A><B> C>, &m<\int|s|<A><> C>, &m<\int|s|<><B> C>.
+      >
       \h1<Overscripts and underscripts>
       \p<
         &m<\ov<A><B> \un<C><D>>.
