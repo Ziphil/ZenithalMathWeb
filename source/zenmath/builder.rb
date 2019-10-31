@@ -60,7 +60,7 @@ module ZenmathBuilder
         super_this << children_list[1]
       end
     when DATA["sum"].method(:key?)
-      symbol = fetch_sum_symbol(name, "large")
+      symbol = fetch_sum_symbol(name, "lrg")
       this << build_sum(symbol, spacing) do |under_this, over_this|
         under_this << children_list[0]
         over_this << children_list[1]
@@ -665,7 +665,7 @@ module ZenmathBuilder
   end
 
   def fetch_sum_symbol(name, size)
-    size_index = (size == "large") ? 1 : 0
+    size_index = (size == "lrg") ? 1 : 0
     symbol = DATA.dig("sum", name, size_index) || ""
     return symbol
   end
