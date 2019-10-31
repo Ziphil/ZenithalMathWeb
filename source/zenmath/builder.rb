@@ -281,8 +281,8 @@ module ZenmathBuilder
           super_this << build_operator(symbol, types)
         end
       elsif char !~ /\s/
+        char = DATA["replacement"][char] || char
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
-        name = DATA["replacement"][name] || name
         symbol, kinds = DATA["operator"][name] || [name, ["bin"]]
         this << build_operator(symbol, kinds)
       end
