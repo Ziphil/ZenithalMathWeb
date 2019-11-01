@@ -81,7 +81,7 @@ module ZenmathBuilder
         base_this << children_list[0]
       end
     when DATA["function"].method(:include?)
-      this << build_identifier(name, ["fun"], spacing)
+      this << build_identifier(name, ["fun", "rm"], spacing)
     when DATA["identifier"].method(:key?)
       char = fetch_identifier_char(name)
       this << build_identifier(char, [], spacing)
@@ -242,7 +242,7 @@ module ZenmathBuilder
       this << build_identifier(text, types, spacing)
     when "op"
       text = children_list[0].first.to_s
-      this << build_identifier(text, ["fun"], spacing)
+      this << build_identifier(text, ["fun", "rm"], spacing)
     when "o"
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
       symbol = children_list[0].first.to_s
@@ -762,7 +762,7 @@ module ZenmathBuilder
     children = base_element.children
     if children.size == 1
       child = children.first
-      if child.name == "math-i" && (child["class"].split(" ") & ["fun", "rm", "alt"]).empty?
+      if child.name == "math-i" && (child["class"].split(" ") & ["rm", "alt"]).empty?
         under_symbol_element = under_element.children.first
         over_symbol_element = over_element.children.first
         if under_symbol_element
