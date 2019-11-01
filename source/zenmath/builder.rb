@@ -60,8 +60,9 @@ module ZenmathBuilder
         super_this << children_list[1]
       end
     when DATA["sum"].method(:key?)
-      symbol = fetch_sum_symbol(name, "lrg")
-      this << build_sum(symbol, spacing) do |under_this, over_this|
+      size = (attributes["s"]) ? "inl" : "lrg"
+      symbol = fetch_sum_symbol(name, size)
+      this << build_sum(symbol, size, spacing) do |under_this, over_this|
         under_this << children_list[0]
         over_this << children_list[1]
       end
@@ -670,29 +671,52 @@ module ZenmathBuilder
     return symbol
   end
 
-  def build_sum(symbol, spacing = nil, &block)
+  def build_sum(symbol, size, spacing = nil, &block)
     this = Nodes[]
-    under_element, over_element = nil
-    this << Element.build("math-underover") do |this|
-      this["class"] = "sum"
-      this << Element.build("math-over") do |this|
-        over_element = this
+    if size == "lrg"
+      under_element, over_element = nil
+      this << Element.build("math-underover") do |this|
+        this["class"] = "sum"
+        this << Element.build("math-over") do |this|
+          over_element = this
+        end
+        this << Element.build("math-basewrap") do |this|
+          this << Element.build("math-base") do |this|
+            this << Element.build("math-o") do |this|
+              this["class"] = "sum"
+              this << Text.new(symbol, true, nil, false)
+            end
+          end
+          this << Element.build("math-under") do |this|
+            under_element = this
+          end
+        end
       end
-      this << Element.build("math-basewrap") do |this|
+      add_spacing(this, spacing)
+      block&.call(under_element, over_element)
+      modify_underover(under_element, over_element)
+    else
+      base_element, sub_element, super_element = nil
+      this << Element.build("math-subsup") do |this|
+        this["class"] = "sum inl"
         this << Element.build("math-base") do |this|
+          base_element = this
           this << Element.build("math-o") do |this|
-            this["class"] = "sum"
+            this["class"] = "sum inl"
             this << Text.new(symbol, true, nil, false)
           end
         end
-        this << Element.build("math-under") do |this|
-          under_element = this
+        this << Element.build("math-sub") do |this|
+          sub_element = this
+        end
+        this << Element.build("math-sup") do |this|
+          super_element = this
         end
       end
+      add_spacing(this, spacing)
+      block&.call(sub_element, super_element)
+      modify_subsuper(base_element, sub_element, super_element, nil, nil)
     end
-    add_spacing(this, spacing)
-    block&.call(under_element, over_element)
-    modify_underover(under_element, over_element)
     return this
   end
 
