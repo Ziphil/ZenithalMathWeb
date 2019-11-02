@@ -222,10 +222,6 @@ module ZenmathBuilder
       this << build_phantom(type, spacing) do |content_this|
         content_this << children_list[0]
       end
-    when "strut"
-      this << build_phantom("ver", spacing) do |content_this|
-        content_this << build_number("1")
-      end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
       this << build_space(type, spacing)
