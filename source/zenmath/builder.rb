@@ -322,6 +322,17 @@ module ZenmathBuilder
     end
   end
 
+  def inherit_spacing(target_element, source_element)
+    inner_elements = source_element.elements.to_a
+    if inner_elements.size == 1
+      inner_element = inner_elements.first
+      inner_spacing = (inner_element["class"].split(" ") & SPACINGS).first
+      if inner_spacing
+        add_spacing([target_element], inner_spacing)
+      end
+    end
+  end
+
   def build_number(text, spacing = nil)
     this = Nodes[]
     element = nil
@@ -427,8 +438,9 @@ module ZenmathBuilder
   def build_subsuper(spacing = nil, &block)
     this = Nodes[]
     base_element, sub_element, super_element, left_sub_element, left_super_element = nil
+    main_element = nil
     this << Element.build("math-subsup") do |this|
-      subsuper_element = this
+      main_element = this
       this << Element.build("math-lsub") do |this|
         left_sub_element = this
       end
@@ -447,6 +459,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element, sub_element, super_element, left_sub_element, left_super_element)
+    inherit_spacing(main_element, base_element)
     modify_subsuper(base_element, sub_element, super_element, left_sub_element, left_super_element)
     return this
   end
@@ -469,7 +482,9 @@ module ZenmathBuilder
   def build_underover(spacing = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
+    main_element = nil
     this << Element.build("math-underover") do |this|
+      main_element = this
       this << Element.build("math-over") do |this|
         over_element = this
       end
@@ -484,6 +499,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element, under_element, over_element)
+    inherit_spacing(main_element, base_element)
     modify_underover(under_element, over_element)
     return this
   end
@@ -723,9 +739,9 @@ module ZenmathBuilder
   def build_accent(under_symbol, over_symbol, spacing = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
-    underover_element = nil
+    main_element = nil
     this << Element.build("math-underover") do |this|
-      underover_element = this
+      main_element = this
       this["class"] = "acc"
       this << Element.build("math-over") do |this|
         over_element = this
@@ -753,6 +769,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element)
+    inherit_spacing(main_element, base_element)
     modify_underover(under_element, over_element)
     modify_accent(base_element, under_element, over_element)
     return this
@@ -789,12 +806,14 @@ module ZenmathBuilder
   def build_wide(kind, under_symbol, over_symbol, modify, spacing = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
+    main_element = nil
     this << Element.build("math-underover") do |this|
       this["class"] = "wid"
       if modify
         this["class"] = [*this["class"].split(" "), "mod"].join(" ")
         this["data-kind"] = kind
       end
+      main_element = this
       this << Element.build("math-over") do |this|
         if over_symbol
           this << Element.build("math-o") do |this|
@@ -821,6 +840,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(base_element)
+    inherit_spacing(main_element, base_element)
     modify_underover(under_element, over_element)
     return this
   end
