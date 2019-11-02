@@ -328,7 +328,10 @@ module ZenmathBuilder
       inner_element = inner_elements.first
       inner_spacing = (inner_element["class"].split(" ") & SPACINGS).first
       if inner_spacing
-        add_spacing([target_element], inner_spacing)
+        target_classes = target_element["class"].split(" ")
+        if (target_classes & SPACINGS).empty?
+          target_element["class"] = [*target_classes, inner_spacing].join(" ")
+        end
       end
     end
   end
