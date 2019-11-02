@@ -165,6 +165,12 @@
         or
         &m<\bigotimes<L \in> \frak<L>><> \bigoplus<M \in> \frak<M>><> \op<Hom> (L, M)>.
       >
+      \p<
+        Inline forms:
+        &m<\sum|s|<A><B> C>
+        or
+        &m<\bigotimes|s|<n \in> \bb<N>><> \sp<M><\otimes> n>>.
+      >
       \h1<Accents>
       \p<
         &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\vec<e>>, &m<\barbelow<E>>, &m<\tildebelow<F>>,  &m<\tildebelow<g>>.
@@ -331,10 +337,10 @@
         &m<(\capdigamma>, \digamma>)>, &m<(\capkoppa>, \koppa>)>, &m<(\capsampi>, \sampi>)>.
       >
       \p<
-        Verious symbols:
+        Various symbols:
         &m<\hbar>>, &m<\sharp> \flat>>, &m<\crotchet> \quaver>>, &m<\bspade> \wheart>>, &m<\dagger>>, &m<\amp> \invamp>>
         and
-        &m<\op<Hom> (V, \hyphen>)>
+        &m<\op<Hom> (`b \ltriangle> `J, F \circ> \hyphen>)>
         and
         &m<m \in> M \iff> f (m) \nin> \sp<M><\natural>> \scand> g (m) \nin> G>.
       >
