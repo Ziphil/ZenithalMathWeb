@@ -119,6 +119,7 @@ math-o {
   math-lsup &,
   math-under &,
   math-over &,
+  math-index &,
   math-arrow & {
     margin-left: spacing(0) !important;
     margin-right: spacing(0) !important;
@@ -175,6 +176,10 @@ math-sqrt {
     vertical-align: top;
   }
 
+  >math-index +math-surd {
+    margin-left: -0.5em;
+  }
+
   >math-surd >math-o {
     margin-top: 0em;
     margin-bottom: 0em;
@@ -184,6 +189,11 @@ math-sqrt {
     margin: 0em spacing(1) 0em spacing(0);
     padding-top: 0.25em;
     border-top: 0.06em solid;
+  }
+
+  >math-index {
+    vertical-align: 0.8em;
+    font-size: 64%;
   }
 
 }

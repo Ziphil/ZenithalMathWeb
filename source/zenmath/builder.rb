@@ -137,8 +137,9 @@ module ZenmathBuilder
       stretch_level = attributes["s"]
       symbol = fetch_radical_symbol(stretch_level)
       modify = !stretch_level
-      this << build_radical(symbol, modify, spacing) do |content_this|
+      this << build_radical(symbol, modify, spacing) do |content_this, index_this|
         content_this << children_list[0]
+        index_this << children_list.fetch(1, Nodes[])
       end
     when "array"
       align_config = attributes["align"]
@@ -545,10 +546,13 @@ module ZenmathBuilder
 
   def build_radical(symbol, modify, spacing = nil, &block)
     this = Nodes[]
-    content_element = nil
+    content_element, index_element = nil
     this << Element.build("math-sqrt") do |this|
       if modify
         this["class"] = "mod" 
+      end
+      this << Element.build("math-index") do |this|
+        index_element = this
       end
       this << Element.build("math-surd") do |this|
         this << Element.build("math-o") do |this|
@@ -560,13 +564,16 @@ module ZenmathBuilder
       end
     end
     add_spacing(this, spacing)
-    block&.call(content_element)
-    modify_radical(content_element)
+    block&.call(content_element, index_element)
+    modify_radical(content_element, index_element)
     return this
   end
 
-  def modify_radical(content_element)
+  def modify_radical(content_element, index_element)
     content_element[0, 0] = build_strut("upper").first
+    if index_element.children.size <= 0
+      index_element.remove
+    end
   end
 
   def fetch_paren_symbol(kind, position, stretch_level)
