@@ -113,18 +113,6 @@ math-o {
     margin-bottom: 0.1em;
   }
 
-  math-sub &,
-  math-sup &,
-  math-lsub &,
-  math-lsup &,
-  math-under &,
-  math-over &,
-  math-index &,
-  math-arrow & {
-    margin-left: spacing(0) !important;
-    margin-right: spacing(0) !important;
-  }
-
   *:not(.lpres) >&:first-child,
   *:not(.lpres) >math-strut +& {
     margin-left: spacing(0);
@@ -560,6 +548,18 @@ math-root {
     *.#{$name} {
       margin-left: spacing(nth($margin, 1));
       margin-right: spacing(nth($margin, 2));
+    }
+  }
+
+  $small-elements: math-sub, math-sup, math-lsub, math-lsup, math-under, math-over, math-index, math-arrow;
+  $shrink-names: bin, rel, sbin, srel, del, cpar;
+
+  @each $small-element in $small-elements {
+    @each $shrink-name in $shrink-names {
+      #{$small-element} *.#{$shrink-name} {
+        margin-left: spacing(0) !important;
+        margin-right: spacing(0) !important;
+      }
     }
   }
 
