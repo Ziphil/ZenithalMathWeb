@@ -58,6 +58,12 @@
         &m<\sqrt<&raw<\span|class="box",style="height:2.4em"|>>>>.
       >
       \p<
+        With index:
+        &m<\sqrt<A><B>>
+        or
+        &m<\sqrt<\frac<S><T> + \frac<U><V>><3>>.
+      >
+      \p<
         Very large: not implemented.
       >
       \h1<Parentheses>
@@ -251,11 +257,7 @@
       >
       \p<
         Accented symbols:
-        &m<\ring<0>>, &m<\tilde<\bf<K>>>, &m<2 \dot|bin|<-> 3>, &m<A \hat|bin|<\oplus>> B>, &m<`a: D \ddot|rel|<\to>> E>.
-      >
-      \p<
-        To put accent symbols where they should be, Zotica currently adopts an ad-hoc solution; accents are placed according to the pre-calculated height and depth of each letter.
-        This calculation is based exclusively on Times New Roman, which means using a different font may cause a broken layout.
+        &m<\ring<0>>, &m<\tilde<\bf<K>>>, &m<2 \dot<-> 3>, &m<A \hat<\oplus>> B>, &m<`a: D \ddot<\to>> E>.
       >
       \h1<Matrices>
       \p<
@@ -345,14 +347,14 @@
         &m<m \in> M \iff> f (m) \nin> \sp<M><\natural>> \scand> g (m) \nin> G>.
       >
       \p<
-        Combining negation symbol
+        Combining negation symbol:
         &m<X \succrel>\not> Y>, &m<A \lls>\not> B>.
       >
       \p<
         Grouping:
-        &m<M \g|bin|<\sb<\otimes>><\bb<Z>>> N>
+        &m<M \sb<\otimes>><\bb<Z>> N>
         or
-        &m<\g|fun|<\un<\lim>><n \to> \infty>>> \frac<\log> n><n> = 0>
+        &m<\un<\lim>><n \to> \infty>> \frac<\log> n><n> = 0>
         or
         &m<n = [-1]>.
       >
