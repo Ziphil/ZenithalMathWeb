@@ -143,9 +143,9 @@
       >
       \h1<Integrals>
       \p<
-        &m<\int<A><B> C>
+        &m<\int<A><B> C>, &m<\intlike|k="intanticlock"|<A> C>
         or
-        &m<\fint<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
+        &m<\intlike|k="fint"|<\sp<a><3> + 3a + 1><\sp<a><4> - 2> g (x) dx>.
       >
       \p<
         Small:
@@ -165,7 +165,7 @@
       >
       \h1<Sums and products>
       \p<
-        &m<\sum<A><B> C>
+        &m<\sum<A><B> C>, &m<\sumlike|k="bigsqcup"|<A> C>
         or more practically
         &m<\varphi> (x) = \sum<n = 0><\infty>> \frac<\sp<\varphi>><(n)> (0)><n !> \sp<x><n>>
         or
@@ -179,11 +179,11 @@
       >
       \h1<Accents>
       \p<
-        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\ring<d>>, &m<\vec<e>>, &m<\barbelow<E>>, &m<\tildebelow<F>>,  &m<\tildebelow<g>>.
+        &m<\dot<A>>, &m<\hat<B>>, &m<\tilde<c>>, &m<\accent|k="ring"|<d>>, &m<\accent|k="vec"|<e>>, &m<\barbelow<E>>, &m<\tildebelow<F>>,  &m<\tildebelow<g>>.
       >
       \p<
         Wide:
-        &m<\widetilde<ABap>>, &m<\widetilde<ap>>, &m<\widehat<ABap>>, &m<\widehat<ap>>, &m<\widecheck<ABap>>, &m<\widetildebelow<ABap>>, &m<\widetildebelow<Ee>>, &m<\widetildebelow<Pp>>.
+        &m<\widetilde<ABap>>, &m<\widetilde<ap>>, &m<\widehat<ABap>>, &m<\widehat<ap>>, &m<\wide|k="widecheck"|<ABap>>, &m<\widetildebelow<ABap>>, &m<\widetildebelow<Ee>>, &m<\widetildebelow<Pp>>.
       >
       \p<
         Sizes:
@@ -234,7 +234,7 @@
         Other examples:
         &m<\widetilde<f \oplus> g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>,
         &m<\ov<\overbrace<A \times> A \times> \cdots> \times> A>><k \text< times>>>, &m<\un<\underbrace<B \times> B \times> \cdots> \times> B>><n + 2 \text< times>>>,
-        &m<\overline<z + pi - 3>>, &m<\underline<G - g>>.
+        &m<\overline<z + pi - 3>>, &m<\wide|k="underline"|<G - g>>.
       >
       \p<
         Accent position:
