@@ -5,9 +5,9 @@ class RadicalModifier extends Modifier {
 
   modify(element) {
     let surdElement = Array.from(element.children).find((child) => child.localName == "math-surd");
-    let contentElement = Array.from(element.children).find((child) => child.localName == "math-sqrtcont");
+    let contentElement = Array.from(element.children).find((child) => child.localName == "math-cont");
     let surdSymbolElement = surdElement.children[0];
-    let stretchLevel = this.calcStretchLevel(element);
+    let stretchLevel = this.calcStretchLevel(contentElement);
     surdSymbolElement.textContent = DATA["radical"][stretchLevel];
   }
 

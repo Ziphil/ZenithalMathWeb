@@ -126,7 +126,7 @@ module ZenmathParserMethod
   def self.create_script_string
     dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
     string = "const DATA = "
-    string << JSON.generate(DATA.slice("radical", "paren", "wide", "shift", "arrow"))
+    string << JSON.generate(DATA.slice("radical", "fence", "wide", "shift", "arrow"))
     string << ";\n"
     string << File.read(dir + "/main.js")
     string << "\n"

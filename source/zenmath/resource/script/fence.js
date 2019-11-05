@@ -1,10 +1,10 @@
 //
 
 
-class ParenModifier extends Modifier {
+class FenceModifier extends Modifier {
 
   modify(element) {
-    let contentElements = Array.from(element.children).filter((child) => child.localName == "math-parencont");
+    let contentElements = Array.from(element.children).filter((child) => child.localName == "math-cont");
     let leftElement = Array.from(element.children).find((child) => child.localName == "math-left");
     let rightElement = Array.from(element.children).find((child) => child.localName == "math-right");
     let centerElement = Array.from(element.children).find((child) => child.localName == "math-center");
@@ -30,31 +30,31 @@ class ParenModifier extends Modifier {
   modifyStretch(contentElements, parentElement, kind, stretchLevel, position) {
     let symbolElement = parentElement.children[0];
     let shift = this.calcShift(contentElements, stretchLevel);
-    symbolElement.textContent = DATA["paren"][kind][position][stretchLevel];
+    symbolElement.textContent = DATA["fence"][kind][position][stretchLevel];
     parentElement.style.verticalAlign = "" + shift + "em";
   }
 
   appendStretch(contentElements, parentElement, kind, position) {
     let stretchElement = document.createElement("math-vstretch");
-    let hasStart = !!DATA["paren"][kind][position]["start"];
-    let hasEnd = !!DATA["paren"][kind][position]["end"];
-    let hasMiddle = !!DATA["paren"][kind][position]["middle"];
+    let hasStart = !!DATA["fence"][kind][position]["start"];
+    let hasEnd = !!DATA["fence"][kind][position]["end"];
+    let hasMiddle = !!DATA["fence"][kind][position]["middle"];
     let startElement = null;
     let endElement = null;
     let middleElement = null;
     if (hasStart) {
       startElement = document.createElement("math-start");
-      startElement.textContent = DATA["paren"][kind][position]["start"];
+      startElement.textContent = DATA["fence"][kind][position]["start"];
       stretchElement.append(startElement);
     }
     if (hasMiddle) {
       middleElement = document.createElement("math-middle");
-      middleElement.textContent = DATA["paren"][kind][position]["middle"];
+      middleElement.textContent = DATA["fence"][kind][position]["middle"];
       stretchElement.append(middleElement);
     }
     if (hasEnd) {
       endElement = document.createElement("math-end");
-      endElement.textContent = DATA["paren"][kind][position]["end"];
+      endElement.textContent = DATA["fence"][kind][position]["end"];
       stretchElement.append(endElement);
     }
     parentElement.removeChild(parentElement.children[0]);
@@ -65,7 +65,7 @@ class ParenModifier extends Modifier {
     for (let i = 0 ; i < barSize ; i ++) { 
       let barWrapperElement = document.createElement("math-barwrap");
       let barElement = document.createElement("math-bar");
-      barElement.textContent = DATA["paren"][kind][position]["bar"];
+      barElement.textContent = DATA["fence"][kind][position]["bar"];
       barWrapperElement.style.height = "" + barHeight + "em";
       barWrapperElement.append(barElement);
       if (i == 0) {
@@ -80,7 +80,7 @@ class ParenModifier extends Modifier {
   calcKinds(element) {
     let leftKind = "paren";
     let rightKind = "paren";
-    let centerKind = "paren";
+    let centerKind = "vert";
     if (element.getAttribute("data-left")) {
       leftKind = element.getAttribute("data-left");
     }
@@ -94,7 +94,7 @@ class ParenModifier extends Modifier {
   }
 
   calcMaxStretchLevel(kind, position) {
-    let keys = Object.keys(DATA["paren"][kind][position]);
+    let keys = Object.keys(DATA["fence"][kind][position]);
     let maxStretchLevel = 0;
     for (let key of keys) {
       if (key.match(/^\d+$/) && parseInt(key) > maxStretchLevel) {
@@ -126,7 +126,7 @@ class ParenModifier extends Modifier {
         break;
       }
     }
-    if (stretchLevel == null && !DATA["paren"][kind][position]["bar"]) {
+    if (stretchLevel == null && !DATA["fence"][kind][position]["bar"]) {
       stretchLevel = maxStretchLevel;
     }
     return stretchLevel;

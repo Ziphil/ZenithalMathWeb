@@ -21,22 +21,22 @@ module ZenmathBuilder
     this = Nodes[]
     spacing = determine_spacing(attributes)
     case name
-    when DATA["paren"].method(:key?)
+    when DATA["fence"].method(:key?)
       stretch_level = attributes["s"]
-      left_symbol = fetch_paren_symbol(name, 0, stretch_level)
-      right_symbol = fetch_paren_symbol(name, 1, stretch_level)
+      left_symbol = fetch_fence_symbol(name, 0, stretch_level)
+      right_symbol = fetch_fence_symbol(name, 1, stretch_level)
       modify = !stretch_level
-      this << build_paren(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
+      this << build_fence(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "fence"
       stretch_level = attributes["s"]
       left_kind = attributes["l"] || "paren"
       right_kind = attributes["r"] || "paren"
-      left_symbol = fetch_paren_symbol(left_kind, 0, stretch_level)
-      right_symbol = fetch_paren_symbol(right_kind, 1, stretch_level)
+      left_symbol = fetch_fence_symbol(left_kind, 0, stretch_level)
+      right_symbol = fetch_fence_symbol(right_kind, 1, stretch_level)
       modify = !stretch_level
-      this << build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, spacing) do |content_this|
+      this << build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, spacing) do |content_this|
         content_this << children_list[0]
       end
     when "set"
@@ -44,9 +44,9 @@ module ZenmathBuilder
       left_kind = attributes["l"] || "brace"
       right_kind = attributes["r"] || "brace"
       center_kind = attributes["c"] || "vert"
-      left_symbol = fetch_paren_symbol(left_kind, 0, stretch_level)
-      right_symbol = fetch_paren_symbol(right_kind, 1, stretch_level)
-      center_symbol = fetch_paren_symbol(center_kind, 0, stretch_level)
+      left_symbol = fetch_fence_symbol(left_kind, 0, stretch_level)
+      right_symbol = fetch_fence_symbol(right_kind, 1, stretch_level)
+      center_symbol = fetch_fence_symbol(center_kind, 0, stretch_level)
       modify = !stretch_level
       this << build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing) do |left_this, right_this|
         left_this << children_list[0]
@@ -143,22 +143,22 @@ module ZenmathBuilder
       end
     when "array"
       align_config = attributes["align"]
-      this << build_array("std", align_config, true, spacing) do |table_this|
+      this << build_table("std", align_config, true, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "stack"
-      this << build_array("stk", nil, true, spacing) do |table_this|
+      this << build_table("stk", nil, true, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "matrix"
-      this << build_array("mat", nil, false, spacing) do |table_this|
+      this << build_table("mat", nil, false, spacing) do |table_this|
         table_this << children_list[0]
       end
     when "case"
-      left_symbol = fetch_paren_symbol("brace", 0, nil)
-      right_symbol = fetch_paren_symbol("none", 1, nil)
-      this << build_paren("brace", "none", left_symbol, right_symbol, true, spacing) do |this|
-        this << build_array("cas", "ll", false) do |table_this|
+      left_symbol = fetch_fence_symbol("brace", 0, nil)
+      right_symbol = fetch_fence_symbol("none", 1, nil)
+      this << build_fence("brace", "none", left_symbol, right_symbol, true, spacing) do |this|
+        this << build_table("cas", "ll", false) do |table_this|
           table_this << children_list[0]
         end
       end
@@ -169,12 +169,12 @@ module ZenmathBuilder
         table_this << children_list[0]
       end
     when "c"
-      this << build_array_cell(spacing) do |cell_this|
+      this << build_table_cell(spacing) do |cell_this|
         cell_this << children_list[0]
       end
     when "cc"
       children_list.each do |children|
-        this << build_array_cell(spacing) do |cell_this|
+        this << build_table_cell(spacing) do |cell_this|
           cell_this << children
         end
       end
@@ -559,7 +559,7 @@ module ZenmathBuilder
           this << Text.new(symbol, true, nil, false)
         end
       end
-      this << Element.build("math-sqrtcont") do |this|
+      this << Element.build("math-cont") do |this|
         content_element = this
       end
     end
@@ -576,16 +576,16 @@ module ZenmathBuilder
     end
   end
 
-  def fetch_paren_symbol(kind, position, stretch_level)
+  def fetch_fence_symbol(kind, position, stretch_level)
     stretch_level ||= "0"
-    symbol = DATA.dig("paren", kind, position, stretch_level) || ""
+    symbol = DATA.dig("fence", kind, position, stretch_level) || ""
     return symbol
   end
 
-  def build_paren(left_kind, right_kind, left_symbol, right_symbol, modify, spacing = nil, &block)
+  def build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, spacing = nil, &block)
     this = Nodes[]
     content_element = nil
-    this << Element.build("math-paren") do |this|
+    this << Element.build("math-fence") do |this|
       this["class"] = "par"
       if modify
         this["class"] = [*this["class"].split(" "), "mod"].join(" ")
@@ -597,7 +597,7 @@ module ZenmathBuilder
           this << Text.new(left_symbol, true, nil, false)
         end
       end
-      this << Element.build("math-parencont") do |this|
+      this << Element.build("math-cont") do |this|
         content_element = this
       end
       this << Element.build("math-right") do |this|
@@ -614,7 +614,7 @@ module ZenmathBuilder
   def build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing = nil, &block)
     this = Nodes[]
     left_element, right_element = nil
-    this << Element.build("math-paren") do |this|
+    this << Element.build("math-fence") do |this|
       this["class"] = "par"
       if modify
         this["class"] = [*this["class"].split(" "), "mod"].join(" ")
@@ -627,7 +627,7 @@ module ZenmathBuilder
           this << Text.new(left_symbol, true, nil, false)
         end
       end
-      this << Element.build("math-parencont") do |this|
+      this << Element.build("math-cont") do |this|
         left_element = this
       end
       this << Element.build("math-center") do |this|
@@ -636,7 +636,7 @@ module ZenmathBuilder
           this << Text.new(right_symbol, true, nil, false)
         end
       end
-      this << Element.build("math-parencont") do |this|
+      this << Element.build("math-cont") do |this|
         right_element = this
       end
       this << Element.build("math-right") do |this|
@@ -851,7 +851,7 @@ module ZenmathBuilder
     return this
   end
 
-  def build_array(type, align_config, raw, spacing = nil, &block)
+  def build_table(type, align_config, raw, spacing = nil, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
@@ -860,7 +860,7 @@ module ZenmathBuilder
     end
     add_spacing(this, spacing)
     block&.call(table_element)
-    modify_array(table_element, type, align_config, raw)
+    modify_table(table_element, type, align_config, raw)
     return this
   end
 
@@ -879,7 +879,7 @@ module ZenmathBuilder
     add_spacing(this, spacing)
     block&.call(table_element)
     modify_diagram(table_element, vertical_gaps_string, horizontal_gaps_string)
-    modify_array(table_element, "diag", nil, false)
+    modify_table(table_element, "diag", nil, false)
     return this
   end
 
@@ -914,7 +914,7 @@ module ZenmathBuilder
     end
   end
 
-  def modify_array(element, type, align_config, raw)
+  def modify_table(element, type, align_config, raw)
     align_array = align_config&.chars
     cell_elements = element.elements.to_a
     column, row = 0, 0
@@ -943,7 +943,7 @@ module ZenmathBuilder
     end
   end
 
-  def build_array_cell(spacing = nil, &block)
+  def build_table_cell(spacing = nil, &block)
     this = Nodes[]
     cell_element = nil
     this << Element.build("math-cell") do |this|

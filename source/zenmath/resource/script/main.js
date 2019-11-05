@@ -119,8 +119,8 @@ function execute() {
   document.querySelectorAll("math-sqrt.mod").forEach((element) => {
     RadicalModifier.execute(element);
   });
-  document.querySelectorAll("math-paren.mod").forEach((element) => {
-    ParenModifier.execute(element);
+  document.querySelectorAll("math-fence.mod").forEach((element) => {
+    FenceModifier.execute(element);
   });
   document.querySelectorAll("math-underover.wid.mod").forEach((element) => {
     WideModifier.execute(element);
