@@ -21,14 +21,44 @@ module ZenmathBuilder
     this = Nodes[]
     spacing = determine_spacing(attributes)
     case name
-    when DATA["fence"].method(:key?)
-      stretch_level = attributes["s"]
-      left_symbol = fetch_fence_symbol(name, 0, stretch_level)
-      right_symbol = fetch_fence_symbol(name, 1, stretch_level)
-      modify = !stretch_level
-      this << build_fence(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
-        content_this << children_list[0]
-      end
+    when "n"
+      text = children_list[0].first.to_s
+      this << build_number(text, spacing)
+    when "i"
+      types = attributes["t"]&.split(/\s*,\s*/) || []
+      text = children_list[0].first.to_s
+      this << build_identifier(text, types, spacing)
+    when "bf"
+      text = children_list[0].first.to_s
+      this << build_identifier(text, ["bf"], spacing)
+    when "rm"
+      text = children_list[0].first.to_s
+      this << build_identifier(text, ["rm"], spacing)
+    when "bfrm"
+      text = children_list[0].first.to_s
+      this << build_identifier(text, ["bf", "rm"], spacing)
+    when "bb", "cal", "scr", "frak"
+      raw_text = children_list[0].first.value
+      text = fetch_alternative_identifier_text(name, raw_text)
+      this << build_identifier(text, ["alt"], spacing)
+    when "op"
+      text = children_list[0].first.to_s
+      this << build_identifier(text, ["fun", "rm"], spacing)
+    when DATA["identifier"].method(:key?)
+      char = fetch_identifier_char(name)
+      this << build_identifier(char, [], spacing)
+    when DATA["function"].method(:include?)
+      this << build_identifier(name, ["fun", "rm"], spacing)
+    when "o"
+      types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
+      symbol = children_list[0].first.to_s
+      this << build_operator(symbol, types, spacing)
+    when DATA["operator"].method(:key?)
+      symbol, types = fetch_operator_symbol(name)
+      this << build_operator(symbol, types, spacing)
+    when "text"
+      text = children_list[0].first.value
+      this << build_text(text, spacing)
     when "fence"
       stretch_level = attributes["s"]
       left_kind = attributes["l"] || "paren"
@@ -37,7 +67,7 @@ module ZenmathBuilder
       right_symbol = fetch_fence_symbol(right_kind, 1, stretch_level)
       modify = !stretch_level
       this << build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, spacing) do |content_this|
-        content_this << children_list[0]
+        content_this << children_list.fetch(0, Nodes[])
       end
     when "set"
       stretch_level = attributes["s"]
@@ -49,28 +79,68 @@ module ZenmathBuilder
       center_symbol = fetch_fence_symbol(center_kind, 0, stretch_level)
       modify = !stretch_level
       this << build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing) do |left_this, right_this|
-        left_this << children_list[0]
-        right_this << children_list[1]
+        left_this << children_list.fetch(0, Nodes[])
+        right_this << children_list.fetch(1, Nodes[])
+      end
+    when DATA["fence"].method(:key?)
+      stretch_level = attributes["s"]
+      left_symbol = fetch_fence_symbol(name, 0, stretch_level)
+      right_symbol = fetch_fence_symbol(name, 1, stretch_level)
+      modify = !stretch_level
+      this << build_fence(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
+        content_this << children_list.fetch(0, Nodes[])
+      end
+    when "intlike"
+      kind = attributes["k"] || "int"
+      size = (attributes["in"]) ? "inl" : "lrg"
+      symbol = fetch_integral_symbol(kind, size)
+      this << build_integral(symbol, size, spacing) do |sub_this, super_this|
+        sub_this << children_list.fetch(0, Nodes[])
+        super_this << children_list.fetch(1, Nodes[])
       end
     when DATA["integral"].method(:key?)
       size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_integral_symbol(name, size)
       this << build_integral(symbol, size, spacing) do |sub_this, super_this|
-        sub_this << children_list[0]
-        super_this << children_list[1]
+        sub_this << children_list.fetch(0, Nodes[])
+        super_this << children_list.fetch(1, Nodes[])
+      end
+    when "sumlike"
+      kind = attributes["k"] || "sum"
+      size = (attributes["in"]) ? "inl" : "lrg"
+      symbol = fetch_sum_symbol(kind, size)
+      this << build_sum(symbol, size, spacing) do |under_this, over_this|
+        under_this << children_list.fetch(0, Nodes[])
+        over_this << children_list.fetch(1, Nodes[])
       end
     when DATA["sum"].method(:key?)
       size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_sum_symbol(name, size)
       this << build_sum(symbol, size, spacing) do |under_this, over_this|
-        under_this << children_list[0]
-        over_this << children_list[1]
+        under_this << children_list.fetch(0, Nodes[])
+        over_this << children_list.fetch(1, Nodes[])
+      end
+    when "accent"
+      kind = attributes["k"]
+      under_symbol = fetch_accent_symbol(kind, 0)
+      over_symbol = fetch_accent_symbol(kind, 1)
+      this << build_accent(under_symbol, over_symbol, spacing) do |base_this|
+        base_this << children_list.fetch(0, Nodes[])
       end
     when DATA["accent"].method(:key?)
       under_symbol = fetch_accent_symbol(name, 0)
       over_symbol = fetch_accent_symbol(name, 1)
       this << build_accent(under_symbol, over_symbol, spacing) do |base_this|
-        base_this << children_list[0]
+        base_this << children_list.fetch(0, Nodes[])
+      end
+    when "wide"
+      kind = attributes["k"]
+      stretch_level = attributes["s"]
+      under_symbol = fetch_wide_symbol(kind, 0, stretch_level)
+      over_symbol  = fetch_wide_symbol(kind, 1, stretch_level)
+      modify = !stretch_level
+      this << build_wide(kind, under_symbol, over_symbol, modify, spacing) do |base_this|
+        base_this << children_list.fetch(0, Nodes[])
       end
     when DATA["wide"].method(:key?)
       stretch_level = attributes["s"]
@@ -78,99 +148,98 @@ module ZenmathBuilder
       over_symbol  = fetch_wide_symbol(name, 1, stretch_level)
       modify = !stretch_level
       this << build_wide(name, under_symbol, over_symbol, modify, spacing) do |base_this|
-        base_this << children_list[0]
-      end
-    when DATA["function"].method(:include?)
-      this << build_identifier(name, ["fun", "rm"], spacing)
-    when DATA["identifier"].method(:key?)
-      char = fetch_identifier_char(name)
-      this << build_identifier(char, [], spacing)
-    when DATA["operator"].method(:key?)
-      symbol, types = fetch_operator_symbol(name)
-      this << build_operator(symbol, types, spacing)
-    when "sb"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
-        base_this << children_list[0]
-        sub_this << children_list[1]
-      end
-    when "sp"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
-        base_this << children_list[0]
-        super_this << children_list[1]
-      end
-    when "sbsp"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
-        base_this << children_list[0]
-        sub_this << children_list[1]
-        super_this << children_list[2]
+        base_this << children_list.fetch(0, Nodes[])
       end
     when "multi"
       this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_this, left_super_this|
-        base_this << children_list[0]
-        sub_this << children_list[1]
-        super_this << children_list[2]
-        left_sub_this << children_list[3]
-        left_super_this << children_list[4]
+        base_this << children_list.fetch(0, Nodes[])
+        sub_this << children_list.fetch(1, Nodes[])
+        super_this << children_list.fetch(2, Nodes[])
+        left_sub_this << children_list.fetch(3, Nodes[])
+        left_super_this << children_list.fetch(4, Nodes[])
       end
-    when "un"
-      this << build_underover(spacing) do |base_this, under_this, over_this|
-        base_this << children_list[0]
-        under_this << children_list[1]
+    when "sb"
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
+        base_this << children_list.fetch(0, Nodes[])
+        sub_this << children_list.fetch(1, Nodes[])
       end
-    when "ov"
-      this << build_underover(spacing) do |base_this, under_this, over_this|
-        base_this << children_list[0]
-        over_this << children_list[1]
+    when "sp"
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
+        base_this << children_list.fetch(0, Nodes[])
+        super_this << children_list.fetch(1, Nodes[])
+      end
+    when "sbsp"
+      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
+        base_this << children_list.fetch(0, Nodes[])
+        sub_this << children_list.fetch(1, Nodes[])
+        super_this << children_list.fetch(2, Nodes[])
       end
     when "unov"
       this << build_underover(spacing) do |base_this, under_this, over_this|
-        base_this << children_list[0]
-        under_this << children_list[1]
-        over_this << children_list[2]
+        base_this << children_list.fetch(0, Nodes[])
+        under_this << children_list.fetch(1, Nodes[])
+        over_this << children_list.fetch(2, Nodes[])
+      end
+    when "un"
+      this << build_underover(spacing) do |base_this, under_this, over_this|
+        base_this << children_list.fetch(0, Nodes[])
+        under_this << children_list.fetch(1, Nodes[])
+      end
+    when "ov"
+      this << build_underover(spacing) do |base_this, under_this, over_this|
+        base_this << children_list.fetch(0, Nodes[])
+        over_this << children_list.fetch(1, Nodes[])
       end
     when "frac"
       this << build_fraction(spacing) do |numerator_this, denominator_this|
-        numerator_this << children_list[0]
-        denominator_this << children_list[1]
+        numerator_this << children_list.fetch(0, Nodes[])
+        denominator_this << children_list.fetch(1, Nodes[])
       end
     when "sqrt"
       stretch_level = attributes["s"]
       symbol = fetch_radical_symbol(stretch_level)
       modify = !stretch_level
       this << build_radical(symbol, modify, spacing) do |content_this, index_this|
-        content_this << children_list[0]
+        content_this << children_list.fetch(0, Nodes[])
         index_this << children_list.fetch(1, Nodes[])
+      end
+    when "table"
+      type = attributes["t"]
+      align_config = attributes["align"]
+      raw = !!attributes["raw"]
+      this << build_table(type, align_config, raw, spacing) do |table_this|
+        table_this << children_list.fetch(0, Nodes[])
       end
     when "array"
       align_config = attributes["align"]
       this << build_table("std", align_config, true, spacing) do |table_this|
-        table_this << children_list[0]
+        table_this << children_list.fetch(0, Nodes[])
       end
     when "stack"
       this << build_table("stk", nil, true, spacing) do |table_this|
-        table_this << children_list[0]
+        table_this << children_list.fetch(0, Nodes[])
       end
     when "matrix"
       this << build_table("mat", nil, false, spacing) do |table_this|
-        table_this << children_list[0]
+        table_this << children_list.fetch(0, Nodes[])
       end
     when "case"
       left_symbol = fetch_fence_symbol("brace", 0, nil)
       right_symbol = fetch_fence_symbol("none", 1, nil)
       this << build_fence("brace", "none", left_symbol, right_symbol, true, spacing) do |this|
         this << build_table("cas", "ll", false) do |table_this|
-          table_this << children_list[0]
+          table_this << children_list.fetch(0, Nodes[])
         end
       end
     when "diag"
       vertical_gaps_string = attributes["ver"]
       horizontal_gaps_string = attributes["hor"]
       this << build_diagram(vertical_gaps_string, horizontal_gaps_string, spacing) do |table_this|
-        table_this << children_list[0]
+        table_this << children_list.fetch(0, Nodes[])
       end
     when "c"
       this << build_table_cell(spacing) do |cell_this|
-        cell_this << children_list[0]
+        cell_this << children_list.fetch(0, Nodes[])
       end
     when "cc"
       children_list.each do |children|
@@ -182,7 +251,7 @@ module ZenmathBuilder
     when "v"
       vertex_name = attributes["name"]
       this << build_diagram_vertex(vertex_name, spacing) do |vertex_this|
-        vertex_this << children_list[0]
+        vertex_this << children_list.fetch(0, Nodes[])
       end
     when "vv"
       children_list.each do |children|
@@ -205,7 +274,7 @@ module ZenmathBuilder
       configs[:mark] = attributes["mark"]
       arrow_name = attributes["name"]
       this << build_arrow(arrow_name, configs, spacing) do |label_this|
-        label_this << children_list[0]
+        label_this << children_list.fetch(0, Nodes[])
       end
     when "br"
       this << Element.new("math-sys-br")
@@ -213,7 +282,7 @@ module ZenmathBuilder
       transform_configs = {}
       transform_configs[:rotate] = attributes["rotate"]
       this << build_group(transform_configs, spacing) do |content_this|
-        content_this << children_list[0]
+        content_this << children_list.fetch(0, Nodes[])
       end
     when "s"
       type = attributes["t"] || "medium"
@@ -221,47 +290,17 @@ module ZenmathBuilder
     when "ph", "vph", "hph"
       type = PHANTOM_TYPES[name]
       this << build_phantom(type, spacing) do |content_this|
-        content_this << children_list[0]
+        content_this << children_list.fetch(0, Nodes[])
       end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
       this << build_space(type, spacing)
-    when "bb", "cal", "scr", "frak"
-      raw_text = children_list[0].first.value
-      text = fetch_alternative_identifier_text(name, raw_text)
-      this << build_identifier(text, ["alt"], spacing)
-    when "n"
-      text = children_list[0].first.to_s
-      this << build_number(text, spacing)
-    when "i"
-      types = attributes["t"]&.split(/\s*,\s*/) || []
-      text = children_list[0].first.to_s
-      this << build_identifier(text, types, spacing)
-    when "op"
-      text = children_list[0].first.to_s
-      this << build_identifier(text, ["fun", "rm"], spacing)
-    when "o"
-      types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
-      symbol = children_list[0].first.to_s
-      this << build_operator(symbol, types, spacing)
-    when "bf"
-      text = children_list[0].first.to_s
-      this << build_identifier(text, ["bf"], spacing)
-    when "rm"
-      text = children_list[0].first.to_s
-      this << build_identifier(text, ["rm"], spacing)
-    when "bfrm"
-      text = children_list[0].first.to_s
-      this << build_identifier(text, ["bf", "rm"], spacing)
-    when "text"
-      text = children_list[0].first.value
-      this << build_text(text, spacing)
     else
       this << Element.build(name) do |this|
         attributes.each do |key, value|
           this[key] = value
         end
-        this << children_list[0]
+        this << children_list.fetch(0, Nodes[])
       end
     end
     return this
@@ -650,9 +689,9 @@ module ZenmathBuilder
     return this
   end
 
-  def fetch_integral_symbol(name, size)
+  def fetch_integral_symbol(kind, size)
     size_index = (size == "lrg") ? 1 : 0
-    symbol = DATA.dig("integral", name, size_index) || ""
+    symbol = DATA.dig("integral", kind, size_index) || ""
     return symbol
   end
 
@@ -687,9 +726,9 @@ module ZenmathBuilder
     return this
   end
 
-  def fetch_sum_symbol(name, size)
+  def fetch_sum_symbol(kind, size)
     size_index = (size == "lrg") ? 1 : 0
-    symbol = DATA.dig("sum", name, size_index) || ""
+    symbol = DATA.dig("sum", kind, size_index) || ""
     return symbol
   end
 
