@@ -53,14 +53,14 @@ module ZenmathBuilder
         right_this << children_list[1]
       end
     when DATA["integral"].method(:key?)
-      size = (attributes["s"]) ? "inl" : "lrg"
+      size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_integral_symbol(name, size)
       this << build_integral(symbol, size, spacing) do |sub_this, super_this|
         sub_this << children_list[0]
         super_this << children_list[1]
       end
     when DATA["sum"].method(:key?)
-      size = (attributes["s"]) ? "inl" : "lrg"
+      size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_sum_symbol(name, size)
       this << build_sum(symbol, size, spacing) do |under_this, over_this|
         under_this << children_list[0]
