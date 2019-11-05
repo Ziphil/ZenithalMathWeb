@@ -7,12 +7,12 @@ unless $LOAD_PATH.include?(lib)
 end
 
 Gem::Specification.new do |spec|
-  spec.name = "zenmath"
+  spec.name = "zotica"
   spec.version = "0.0.0"
   spec.authors = ["Ziphil"]
   spec.email = ["ziphil.shaleiras@gmail.com"]
   spec.licenses = ["MIT"]
-  spec.homepage = "https://github.com/Ziphil/ZenithalMath"
+  spec.homepage = "https://github.com/Ziphil/ZenithalMathWeb"
   spec.summary = "To be written"
   spec.description = <<~end_string
     To be written

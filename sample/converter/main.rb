@@ -6,7 +6,7 @@ require 'open3'
 require 'pp'
 require 'rexml/document'
 require 'zenml'
-require_relative '../../source/zenmath'
+require_relative '../../source/zotica'
 
 include REXML
 include Zenithal
@@ -59,7 +59,7 @@ class WholeSampleConverter
   end
 
   def save(converter, formatter)
-    ZenmathParserMethod.save_font_strings
+    ZoticaParserMethod.save_font_strings
     File.open(OUTPUT_DIR + "/main.html", "w") do |file|
       file.write(converter.convert)
     end
@@ -68,7 +68,7 @@ class WholeSampleConverter
 
   def create_parser
     source = File.read(DOCUMENT_DIR + "/main.zml")
-    parser = ZenmathParser.new(source)
+    parser = ZoticaParser.new(source)
     parser.brace_name = "x"
     parser.bracket_name = "xn"
     parser.slash_name = "i"

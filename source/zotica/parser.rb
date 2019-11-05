@@ -8,7 +8,7 @@ require 'ttfunk'
 include REXML
 
 
-module ZenmathParserMethod
+module ZoticaParserMethod
 
   COMMON_STYLE_PATH = "resource/style/math.scss"
   SPECIALIZED_STYLE_PATH = "resource/style/times.scss"
@@ -28,7 +28,7 @@ module ZenmathParserMethod
     ]
   }
 
-  include ZenmathBuilder
+  include ZoticaBuilder
   include ZenithalParserMethod
 
   private
@@ -66,8 +66,8 @@ module ZenmathParserMethod
       children = children_list.first
       return children
     elsif name == @resource_macro_name
-      style_string = ZenmathParserMethod.create_style_string(attributes["font_url"])
-      script_string = ZenmathParserMethod.create_script_string
+      style_string = ZoticaParserMethod.create_style_string(attributes["font_url"])
+      script_string = ZoticaParserMethod.create_script_string
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
         element << Text.new(style_string, true, nil, true)
@@ -174,19 +174,19 @@ module ZenmathParserMethod
     main_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
     math_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
     File.open(main_font_path, "w") do |file|
-      file.write(ZenmathParserMethod.create_font_string(:main))
+      file.write(ZoticaParserMethod.create_font_string(:main))
     end
     File.open(math_font_path, "w") do |file|
-      file.write(ZenmathParserMethod.create_font_string(:math))
+      file.write(ZoticaParserMethod.create_font_string(:math))
     end
   end
 
 end
 
 
-class ZenmathParser < ZenithalParser
+class ZoticaParser < ZenithalParser
 
-  include ZenmathParserMethod
+  include ZoticaParserMethod
 
   attr_reader :raw_macro_name
   attr_reader :resource_macro_name

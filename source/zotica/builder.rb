@@ -7,7 +7,7 @@ require 'rexml/document'
 include REXML
 
 
-module ZenmathBuilder
+module ZoticaBuilder
 
   DATA_PATH = "resource/math.json"
   SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scas" => "acas", "quad" => "sgl", "qquad" => "dbl"}

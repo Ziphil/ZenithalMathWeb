@@ -30,7 +30,7 @@ Zotica の仕様は以下の通りです。
 
 - [バージョン 1.0](document/zotica/1.0.md) (策定中)
 
-このリポジトリは、Ruby 実装の ZenML パーサーである `ZenithalParser` クラスを拡張した `ZenmathParser` クラスを提供します。
+このリポジトリは、Ruby 実装の ZenML パーサーである `ZenithalParser` クラスを拡張した `ZoticaParser` クラスを提供します。
 このクラスは通常の ZenML パーサーと同じように ZenML ドキュメントをパースしますが、引数の内容が Zotica で書かれたマクロを処理できるようになっています。
 
 ## インストール
@@ -47,7 +47,7 @@ Ruby や ZenML はよく分からないが、とりあえず Zotica で数式を
 - [チュートリアル](document/tutorial.md)
 
 ### すでに ZenML を使っている場合
-`ZenithalParser` の代わりに `ZenmathParser` インスタンスを作成します。
+`ZenithalParser` の代わりに `ZoticaParser` インスタンスを作成します。
 
 このクラスには `register_math_macro` メソッドが追加されており、引数の内容が Zotica で書かれるマクロを登録することができます。
 このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された Zotica の構造そのものではなく、それが HTML 要素に変換されたものになります。
@@ -65,7 +65,7 @@ include REXML
 include Zenithal
 # パーサーの作成
 source = File.read("sample.zml")
-parser = ZenmathParser.new(source)
+parser = ZoticaParser.new(source)
 # Zotica マクロの登録
 parser.register_math_macro("m") do |attributes, children_list|
   # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を HTML に変換したものが渡される
@@ -95,7 +95,7 @@ end
 
 ### 数式フォントについて
 Zotica で用いられる数式フォントは、[STIX Two Math](https://www.stixfonts.org/) のバージョン 2.00 b137 を HTML での表示用に改変したものになっています。
-改変を行ったフォントは[ここ](source/zenmath/resource/font.otf)に置いてあるので、オリジナルと同じ [SIL Open Font License](http://scripts.sil.org/OFL) のもと自由に使用していただいて構いません。
+改変を行ったフォントは[ここ](source/zotica/resource/font.otf)に置いてあるので、オリジナルと同じ [SIL Open Font License](http://scripts.sil.org/OFL) のもと自由に使用していただいて構いません。
 施した改変の内容は以下の通りです。
 
 追加で登録されているグリフ (`.notdef` ～ `zeroinferior.per`) に専用のコードポイントを与えるため、これらのグリフを U+F0000 ～ U+F04DB にコピーします。
