@@ -36,7 +36,7 @@ Zotica の仕様は以下の通りです。
 ## インストール
 RubyGems からインストールできるようになる予定です。
 ```
-gem install zenmath
+gem install zotica
 ```
 
 ## 使い方
@@ -60,7 +60,7 @@ Zotica が出力する HTML 要素を正しく表示するには、専用の CSS
 # ライブラリの読み込み
 require 'rexml/document'
 require 'zenml'
-require 'zenmath'
+require 'zotica'
 include REXML
 include Zenithal
 # パーサーの作成
