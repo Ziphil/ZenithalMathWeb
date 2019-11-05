@@ -35,7 +35,7 @@
       \p<
         &m<\sqrt<A>>, &m<\sqrt<c>>, &m<\sqrt<q>>
         or
-        &m<\sqrt<\frac<1><i \wedgewedge> j> + \frac<1><j \veevee> i>>>
+        &m<\sqrt<\frac<1><i \wwedge> j> + \frac<1><j \vvee> i>>>
         or
         &m<\frac<W><\sqrt<5 W>> = \sqrt<\frac<W><5>>>.
       >
@@ -149,7 +149,7 @@
       >
       \p<
         Small:
-        &m<\int|s|<A><B> C>, &m<\int|s|<A><> C>, &m<\int|s|<><B> C>.
+        &m<\int|in|<A><B> C>, &m<\int|in|<A><> C>, &m<\int|in|<><B> C>.
       >
       \h1<Overscripts and underscripts>
       \p<
@@ -173,9 +173,9 @@
       >
       \p<
         Inline forms:
-        &m<\sum|s|<A><B> C>
+        &m<\sum|in|<A><B> C>
         or
-        &m<\bigotimes|s|<n \in> \bb<N>><> \sp<M><\otimes> n>>.
+        &m<\bigotimes|in|<n \in> \bb<N>><> \sp<M><\otimes> n>>.
       >
       \h1<Accents>
       \p<
