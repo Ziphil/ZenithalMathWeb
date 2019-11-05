@@ -1,6 +1,6 @@
 out
 sample/out
-source/zenmath/resource/font/*.ttf
+source/zotica/resource/font/*.ttf
 mathjax.html
 .vscode
 *.gem
