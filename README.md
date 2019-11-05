@@ -1,31 +1,21 @@
 <div align="center">
-<h1>Zotica ＋ ZenMath</h1>
+<h1>Zotica</h1>
 </div>
 
 ## 概要
 
-### 構成要素
-このリポジトリは、以下の 2 つの要素から構成されています。
-
-- HTML 上に数式を表示するための HTML カスタム要素仕様 ＋ CSS ＋ JavaScript セット (Zotica)
-- 上記仕様に則った HTML を出力するためのマークアップ言語 (ZenMath)
-
-以下でそれぞれについて説明します。
-
-### Zotica
-Zotica とは、数式を記述するための HTML カスタム要素と、それを綺麗に表示するための CSS ＋ JavaScript のセットです。
-TeX と同程度の品質の数式を組めることと、自動生成にありがちな難読な HTML にはならないようにすることを目指しています。
-この HTML 要素の仕様は、数式の構造というよりもブラウザ上での見た目に沿った構成になっており、記号の位置を調整するためのアドホックな要素も含みます。
-そのため、人間が直接書くことは想定していません。
+Zotica とは、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
+処理系を通すことで HTML 要素に変換され、専用の CSS ＋ JavaScript を適用することで、Web ページ内に数式を表示することができます。
+TeX と同程度の品質の数式を組めることと、出力される HTML が難読なものにならないようにすることを目指しています。
 
 ブラウザ上で数式を表示するエンジンとしては、すでに [MathJax](https://www.mathjax.org/) や [KaTeX](https://katex.org/) などがあります。
 これらとの違いは主に以下の 3 点です。
 
-- HTML の構造が比較的簡潔
 - 記号以外は本文フォントを継承して描画するので数式だけ本文から浮いてしまうことがない
+- 出力される HTML の構造が比較的簡潔
 - CSS を上書きするだけで要素間のスペーシングを比較的簡単にカスタマイズできる
 
-以下のような数式をブラウザ上で描画することができます (キャプチャ画像です)。
+以下は、Zotica による数式の出力例です (Google Chrome でのキャプチャ画像)。
 
 <div align="center">
 <img src="document/image/sample.png">
@@ -35,28 +25,13 @@ TeX と同程度の品質の数式を組めることと、自動生成にあり�
 
 - [描画サンプルページ](https://ziphil.github.io/ZenithalMathWebDemo/main.html)
 
-Zotica のカスタム要素の仕様は以下の通りです。
-現在は試案段階で、突然変更になる可能性がありますなので、利用する際は注意してください。
+Zotica の仕様は以下の通りです。
+現在は試案段階で、突然変更になる可能性がありますので、利用する際は注意してください。
 
-- [バージョン 1.0](document/zotica/1.0.md)
-
-### ZenMath
-Zenithal Math Markup Language (略称 ZenMath) は、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
-人間が直接書くことを想定しています。
-
-ZenMath はほとんど ZenML のサブセットになっています。
-ZenML と異なる点は、以下の 2 ヶ所のみです。
-
-- 一部の普通の要素が 2 つ以上の引数をもてる
-- エスケープ記法がラテン文字に対しても使える (対応するギリシャ文字に変換される)
+- [バージョン 1.0](document/zotica/1.0.md) (策定中)
 
 このリポジトリは、Ruby 実装の ZenML パーサーである `ZenithalParser` クラスを拡張した `ZenmathParser` クラスを提供します。
-このクラスは通常の ZenML パーサーと同じように ZenML ドキュメントをパースしますが、引数の内容が ZenMath で書かれるマクロを処理できるようになっています。
-
-仕様は以下の通りです。
-現在は試案段階なので、突然変更になる可能性があります。
-
-- [バージョン 1.0](document/zenmath/1.0.md) (執筆中)
+このクラスは通常の ZenML パーサーと同じように ZenML ドキュメントをパースしますが、引数の内容が Zotica で書かれたマクロを処理できるようになっています。
 
 ## インストール
 RubyGems からインストールできるようになる予定です。
@@ -67,37 +42,18 @@ gem install zenmath
 ## 使い方
 
 ### Ruby とか ZenML とかよく分からない場合
-Ruby や ZenML はよく分からないが、とりあえず Zotica ＋ ZenMath で数式をレンダリングしてみたいという場合は、以下のドキュメントを参考にしてください。
+Ruby や ZenML はよく分からないが、とりあえず Zotica で数式をレンダリングしてみたいという場合は、以下のドキュメントを参考にしてください。
 
 - [チュートリアル](document/tutorial.md)
-
-### Zotica を単独で使いたい場合
-上記の通り RubyGems から Zotica ＋ ZenMath をインストールします。
-
-Zotica で使用する CSS と JavaScript を生成するため、以下のスクリプトを実行してください。
-```ruby
-# ライブラリの読み込み
-require 'zenml'
-require 'zenmath'
-include Zenithal
-# CSS ファイルの作成 (フォントのファイル名は適宜変更してください)
-style_string = ZenmathParserMethod.create_style_string("font.otf")
-File.write("style.css", style_string)
-# JavaScript ファイルの作成
-script_string = ZenmathParserMethod.create_script_string
-File.write("script.js", script_string)
-```
-`style.css` と `script.js` の 2 つのファイルが生成されるので、これらを Zotica を利用したい HTML のヘッダーで読み込んでください。
-後は、HTML 中に Zotica のカスタム要素を書くだけです。
 
 ### すでに ZenML を使っている場合
 `ZenithalParser` の代わりに `ZenmathParser` インスタンスを作成します。
 
-このクラスには `register_math_macro` メソッドが追加されており、引数の内容が ZenMath で書かれるマクロを登録することができます。
-このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された ZenMath の構造そのものではなく、それが Zotica に変換されたものになります。
+このクラスには `register_math_macro` メソッドが追加されており、引数の内容が Zotica で書かれるマクロを登録することができます。
+このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された Zotica の構造そのものではなく、それが HTML 要素に変換されたものになります。
 
-Zotica を正しく表示するには、専用の CSS と JavaScript を適用する必要があります。
-このクラスのパーサーを使うと、`math-style` マクロによって必要な CSS と JavaScript を埋め込むことができます。
+Zotica が出力する HTML 要素を正しく表示するには、専用の CSS と JavaScript を適用する必要があります。
+このクラスのパーサーを使うと、`math-resource` マクロによって必要な CSS と JavaScript を埋め込むことができます。
 
 詳しくは以下のコードを参照してください。
 ```ruby
@@ -110,9 +66,9 @@ include Zenithal
 # パーサーの作成
 source = File.read("sample.zml")
 parser = ZenmathParser.new(source)
-# ZenMath マクロの登録
+# Zotica マクロの登録
 parser.register_math_macro("m") do |attributes, children_list|
-  # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を Zotica に変換したものが渡される
+  # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を HTML に変換したものが渡される
   # ここではそれをそのまま返して HTML として表示させている
   next children_list.first
 end
@@ -128,7 +84,7 @@ end
   >
   \body<
     \p<
-      ## 登録したマクロ内に ZenMath が書ける
+      ## 登録したマクロ内に Zotica が書ける
       2 次方程式 &m<a \sp<x><2> + bx + c = 0> は &m<\sp<b><2> - 4ac = 0> のとき重解をもち･･･。
     >
   >
@@ -154,7 +110,10 @@ U+F011D, U+F011E, U+F011F のグリフをそれぞれ下方向に 667, 1183, 170
 その上で、コピーした各グリフに対し、グリフの右端の X 座標を 0 にし、文字幅をグリフ幅に一致させます。
 例えば U+F0500 に対しては、グリフ全体を右方向に 338 移動させ、文字幅を 162 に設定します。
 
-### 本文フォントについて
-本文フォント (したがって Zotica の数式中の記号以外の部分に使われるフォント) は Times New Roman を想定しています。
-それ以外のフォントでも概ね綺麗に表示されると思いますが、スペーシングが少し不自然になる可能性があります。
-現状では、SCSS や JavaScript 中の数値を変更する以外の調整方法はありませんが、いずれは何らかの方法で調整できるようにするつもりです。
+### 構成要素の変更について
+開発当初は、数式を記述するマークアップ言語と、数式を表示するための HTML ＋ CSS ＋ JavaScript セットとを分離して、後者のみを「Zotica」と呼んでいました。
+しかし、開発の都合により両者がかなり密結合になってしまったため、両者を合わせて 1 つのプロダクトとして「Zotica」と呼ぶことにしました。
+
+現在は、Zotica のマークアップを HTML に変換する際の処理と CSS ＋ JavaScript のセットが噛み合っていないと、数式が綺麗に表示できません。
+そのため、Zotica が出力するような HTML 要素を別のプロダクトから直接生成することは推奨しません。
+例えば、別のマークアップ方式から Zotica を利用して数式を表示させたい場合など、別のプロダクトから Zotica を利用する場合は、HTML 要素ではなく Zotica のマークアップを生成してください。
