@@ -641,22 +641,5 @@
     "n": "ν", "o": "ο", "p": "π", "q": "ϕ", "r": "ρ", "s": "σ", "t": "τ", "u": "θ", "v": "ω", "w": "ς", "x": "χ", "y": "υ", "z": "ζ",
     "A": "Α", "B": "Β", "C": "Ψ", "D": "Δ", "E": "Ε", "F": "Φ", "G": "Γ", "H": "Η", "I": "Ι", "J": "Ξ", "K": "Κ", "L": "Λ", "M": "Μ", 
     "N": "Ν", "O": "Ο", "P": "Π", "Q": "Φ", "R": "Ρ", "S": "Σ", "T": "Τ", "U": "Θ", "V": "Ω", "W": "Σ", "X": "Χ", "Y": "Υ", "Z": "Ζ"
-  },
-  "height": [
-    {
-      "f": "full", "g": "full", "j": "full", "p": "full", "q": "full", "y": "full",
-      "β": "full", "γ": "full", "η": "full", "μ": "full", "ρ": "full", "φ": "full", "χ": "full", "ψ": "full",
-      "ϱ": "full", "ϕ": "full",
-      "ζ": "half", "ξ": "half"
-    },
-    {
-      "a": "small", "c": "small", "e": "small", "g": "small", "m": "small", "n": "small", "o": "small", "p": "small", "q": "small",
-      "r": "small", "s": "small", "u": "small", "v": "small", "w": "small", "x": "small", "y": "small", "z": "small",
-      "α": "small", "γ": "small", "ε": "small", "η": "small", "ι": "small", "κ": "small", "μ": "small", "ν": "small", "ο": "small",
-      "π": "small", "ρ": "small", "σ": "small", "τ": "small", "υ": "small", "φ": "small", "χ": "small", "ψ": "small", "ω": "small", 
-      "ϵ": "small", "ϰ": "small", "ϖ": "small", "ϱ": "small",
-      "t": "half",
-      "i": "dot", "j": "dot"
-    }
-  ]
+  }
 }
