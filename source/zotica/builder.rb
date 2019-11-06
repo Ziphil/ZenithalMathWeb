@@ -12,7 +12,7 @@ module ZoticaBuilder
   DATA_PATH = "resource/math.json"
   SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scas" => "acas", "quad" => "sgl", "qquad" => "dbl"}
   PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
-  SPACINGS = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
+  ROLES = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
   private
@@ -340,7 +340,7 @@ module ZoticaBuilder
 
   def determine_role(attributes)
     role = nil
-    SPACINGS.each do |each_role|
+    ROLES.each do |each_role|
       if attributes[each_role]
         role = each_role
       end
@@ -351,7 +351,7 @@ module ZoticaBuilder
   def add_role(nodes, role)
     nodes.each do |node|
       if node.is_a?(Element) && role
-        classes = node["class"].split(" ") - SPACINGS
+        classes = node["class"].split(" ") - ROLES
         classes << role
         node["class"] = classes.join(" ")
       end
@@ -362,10 +362,10 @@ module ZoticaBuilder
     inner_elements = source_element.elements.to_a
     if inner_elements.size == 1
       inner_element = inner_elements.first
-      inner_role = (inner_element["class"].split(" ") & SPACINGS).first
+      inner_role = (inner_element["class"].split(" ") & ROLES).first
       if inner_role
         target_classes = target_element["class"].split(" ")
-        if (target_classes & SPACINGS).empty?
+        if (target_classes & ROLES).empty?
           target_element["class"] = [*target_classes, inner_role].join(" ")
         end
       end
