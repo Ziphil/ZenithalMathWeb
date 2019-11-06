@@ -144,10 +144,10 @@ module ZoticaParserMethod
     unless path
       if type == :main
         path = File.expand_path("../" + DEFAULT_TTF_PATHS[:main], __FILE__)
-        metrics = {:em => 2048, :ascent => 1638 + 78, :descent => -410 + 78}
+        metrics = {:em => 2048, :ascent => 1638 + 78, :descent => 410 - 78}
       else
         path = File.expand_path("../" + DEFAULT_TTF_PATHS[:math], __FILE__)
-        metrics = {:em => 1000, :ascent => 762, :descent => -238}
+        metrics = {:em => 1000, :ascent => 762, :descent => 238}
       end
     end
     file = TTFunk::File.open(path)
@@ -159,7 +159,7 @@ module ZoticaParserMethod
         glyph = file.glyph_outlines.for(glyph_id)
         if glyph
           top_margin = (glyph.y_max - metrics[:ascent]) / metrics[:em].to_f
-          bottom_margin = (-glyph.y_min + metrics[:descent]) / metrics[:em].to_f
+          bottom_margin = (-glyph.y_min - metrics[:descent]) / metrics[:em].to_f
           string << ",\n" unless first
           string << "  \"#{codepoint}\": [#{bottom_margin}, #{top_margin}]"
           first = false
@@ -188,10 +188,10 @@ class ZoticaParser < ZenithalParser
 
   include ZoticaParserMethod
 
-  attr_reader :raw_macro_name
-  attr_reader :resource_macro_name
+  attr_accessor :raw_macro_name
+  attr_accessor :resource_macro_name
 
-  def initialize(source, main_font_path = nil)
+  def initialize(source)
     super(source)
     @simple_math_macro_name = nil
     @raw_macro_name = "raw"
@@ -199,14 +199,20 @@ class ZoticaParser < ZenithalParser
     @math_macro_names = []
     @fonts = {}
     @math_level = 0
-    parse_fonts(main_font_path)
+    load_default_fonts
   end
 
-  def parse_fonts(main_font_path)
-    main_font_path ||= File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
-    math_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
-    @fonts[:main] = JSON.parse(File.read(main_font_path))
-    @fonts[:math] = JSON.parse(File.read(math_font_path))
+  def load_default_fonts
+    main_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
+    math_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
+    @fonts[:main] = JSON.parse(File.read(main_path))
+    @fonts[:math] = JSON.parse(File.read(math_path))
+  end
+
+  def load_font(path)
+    if path
+      @fonts[:main] = JSON.parse(File.read(path))
+    end
   end
 
   def register_math_macro(name, &block)
