@@ -19,46 +19,46 @@ module ZoticaBuilder
 
   def create_math_element(name, attributes, children_list)
     this = Nodes[]
-    spacing = determine_spacing(attributes)
+    role = determine_role(attributes)
     case name
     when "n"
       text = children_list[0].first.to_s
-      this << build_number(text, spacing)
+      this << build_number(text, role)
     when "i"
       types = attributes["t"]&.split(/\s*,\s*/) || []
       text = children_list[0].first.to_s
-      this << build_identifier(text, types, spacing)
+      this << build_identifier(text, types, role)
     when "bf"
       text = children_list[0].first.to_s
-      this << build_identifier(text, ["bf"], spacing)
+      this << build_identifier(text, ["bf"], role)
     when "rm"
       text = children_list[0].first.to_s
-      this << build_identifier(text, ["rm"], spacing)
+      this << build_identifier(text, ["rm"], role)
     when "bfrm"
       text = children_list[0].first.to_s
-      this << build_identifier(text, ["bf", "rm"], spacing)
+      this << build_identifier(text, ["bf", "rm"], role)
     when "bb", "varbb", "cal", "scr", "frak", "varfrak"
       raw_text = children_list[0].first.value
       text = fetch_alternative_identifier_text(name, raw_text)
-      this << build_identifier(text, ["alt"], spacing)
+      this << build_identifier(text, ["alt"], role)
     when "op"
       text = children_list[0].first.to_s
-      this << build_identifier(text, ["fun", "rm"], spacing)
+      this << build_identifier(text, ["fun", "rm"], role)
     when DATA["identifier"].method(:key?)
       char = fetch_identifier_char(name)
-      this << build_identifier(char, [], spacing)
+      this << build_identifier(char, [], role)
     when DATA["function"].method(:include?)
-      this << build_identifier(name, ["fun", "rm"], spacing)
+      this << build_identifier(name, ["fun", "rm"], role)
     when "o"
       types = attributes["t"]&.split(/\s*,\s*/) || ["ord"]
       symbol = children_list[0].first.to_s
-      this << build_operator(symbol, types, spacing)
+      this << build_operator(symbol, types, role)
     when DATA["operator"].method(:key?)
       symbol, types = fetch_operator_symbol(name)
-      this << build_operator(symbol, types, spacing)
+      this << build_operator(symbol, types, role)
     when "text"
       text = children_list[0].first.value
-      this << build_text(text, spacing)
+      this << build_text(text, role)
     when "fence"
       stretch_level = attributes["s"]
       left_kind = attributes["l"] || "paren"
@@ -66,7 +66,7 @@ module ZoticaBuilder
       left_symbol = fetch_fence_symbol(left_kind, 0, stretch_level)
       right_symbol = fetch_fence_symbol(right_kind, 1, stretch_level)
       modify = !stretch_level
-      this << build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, spacing) do |content_this|
+      this << build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, role) do |content_this|
         content_this << children_list.fetch(0, Nodes[])
       end
     when "set"
@@ -78,7 +78,7 @@ module ZoticaBuilder
       right_symbol = fetch_fence_symbol(right_kind, 1, stretch_level)
       center_symbol = fetch_fence_symbol(center_kind, 0, stretch_level)
       modify = !stretch_level
-      this << build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing) do |left_this, right_this|
+      this << build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, role) do |left_this, right_this|
         left_this << children_list.fetch(0, Nodes[])
         right_this << children_list.fetch(1, Nodes[])
       end
@@ -87,21 +87,21 @@ module ZoticaBuilder
       left_symbol = fetch_fence_symbol(name, 0, stretch_level)
       right_symbol = fetch_fence_symbol(name, 1, stretch_level)
       modify = !stretch_level
-      this << build_fence(name, name, left_symbol, right_symbol, modify, spacing) do |content_this|
+      this << build_fence(name, name, left_symbol, right_symbol, modify, role) do |content_this|
         content_this << children_list.fetch(0, Nodes[])
       end
     when "intlike"
       kind = attributes["k"] || "int"
       size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_integral_symbol(kind, size)
-      this << build_integral(symbol, size, spacing) do |sub_this, super_this|
+      this << build_integral(symbol, size, role) do |sub_this, super_this|
         sub_this << children_list.fetch(0, Nodes[])
         super_this << children_list.fetch(1, Nodes[])
       end
     when DATA["integral"].method(:key?)
       size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_integral_symbol(name, size)
-      this << build_integral(symbol, size, spacing) do |sub_this, super_this|
+      this << build_integral(symbol, size, role) do |sub_this, super_this|
         sub_this << children_list.fetch(0, Nodes[])
         super_this << children_list.fetch(1, Nodes[])
       end
@@ -109,14 +109,14 @@ module ZoticaBuilder
       kind = attributes["k"] || "sum"
       size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_sum_symbol(kind, size)
-      this << build_sum(symbol, size, spacing) do |under_this, over_this|
+      this << build_sum(symbol, size, role) do |under_this, over_this|
         under_this << children_list.fetch(0, Nodes[])
         over_this << children_list.fetch(1, Nodes[])
       end
     when DATA["sum"].method(:key?)
       size = (attributes["in"]) ? "inl" : "lrg"
       symbol = fetch_sum_symbol(name, size)
-      this << build_sum(symbol, size, spacing) do |under_this, over_this|
+      this << build_sum(symbol, size, role) do |under_this, over_this|
         under_this << children_list.fetch(0, Nodes[])
         over_this << children_list.fetch(1, Nodes[])
       end
@@ -124,13 +124,13 @@ module ZoticaBuilder
       kind = attributes["k"]
       under_symbol = fetch_accent_symbol(kind, 0)
       over_symbol = fetch_accent_symbol(kind, 1)
-      this << build_accent(under_symbol, over_symbol, spacing) do |base_this|
+      this << build_accent(under_symbol, over_symbol, role) do |base_this|
         base_this << children_list.fetch(0, Nodes[])
       end
     when DATA["accent"].method(:key?)
       under_symbol = fetch_accent_symbol(name, 0)
       over_symbol = fetch_accent_symbol(name, 1)
-      this << build_accent(under_symbol, over_symbol, spacing) do |base_this|
+      this << build_accent(under_symbol, over_symbol, role) do |base_this|
         base_this << children_list.fetch(0, Nodes[])
       end
     when "wide"
@@ -139,7 +139,7 @@ module ZoticaBuilder
       under_symbol = fetch_wide_symbol(kind, 0, stretch_level)
       over_symbol  = fetch_wide_symbol(kind, 1, stretch_level)
       modify = !stretch_level
-      this << build_wide(kind, under_symbol, over_symbol, modify, spacing) do |base_this|
+      this << build_wide(kind, under_symbol, over_symbol, modify, role) do |base_this|
         base_this << children_list.fetch(0, Nodes[])
       end
     when DATA["wide"].method(:key?)
@@ -147,11 +147,11 @@ module ZoticaBuilder
       under_symbol = fetch_wide_symbol(name, 0, stretch_level)
       over_symbol  = fetch_wide_symbol(name, 1, stretch_level)
       modify = !stretch_level
-      this << build_wide(name, under_symbol, over_symbol, modify, spacing) do |base_this|
+      this << build_wide(name, under_symbol, over_symbol, modify, role) do |base_this|
         base_this << children_list.fetch(0, Nodes[])
       end
     when "multi"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_this, left_super_this|
+      this << build_subsuper(role) do |base_this, sub_this, super_this, left_sub_this, left_super_this|
         base_this << children_list.fetch(0, Nodes[])
         sub_this << children_list.fetch(1, Nodes[])
         super_this << children_list.fetch(2, Nodes[])
@@ -159,39 +159,39 @@ module ZoticaBuilder
         left_super_this << children_list.fetch(4, Nodes[])
       end
     when "sb"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
+      this << build_subsuper(role) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
         base_this << children_list.fetch(0, Nodes[])
         sub_this << children_list.fetch(1, Nodes[])
       end
     when "sp"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
+      this << build_subsuper(role) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
         base_this << children_list.fetch(0, Nodes[])
         super_this << children_list.fetch(1, Nodes[])
       end
     when "sbsp"
-      this << build_subsuper(spacing) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
+      this << build_subsuper(role) do |base_this, sub_this, super_this, left_sub_element, left_super_element|
         base_this << children_list.fetch(0, Nodes[])
         sub_this << children_list.fetch(1, Nodes[])
         super_this << children_list.fetch(2, Nodes[])
       end
     when "unov"
-      this << build_underover(spacing) do |base_this, under_this, over_this|
+      this << build_underover(role) do |base_this, under_this, over_this|
         base_this << children_list.fetch(0, Nodes[])
         under_this << children_list.fetch(1, Nodes[])
         over_this << children_list.fetch(2, Nodes[])
       end
     when "un"
-      this << build_underover(spacing) do |base_this, under_this, over_this|
+      this << build_underover(role) do |base_this, under_this, over_this|
         base_this << children_list.fetch(0, Nodes[])
         under_this << children_list.fetch(1, Nodes[])
       end
     when "ov"
-      this << build_underover(spacing) do |base_this, under_this, over_this|
+      this << build_underover(role) do |base_this, under_this, over_this|
         base_this << children_list.fetch(0, Nodes[])
         over_this << children_list.fetch(1, Nodes[])
       end
     when "frac"
-      this << build_fraction(spacing) do |numerator_this, denominator_this|
+      this << build_fraction(role) do |numerator_this, denominator_this|
         numerator_this << children_list.fetch(0, Nodes[])
         denominator_this << children_list.fetch(1, Nodes[])
       end
@@ -199,7 +199,7 @@ module ZoticaBuilder
       stretch_level = attributes["s"]
       symbol = fetch_radical_symbol(stretch_level)
       modify = !stretch_level
-      this << build_radical(symbol, modify, spacing) do |content_this, index_this|
+      this << build_radical(symbol, modify, role) do |content_this, index_this|
         content_this << children_list.fetch(0, Nodes[])
         index_this << children_list.fetch(1, Nodes[])
       end
@@ -207,26 +207,26 @@ module ZoticaBuilder
       type = attributes["t"]
       align_config = attributes["align"]
       raw = !!attributes["raw"]
-      this << build_table(type, align_config, raw, spacing) do |table_this|
+      this << build_table(type, align_config, raw, role) do |table_this|
         table_this << children_list.fetch(0, Nodes[])
       end
     when "array"
       align_config = attributes["align"]
-      this << build_table("std", align_config, true, spacing) do |table_this|
+      this << build_table("std", align_config, true, role) do |table_this|
         table_this << children_list.fetch(0, Nodes[])
       end
     when "stack"
-      this << build_table("stk", nil, true, spacing) do |table_this|
+      this << build_table("stk", nil, true, role) do |table_this|
         table_this << children_list.fetch(0, Nodes[])
       end
     when "matrix"
-      this << build_table("mat", nil, false, spacing) do |table_this|
+      this << build_table("mat", nil, false, role) do |table_this|
         table_this << children_list.fetch(0, Nodes[])
       end
     when "case"
       left_symbol = fetch_fence_symbol("brace", 0, nil)
       right_symbol = fetch_fence_symbol("none", 1, nil)
-      this << build_fence("brace", "none", left_symbol, right_symbol, true, spacing) do |this|
+      this << build_fence("brace", "none", left_symbol, right_symbol, true, role) do |this|
         this << build_table("cas", "ll", false) do |table_this|
           table_this << children_list.fetch(0, Nodes[])
         end
@@ -234,28 +234,28 @@ module ZoticaBuilder
     when "diag"
       vertical_gaps_string = attributes["ver"]
       horizontal_gaps_string = attributes["hor"]
-      this << build_diagram(vertical_gaps_string, horizontal_gaps_string, spacing) do |table_this|
+      this << build_diagram(vertical_gaps_string, horizontal_gaps_string, role) do |table_this|
         table_this << children_list.fetch(0, Nodes[])
       end
     when "c"
-      this << build_table_cell(spacing) do |cell_this|
+      this << build_table_cell(role) do |cell_this|
         cell_this << children_list.fetch(0, Nodes[])
       end
     when "cc"
       children_list.each do |children|
-        this << build_table_cell(spacing) do |cell_this|
+        this << build_table_cell(role) do |cell_this|
           cell_this << children
         end
       end
       this << Element.new("math-sys-br")
     when "v"
       vertex_name = attributes["name"]
-      this << build_diagram_vertex(vertex_name, spacing) do |vertex_this|
+      this << build_diagram_vertex(vertex_name, role) do |vertex_this|
         vertex_this << children_list.fetch(0, Nodes[])
       end
     when "vv"
       children_list.each do |children|
-        this << build_diagram_vertex(spacing) do |vertex_this|
+        this << build_diagram_vertex(role) do |vertex_this|
           vertex_this << children
         end
       end
@@ -273,7 +273,7 @@ module ZoticaBuilder
       configs[:inverted] = attributes["inv"]
       configs[:mark] = attributes["mark"]
       arrow_name = attributes["name"]
-      this << build_arrow(arrow_name, configs, spacing) do |label_this|
+      this << build_arrow(arrow_name, configs, role) do |label_this|
         label_this << children_list.fetch(0, Nodes[])
       end
     when "br"
@@ -281,20 +281,20 @@ module ZoticaBuilder
     when "g"
       transform_configs = {}
       transform_configs[:rotate] = attributes["rotate"]
-      this << build_group(transform_configs, spacing) do |content_this|
+      this << build_group(transform_configs, role) do |content_this|
         content_this << children_list.fetch(0, Nodes[])
       end
     when "s"
       type = attributes["t"] || "medium"
-      this << build_space(type, spacing)
+      this << build_space(type, role)
     when "ph", "vph", "hph"
       type = PHANTOM_TYPES[name]
-      this << build_phantom(type, spacing) do |content_this|
+      this << build_phantom(type, role) do |content_this|
         content_this << children_list.fetch(0, Nodes[])
       end
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
-      this << build_space(type, spacing)
+      this << build_space(type, role)
     else
       this << Element.build(name) do |this|
         attributes.each do |key, value|
@@ -338,48 +338,48 @@ module ZoticaBuilder
 
   public
 
-  def determine_spacing(attributes)
-    spacing = nil
-    SPACINGS.each do |each_spacing|
-      if attributes[each_spacing]
-        spacing = each_spacing
+  def determine_role(attributes)
+    role = nil
+    SPACINGS.each do |each_role|
+      if attributes[each_role]
+        role = each_role
       end
     end
-    return spacing
+    return role
   end
 
-  def add_spacing(nodes, spacing)
+  def add_role(nodes, role)
     nodes.each do |node|
-      if node.is_a?(Element) && spacing
+      if node.is_a?(Element) && role
         classes = node["class"].split(" ") - SPACINGS
-        classes << spacing
+        classes << role
         node["class"] = classes.join(" ")
       end
     end
   end
 
-  def inherit_spacing(target_element, source_element)
+  def inherit_role(target_element, source_element)
     inner_elements = source_element.elements.to_a
     if inner_elements.size == 1
       inner_element = inner_elements.first
-      inner_spacing = (inner_element["class"].split(" ") & SPACINGS).first
-      if inner_spacing
+      inner_role = (inner_element["class"].split(" ") & SPACINGS).first
+      if inner_role
         target_classes = target_element["class"].split(" ")
         if (target_classes & SPACINGS).empty?
-          target_element["class"] = [*target_classes, inner_spacing].join(" ")
+          target_element["class"] = [*target_classes, inner_role].join(" ")
         end
       end
     end
   end
 
-  def build_number(text, spacing = nil)
+  def build_number(text, role = nil)
     this = Nodes[]
     element = nil
     this << Element.build("math-n") do |this|
       this << ~text
       element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     modify_vertical_margins(element, "main")
     return this
   end
@@ -394,7 +394,7 @@ module ZoticaBuilder
     return text
   end
 
-  def build_identifier(text, types, spacing = nil)
+  def build_identifier(text, types, role = nil)
     this = Nodes[]
     element = nil
     font_type = (types.include?("alt")) ? "math" : "main"
@@ -404,7 +404,7 @@ module ZoticaBuilder
       this << ~text
       element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     modify_vertical_margins(element, font_type)
     return this
   end
@@ -414,7 +414,7 @@ module ZoticaBuilder
     return symbol, types
   end
 
-  def build_operator(symbol, types, spacing = nil, &block)
+  def build_operator(symbol, types, role = nil, &block)
     this = Nodes[]
     element = nil
     font_type = (types.include?("txt")) ? "main" : "math"
@@ -423,7 +423,7 @@ module ZoticaBuilder
       this << ~symbol
       element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     modify_vertical_margins(element, font_type)
     return this
   end
@@ -446,7 +446,7 @@ module ZoticaBuilder
     element["style"] += "margin-bottom: #{max_bottom_margin}em; "
   end
 
-  def build_strut(type, spacing = nil)
+  def build_strut(type, role = nil)
     this = Nodes[]
     this << Element.build("math-strut") do |this|
       if type == "upper" || type == "dupper"
@@ -470,11 +470,11 @@ module ZoticaBuilder
         this << ~" "
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     return this
   end
 
-  def build_subsuper(spacing = nil, &block)
+  def build_subsuper(role = nil, &block)
     this = Nodes[]
     base_element, sub_element, super_element, left_sub_element, left_super_element = nil
     main_element = nil
@@ -496,9 +496,9 @@ module ZoticaBuilder
         super_element = this
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(base_element, sub_element, super_element, left_sub_element, left_super_element)
-    inherit_spacing(main_element, base_element)
+    inherit_role(main_element, base_element)
     modify_subsuper(base_element, sub_element, super_element, left_sub_element, left_super_element)
     return this
   end
@@ -518,7 +518,7 @@ module ZoticaBuilder
     end
   end
 
-  def build_underover(spacing = nil, &block)
+  def build_underover(role = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
@@ -536,9 +536,9 @@ module ZoticaBuilder
         end
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(base_element, under_element, over_element)
-    inherit_spacing(main_element, base_element)
+    inherit_role(main_element, base_element)
     modify_underover(under_element, over_element)
     return this
   end
@@ -552,7 +552,7 @@ module ZoticaBuilder
     end
   end
 
-  def build_fraction(spacing = nil, &block)
+  def build_fraction(role = nil, &block)
     this = Nodes[]
     numerator_element, denominator_element = nil
     this << Element.build("math-frac") do |this|
@@ -566,7 +566,7 @@ module ZoticaBuilder
         end
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(numerator_element, denominator_element)
     modify_fraction(numerator_element, denominator_element)
     return this
@@ -583,7 +583,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_radical(symbol, modify, spacing = nil, &block)
+  def build_radical(symbol, modify, role = nil, &block)
     this = Nodes[]
     content_element, index_element = nil
     this << Element.build("math-sqrt") do |this|
@@ -602,7 +602,7 @@ module ZoticaBuilder
         content_element = this
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(content_element, index_element)
     modify_radical(content_element, index_element)
     return this
@@ -621,7 +621,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, spacing = nil, &block)
+  def build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, role = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-fence") do |this|
@@ -645,12 +645,12 @@ module ZoticaBuilder
         end
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(content_element)
     return this
   end
 
-  def build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, spacing = nil, &block)
+  def build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, role = nil, &block)
     this = Nodes[]
     left_element, right_element = nil
     this << Element.build("math-fence") do |this|
@@ -684,7 +684,7 @@ module ZoticaBuilder
         end
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(left_element, right_element)
     return this
   end
@@ -695,7 +695,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_integral(symbol, size, spacing = nil, &block)
+  def build_integral(symbol, size, role = nil, &block)
     this = Nodes[]
     base_element, sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
@@ -720,7 +720,7 @@ module ZoticaBuilder
         super_element = this
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(sub_element, super_element)
     modify_subsuper(base_element, sub_element, super_element, nil, nil)
     return this
@@ -732,7 +732,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_sum(symbol, size, spacing = nil, &block)
+  def build_sum(symbol, size, role = nil, &block)
     this = Nodes[]
     if size == "lrg"
       under_element, over_element = nil
@@ -753,7 +753,7 @@ module ZoticaBuilder
           end
         end
       end
-      add_spacing(this, spacing)
+      add_role(this, role)
       block&.call(under_element, over_element)
       modify_underover(under_element, over_element)
     else
@@ -774,14 +774,14 @@ module ZoticaBuilder
           super_element = this
         end
       end
-      add_spacing(this, spacing)
+      add_role(this, role)
       block&.call(sub_element, super_element)
       modify_subsuper(base_element, sub_element, super_element, nil, nil)
     end
     return this
   end
 
-  def build_accent(under_symbol, over_symbol, spacing = nil, &block)
+  def build_accent(under_symbol, over_symbol, role = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
@@ -812,9 +812,9 @@ module ZoticaBuilder
         end
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(base_element)
-    inherit_spacing(main_element, base_element)
+    inherit_role(main_element, base_element)
     modify_underover(under_element, over_element)
     modify_accent(base_element, under_element, over_element)
     return this
@@ -848,7 +848,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_wide(kind, under_symbol, over_symbol, modify, spacing = nil, &block)
+  def build_wide(kind, under_symbol, over_symbol, modify, role = nil, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
@@ -883,27 +883,27 @@ module ZoticaBuilder
         end
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(base_element)
-    inherit_spacing(main_element, base_element)
+    inherit_role(main_element, base_element)
     modify_underover(under_element, over_element)
     return this
   end
 
-  def build_table(type, align_config, raw, spacing = nil, &block)
+  def build_table(type, align_config, raw, role = nil, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
       this["class"] = type
       table_element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(table_element)
     modify_table(table_element, type, align_config, raw)
     return this
   end
 
-  def build_diagram(vertical_gaps_string, horizontal_gaps_string, spacing = nil, &block)
+  def build_diagram(vertical_gaps_string, horizontal_gaps_string, role = nil, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-diagram") do |this|
@@ -915,7 +915,7 @@ module ZoticaBuilder
       end
       table_element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(table_element)
     modify_diagram(table_element, vertical_gaps_string, horizontal_gaps_string)
     modify_table(table_element, "diag", nil, false)
@@ -982,18 +982,18 @@ module ZoticaBuilder
     end
   end
 
-  def build_table_cell(spacing = nil, &block)
+  def build_table_cell(role = nil, &block)
     this = Nodes[]
     cell_element = nil
     this << Element.build("math-cell") do |this|
       cell_element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(cell_element)
     return this
   end
 
-  def build_diagram_vertex(name, spacing = nil, &block)
+  def build_diagram_vertex(name, role = nil, &block)
     this = Nodes[]
     vertex_element = nil
     this << Element.build("math-cellwrap") do |this|
@@ -1004,12 +1004,12 @@ module ZoticaBuilder
         vertex_element = this
       end
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(vertex_element)
     return this
   end
 
-  def build_arrow(name, configs, spacing = nil, &block)
+  def build_arrow(name, configs, role = nil, &block)
     this = Nodes[]
     label_element = nil
     this << Element.build("math-arrow") do |this|
@@ -1044,12 +1044,12 @@ module ZoticaBuilder
       end
       label_element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(label_element)
     return this
   end
 
-  def build_group(transform_configs, spacing = nil, &block)
+  def build_group(transform_configs, role = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
@@ -1062,21 +1062,21 @@ module ZoticaBuilder
       end
       content_element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(content_element)
     return this
   end
 
-  def build_space(type, spacing = nil)
+  def build_space(type, role = nil)
     this = Nodes[]
     this << Element.build("math-space") do |this|
       this["class"] = type
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     return this
   end
 
-  def build_phantom(type, spacing = nil, &block)
+  def build_phantom(type, role = nil, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-phantom") do |this|
@@ -1086,17 +1086,17 @@ module ZoticaBuilder
       end
       content_element = this
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     block&.call(content_element)
     return this
   end
 
-  def build_text(text, spacing = nil, &block)
+  def build_text(text, role = nil, &block)
     this = Nodes[]
     this << Element.build("math-text") do |this|
       this << Text.new(text, true, nil, false)
     end
-    add_spacing(this, spacing)
+    add_role(this, role)
     return this
   end
 
