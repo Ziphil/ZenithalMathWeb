@@ -325,11 +325,13 @@
       >
       \h1<Alternative letters>
       \p<
-        &m<\bb<Aa> * \cal<Bb> * \scr<Cc> * \frak<Dd>>
+        &m<\bb<Aa> * \varbb<Bb> * \cal<Cc> * \scr<Dd> * \frak<Ee>>
         or
         &m<`s \nin> \frak<gl> (\sb<\frak<S>><n>)>
         or
-        &m<`t \in> \sp<\scr<G>><\scr<F>>: T \raarr> S>.
+        &m<`t \in> \sp<\scr<G>><\scr<F>>: T \raarr> S>
+        or
+        &m<\frak<g> = \frak<h> \oplus> \bigoplus<`a \in> `D> \sb<\frak<g>><`a>>.
       >
       \h1<Miscellaneous>
       \p<
@@ -558,7 +560,7 @@
             \v<P \sb|bin|<\otimes>><R> \sb<\bracket<P, \sb<\bracket<P, \bigoplus<i \in> I><> \sb<Y><i>>><T>>><T>>
             \v<\sb<\bracket<P, \bigoplus<i \in> I><> \sb<Y><i>>><T>>
             \ar|s="1",e="2",line="2",tip="none"|> \ar|s="3",e="4",line="2",tip="none"|>
-            \ar|s="1",e="3",inv|<`[ \rm<id>, \rm<id> \otimes> `l `]> \ar|s="2",e="4"|<`l>
+            \ar|s="1",e="3",inv|<\rm<id> \otimes> `[ \rm<id>, `l `]> \ar|s="2",e="4"|<`l>
           >
         >
       >
@@ -573,10 +575,10 @@
             \ar|s="5",e="6",shift="3",pos="70"|<\sbsp<`F><n + 1><n>> \ar|s="6",e="5",shift="3",pos="30"|<\sbsp<`F><n><n + 1>>
             \ar|s="6",e="7",shift="3"|> \ar|s="7",e="6",shift="3"|>
             \ar|s="1",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><0>>
-            \ar|s="2",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><1>>
-            \ar|s="3",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><2>>
-            \ar|s="5",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><n>>
-            \ar|s="6",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><n + 1>>
+            \ar|s="2",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><1>>
+            \ar|s="3",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><2>>
+            \ar|s="5",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><n>>
+            \ar|s="6",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><n + 1>>
             \ar|s="8",e="1",bend="40",pos="85"|<\sbsp<`F><0><\infty>>>
             \ar|s="8",e="2",bend="40",pos="85"|<\sbsp<`F><1><\infty>>>
             \ar|s="8",e="3",bend="40",pos="85"|<\sbsp<`F><2><\infty>>>
