@@ -2,7 +2,7 @@
   "leaf": [
     "n", "i", "op", "o", "bf", "rm", "bfrm",
     "text",
-    "bb", "cal", "scr", "frak"
+    "bb", "varbb", "cal", "scr", "frak", "varfrak"
   ],
   "replacement": {
     "-": "−",
@@ -586,12 +586,24 @@
     }
   },
   "alternative": {
-    "bb": {
+    "varbb": {
       "a": "𝕒", "b": "𝕓", "c": "𝕔", "d": "𝕕", "e": "𝕖", "f": "𝕗", "g": "𝕘", "h": "𝕙", "i": "𝕚", "j": "𝕛", "k": "𝕜", "l": "𝕝", "m": "𝕞", 
       "n": "𝕟", "o": "𝕠", "p": "𝕡", "q": "𝕢", "r": "𝕣", "s": "𝕤", "t": "𝕥", "u": "𝕦", "v": "𝕧", "w": "𝕨", "x": "𝕩", "y": "𝕪", "z": "𝕫",
       "A": "𝔸", "B": "𝔹", "C": "ℂ", "D": "𝔻", "E": "𝔼", "F": "𝔽", "G": "𝔾", "H": "ℍ", "I": "𝕀", "J": "𝕁", "K": "𝕂", "L": "𝕃", "M": "𝕄", 
       "N": "ℕ", "O": "𝕆", "P": "ℙ", "Q": "ℚ", "R": "ℝ", "S": "𝕊", "T": "𝕋", "U": "𝕌", "V": "𝕍", "W": "𝕎", "X": "𝕏", "Y": "𝕐", "Z": "ℤ",
       "0": "𝟘", "1": "𝟙", "2": "𝟚", "3": "𝟛", "4": "𝟜", "5": "𝟝", "6": "𝟞", "7": "𝟟", "8": "𝟠", "9": "𝟡"
+    },
+    "bb": {
+      "a": "\uDB84\uDC1A", "b": "\uDB84\uDC1B", "c": "\uDB84\uDC1C", "d": "\uDB84\uDC1D", "e": "\uDB84\uDC1E", "f": "\uDB84\uDC1F", "g": "\uDB84\uDC20",
+      "h": "\uDB84\uDC21", "i": "\uDB84\uDC22", "j": "\uDB84\uDC23", "k": "\uDB84\uDC24", "l": "\uDB84\uDC25", "m": "\uDB84\uDC26", "n": "\uDB84\uDC27",
+      "o": "\uDB84\uDC28", "p": "\uDB84\uDC29", "q": "\uDB84\uDC2A", "r": "\uDB84\uDC2B", "s": "\uDB84\uDC2C", "t": "\uDB84\uDC2D", "u": "\uDB84\uDC2E",
+      "v": "\uDB84\uDC2F", "w": "\uDB84\uDC30", "x": "\uDB84\uDC31", "y": "\uDB84\uDC32", "z": "\uDB84\uDC33",
+      "A": "\uDB84\uDC00", "B": "\uDB84\uDC01", "C": "\uDB84\uDC02", "D": "\uDB84\uDC03", "E": "\uDB84\uDC04", "F": "\uDB84\uDC05", "G": "\uDB84\uDC06",
+      "H": "\uDB84\uDC07", "I": "\uDB84\uDC08", "J": "\uDB84\uDC09", "K": "\uDB84\uDC0A", "L": "\uDB84\uDC0B", "M": "\uDB84\uDC0C", "N": "\uDB84\uDC0D",
+      "O": "\uDB84\uDC0E", "P": "\uDB84\uDC0F", "Q": "\uDB84\uDC10", "R": "\uDB84\uDC11", "S": "\uDB84\uDC12", "T": "\uDB84\uDC13", "U": "\uDB84\uDC14",
+      "V": "\uDB84\uDC15", "W": "\uDB84\uDC16", "X": "\uDB84\uDC17", "Y": "\uDB84\uDC18", "Z": "\uDB84\uDC19",
+      "0": "\uDB84\uDC34", "1": "\uDB84\uDC35", "2": "\uDB84\uDC36", "3": "\uDB84\uDC37", "4": "\uDB84\uDC38",
+      "5": "\uDB84\uDC39", "6": "\uDB84\uDC3A", "7": "\uDB84\uDC3B", "8": "\uDB84\uDC3C", "9": "\uDB84\uDC3D"
     },
     "cal": {
       "a": "𝒶", "b": "𝒷", "c": "𝒸", "d": "𝒹", "e": "ℯ", "f": "𝒻", "g": "ℊ", "h": "𝒽", "i": "𝒾", "j": "𝒿", "k": "𝓀", "l": "𝓁", "m": "𝓂", 
@@ -607,11 +619,21 @@
       "O": "\uDB81\uDCA6", "P": "\uDB81\uDCA7", "Q": "\uDB81\uDCA8", "R": "\uDB81\uDCA9", "S": "\uDB81\uDCAA", "T": "\uDB81\uDCAB", "U": "\uDB81\uDCAC", 
       "V": "\uDB81\uDCAD", "W": "\uDB81\uDCAE", "X": "\uDB81\uDCAF", "Y": "\uDB81\uDCB0", "Z": "\uDB81\uDCB1"
     },
-    "frak": {
+    "varfrak": {
       "a": "𝔞", "b": "𝔟", "c": "𝔠", "d": "𝔡", "e": "𝔢", "f": "𝔣", "g": "𝔤", "h": "𝔥", "i": "𝔦", "j": "𝔧", "k": "𝔨", "l": "𝔩", "m": "𝔪", 
       "n": "𝔫", "o": "𝔬", "p": "𝔭", "q": "𝔮", "r": "𝔯", "s": "𝔰", "t": "𝔱", "u": "𝔲", "v": "𝔳", "w": "𝔴", "x": "𝔵", "y": "𝔶", "z": "𝔷",
       "A": "𝔄", "B": "𝔅", "C": "ℭ", "D": "𝔇", "E": "𝔈", "F": "𝔉", "G": "𝔊", "H": "ℌ", "I": "ℑ", "J": "𝔍", "K": "𝔎", "L": "𝔏", "M": "𝔐", 
       "N": "𝔑", "O": "𝔒", "P": "𝔓", "Q": "𝔔", "R": "ℜ", "S": "𝔖", "T": "𝔗", "U": "𝔘", "V": "𝔙", "W": "𝔚", "X": "𝔛", "Y": "𝔜", "Z": "ℨ"
+    },
+    "frak": {
+      "a": "\uDB84\uDC58", "b": "\uDB84\uDC59", "c": "\uDB84\uDC5A", "d": "\uDB84\uDC5B", "e": "\uDB84\uDC5C", "f": "\uDB84\uDC5D", "g": "\uDB84\uDC5E",
+      "h": "\uDB84\uDC5F", "i": "\uDB84\uDC60", "j": "\uDB84\uDC61", "k": "\uDB84\uDC62", "l": "\uDB84\uDC63", "m": "\uDB84\uDC64", "n": "\uDB84\uDC65",
+      "o": "\uDB84\uDC66", "p": "\uDB84\uDC67", "q": "\uDB84\uDC68", "r": "\uDB84\uDC69", "s": "\uDB84\uDC6A", "t": "\uDB84\uDC6B", "u": "\uDB84\uDC6C",
+      "v": "\uDB84\uDC6D", "w": "\uDB84\uDC6E", "x": "\uDB84\uDC6F", "y": "\uDB84\uDC70", "z": "\uDB84\uDC71",
+      "A": "\uDB84\uDC3E", "B": "\uDB84\uDC3F", "C": "\uDB84\uDC40", "D": "\uDB84\uDC41", "E": "\uDB84\uDC42", "F": "\uDB84\uDC43", "G": "\uDB84\uDC44",
+      "H": "\uDB84\uDC45", "I": "\uDB84\uDC46", "J": "\uDB84\uDC47", "K": "\uDB84\uDC48", "L": "\uDB84\uDC49", "M": "\uDB84\uDC4A", "N": "\uDB84\uDC4B",
+      "O": "\uDB84\uDC4C", "P": "\uDB84\uDC4D", "Q": "\uDB84\uDC4E", "R": "\uDB84\uDC4F", "S": "\uDB84\uDC50", "T": "\uDB84\uDC51", "U": "\uDB84\uDC52",
+      "V": "\uDB84\uDC53", "W": "\uDB84\uDC54", "X": "\uDB84\uDC55", "Y": "\uDB84\uDC56", "Z": "\uDB84\uDC57"
     }
   },
   "greek": {
