@@ -65,9 +65,9 @@ class SubsuperModifier extends Modifier {
     if (height < 0.4875) {
       height = 0.4875;
     }
-    let shiftConst = -0.2;
+    let shiftConst = -0.25;
     if (baseElement.parentNode.classList.contains("int") && !baseElement.parentNode.classList.contains("inl")) {
-      shiftConst = -0.1;
+      shiftConst = -0.15;
     }
     let shift = (height + shiftConst) * fontRatio;
     return -shift;
