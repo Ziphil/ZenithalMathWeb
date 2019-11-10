@@ -259,6 +259,10 @@
         Accented symbols:
         &m<\ring<0>>, &m<\tilde<\bf<K>>>, &m<2 \dot<-> 3>, &m<A \hat<\oplus>> B>, &m<`a: D \ddot<\to>> E>.
       >
+      \p<
+        Double:
+        &m<\hat<\hat<a>>>, &m<\bar<\tilde<P>>>, &m<\tildebelow<\barbelow<g>>>, &m<\ring<\tildebelow<X>>>.
+      >
       \h1<Matrices>
       \p<
         &m<
