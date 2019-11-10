@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.email = ["ziphil.shaleiras@gmail.com"]
   spec.licenses = ["MIT"]
   spec.homepage = "https://github.com/Ziphil/ZenithalMathWeb"
-  spec.summary = "To be written"
+  spec.summary = "Web rendering engine for mathematical formulae"
   spec.description = <<~end_string
     To be written
   end_string
