@@ -144,11 +144,13 @@
     "tort": [
       {
         "0": "❲",
-        "1": "\uDB80\uDDE0", "2": "\uDB80\uDDE1", "3": "\uDB80\uDDE2", "4": "\uDB80\uDDE3"
+        "1": "\uDB80\uDDE0", "2": "\uDB80\uDDE1", "3": "\uDB80\uDDE2", "4": "\uDB80\uDDE3",
+        "start": "\uDB81\uDDA4", "bar": "\uDB81\uDDA5", "end": "\uDB81\uDDA6"
       },
       {
         "0": "❳",
-        "1": "\uDB80\uDDE4", "2": "\uDB80\uDDE5", "3": "\uDB80\uDDE6", "4": "\uDB80\uDDE7"
+        "1": "\uDB80\uDDE4", "2": "\uDB80\uDDE5", "3": "\uDB80\uDDE6", "4": "\uDB80\uDDE7",
+        "start": "\uDB81\uDDA7", "bar": "\uDB81\uDDA8", "end": "\uDB81\uDDA9"
       }
     ]
   },
