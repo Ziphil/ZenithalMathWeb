@@ -156,7 +156,7 @@ class FenceModifier extends Modifier {
   }
 
   calcStretchShift(elements) {
-    let shift = -Math.max(...elements.map((element) => this.getLowerHeight(element))) + 0.25;
+    let shift = Math.max(...elements.map((element) => this.getUpperHeight(element))) - 0.95;
     return shift;
   }
 

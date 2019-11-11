@@ -306,6 +306,8 @@ math-underover {
 
 
 math-vstretch {
+  display: inline-flex !important;
+  flex-direction: column;
 
   >math-start,
   >math-barwrap >math-bar,
