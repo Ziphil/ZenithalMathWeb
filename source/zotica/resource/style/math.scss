@@ -132,6 +132,14 @@ math-frac {
     display: block;
   }
 
+  &.inf >math-num >* {
+    margin-left: spacing(24);
+  }
+
+  &.inf >math-num >*:first-child {
+    margin-left: spacing(0);
+  }
+
   >math-denwrap {
     margin: 0.2em 0em 0em 0em;
     width: 100%;
@@ -494,6 +502,19 @@ math-diagram {
 }
 
 
+math-tree {
+
+  math-infer {
+    vertical-align: bottom;
+  }
+
+  math-label {
+    font-size: 80%;
+  }
+
+}
+
+
 math-space {
 
   $margins: (
@@ -556,7 +577,7 @@ math-root {
     }
   }
 
-  $small-elements: math-sub, math-sup, math-lsub, math-lsup, math-under, math-over, math-index, math-arrow;
+  $small-elements: math-sub, math-sup, math-lsub, math-lsup, math-under, math-over, math-index, math-arrow, math-label;
   $shrink-names: bin, rel, sbin, srel, del, cpar;
 
   @each $small-element in $small-elements {

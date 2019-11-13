@@ -276,6 +276,21 @@ module ZoticaBuilder
       this << build_arrow(arrow_name, configs, role) do |label_this|
         label_this << children_list.fetch(0, Nodes[])
       end
+    when "tree"
+      this << build_tree(role) do |content_this|
+        content_this << children_list.fetch(0, Nodes[])
+      end
+    when "axm"
+      this << build_tree_axiom(role) do |content_this|
+        content_this << children_list.fetch(0, Nodes[])
+      end
+    when "infr"
+      number = attributes["n"].to_i
+      this << build_tree_inference(number, role) do |content_this, right_label_this, left_label_this|
+        content_this << children_list.fetch(0, Nodes[])
+        right_label_this << children_list.fetch(1, Nodes[])
+        left_label_this << children_list.fetch(2, Nodes[])
+      end
     when "br"
       this << Element.new("math-sys-br")
     when "g"
@@ -1048,6 +1063,98 @@ module ZoticaBuilder
     end
     add_role(this, role)
     block&.call(label_element)
+    return this
+  end
+
+  def build_tree(role = nil, &block)
+    this = Nodes[]
+    content_element = nil
+    this << Element.build("math-tree") do |this|
+      content_element = this
+    end
+    add_role(this, role)
+    block&.call(content_element)
+    modify_tree(content_element)
+    return this
+  end
+
+  def modify_tree(element)
+    stack = []
+    element.elements.each do |child|
+      case child.name
+      when "math-axiom"
+        child[0, 0] = build_strut("dlower").first
+        stack.push(child)
+      when "math-sys-infer"
+        number = child.attribute("data-num").to_s.to_i
+        antecedent_elements = stack.pop(number)
+        inference_element = Element.build("math-infer") do |this|
+          this << Element.build("math-label") do |this|
+            child.get_elements("math-left").first.each_element do |each_element|
+              this << each_element
+            end
+          end
+          this << Element.build("math-frac") do |this|
+            this["class"] = "inf"
+            this << Element.build("math-num") do |this|
+              antecedent_elements.each do |antecedent_element|
+                this << antecedent_element
+              end
+            end
+            this << Element.build("math-denwrap") do |this|
+              this << Element.new("math-line")
+              this << Element.build("math-den") do |this|
+                this << build_strut("upper").first
+                this << build_strut("dlower").first
+                child.get_elements("math-cont").first.each_element do |each_element|
+                  this << each_element
+                end
+              end
+            end
+          end
+          this << Element.build("math-label") do |this|
+            child.get_elements("math-right").first.each_element do |each_element|
+              this << each_element
+            end
+          end
+        end
+        stack.push(inference_element)
+      end
+    end
+    element.each_element do |child|
+      child.remove
+    end
+    element << stack.first
+  end
+
+  def build_tree_axiom(role = nil, &block)
+    this = Nodes[]
+    content_element = nil
+    this << Element.build("math-axiom") do |this|
+      content_element = this
+    end
+    add_role(this, role)
+    block&.call(content_element)
+    return this
+  end
+
+  def build_tree_inference(number, role = nil, &block)
+    this = Nodes[]
+    content_element, right_label_element, left_label_element = nil
+    this << Element.build("math-sys-infer") do |this|
+      this["data-num"] = number.to_s
+      this << Element.build("math-cont") do |this|
+        content_element = this
+      end
+      this << Element.build("math-right") do |this|
+        right_label_element = this
+      end
+      this << Element.build("math-left") do |this|
+        left_label_element = this
+      end
+    end
+    add_role(this, role)
+    block&.call(content_element, right_label_element, left_label_element)
     return this
   end
 
