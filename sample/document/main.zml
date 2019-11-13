@@ -538,13 +538,13 @@
       >
       \h1<Proof trees (Gentzen style)>
       \p<
-        &mb<
+        &m<
           \tree<
             \axm<A> \axm<B>
             \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<(A \wedge> B) \to|bin|> C>
             \infr|n="2"|<C><\to|ord|> \rm<E>>
           >
-        >
+        >.
       >
       \h1<More complicated examples>
       \p<
