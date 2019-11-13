@@ -156,32 +156,35 @@ math-frac {
 }
 
 
-math-sqrt {
-  margin-top: 0em;
+math-rad {
 
-  >math-surd {
+  >math-sqrt {
+    margin-top: 0em;
+  }
+
+  >math-sqrt >math-surd {
     margin-top: 0.21em;
     vertical-align: top;
   }
 
-  >math-index +math-surd {
-    margin-left: -0.5em;
-  }
-
-  >math-surd >math-o {
+  >math-sqrt >math-surd >math-o {
     margin-top: 0em;
     margin-bottom: 0em;
   }
 
-  >math-cont {
+  >math-sqrt >math-cont {
     margin: 0em spacing(1) 0em spacing(0);
     padding-top: 0.25em;
     border-top: 0.06em solid;
   }
 
   >math-index {
-    vertical-align: 0.8em;
+    vertical-align: 0.9em;
     font-size: 64%;
+  }
+
+  >math-index +math-sqrt {
+    margin-left: -0.5em; 
   }
 
 }

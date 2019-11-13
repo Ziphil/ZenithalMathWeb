@@ -586,20 +586,22 @@ module ZoticaBuilder
   def build_radical(symbol, modify, role = nil, &block)
     this = Nodes[]
     content_element, index_element = nil
-    this << Element.build("math-sqrt") do |this|
+    this << Element.build("math-rad") do |this|
       if modify
         this["class"] = "mod" 
       end
       this << Element.build("math-index") do |this|
         index_element = this
       end
-      this << Element.build("math-surd") do |this|
-        this << Element.build("math-o") do |this|
-          this << Text.new(symbol, true, nil, false)
+      this << Element.build("math-sqrt") do |this|
+        this << Element.build("math-surd") do |this|
+          this << Element.build("math-o") do |this|
+            this << Text.new(symbol, true, nil, false)
+          end
         end
-      end
-      this << Element.build("math-cont") do |this|
-        content_element = this
+        this << Element.build("math-cont") do |this|
+          content_element = this
+        end
       end
     end
     add_role(this, role)
