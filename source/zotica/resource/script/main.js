@@ -3,6 +3,39 @@
 
 class Modifier {
 
+  modify() {
+    let outerThis = this;
+    let byDepthDescending = function (first, second) {
+      return outerThis.getDepth(second) - outerThis.getDepth(first);
+    }
+    Array.from(document.querySelectorAll("math-subsup, math-underover")).sort(byDepthDescending).forEach((element) => {
+      if (element.localName == "math-subsup") {
+        SubsuperModifier.execute(element);
+      } else if (element.localName == "math-underover") {
+        UnderoverModifier.execute(element);
+      }
+    });
+    document.querySelectorAll("math-rad.mod").forEach((element) => {
+      RadicalModifier.execute(element);
+    });
+    document.querySelectorAll("math-fence.mod").forEach((element) => {
+      FenceModifier.execute(element);
+    });
+    document.querySelectorAll("math-underover.wid.mod").forEach((element) => {
+      WideModifier.execute(element);
+    });
+    document.querySelectorAll("math-diagram").forEach((element) => {
+      DiagramModifier.execute(element);
+    });
+    Array.from(document.querySelectorAll("math-frac.inf")).sort(byDepthDescending).forEach((element) => {
+      TreeModifier.execute(element);
+    });
+    document.querySelectorAll("debug").forEach((element) => {
+      let modifier = new Modifier();
+      modifier.renderDebug(element);
+    });
+  }
+
   getFontSize(element) {
     let fontSizeString = window.getComputedStyle(element).fontSize;
     let fontSize = parseFloat(fontSizeString);
@@ -55,6 +88,16 @@ class Modifier {
     return height;
   }
 
+  getDepth(element) {
+    let currentElement = element;
+    let depth = 0;
+    while (currentElement) {
+      currentElement = currentElement.parentNode;
+      depth += 1;
+    }
+    return depth;
+  }  
+
   findChild(element, name) {
     return Array.from(element.children).find((child) => child.localName == name);
   }
@@ -95,48 +138,4 @@ class Modifier {
     modifier.modify(element);
   }
 
-}
-
-
-function getDepth(element) {
-  let currentElement = element;
-  let depth = 0;
-  while (currentElement) {
-    currentElement = currentElement.parentNode;
-    depth += 1;
-  }
-  return depth;
-}
-
-function byDepthDescending(first, second) {
-  return getDepth(second) - getDepth(first);
-}
-
-function execute() {
-  Array.from(document.querySelectorAll("math-subsup, math-underover")).sort(byDepthDescending).forEach((element) => {
-    if (element.localName == "math-subsup") {
-      SubsuperModifier.execute(element);
-    } else if (element.localName == "math-underover") {
-      UnderoverModifier.execute(element);
-    }
-  });
-  document.querySelectorAll("math-rad.mod").forEach((element) => {
-    RadicalModifier.execute(element);
-  });
-  document.querySelectorAll("math-fence.mod").forEach((element) => {
-    FenceModifier.execute(element);
-  });
-  document.querySelectorAll("math-underover.wid.mod").forEach((element) => {
-    WideModifier.execute(element);
-  });
-  document.querySelectorAll("math-diagram").forEach((element) => {
-    DiagramModifier.execute(element);
-  });
-  Array.from(document.querySelectorAll("math-frac.inf")).sort(byDepthDescending).forEach((element) => {
-    TreeModifier.execute(element);
-  });
-  document.querySelectorAll("debug").forEach((element) => {
-    let modifier = new Modifier();
-    modifier.renderDebug(element);
-  });
 }

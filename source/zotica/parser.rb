@@ -136,7 +136,7 @@ module ZoticaParserMethod
         string << "\n"
       end
     end
-    string << "window.onload = execute;"
+    string << "window.onload = () => Modifier.execute();"
     return string
   end
 
