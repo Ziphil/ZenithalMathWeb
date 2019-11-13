@@ -1106,9 +1106,7 @@ module ZoticaBuilder
               this << Element.build("math-den") do |this|
                 this << build_strut("upper").first
                 this << build_strut("dlower").first
-                child.get_elements("math-cont").first.each_element do |each_element|
-                  this << each_element
-                end
+                this << child.get_elements("math-cont").first
               end
             end
           end

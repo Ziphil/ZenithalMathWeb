@@ -55,6 +55,10 @@ class Modifier {
     return height;
   }
 
+  findChild(element, name) {
+    return Array.from(element.children).find((child) => child.localName == name);
+  }
+
   renderDebug(element) {
     let clientRect = element.getBoundingClientRect();
     let scrollOffset = window.pageYOffset;
@@ -127,6 +131,9 @@ function execute() {
   });
   document.querySelectorAll("math-diagram").forEach((element) => {
     DiagramModifier.execute(element);
+  });
+  Array.from(document.querySelectorAll("math-frac.inf")).sort(byDepthDescending).forEach((element) => {
+    TreeModifier.execute(element);
   });
   document.querySelectorAll("debug").forEach((element) => {
     let modifier = new Modifier();

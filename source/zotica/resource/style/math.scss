@@ -126,6 +126,10 @@ math-frac {
   margin: 0em spacing(2) !important;
   vertical-align: -0.01em;
 
+  &.inf {
+    margin: 0em !important;
+  }
+
   >math-num {
     margin-bottom: -0.1em;
     text-align: center;
@@ -144,6 +148,7 @@ math-frac {
     margin: 0.2em 0em 0em 0em;
     width: 100%;
     display: inline-table;
+    text-align: left;
   }
 
   >math-denwrap >math-line {
@@ -153,6 +158,11 @@ math-frac {
     height: 0.06em;
     border-top: 0.06em solid;
     box-sizing: content-box;
+  }
+
+  &.inf >math-denwrap >math-line {
+    margin: 0em 0em 0.18em 0em !important;
+    padding: 0em 0em !important;
   }
 
   >math-denwrap >math-den {
@@ -503,6 +513,7 @@ math-diagram {
 
 
 math-tree {
+  vertical-align: middle;
 
   math-infer {
     vertical-align: bottom;
