@@ -4,11 +4,11 @@
 class SubsuperModifier extends Modifier {
 
   modify(element) {
-    let baseElement = Array.from(element.children).find((child) => child.localName == "math-base");
-    let subElement = Array.from(element.children).find((child) => child.localName == "math-sub");
-    let superElement = Array.from(element.children).find((child) => child.localName == "math-sup");
-    let leftSubElement = Array.from(element.children).find((child) => child.localName == "math-lsub");
-    let leftSuperElement = Array.from(element.children).find((child) => child.localName == "math-lsup");
+    let baseElement = this.findChild(element, "math-base");
+    let subElement = this.findChild(element, "math-sub");
+    let superElement = this.findChild(element, "math-sup");
+    let leftSubElement = this.findChild(element, "math-lsub");
+    let leftSuperElement = this.findChild(element, "math-lsup");
     this.modifySide(element, baseElement, subElement, superElement, "right");
     this.modifySide(element, baseElement, leftSubElement, leftSuperElement, "left");
   }

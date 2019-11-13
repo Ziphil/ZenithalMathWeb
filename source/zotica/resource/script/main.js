@@ -102,6 +102,10 @@ class Modifier {
     return Array.from(element.children).find((child) => child.localName == name);
   }
 
+  findChildren(element, name) {
+    return Array.from(element.children).filter((child) => child.localName == name);
+  }
+
   renderDebug(element) {
     let clientRect = element.getBoundingClientRect();
     let scrollOffset = window.pageYOffset;

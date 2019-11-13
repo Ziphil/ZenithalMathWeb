@@ -4,8 +4,8 @@
 class WideModifier extends Modifier {
 
   modify(element) {
-    let baseWrapperElement = Array.from(element.children).find((child) => child.localName == "math-basewrap");
-    let overElement = Array.from(element.children).find((child) => child.localName == "math-over");
+    let baseWrapperElement = this.findChild(element, "math-basewrap");
+    let overElement = this.findChild(element, "math-over");
     let contentElement = baseWrapperElement.children[0];
     let parentElements = [baseWrapperElement.children[1], overElement];
     let kind = this.calcKind(element);

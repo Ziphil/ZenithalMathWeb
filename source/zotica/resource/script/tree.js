@@ -4,7 +4,7 @@
 class TreeModifier extends Modifier {
 
   modify(element) {
-    let antecendentParentElement = Array.from(element.children).find((child) => child.localName == "math-num");
+    let antecendentParentElement = this.findChild(element, "math-num");
     let firstAntecedentElement = antecendentParentElement.children[0];
     let lastAntecedentElement = antecendentParentElement.children[antecendentParentElement.children.length - 1];
     let firstContentElement = this.calcContentElement(firstAntecedentElement);

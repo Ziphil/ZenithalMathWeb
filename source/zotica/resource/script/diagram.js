@@ -11,8 +11,8 @@ const LABEL_DISTANCE = 5 * UNIT;
 class DiagramModifier extends Modifier {
 
   modify(element) {
-    let arrowElements = Array.from(element.children).filter((child) => child.localName == "math-arrow");
-    let cellElements = Array.from(element.children).filter((child) => child.localName == "math-cellwrap").map((child) => child.children[0]);
+    let arrowElements = this.findChildren(element, "math-arrow");
+    let cellElements = this.findChildren(element, "math-cellwrap").map((child) => child.children[0]);
     let backgroundColor = this.getBackgroundColor(element);
     let graphic = this.createGraphic(element);
     element.appendChild(graphic);

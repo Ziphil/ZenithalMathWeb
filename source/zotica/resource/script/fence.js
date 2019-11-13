@@ -4,10 +4,10 @@
 class FenceModifier extends Modifier {
 
   modify(element) {
-    let contentElements = Array.from(element.children).filter((child) => child.localName == "math-cont");
-    let leftElement = Array.from(element.children).find((child) => child.localName == "math-left");
-    let rightElement = Array.from(element.children).find((child) => child.localName == "math-right");
-    let centerElement = Array.from(element.children).find((child) => child.localName == "math-center");
+    let contentElements = this.findChildren(element, "math-cont");
+    let leftElement = this.findChild(element, "math-left");
+    let rightElement = this.findChild(element, "math-right");
+    let centerElement = this.findChild(element, "math-center");
     let parentElements = [leftElement, rightElement, centerElement];
     let kinds = this.calcKinds(element);
     for (let position of [0, 1, 2]) {
