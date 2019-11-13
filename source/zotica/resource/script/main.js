@@ -116,7 +116,7 @@ function execute() {
       UnderoverModifier.execute(element);
     }
   });
-  document.querySelectorAll("math-sqrt.mod").forEach((element) => {
+  document.querySelectorAll("math-rad.mod").forEach((element) => {
     RadicalModifier.execute(element);
   });
   document.querySelectorAll("math-fence.mod").forEach((element) => {

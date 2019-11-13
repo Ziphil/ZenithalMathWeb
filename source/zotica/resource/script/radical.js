@@ -4,11 +4,25 @@
 class RadicalModifier extends Modifier {
 
   modify(element) {
-    let surdElement = Array.from(element.children).find((child) => child.localName == "math-surd");
-    let contentElement = Array.from(element.children).find((child) => child.localName == "math-cont");
+    let squareElement = Array.from(element.children).find((child) => child.localName == "math-sqrt");
+    let indexElement = Array.from(element.children).find((child) => child.localName == "math-index");
+    let surdElement = Array.from(squareElement.children).find((child) => child.localName == "math-surd");
+    let contentElement = Array.from(squareElement.children).find((child) => child.localName == "math-cont");
     let surdSymbolElement = surdElement.children[0];
     let stretchLevel = this.calcStretchLevel(contentElement);
     surdSymbolElement.textContent = DATA["radical"][stretchLevel];
+    if (indexElement) {
+      this.modifyIndex(element, indexElement);
+    }
+  }
+
+  modifyIndex(element, indexElement) {
+    let width = this.getWidth(indexElement);
+    let fontRatio = this.getFontSize(element) / this.getFontSize(indexElement);
+    if (width / fontRatio < 0.5) {
+      let margin = 0.5 * fontRatio - width;
+      indexElement.style.marginLeft = "" + margin + "em";
+    }
   }
 
   calcStretchLevel(element) {
