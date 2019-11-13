@@ -536,6 +536,16 @@
           >
         >.
       >
+      \h1<Proof trees (Gentzen style)>
+      \p<
+        &mb<
+          \tree<
+            \axm<A> \axm<B>
+            \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<(A \wedge> B) \to|bin|> C>
+            \infr|n="2"|<C><\to|ord|> \rm<E>>
+          >
+        >
+      >
       \h1<More complicated examples>
       \p<
         1:
@@ -588,6 +598,23 @@
             \ar|s="8",e="3",bend="40",pos="85"|<\sbsp<`F><2><\infty>>>
             \ar|s="8",e="5",bend="40",pos="85"|<\sbsp<`F><n><\infty>>>
             \ar|s="8",e="6",bend="40",pos="85"|<\sbsp<`F><n + 1><\infty>>>
+          >
+        >
+      >
+      \p<
+        5:
+        &mb<
+          \tree<
+            \axm<`[p`] \sb<><2>> \axm<`[\neg> p`] \sb<><3>>
+            \infr|n="2"|<\bot>> \axm<`[\neg> q`] \sb<><1>>
+            \infr|n="2"|<\neg> \neg> q><1>
+            \infr|n="1"|<q>
+            \infr|n="1"|<p \to|bin|> q><2> \axm<`[(p \to|bin|> q) \to|bin|> p`] \sb<><4>>
+            \infr|n="2"|<p> \axm<`[\neg> p`] \sb<><3>>
+            \infr|n="2"|<\bot>>
+            \infr|n="2"|<\neg> \neg> p><3>
+            \infr|n="1"|<p>
+            \infr|n="1"|<((p \to|bin|> q) \to|bin|> p) \to|bin|> p><4>
           >
         >
       >
