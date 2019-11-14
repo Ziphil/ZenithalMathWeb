@@ -136,7 +136,7 @@ math-frac {
     margin: 0.2em 0em 0em 0em;
     width: 100%;
     display: inline-table;
-    text-align: left;
+    text-align: center;
   }
 
   >math-denwrap >math-line {
@@ -193,7 +193,7 @@ math-step {
 
   >math-conwrap >math-con {
     margin: 0em 0em;
-    text-align: center;
+    text-align: left;
     display: block;
   }
 

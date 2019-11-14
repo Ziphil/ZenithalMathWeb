@@ -11,26 +11,33 @@ class TreeModifier extends Modifier {
     let lastContentElement = this.calcContentElement(lastAntecedentElement);
     let leftLabelElement = element.previousElementSibling;
     let rightLabelElement = element.nextElementSibling;
-    let fontSize = this.getFontSize(element);
-    let fontRatio = fontSize / this.getFontSize(leftLabelElement);
-    let firstAntecedentWidth = this.getWidth(firstAntecedentElement);
-    let lastAntecedentWidth = this.getWidth(lastAntecedentElement);
-    let firstContentWidth = this.getWidth(firstContentElement);
-    let lastContentWidth = this.getWidth(lastContentElement);
+    let consequentWrapperElement = this.findChild(element, "math-conwrap");
+    let lineElement = this.findChild(consequentWrapperElement, "math-line");
+    let consequentElement = this.findChild(consequentWrapperElement, "math-con");
+    let contentElement = this.findChild(consequentElement, "math-cont");
+    let fontRatio = this.getFontSize(element) / this.getFontSize(leftLabelElement);
     let leftLabelWidth = this.getWidth(leftLabelElement, element);
     let rightLabelWidth = this.getWidth(rightLabelElement, element);
+    let contentWidth = this.getWidth(contentElement);
     let wholeWidth = this.getWidth(element);
     let leftExtrusion = 0;
     let rightExtrusion = 0;
     if (firstContentElement.localName != "math-axiom") {
-      leftExtrusion = firstContentElement.offsetLeft / fontSize;
+      leftExtrusion = this.getOffsetLeft(firstContentElement);
     }
     if (lastContentElement.localName != "math-axiom") {
-      rightExtrusion = (lastContentElement.offsetParent.offsetWidth - lastContentElement.offsetLeft - lastContentElement.offsetWidth) / fontSize;
+      rightExtrusion = this.getOffsetRight(lastContentElement);
     }
     let lineWidth = wholeWidth - leftExtrusion - rightExtrusion;
-    let consequentElement = this.findChild(element, "math-conwrap");
-    let lineElement = this.findChild(consequentElement, "math-line");
+    let leftMargin = (lineWidth - contentWidth) / 2 + leftExtrusion;
+    consequentElement.style.setProperty("margin-left", "" + leftMargin + "em");
+    if (leftExtrusion > this.getOffsetLeft(contentElement) - leftLabelWidth) {
+      leftExtrusion = this.getOffsetLeft(contentElement) - leftLabelWidth;
+    }
+    if (rightExtrusion > this.getOffsetRight(contentElement) - rightLabelWidth) {
+      rightExtrusion = this.getOffsetRight(contentElement) - rightLabelWidth;
+    }
+    lineWidth = wholeWidth - leftExtrusion - rightExtrusion;
     lineElement.style.setProperty("width", "" + lineWidth + "em", "important");
     lineElement.style.setProperty("margin-left", "" + leftExtrusion + "em", "important");
     element.style.setProperty("margin-right", "" + (-rightExtrusion) + "em", "important");
@@ -50,8 +57,8 @@ class TreeModifier extends Modifier {
     } else {
       let stepElement = this.findChild(antecedentElement, "math-step");
       let consequenceWrapperElement = this.findChild(stepElement, "math-conwrap");
-      let consequenceElement = this.findChild(consequenceWrapperElement, "math-con");
-      contentElement = this.findChild(consequenceElement, "math-cont");
+      let consequentElement = this.findChild(consequenceWrapperElement, "math-con");
+      contentElement = this.findChild(consequentElement, "math-cont");
     }
     return contentElement;
   }
