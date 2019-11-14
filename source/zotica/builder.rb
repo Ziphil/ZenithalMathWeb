@@ -1087,10 +1087,15 @@ module ZoticaBuilder
         stack.push(child)
       when "math-sys-infer"
         number = child.attribute("data-num").to_s.to_i
+        left_label_element = child.get_elements("math-sys-llabel").first
+        right_label_element = child.get_elements("math-sys-rlabel").first
         antecedent_elements = stack.pop(number)
         inference_element = Element.build("math-infer") do |this|
           this << Element.build("math-label") do |this|
-            child.get_elements("math-sys-llabel").first.each_element do |each_element|
+            if left_label_element.to_a.empty?
+              this["class"] = "non"
+            end
+            left_label_element.each_element do |each_element|
               this << each_element
             end
           end
@@ -1110,7 +1115,10 @@ module ZoticaBuilder
             end
           end
           this << Element.build("math-label") do |this|
-            child.get_elements("math-sys-rlabel").first.each_element do |each_element|
+            if right_label_element.to_a.empty?
+              this["class"] = "non"
+            end
+            right_label_element.each_element do |each_element|
               this << each_element
             end
           end

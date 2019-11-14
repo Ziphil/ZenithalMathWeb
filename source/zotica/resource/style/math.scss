@@ -546,8 +546,21 @@ math-tree {
     position: relative;
   }
 
-  math-label {
+  math-infer >math-label {
     font-size: 80%;
+  }
+
+  math-infer >math-label:first-child {
+    padding-right: spacing(3);
+  }
+
+  math-infer >math-label:last-child {
+    padding-left: spacing(3);
+  }
+
+  math-infer >math-label.non {
+    padding-left: spacing(0);
+    padding-right: spacing(0);
   }
 
 }
