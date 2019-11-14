@@ -4,9 +4,9 @@
 class TreeModifier extends Modifier {
 
   modify(element) {
-    let antecendentParentElement = this.findChild(element, "math-num");
-    let firstAntecedentElement = antecendentParentElement.children[0];
-    let lastAntecedentElement = antecendentParentElement.children[antecendentParentElement.children.length - 1];
+    let antecendentContainerElement = this.findChild(element, "math-ant");
+    let firstAntecedentElement = antecendentContainerElement.children[0];
+    let lastAntecedentElement = antecendentContainerElement.children[antecendentContainerElement.children.length - 1];
     let firstContentElement = this.calcContentElement(firstAntecedentElement);
     let lastContentElement = this.calcContentElement(lastAntecedentElement);
     let leftLabelElement = element.previousElementSibling;
@@ -29,7 +29,7 @@ class TreeModifier extends Modifier {
       rightExtrusion = (lastContentElement.offsetParent.offsetWidth - lastContentElement.offsetLeft - lastContentElement.offsetWidth) / fontSize;
     }
     let lineWidth = wholeWidth - leftExtrusion - rightExtrusion;
-    let consequentElement = this.findChild(element, "math-denwrap");
+    let consequentElement = this.findChild(element, "math-conwrap");
     let lineElement = this.findChild(consequentElement, "math-line");
     lineElement.style.setProperty("width", "" + lineWidth + "em", "important");
     lineElement.style.setProperty("margin-left", "" + leftExtrusion + "em", "important");
@@ -48,9 +48,9 @@ class TreeModifier extends Modifier {
     if (antecedentElement.localName == "math-axiom") {
       contentElement = antecedentElement;
     } else {
-      let fractionElement = this.findChild(antecedentElement, "math-frac");
-      let consequenceWrapperElement = this.findChild(fractionElement, "math-denwrap");
-      let consequenceElement = this.findChild(consequenceWrapperElement, "math-den");
+      let stepElement = this.findChild(antecedentElement, "math-step");
+      let consequenceWrapperElement = this.findChild(stepElement, "math-conwrap");
+      let consequenceElement = this.findChild(consequenceWrapperElement, "math-con");
       contentElement = this.findChild(consequenceElement, "math-cont");
     }
     return contentElement;

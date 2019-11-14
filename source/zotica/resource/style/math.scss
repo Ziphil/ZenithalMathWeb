@@ -126,22 +126,10 @@ math-frac {
   margin: 0em spacing(2) !important;
   vertical-align: -0.01em;
 
-  &.inf {
-    margin: 0em !important;
-  }
-
   >math-num {
     margin-bottom: -0.1em;
     text-align: center;
     display: block;
-  }
-
-  &.inf >math-num >* {
-    margin-left: spacing(24);
-  }
-
-  &.inf >math-num >*:first-child {
-    margin-left: spacing(0);
   }
 
   >math-denwrap {
@@ -160,12 +148,50 @@ math-frac {
     box-sizing: content-box;
   }
 
-  &.inf >math-denwrap >math-line {
-    margin: 0em 0em 0.18em 0em !important;
-    padding: 0em 0em !important;
+  >math-denwrap >math-den {
+    margin: 0em 0em;
+    text-align: center;
+    display: block;
   }
 
-  >math-denwrap >math-den {
+}
+
+
+math-step {
+  margin: 0em !important;
+  vertical-align: -0.01em;
+
+  >math-ant {
+    margin-bottom: -0.1em;
+    text-align: center;
+    display: block;
+  }
+
+  >math-ant >* {
+    margin-left: spacing(24);
+  }
+
+  >math-ant >*:first-child {
+    margin-left: spacing(0);
+  }
+
+  >math-conwrap {
+    margin: 0.2em 0em 0em 0em;
+    width: 100%;
+    display: inline-table;
+    text-align: left;
+  }
+
+  >math-conwrap >math-line {
+    margin: 0em 0em 0.18em 0em !important;
+    padding: 0em 0em !important;
+    width: 0em;
+    height: 0.06em;
+    border-top: 0.06em solid;
+    box-sizing: content-box;
+  }
+
+  >math-conwrap >math-con {
     margin: 0em 0em;
     text-align: center;
     display: block;

@@ -1090,20 +1090,19 @@ module ZoticaBuilder
         antecedent_elements = stack.pop(number)
         inference_element = Element.build("math-infer") do |this|
           this << Element.build("math-label") do |this|
-            child.get_elements("math-left").first.each_element do |each_element|
+            child.get_elements("math-sys-llabel").first.each_element do |each_element|
               this << each_element
             end
           end
-          this << Element.build("math-frac") do |this|
-            this["class"] = "inf"
-            this << Element.build("math-num") do |this|
+          this << Element.build("math-step") do |this|
+            this << Element.build("math-ant") do |this|
               antecedent_elements.each do |antecedent_element|
                 this << antecedent_element
               end
             end
-            this << Element.build("math-denwrap") do |this|
+            this << Element.build("math-conwrap") do |this|
               this << Element.new("math-line")
-              this << Element.build("math-den") do |this|
+              this << Element.build("math-con") do |this|
                 this << build_strut("upper").first
                 this << build_strut("dlower").first
                 this << child.get_elements("math-cont").first
@@ -1111,7 +1110,7 @@ module ZoticaBuilder
             end
           end
           this << Element.build("math-label") do |this|
-            child.get_elements("math-right").first.each_element do |each_element|
+            child.get_elements("math-sys-rlabel").first.each_element do |each_element|
               this << each_element
             end
           end
@@ -1144,10 +1143,10 @@ module ZoticaBuilder
       this << Element.build("math-cont") do |this|
         content_element = this
       end
-      this << Element.build("math-right") do |this|
+      this << Element.build("math-sys-rlabel") do |this|
         right_label_element = this
       end
-      this << Element.build("math-left") do |this|
+      this << Element.build("math-sys-llabel") do |this|
         left_label_element = this
       end
     end

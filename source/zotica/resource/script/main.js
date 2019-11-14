@@ -27,7 +27,7 @@ class Modifier {
     document.querySelectorAll("math-diagram").forEach((element) => {
       DiagramModifier.execute(element);
     });
-    Array.from(document.querySelectorAll("math-frac.inf")).sort(byDepthDescending).forEach((element) => {
+    Array.from(document.querySelectorAll("math-step")).sort(byDepthDescending).forEach((element) => {
       TreeModifier.execute(element);
     });
     document.querySelectorAll("debug").forEach((element) => {
