@@ -541,14 +541,13 @@
         &m<
           \tree<
             \axm<A> \axm<B>
-            \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<(A \wedge> B) \to|bin|> C>
+            \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<`F>
             \infr|n="2"|<C><\to|ord|> \rm<E>>
           >
         >
         or
         &m<
           \tree<
-            \axm<`[Zz`]>
             \axm<`[Aaa`]> \axm<`[Bbb`]>
             \infr|n="2"|<`[Cc`]> \axm<`[W`]>
             \infr|n="2"|<`[Ddddd`]><Mmmm>
@@ -559,7 +558,7 @@
             \infr|n="2"|<`[Gg`]> \axm<`[Yyy`]>
             \infr|n="2"|<`[Hhhh`]>
             \infr|n="2"|<`[Ii`]><Nn><Oooo>
-            \infr|n="2"|<`[J`]>
+            \infr|n="1"|<`[J`]>
           >
         >.
       >
@@ -623,15 +622,15 @@
         &mb<
           \tree<
             \axm<`[p`] \sb<><2>> \axm<`[\neg> p`] \sb<><3>>
-            \infr|n="2"|<\bot>> \axm<`[\neg> q`] \sb<><1>>
-            \infr|n="2"|<\neg> \neg> q><1>
-            \infr|n="1"|<q>
-            \infr|n="1"|<p \to|bin|> q><2> \axm<`[(p \to|bin|> q) \to|bin|> p`] \sb<><4>>
-            \infr|n="2"|<p> \axm<`[\neg> p`] \sb<><3>>
-            \infr|n="2"|<\bot>>
-            \infr|n="2"|<\neg> \neg> p><3>
-            \infr|n="1"|<p>
-            \infr|n="1"|<((p \to|bin|> q) \to|bin|> p) \to|bin|> p><4>
+            \infr|n="2"|<\bot>><><\neg> \rm<E>> \axm<`[\neg> q`] \sb<><1>>
+            \infr|n="2"|<\neg> \neg> q><1><\neg> \rm<I>>
+            \infr|n="1"|<q><><\neg> \neg>>
+            \infr|n="1"|<p \to|bin|> q><2><\to|ord|> \rm<I>> \axm<`[(p \to|bin|> q) \to|bin|> p`] \sb<><4>>
+            \infr|n="2"|<p><><\to|ord|> \rm<E>> \axm<`[\neg> p`] \sb<><3>>
+            \infr|n="2"|<\bot>><><\neg> \rm<E>>
+            \infr|n="2"|<\neg> \neg> p><3><\neg> \rm<I>>
+            \infr|n="1"|<p><><\neg> \neg>>
+            \infr|n="1"|<((p \to|bin|> q) \to|bin|> p) \to|bin|> p><4><\to|ord|> \rm<I>>
           >
         >
       >
