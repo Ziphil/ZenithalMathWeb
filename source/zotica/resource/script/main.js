@@ -88,6 +88,16 @@ class Modifier {
     return height;
   }
 
+  getOffsetLeft(element, fontElement) {
+    let offset = element.offsetLeft / this.getFontSize(fontElement || element);
+    return offset;
+  }
+
+  getOffsetRight(element, fontElement) {
+    let offset = (element.offsetParent.offsetWidth - element.offsetLeft - element.offsetWidth) / this.getFontSize(fontElement || element);
+    return offset;
+  }
+
   getDepth(element) {
     let currentElement = element;
     let depth = 0;
