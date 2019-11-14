@@ -563,6 +563,11 @@ math-tree {
     padding-right: spacing(0);
   }
 
+  math-axiom,
+  math-con >math-cont {
+    padding: 0em spacing(5);
+  }
+
 }
 
 
