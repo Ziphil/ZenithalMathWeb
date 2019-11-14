@@ -544,6 +544,23 @@
             \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<(A \wedge> B) \to|bin|> C>
             \infr|n="2"|<C><\to|ord|> \rm<E>>
           >
+        >
+        or
+        &m<
+          \tree<
+            \axm<`[Zz`]>
+            \axm<`[Aaa`]> \axm<`[Bbb`]>
+            \infr|n="2"|<`[Cc`]> \axm<`[W`]>
+            \infr|n="2"|<`[Ddddd`]><Mmmm>
+            \axm<`[Ppp`]> \axm<`[Qqq`]>
+            \infr|n="1"|<`[R`]>
+            \infr|n="2"|<`[Ee`]><Uuu>
+            \infr|n="1"|<`[Fffff`]> \axm<`[X`]> 
+            \infr|n="2"|<`[Gg`]> \axm<`[Yyy`]>
+            \infr|n="2"|<`[Hhhh`]>
+            \infr|n="2"|<`[Ii`]><Nn><Oooo>
+            \infr|n="2"|<`[J`]>
+          >
         >.
       >
       \h1<More complicated examples>
