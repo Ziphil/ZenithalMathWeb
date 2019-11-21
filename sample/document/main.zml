@@ -368,7 +368,9 @@
         Changing identifier styles:
         &m<V \in> \sb<\bfrm<Vect>><k>>
         or
-        &m<\rm<Vol> = `r \sfun> \sin> `f \sfun> d `r d `u d`f>.
+        &m<\rm<Vol> = `r \sfun> \sin> `f \sfun> d `r d `u d`f>
+        or
+        &m<\tt<if> \sfun> B \sfun> \tt<then> \sfun> M \sfun> \tt<else> \sfun> N>.
       >
       \p<
         Changing spacing:
