@@ -13,6 +13,7 @@ module ZoticaParserMethod
   COMMON_STYLE_PATH = "resource/style/math.scss"
   SPECIALIZED_STYLE_PATH = "resource/style/times.scss"
   DEFAULT_TTF_PATHS = {:main => "resource/font/main.ttf", :math => "resource/font/math.ttf"}
+  DEFAULT_FONT_PATHS = {:main => "resource/font/main.json", :math => "resource/font/math.json"}
   SCRIPT_DIR = "resource/script"
 
   CODEPOINTS = {
@@ -27,7 +28,6 @@ module ZoticaParserMethod
     ]
   }
 
-  include ZoticaBuilder
   include ZenithalParserMethod
 
   private
@@ -41,7 +41,7 @@ module ZoticaParserMethod
       options = options.clone
       options[:math] = nil
       return options
-    elsif DATA["leaf"].include?(name)
+    elsif ZoticaBuilder::DATA["leaf"].include?(name)
       options = options.clone
       options[:math_leaf] = true
       return options
@@ -82,7 +82,7 @@ module ZoticaParserMethod
 
   def create_element(name, marks, attributes, children_list, options)
     if options[:math]
-      return create_math_element(name, attributes, children_list)
+      return ZoticaBuilder.create_math_element(name, attributes, children_list, {:fonts => @fonts})
     else
       return super
     end
@@ -90,7 +90,7 @@ module ZoticaParserMethod
 
   def create_special_element(kind, children, options)
     if options[:math]
-      return create_math_element("g", {}, [children])
+      return ZoticaBuilder.create_math_element("g", {}, [children], {:fonts => @fonts})
     else
       return super
     end
@@ -98,7 +98,7 @@ module ZoticaParserMethod
 
   def create_text(raw_text, options)
     if options[:math] && !options[:math_leaf]
-      return create_math_text(raw_text)
+      return ZoticaBuilder.create_math_text(raw_text, {:fonts => @fonts})
     else
       return super
     end
@@ -106,7 +106,7 @@ module ZoticaParserMethod
 
   def create_escape(place, char, options)
     if options[:math] && place == :text
-      return create_math_escape(char)
+      return ZoticaBuilder.create_math_escape(char, {:fonts => @fonts})
     else
       return super
     end
@@ -125,7 +125,7 @@ module ZoticaParserMethod
   def self.create_script_string
     dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
     string = "const DATA = "
-    string << JSON.generate(DATA.slice("radical", "fence", "wide", "shift", "arrow"))
+    string << JSON.generate(ZoticaBuilder::DATA.slice("radical", "fence", "wide", "shift", "arrow"))
     string << ";\n"
     string << File.read(dir + "/main.js")
     string << "\n"
