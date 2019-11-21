@@ -397,6 +397,12 @@
         or
         &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
       >
+      \p<
+        Specifying classes:
+        &m<\g|class="red"|<a> \sp<x><2> + \g|class="yellow"|<b> \sp<x> + \g|class="green"|<c>>
+        or
+        &m<\g|class="frame"|<\int<-1><1> \sqrt<1 - \sp<x><2>> dx> = \frac<`p><2>>
+      >
       \h1<Commutative diagrams>
       \p<
         Standard:

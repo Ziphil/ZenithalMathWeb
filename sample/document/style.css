@@ -70,3 +70,20 @@ article p math-root span.box::before {
   line-height: 1;
   content: "?";
 }
+
+.red {
+  color: hsl(0, 100%, 40%);
+}
+
+.yellow {
+  color: hsl(60, 100%, 40%);
+}
+
+.green {
+  color: hsl(120, 100%, 40%);
+}
+
+.frame {
+  padding: 0.2em;
+  border: 3px double;
+}
