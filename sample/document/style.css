@@ -87,3 +87,10 @@ article p math-root span.box::before {
   padding: 0.2em;
   border: 3px double;
 }
+
+.fill {
+  padding: 0.2em;
+  color: white;
+  background: linear-gradient(-45deg, hsl(60, 80%, 30%) 25%, black 25%, black 50%, hsl(60, 80%, 30%) 50%, hsl(60, 80%, 30%) 75%, black 75%, black);
+  background-size: 6px 6px;
+}
