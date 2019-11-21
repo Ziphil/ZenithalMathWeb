@@ -1,6 +1,6 @@
 {
   "leaf": [
-    "n", "i", "op", "o", "bf", "rm", "bfrm",
+    "n", "i", "op", "o", "bf", "rm", "bfrm", "tt",
     "text",
     "bb", "varbb", "cal", "scr", "frak", "varfrak"
   ],

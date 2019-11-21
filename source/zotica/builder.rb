@@ -37,6 +37,9 @@ module ZoticaBuilder
     when "bfrm"
       text = children_list[0].first.to_s
       this << build_identifier(text, ["bf", "rm"], role)
+    when "tt"
+      text = children_list[0].first.to_s
+      this << build_identifier(text, ["tt"], role)
     when "bb", "varbb", "cal", "scr", "frak", "varfrak"
       raw_text = children_list[0].first.value
       text = fetch_alternative_identifier_text(name, raw_text)

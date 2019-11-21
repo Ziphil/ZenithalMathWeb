@@ -41,6 +41,11 @@ math-i {
     font-weight: bold;
   }
 
+  &.tt {
+    font-family: "Consolas";
+    font-style: normal;
+  }
+
   &.alt {
     @include math-font;
     padding-right: spacing(0);
