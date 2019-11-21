@@ -40,6 +40,7 @@ module ZoticaBuilder
   def create_math_element(name, attributes, children_list, options = {})
     this = Nodes[]
     options[:role] = determine_role(attributes)
+    options[:class] = attributes["class"]
     case name
     when "n"
       text = children_list[0].first.to_s
@@ -392,6 +393,9 @@ module ZoticaBuilder
         classes = node["class"].split(" ") - ROLES
         classes << options[:role]
         node["class"] = classes.join(" ")
+      end
+      if options[:class]
+        node["class"] = (node["class"].split(" ") + options[:class].split(" ")).join(" ")
       end
     end
   end
