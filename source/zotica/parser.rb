@@ -3,30 +3,10 @@
 
 require 'pp'
 require 'rexml/document'
-require 'sassc'
-require 'ttfunk'
 include REXML
 
 
 module ZoticaParserMethod
-
-  COMMON_STYLE_PATH = "resource/style/math.scss"
-  SPECIALIZED_STYLE_PATH = "resource/style/times.scss"
-  DEFAULT_TTF_PATHS = {:main => "resource/font/main.ttf", :math => "resource/font/math.ttf"}
-  DEFAULT_FONT_PATHS = {:main => "resource/font/main.json", :math => "resource/font/math.json"}
-  SCRIPT_DIR = "resource/script"
-
-  CODEPOINTS = {
-    :main => [
-      0x0..0x2AF, 0x370..0x52F,
-      0x2100..0x214F, 0x2200..0x22FF
-    ],
-    :math => [
-      0x0..0x2AF,
-      0x2100..0x214F, 0x2190..0x21FF, 0x2200..0x22FF, 0x2300..0x23FF, 0x27C0..0x27EF, 0x27F0..0x27FF, 0x2900..0x297F, 0x2980..0x29FF, 0x2A00..0x2AFF, 0x2B00..0x2BFF,
-      0x1D400..0x1D7FF, 0xF0000..0xF05FF, 0xF1000..0xF10FF
-    ]
-  }
 
   include ZenithalParserMethod
 
@@ -65,8 +45,8 @@ module ZoticaParserMethod
       children = children_list.first
       return children
     elsif name == @resource_macro_name
-      style_string = ZoticaParserMethod.create_style_string(attributes["font_url"])
-      script_string = ZoticaParserMethod.create_script_string
+      style_string = ZoticaBuilder.create_style_string(attributes["font_url"])
+      script_string = ZoticaBuilder.create_script_string
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
         element << Text.new(style_string, true, nil, true)
@@ -109,74 +89,6 @@ module ZoticaParserMethod
       return ZoticaBuilder.create_math_escape(char, {:fonts => @fonts})
     else
       return super
-    end
-  end
-
-  def self.create_style_string(font_url = nil, style = :compressed)
-    common_path = File.expand_path("../" + COMMON_STYLE_PATH, __FILE__)
-    common_string = SassC::Engine.new(File.read(common_path), {:style => style}).render
-    common_string.gsub!("__mathfonturl__", font_url || "font.otf")
-    specialized_path = File.expand_path("../" + SPECIALIZED_STYLE_PATH, __FILE__)
-    specialized_string = SassC::Engine.new(File.read(specialized_path), {:style => style}).render
-    string = common_string + specialized_string
-    return string
-  end
-
-  def self.create_script_string
-    dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
-    string = "const DATA = "
-    string << JSON.generate(ZoticaBuilder::DATA.slice("radical", "fence", "wide", "shift", "arrow"))
-    string << ";\n"
-    string << File.read(dir + "/main.js")
-    string << "\n"
-    Dir.each_child(dir) do |entry|
-      unless entry == "main.js"
-        string << File.read(dir + "/" + entry)
-        string << "\n"
-      end
-    end
-    string << "window.onload = () => Modifier.execute();"
-    return string
-  end
-
-  def self.create_font_string(type, path = nil, metrics = nil)
-    unless path
-      if type == :main
-        path = File.expand_path("../" + DEFAULT_TTF_PATHS[:main], __FILE__)
-        metrics = {:em => 2048, :ascent => 1638 + 78, :descent => 410 - 78}
-      else
-        path = File.expand_path("../" + DEFAULT_TTF_PATHS[:math], __FILE__)
-        metrics = {:em => 1000, :ascent => 762, :descent => 238}
-      end
-    end
-    file = TTFunk::File.open(path)
-    first = true
-    string = "{\n"
-    CODEPOINTS[type].each do |part_codepoints|
-      part_codepoints.each do |codepoint|
-        glyph_id = file.cmap.unicode.first[codepoint]
-        glyph = file.glyph_outlines.for(glyph_id)
-        if glyph
-          top_margin = (glyph.y_max - metrics[:ascent]) / metrics[:em].to_f
-          bottom_margin = (-glyph.y_min - metrics[:descent]) / metrics[:em].to_f
-          string << ",\n" unless first
-          string << "  \"#{codepoint}\": [#{bottom_margin}, #{top_margin}]"
-          first = false
-        end
-      end
-    end
-    string << "\n}"
-    return string
-  end
-
-  def self.save_font_strings
-    main_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
-    math_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
-    File.open(main_font_path, "w") do |file|
-      file.write(ZoticaParserMethod.create_font_string(:main))
-    end
-    File.open(math_font_path, "w") do |file|
-      file.write(ZoticaParserMethod.create_font_string(:math))
     end
   end
 

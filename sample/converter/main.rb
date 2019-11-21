@@ -59,7 +59,7 @@ class WholeSampleConverter
   end
 
   def save(converter, formatter)
-    ZoticaParserMethod.save_font_strings
+    ZoticaBuilder.save_font_strings
     File.open(OUTPUT_DIR + "/main.html", "w") do |file|
       file.write(converter.convert)
     end

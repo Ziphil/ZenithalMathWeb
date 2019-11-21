@@ -74,7 +74,7 @@ class Executor
     metrics[:ascent] = @options[:ascent] || 1638
     metrics[:descent] = @options[:descent] || 410
     metrics[:em] = metrics[:ascent] + metrics[:descent]
-    output = ZoticaParserMethod.create_font_string(:main, @paths.first, metrics)
+    output = ZoticaBuilder.create_font_string(:main, @paths.first, metrics)
     if @options[:output_path]
       File.write(@options[:output_path], output)
     else
