@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+
+require 'optparse'
+require 'zotica'
+include Zenithal
+
+
+class Executor
+
+  def initialize(args)
+    @mode, @options, @paths = nil, {}, []
+    parser = OptionParser.new
+    parser.on("-o PATH") do |value|
+      @options[:output_path] = value
+    end
+    parser.on("-a ASCENT", Numeric) do |value|
+      @options[:ascent] = value.to_f
+    end
+    parser.on("-d DESCENT", Numeric) do |value|
+      @options[:descent] = value.to_f
+    end
+    @paths = parser.parse(args)
+  end
+
+  def execute
+    case @mode
+    when :other
+    else
+      create_font
+    end
+  end
+
+  def create_font
+    metrics = {}
+    metrics[:ascent] = @options[:ascent] || 1638
+    metrics[:descent] = @options[:descent] || 410
+    metrics[:em] = metrics[:ascent] + metrics[:descent]
+    output = ZoticaBuilder.create_font_string(:main, @paths.first, metrics)
+    if @options[:output_path]
+      File.write(@options[:output_path], output)
+    else
+      STDOUT.print(output)
+    end
+  end
+
+end
+
+
+executor = Executor.new(ARGV)
+executor.execute

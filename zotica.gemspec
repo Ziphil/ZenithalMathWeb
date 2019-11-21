@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob("source/**/*")
   spec.require_paths = ["source"]
   spec.bindir = "exec"
-  spec.executables = "zotica"
+  spec.executables = ["zotica", "zoticaf"]
 end

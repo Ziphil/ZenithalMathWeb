@@ -60,7 +60,7 @@ HTML に変換したい ZenML ドキュメントを作り、作業フォルダ�
 本文フォントに使う TrueType 形式のフォントファイルを用意し、作業フォルダに `main.ttf` という名前で保存します。
 この状態で、以下のコマンドを実行してください。
 ```
-zotica --create-font main.ttf -o main.json
+zoticaf main.ttf -o main.json
 ```
 同じフォルダ内に `main.json` が生成されます。
 
