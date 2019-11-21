@@ -13,7 +13,6 @@ module ZoticaParserMethod
   COMMON_STYLE_PATH = "resource/style/math.scss"
   SPECIALIZED_STYLE_PATH = "resource/style/times.scss"
   DEFAULT_TTF_PATHS = {:main => "resource/font/main.ttf", :math => "resource/font/math.ttf"}
-  DEFAULT_FONT_PATHS = {:main => "resource/font/main.json", :math => "resource/font/math.json"}
   SCRIPT_DIR = "resource/script"
 
   CODEPOINTS = {
@@ -199,14 +198,6 @@ class ZoticaParser < ZenithalParser
     @math_macro_names = []
     @fonts = {}
     @math_level = 0
-    load_default_fonts
-  end
-
-  def load_default_fonts
-    main_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
-    math_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
-    @fonts[:main] = JSON.parse(File.read(main_path))
-    @fonts[:math] = JSON.parse(File.read(math_path))
   end
 
   def load_font(path)

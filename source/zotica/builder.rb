@@ -10,6 +10,7 @@ include REXML
 module ZoticaBuilder
 
   DATA_PATH = "resource/math.json"
+  DEFAULT_FONT_PATHS = {:main => "resource/font/main.json", :math => "resource/font/math.json"}
   SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scas" => "acas", "quad" => "sgl", "qquad" => "dbl"}
   PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
   ROLES = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
@@ -21,6 +22,7 @@ module ZoticaBuilder
     this = Nodes[]
     options = {}
     options[:role] = determine_role(attributes)
+    options[:fonts] = @fonts
     case name
     when "n"
       text = children_list[0].first.to_s
@@ -327,21 +329,23 @@ module ZoticaBuilder
 
   def create_math_text(text)
     this = Nodes[]
+    options = {}
+    options[:fonts] = @fonts
     text.each_char do |char|
       if char =~ /\p{Number}/
-        this << build_number(char)
+        this << build_number(char, options)
       elsif char =~ /\p{Letter}|\p{Mark}/
-        this << build_identifier(char, [])
+        this << build_identifier(char, [], options)
       elsif char == "'"
         symbol, types = fetch_operator_symbol("pr")
-        this << build_subsuper do |base_this, sub_this, super_this|
-          super_this << build_operator(symbol, types)
+        this << build_subsuper(options) do |base_this, sub_this, super_this|
+          super_this << build_operator(symbol, types, options)
         end
       elsif char !~ /\s/
         char = DATA["replacement"][char] || char
         name = DATA["operator"].find{|s, (t, u)| char == t}&.first || char
         symbol, kinds = DATA["operator"][name] || [name, ["bin"]]
-        this << build_operator(symbol, kinds)
+        this << build_operator(symbol, kinds, options)
       end
     end
     return this
@@ -358,7 +362,7 @@ module ZoticaBuilder
   public
 
   def determine_role(attributes)
-    options = nil
+    role = nil
     ROLES.each do |each_role|
       if attributes[each_role]
         role = each_role
@@ -369,7 +373,7 @@ module ZoticaBuilder
 
   def apply_options(nodes, options)
     nodes.each do |node|
-      if node.is_a?(Element) && options && options[:role]
+      if node.is_a?(Element) && options[:role]
         classes = node["class"].split(" ") - ROLES
         classes << options[:role]
         node["class"] = classes.join(" ")
@@ -391,7 +395,7 @@ module ZoticaBuilder
     end
   end
 
-  def build_number(text, options = nil)
+  def build_number(text, options = {})
     this = Nodes[]
     element = nil
     this << Element.build("math-n") do |this|
@@ -399,7 +403,7 @@ module ZoticaBuilder
       element = this
     end
     apply_options(this, options)
-    modify_vertical_margins(element, "main")
+    modify_vertical_margins(element, "main", options)
     return this
   end
 
@@ -413,7 +417,7 @@ module ZoticaBuilder
     return text
   end
 
-  def build_identifier(text, types, options = nil)
+  def build_identifier(text, types, options = {})
     this = Nodes[]
     element = nil
     font_type = (types.include?("alt")) ? "math" : "main"
@@ -424,7 +428,7 @@ module ZoticaBuilder
       element = this
     end
     apply_options(this, options)
-    modify_vertical_margins(element, font_type)
+    modify_vertical_margins(element, font_type, options)
     return this
   end
 
@@ -433,7 +437,7 @@ module ZoticaBuilder
     return symbol, types
   end
 
-  def build_operator(symbol, types, options = nil, &block)
+  def build_operator(symbol, types, options = {}, &block)
     this = Nodes[]
     element = nil
     font_type = (types.include?("txt")) ? "main" : "math"
@@ -443,16 +447,16 @@ module ZoticaBuilder
       element = this
     end
     apply_options(this, options)
-    modify_vertical_margins(element, font_type)
+    modify_vertical_margins(element, font_type, options)
     return this
   end
 
-  def modify_vertical_margins(element, font_type)
+  def modify_vertical_margins(element, font_type, options)
     text = element.inner_text
     max_top_margin, max_bottom_margin = -2, -2
     text.each_char do |char|
       codepoint = char.unpack1("U*")
-      bottom_margin, top_margin = @fonts.dig(font_type.intern, codepoint.to_s) || [0, 0]
+      bottom_margin, top_margin = options[:fonts]&.dig(font_type.intern, codepoint.to_s) || DEFAULT_FONTS.dig(font_type.intern, codepoint.to_s) || [0, 0]
       if top_margin > max_top_margin
         max_top_margin = top_margin
       end
@@ -465,7 +469,7 @@ module ZoticaBuilder
     element["style"] += "margin-bottom: #{max_bottom_margin}em; "
   end
 
-  def build_strut(type, options = nil)
+  def build_strut(type, options = {})
     this = Nodes[]
     this << Element.build("math-strut") do |this|
       if type == "upper" || type == "dupper"
@@ -473,7 +477,7 @@ module ZoticaBuilder
       elsif type == "dlower" || type == "dfull"
         this["style"] += "margin-bottom: -0em;"
       else
-        bottom_margin = @fonts.dig(:main, "72", 0)
+        bottom_margin = options[:fonts]&.dig(:main, "72", 0) || DEFAULT_FONTS.dig(:main, "72", 0)
         this["style"] += "margin-bottom: #{bottom_margin}em;"
       end
       if type == "lower" || type == "dlower"
@@ -481,7 +485,7 @@ module ZoticaBuilder
       elsif type == "dupper" || type == "dfull"
         this["style"] += "margin-top: -0em;"
       else
-        top_margin = @fonts.dig(:main, "72", 1)
+        top_margin = options[:fonts]&.dig(:main, "72", 1) || DEFAULT_FONTS.dig(:main, "72", 1)
         this["style"] += "margin-top: #{top_margin}em;"
       end
       this << Element.build("math-text") do |this|
@@ -493,7 +497,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_subsuper(options = nil, &block)
+  def build_subsuper(options = {}, &block)
     this = Nodes[]
     base_element, sub_element, super_element, left_sub_element, left_super_element = nil
     main_element = nil
@@ -537,7 +541,7 @@ module ZoticaBuilder
     end
   end
 
-  def build_underover(options = nil, &block)
+  def build_underover(options = {}, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
@@ -571,7 +575,7 @@ module ZoticaBuilder
     end
   end
 
-  def build_fraction(options = nil, &block)
+  def build_fraction(options = {}, &block)
     this = Nodes[]
     numerator_element, denominator_element = nil
     this << Element.build("math-frac") do |this|
@@ -602,7 +606,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_radical(symbol, modify, options = nil, &block)
+  def build_radical(symbol, modify, options = {}, &block)
     this = Nodes[]
     content_element, index_element = nil
     this << Element.build("math-rad") do |this|
@@ -642,7 +646,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, options = nil, &block)
+  def build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, options = {}, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-fence") do |this|
@@ -671,7 +675,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, options = nil, &block)
+  def build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, options = {}, &block)
     this = Nodes[]
     left_element, right_element = nil
     this << Element.build("math-fence") do |this|
@@ -716,7 +720,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_integral(symbol, size, options = nil, &block)
+  def build_integral(symbol, size, options = {}, &block)
     this = Nodes[]
     base_element, sub_element, super_element = nil
     this << Element.build("math-subsup") do |this|
@@ -753,7 +757,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_sum(symbol, size, options = nil, &block)
+  def build_sum(symbol, size, options = {}, &block)
     this = Nodes[]
     if size == "lrg"
       under_element, over_element = nil
@@ -802,7 +806,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_accent(under_symbol, over_symbol, options = nil, &block)
+  def build_accent(under_symbol, over_symbol, options = {}, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
@@ -869,7 +873,7 @@ module ZoticaBuilder
     return symbol
   end
 
-  def build_wide(kind, under_symbol, over_symbol, modify, options = nil, &block)
+  def build_wide(kind, under_symbol, over_symbol, modify, options = {}, &block)
     this = Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
@@ -911,7 +915,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_table(type, align_config, raw, options = nil, &block)
+  def build_table(type, align_config, raw, options = {}, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-table") do |this|
@@ -924,7 +928,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_diagram(vertical_gaps_string, horizontal_gaps_string, options = nil, &block)
+  def build_diagram(vertical_gaps_string, horizontal_gaps_string, options = {}, &block)
     this = Nodes[]
     table_element = nil
     this << Element.build("math-diagram") do |this|
@@ -1003,7 +1007,7 @@ module ZoticaBuilder
     end
   end
 
-  def build_table_cell(options = nil, &block)
+  def build_table_cell(options = {}, &block)
     this = Nodes[]
     cell_element = nil
     this << Element.build("math-cell") do |this|
@@ -1014,7 +1018,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_diagram_vertex(name, options = nil, &block)
+  def build_diagram_vertex(name, options = {}, &block)
     this = Nodes[]
     vertex_element = nil
     this << Element.build("math-cellwrap") do |this|
@@ -1030,7 +1034,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_arrow(name, configs, options = nil, &block)
+  def build_arrow(name, configs, options = {}, &block)
     this = Nodes[]
     label_element = nil
     this << Element.build("math-arrow") do |this|
@@ -1070,7 +1074,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_tree(options = nil, &block)
+  def build_tree(options = {}, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-tree") do |this|
@@ -1136,7 +1140,7 @@ module ZoticaBuilder
     element << stack.first
   end
 
-  def build_tree_axiom(options = nil, &block)
+  def build_tree_axiom(options = {}, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-axiom") do |this|
@@ -1147,7 +1151,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_tree_inference(number, options = nil, &block)
+  def build_tree_inference(number, options = {}, &block)
     this = Nodes[]
     content_element, right_label_element, left_label_element = nil
     this << Element.build("math-sys-infer") do |this|
@@ -1167,7 +1171,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_group(transform_configs, options = nil, &block)
+  def build_group(transform_configs, options = {}, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-group") do |this|
@@ -1185,7 +1189,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_space(type, options = nil)
+  def build_space(type, options = {})
     this = Nodes[]
     this << Element.build("math-space") do |this|
       this["class"] = type
@@ -1194,7 +1198,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_phantom(type, options = nil, &block)
+  def build_phantom(type, options = {}, &block)
     this = Nodes[]
     content_element = nil
     this << Element.build("math-phantom") do |this|
@@ -1209,7 +1213,7 @@ module ZoticaBuilder
     return this
   end
 
-  def build_text(text, options = nil, &block)
+  def build_text(text, options = {}, &block)
     this = Nodes[]
     this << Element.build("math-text") do |this|
       this << Text.new(text, true, nil, false)
@@ -1226,6 +1230,16 @@ module ZoticaBuilder
     return data
   end
 
+  def self.create_default_fonts
+    fonts = {}
+    main_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
+    math_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
+    fonts[:main] = JSON.parse(File.read(main_path))
+    fonts[:math] = JSON.parse(File.read(math_path))
+    return fonts
+  end
+
   DATA = self.create_data
+  DEFAULT_FONTS = self.create_default_fonts
 
 end
