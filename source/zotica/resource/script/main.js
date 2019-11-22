@@ -4,32 +4,43 @@
 class Modifier {
 
   modify() {
-    let outerThis = this;
-    let byDepthDescending = function (first, second) {
-      return outerThis.getDepth(second) - outerThis.getDepth(first);
-    }
-    Array.from(document.querySelectorAll("math-subsup, math-underover")).sort(byDepthDescending).forEach((element) => {
-      if (element.localName == "math-subsup") {
+    console.info("[Zotica] Start");
+    let startDate = new Date();
+    let elements = [];
+    elements.push(...document.querySelectorAll("math-subsup"));
+    elements.push(...document.querySelectorAll("math-underover"));
+    elements.push(...document.querySelectorAll("math-rad.mod"));
+    elements.push(...document.querySelectorAll("math-fence.mod"));
+    elements.push(...document.querySelectorAll("math-diagram"));
+    elements.push(...document.querySelectorAll("math-step"));
+    elements = elements.sort((first, second) => {
+      return this.getDepth(second) - this.getDepth(first);
+    });
+    elements.forEach((element) => {
+      let name = element.localName;
+      if (name == "math-subsup") {
         SubsuperModifier.execute(element);
-      } else if (element.localName == "math-underover") {
+      } else if (name == "math-underover") {
         UnderoverModifier.execute(element);
+        if (element.classList.contains("wid") && element.classList.contains("mod")) {
+          WideModifier.execute(element);
+        }
+      } else if (name == "math-rad") {
+        RadicalModifier.execute(element);
+      } else if (name == "math-fence") {
+        FenceModifier.execute(element);
+      } else if (name == "math-diagram") {
+        DiagramModifier.execute(element);
+      } else if (name == "math-step") {
+        TreeModifier.execute(element);
       }
     });
-    document.querySelectorAll("math-rad.mod").forEach((element) => {
-      RadicalModifier.execute(element);
-    });
-    document.querySelectorAll("math-fence.mod").forEach((element) => {
-      FenceModifier.execute(element);
-    });
-    document.querySelectorAll("math-underover.wid.mod").forEach((element) => {
-      WideModifier.execute(element);
-    });
-    document.querySelectorAll("math-diagram").forEach((element) => {
-      DiagramModifier.execute(element);
-    });
-    Array.from(document.querySelectorAll("math-step")).sort(byDepthDescending).forEach((element) => {
-      TreeModifier.execute(element);
-    });
+    let finishDate = new Date();
+    let elapsedTime = ((finishDate - startDate) / 1000).toFixed(4);
+    console.info("[Zotica] Finish (" + elements.length + " elements, " + elapsedTime + " seconds)");
+  }
+
+  modifyDebug() {
     document.querySelectorAll("debug").forEach((element) => {
       let modifier = new Modifier();
       modifier.renderDebug(element);
@@ -99,12 +110,18 @@ class Modifier {
   }
 
   getDepth(element) {
-    let currentElement = element;
     let depth = 0;
-    while (currentElement) {
-      currentElement = currentElement.parentNode;
-      depth += 1;
+    if (element.zoticaDepth != undefined) {
+      depth = element.zoticaDepth;
+    } else {
+      let parent = element.parentNode;
+      if (parent) {
+        depth = this.getDepth(parent) + 1;
+      } else {
+        depth = 0;
+      }
     }
+    element.zoticaDepth = depth;
     return depth;
   }  
 
