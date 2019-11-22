@@ -548,7 +548,7 @@
       \p<
         &m<
           \tree<
-            \axm<A> \axm<B>
+            \infr|n="0"|<A> \axm<B>
             \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<`F>
             \infr|n="2"|<C><\to|ord|> \rm<E>>
           >
