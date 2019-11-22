@@ -22,10 +22,10 @@ class TreeModifier extends Modifier {
     let wholeWidth = this.getWidth(element);
     let leftExtrusion = 0;
     let rightExtrusion = 0;
-    if (firstContentElement.localName != "math-axiom") {
+    if (firstContentElement && firstContentElement.localName != "math-axiom") {
       leftExtrusion = this.getOffsetLeft(firstContentElement);
     }
-    if (lastContentElement.localName != "math-axiom") {
+    if (lastContentElement && lastContentElement.localName != "math-axiom") {
       rightExtrusion = this.getOffsetRight(lastContentElement);
     }
     let lineWidth = wholeWidth - leftExtrusion - rightExtrusion;
@@ -52,13 +52,15 @@ class TreeModifier extends Modifier {
 
   calcContentElement(antecedentElement) {
     let contentElement = null;
-    if (antecedentElement.localName == "math-axiom") {
-      contentElement = antecedentElement;
-    } else {
-      let stepElement = this.findChild(antecedentElement, "math-step");
-      let consequenceWrapperElement = this.findChild(stepElement, "math-conwrap");
-      let consequentElement = this.findChild(consequenceWrapperElement, "math-con");
-      contentElement = this.findChild(consequentElement, "math-cont");
+    if (antecedentElement) {
+      if (antecedentElement.localName == "math-axiom") {
+        contentElement = antecedentElement;
+      } else {
+        let stepElement = this.findChild(antecedentElement, "math-step");
+        let consequenceWrapperElement = this.findChild(stepElement, "math-conwrap");
+        let consequentElement = this.findChild(consequenceWrapperElement, "math-con");
+        contentElement = this.findChild(consequentElement, "math-cont");
+      }
     }
     return contentElement;
   }
