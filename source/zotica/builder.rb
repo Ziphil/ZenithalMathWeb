@@ -31,7 +31,7 @@ module ZoticaBuilder
   }
 
   SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scas" => "acas", "quad" => "sgl", "qquad" => "dbl"}
-  PHANTOM_TYPES = {"ph" => nil, "vph" => "ver", "hph" => "hor"}
+  PHANTOM_TYPES = {"ph" => "bth", "vph" => "ver", "hph" => "hor"}
   ROLES = ["bin", "rel", "sbin", "srel", "del", "fun", "not", "ord", "lpar", "rpar", "cpar"]
   ALIGNS = {"c" => "center", "l" => "left", "r" => "right"}
 
@@ -323,14 +323,14 @@ module ZoticaBuilder
       this << ZoticaBuilder.build_group(transform_configs, options) do |content_this|
         content_this << children_list.fetch(0, Nodes[])
       end
-    when "s"
-      type = attributes["t"] || "medium"
-      this << ZoticaBuilder.build_space(type, options)
     when "ph", "vph", "hph"
-      type = PHANTOM_TYPES[name]
+      type = PHANTOM_TYPES[name] || attributes["t"] || "bth"
       this << ZoticaBuilder.build_phantom(type, options) do |content_this|
         content_this << children_list.fetch(0, Nodes[])
       end
+    when "s"
+      type = attributes["t"] || "medium"
+      this << ZoticaBuilder.build_space(type, options)
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
       this << ZoticaBuilder.build_space(type, options)
@@ -1222,7 +1222,7 @@ module ZoticaBuilder
     content_element = nil
     this << Element.build("math-phantom") do |this|
       this["class"] = ["lpres", "rpres"].join(" ")
-      if type
+      unless type == "bth"
         this["class"] = [*this["class"].split(" "), type].join(" ")
       end
       content_element = this
