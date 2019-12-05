@@ -63,12 +63,13 @@ article p math-root span.box {
   height: 1em;
   display: inline-block;
   vertical-align: middle; 
-  background-color: hsl(240, 80%, 80%);
+  background: linear-gradient(-45deg, hsl(240, 80%, 50%) 25%, white 25%, white 50%, hsl(240, 80%, 50%) 50%, hsl(240, 80%, 50%) 75%, white 75%, white);
+  background-size: 4px 4px;
 }
 
 article p math-root span.box::before {
   line-height: 1;
-  content: "?";
+  content: "";
 }
 
 .red {
