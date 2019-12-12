@@ -93,15 +93,25 @@ module ZoticaParserMethod
 end
 
 
-class ZoticaParser < ZenithalParser
+module ZoticaParserMixin
 
   include ZoticaParserMethod
 
   attr_accessor :raw_macro_name
   attr_accessor :resource_macro_name
 
+  def self.extended(object)
+    object.instance_eval do
+      setup_variables
+    end
+  end
+
   def initialize(source)
     super(source)
+    setup_variables
+  end
+
+  def setup_variables
     @simple_math_macro_name = nil
     @raw_macro_name = "raw"
     @resource_macro_name = "math-resource"
@@ -127,5 +137,12 @@ class ZoticaParser < ZenithalParser
       next [children_list.first]
     end
   end
+
+end
+
+
+class ZoticaParser < ZenithalParser
+
+  include ZoticaParserMixin
 
 end
