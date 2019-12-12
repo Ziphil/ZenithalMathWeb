@@ -33,13 +33,13 @@ class Executor
   def execute
     case @mode
     when :simple
-      convert_simple
+      convert(true)
     else
-      convert
+      convert(false)
     end
   end
 
-  def convert
+  def convert(only_math = false)
     unless @paths.empty?
       source = File.read(@paths.first)
     else
@@ -49,6 +49,7 @@ class Executor
     parser.simple_math_macro_name = @options[:math_macro_name] || "m"
     parser.raw_macro_name = @options[:raw_macro_name] || "raw"
     parser.resource_macro_name = @options[:resource_macro_name] || "math-resource"
+    parser.only_math = only_math
     parser.load_font(@options[:font_path])
     document = parser.parse
     converter = ZenithalConverter.simple_html(document)
@@ -58,9 +59,6 @@ class Executor
     else
       STDOUT.print(output)
     end
-  end
-
-  def convert_simple
   end
 
 end

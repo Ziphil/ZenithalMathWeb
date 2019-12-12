@@ -59,7 +59,7 @@ module ZoticaParserMethod
   end
 
   def create_element(name, marks, attributes, children_list, options)
-    if options[:math]
+    if options[:math] || @only_math
       return ZoticaBuilder.create_math_element(name, attributes, children_list, {:fonts => @fonts})
     else
       return super
@@ -67,7 +67,7 @@ module ZoticaParserMethod
   end
 
   def create_special_element(kind, children, options)
-    if options[:math]
+    if options[:math] || @only_math
       return ZoticaBuilder.create_math_element("g", {}, [children], {:fonts => @fonts})
     else
       return super
@@ -75,7 +75,7 @@ module ZoticaParserMethod
   end
 
   def create_text(raw_text, options)
-    if options[:math] && !options[:math_leaf]
+    if (options[:math] || @only_math) && !options[:math_leaf]
       return ZoticaBuilder.create_math_text(raw_text, {:fonts => @fonts})
     else
       return super
@@ -83,7 +83,7 @@ module ZoticaParserMethod
   end
 
   def create_escape(place, char, options)
-    if options[:math] && place == :text
+    if (options[:math] || @only_math) && place == :text
       return ZoticaBuilder.create_math_escape(char, {:fonts => @fonts})
     else
       return super
@@ -99,6 +99,7 @@ module ZoticaParserMixin
 
   attr_accessor :raw_macro_name
   attr_accessor :resource_macro_name
+  attr_accessor :only_math
 
   def self.extended(object)
     object.instance_eval do
@@ -116,6 +117,7 @@ module ZoticaParserMixin
     @raw_macro_name = "raw"
     @resource_macro_name = "math-resource"
     @math_macro_names = []
+    @only_math = false
     @fonts = {}
     @math_level = 0
   end
