@@ -8,8 +8,6 @@ include REXML
 
 module ZoticaParserMethod
 
-  include ZenithalParserMethod
-
   private
 
   def determine_options(name, marks, attributes, macro, options)
