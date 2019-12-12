@@ -121,7 +121,7 @@ class FenceModifier extends Modifier {
     let maxStretchLevel = this.calcMaxStretchLevel(kind, position);
     let stretchLevel = null;
     for (let i = 0 ; i <= maxStretchLevel ; i ++) {
-      if (heightAbs <= 1159 + 242 * i) {
+      if (heightAbs <= 1059 + 242 * i) {
         stretchLevel = i;
         break;
       }
