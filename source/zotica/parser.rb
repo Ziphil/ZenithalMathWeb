@@ -43,7 +43,7 @@ module ZoticaParserMethod
       children = children_list.first
       return children
     elsif name == @resource_macro_name
-      style_string = ZoticaBuilder.create_style_string(attributes["font_url"])
+      style_string = ZoticaBuilder.create_style_string(attributes["font-url"])
       script_string = ZoticaBuilder.create_script_string
       nodes = Nodes[]
       nodes << Element.build("style") do |element|
