@@ -27,16 +27,27 @@ class Executor
     parser.on("-f PATH") do |value|
       @options[:font_path] = value
     end
+    parser.on("-z") do
+      @mode = nil
+    end
+    parser.on("-l") do
+      @mode = :light
+    end
+    parser.on("-j") do
+      @mode = :script
+    end
     parser.on("-s") do
-      @mode = :simple
+      @mode = :style
     end
     @paths = parser.parse(args)
   end
 
   def execute
     case @mode
-    when :simple
+    when :light
       convert(true)
+    when :script, :style
+      output_resource
     else
       convert(false)
     end
@@ -64,6 +75,20 @@ class Executor
     end
   end
 
+  def output_resource
+    case @mode
+    when :script
+      output = ZoticaBuilder.create_script_string
+    when :style
+      font_url = @options[:font_path] || "font.otf"
+      output = ZoticaBuilder.create_style_string(font_url)
+    end
+    if @options[:output_path]
+      File.write(@options[:output_path], output)
+    else
+      STDOUT.print(output)
+    end
+  end
 end
 
 
