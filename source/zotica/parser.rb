@@ -10,6 +10,23 @@ module ZoticaParserMethod
 
   private
 
+  def parse_document
+    if @only_math
+      parser = Parser.build(self) do
+        document = Element.new("math-root")
+        children = +parse_nodes({})
+        +parse_eof
+        children.each do |child|
+          document.add(child)
+        end
+        next document
+      end
+      return parser
+    else
+      return super
+    end
+  end
+
   def determine_options(name, marks, attributes, macro, options)
     if macro && @math_macro_names.include?(name)
       options = options.clone
