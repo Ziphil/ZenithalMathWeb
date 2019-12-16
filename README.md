@@ -52,8 +52,9 @@ gem install zotica.gem
 Ruby や ZenML はよく分からないが、とりあえず Zotica で数式をレンダリングしてみたいという場合は、以下のドキュメントを参考にしてください。
 
 - [チュートリアル](document/tutorial.md)
+- [コマンドライン API の仕様](document/command.md)
 
-### すでに ZenML を使っている場合
+### Ruby から呼び出す場合
 `ZenithalParser` の代わりに `ZoticaParser` インスタンスを作成します。
 
 このクラスには `register_math_macro` メソッドが追加されており、引数の内容が Zotica で書かれるマクロを登録することができます。
