@@ -21,11 +21,14 @@ class Executor
     parser.on("-r NAME") do |value|
       @options[:raw_macro_name] = value
     end
-    parser.on("-s NAME") do |value|
+    parser.on("-c NAME") do |value|
       @options[:resource_macro_name] = value
     end
     parser.on("-f PATH") do |value|
       @options[:font_path] = value
+    end
+    parser.on("-s") do |value|
+      @mode = :simple
     end
     @paths = parser.parse(args)
   end
