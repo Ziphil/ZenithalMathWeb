@@ -35,8 +35,15 @@ Zotica の仕様は以下の通りです。
 
 ## インストール
 RubyGems からインストールできるようになる予定です。
+正式リリースまでもう少しお待ち下さい。
 ```
 gem install zotica
+```
+
+とにかく試してみたい場合は、このリポジトリをクローンし、以下のコマンドを実行することでビルドおよびインストールすることができます。
+```
+gem build zotica.gemspec -o zotica.gem
+gem install zotica.gem
 ```
 
 ## 使い方
