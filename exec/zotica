@@ -27,7 +27,7 @@ class Executor
     parser.on("-f PATH") do |value|
       @options[:font_path] = value
     end
-    parser.on("-s") do |value|
+    parser.on("-s") do
       @mode = :simple
     end
     @paths = parser.parse(args)
