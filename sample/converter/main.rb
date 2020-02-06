@@ -53,7 +53,7 @@ class WholeSampleConverter
 
   def execute
     parser = create_parser
-    converter = create_converter(parser.exec)
+    converter = create_converter(parser.run)
     formatter = create_formatter
     save(converter, formatter)
   end
