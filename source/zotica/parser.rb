@@ -81,12 +81,17 @@ class ZoticaSingleParser < ZenithalParser
   attr_accessor :exact
   attr_accessor :fonts
 
-  def initialize(source, attributes = {}, &block)
+  def initialize(source)
     super(source)
     @exact = false
+    @fonts = {}
+    @attributes = nil
+    @block = nil
+  end
+
+  def setup(attributes, block)
     @attributes = attributes
     @block = block
-    @fonts = {}
   end
 
 end
@@ -111,13 +116,14 @@ class ZoticaParser < ZenithalParser
   def register_math_macro(name, &block)
     outer_self = self
     register_plugin(name) do |attributes|
-      parser = ZoticaSingleParser.new(@source, attributes, &block)
+      parser = ZoticaSingleParser.new(@source)
       parser.register_plugin(@raw_macro_name) do |_|
         raw_parser = outer_self.clone
         raw_parser.exact = false
         raw_parser.whole = false
         next raw_parser
       end
+      parser.setup(attributes, block)
       parser.fonts = @fonts
       next parser
     end
