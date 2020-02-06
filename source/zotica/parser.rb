@@ -94,6 +94,12 @@ class ZoticaSingleParser < ZenithalParser
     @block = block
   end
 
+  def load_font(path)
+    if path
+      @fonts[:main] = JSON.parse(File.read(path))
+    end
+  end
+
 end
 
 
