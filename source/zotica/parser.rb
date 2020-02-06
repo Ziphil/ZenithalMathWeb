@@ -99,11 +99,9 @@ end
 
 class ZoticaParser < ZenithalParser
 
-  attr_accessor :raw_macro_name
-
   def initialize(source)
     super(source)
-    @raw_macro_name = "raw"
+    @raw_macro_names = []
     @fonts = {}
   end
 
@@ -117,11 +115,13 @@ class ZoticaParser < ZenithalParser
     outer_self = self
     register_plugin(name) do |attributes|
       parser = ZoticaSingleParser.new(@source)
-      parser.register_plugin(@raw_macro_name) do |_|
-        raw_parser = outer_self.clone
-        raw_parser.exact = false
-        raw_parser.whole = false
-        next raw_parser
+      @raw_macro_names.each do |raw_macro_name|
+        parser.register_plugin(raw_macro_name) do |_|
+          raw_parser = outer_self.clone
+          raw_parser.exact = false
+          raw_parser.whole = false
+          next raw_parser
+        end
       end
       parser.setup(attributes, block)
       parser.fonts = @fonts
@@ -158,6 +158,10 @@ class ZoticaParser < ZenithalParser
   def resource_macro_name=(name)
     STDERR.puts("This method is now obsolete. Use 'register_resource_macro' instead.")
     register_resource_macro(name)
+  end
+
+  def register_raw_macro(name)
+    @raw_macro_names << name
   end
 
 end
