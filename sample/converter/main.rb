@@ -70,6 +70,7 @@ class WholeSampleConverter
     source = File.read(DOCUMENT_DIR + "/main.zml")
     parser = ZoticaParser.new(source)
     parser.register_resource_macro("math-resource")
+    parser.register_raw_macro("raw")
     parser.brace_name = "x"
     parser.bracket_name = "xn"
     parser.slash_name = "i"
