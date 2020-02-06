@@ -146,6 +146,15 @@ class ZoticaParser < ZenithalParser
     register_simple_math_macro(name)
   end
 
+  def register_raw_macro(name)
+    @raw_macro_names << name
+  end
+
+  def raw_macro_name=(name)
+    STDERR.puts("This method is now obsolete. Use 'register_raw_macro' instead.")
+    register_raw_macro(name)
+  end
+
   def register_resource_macro(name)
     register_macro(name) do |attributes, children_list|
       style_string = ZoticaBuilder.create_style_string(attributes["font-url"])
@@ -164,10 +173,6 @@ class ZoticaParser < ZenithalParser
   def resource_macro_name=(name)
     STDERR.puts("This method is now obsolete. Use 'register_resource_macro' instead.")
     register_resource_macro(name)
-  end
-
-  def register_raw_macro(name)
-    @raw_macro_names << name
   end
 
 end
