@@ -53,7 +53,7 @@ class WholeSampleConverter
 
   def execute
     parser = create_parser
-    converter = create_converter(parser.parse)
+    converter = create_converter(parser.exec)
     formatter = create_formatter
     save(converter, formatter)
   end
@@ -68,8 +68,8 @@ class WholeSampleConverter
 
   def create_parser
     source = File.read(DOCUMENT_DIR + "/main.zml")
-    parser = ZenithalParser.new(source)
-    parser.extend(ZoticaParserMixin)
+    parser = ZoticaParser.new(source)
+    parser.register_resource_macro("math-resource")
     parser.brace_name = "x"
     parser.bracket_name = "xn"
     parser.slash_name = "i"
