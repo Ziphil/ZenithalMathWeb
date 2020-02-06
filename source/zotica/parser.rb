@@ -108,6 +108,7 @@ class ZoticaParser < ZenithalParser
   def initialize(source)
     super(source)
     @raw_macro_names = []
+    @math_macros = {}
     @fonts = {}
   end
 
@@ -129,10 +130,18 @@ class ZoticaParser < ZenithalParser
           next raw_parser
         end
       end
+      @math_macros.each do |math_macro_name, math_macro_block|
+        parser.register_plugin(math_macro_name) do |_|
+          math_parser = parser.clone
+          math_parser.setup(attributes, math_macro_block)
+          next math_parser
+        end
+      end
       parser.setup(attributes, block)
       parser.fonts = @fonts
       next parser
     end
+    @math_macros[name] = block
   end
 
   def register_simple_math_macro(name)
