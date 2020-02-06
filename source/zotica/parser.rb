@@ -142,7 +142,7 @@ class ZoticaParser < ZenithalParser
   end
 
   def simple_math_macro_name=(name)
-    STDERR.puts("This method is now obsolete. Use 'register_simple_math_macro' instead.")
+    warn("This method is now obsolete. Use 'register_simple_math_macro' instead.", uplevel: 1)
     register_simple_math_macro(name)
   end
 
@@ -151,7 +151,7 @@ class ZoticaParser < ZenithalParser
   end
 
   def raw_macro_name=(name)
-    STDERR.puts("This method is now obsolete. Use 'register_raw_macro' instead.")
+    warn("This method is now obsolete. Use 'register_raw_macro' instead.", uplevel: 1)
     register_raw_macro(name)
   end
 
@@ -171,7 +171,7 @@ class ZoticaParser < ZenithalParser
   end
   
   def resource_macro_name=(name)
-    STDERR.puts("This method is now obsolete. Use 'register_resource_macro' instead.")
+    warn("This method is now obsolete. Use 'register_resource_macro' instead.", uplevel: 1)
     register_resource_macro(name)
   end
 
