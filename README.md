@@ -28,7 +28,7 @@ TeX と同程度の品質の数式を組めることと、出力される HTML �
 Zotica の仕様は以下の通りです。
 現在は試案段階で、突然変更になる可能性がありますので、利用する際は注意してください。
 
-- [バージョン 1.0](document/zotica/1.0.md) (ほぼ確定)
+- [バージョン 1.0](document/zotica/1.0.md)
 
 このリポジトリは、Ruby 実装の ZenML パーサーである `ZenithalParser` クラスを拡張した `ZoticaParser` クラスを提供します。
 このクラスは通常の ZenML パーサーと同じように ZenML ドキュメントをパースしますが、引数の内容が Zotica で書かれたマクロを処理できるようになっています。
@@ -48,61 +48,27 @@ gem install zotica.gem
 
 ## 使い方
 
-### Ruby とか ZenML とかよく分からない場合
-Ruby や ZenML はよく分からないが、とりあえず Zotica で数式をレンダリングしてみたいという場合は、以下のドキュメントを参考にしてください。
+### とにかく試してみたい場合
+とりあえず試しに Zotica で数式をレンダリングしてみたいという場合は、以下のチュートリアルを参考にしてください。
+環境構築から数式を含む HTML の生成までを行えます。
 
 - [チュートリアル](document/tutorial.md)
-- [コマンドライン API の仕様](document/command.md)
+
+### コマンドラインを用いる場合
+Zotica 処理系をコマンドラインから呼び出すための API が用意されています。
+上記の「インストール」の項目に沿って Ruby と Zotica をインストールすれば、自動的に使えるようになります。
+
+- [コマンドラインインタフェースの仕様](document/command.md)
 
 ### Ruby から呼び出す場合
-`ZenithalParser` の代わりに `ZoticaParser` インスタンスを作成します。
+Zotica 処理系は Ruby で書かれているため、Ruby から呼び出すことができます。
+詳しい方法については、以下のドキュメントを参考にしてください。
 
-このクラスには `register_math_macro` メソッドが追加されており、引数の内容が Zotica で書かれるマクロを登録することができます。
-このマクロに渡されるノードは、ドキュメント上の該当マクロの引数として記述された Zotica の構造そのものではなく、それが HTML 要素に変換されたものになります。
+- [Ruby API のチュートリアル](document/ruby.md)
 
-Zotica が出力する HTML 要素を正しく表示するには、専用の CSS と JavaScript を適用する必要があります。
-このクラスのパーサーを使うと、`math-resource` マクロによって必要な CSS と JavaScript を埋め込むことができます。
-
-詳しくは以下のコードを参照してください。
-```ruby
-# ライブラリの読み込み
-require 'rexml/document'
-require 'zenml'
-require 'zotica'
-include REXML
-include Zenithal
-# パーサーの作成
-source = File.read("sample.zml")
-parser = ZoticaParser.new(source)
-# Zotica マクロの登録
-parser.register_math_macro("m") do |attributes, children_list|
-  # children_list には ZenML ドキュメント上で該当マクロに渡された各引数を HTML に変換したものが渡される
-  # ここではそれをそのまま返して HTML として表示させている
-  next children_list.first
-end
-```
-このようにすると、以下のような ZenML ドキュメントがパースできます。
-```
-\zml?|version="1.0"|>
-\xml?|version="1.0",encoding="UTF-8"|>
-\html<
-  \head<
-    ## 数式を正しく表示するための CSS と JavaScript を埋め込む
-    &math-resource|url="font.otf"|>
-  >
-  \body<
-    \p<
-      ## 登録したマクロ内に Zotica が書ける
-      2 次方程式 &m<a \sp<x><2> + bx + c = 0> は &m<\sp<b><2> - 4ac = 0> のとき重解をもち･･･。
-    >
-  >
->
-```
-
-## 今後の課題
+## 今後のアップデート予定
 以下の機能を実装予定です。
 
-- コマンドラインインターフェースの整備
 - LaTeX 形式の数式記述に対応
 - スペーシングを調整する API の作成
 
