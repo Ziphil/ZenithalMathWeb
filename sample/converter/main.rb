@@ -52,17 +52,14 @@ class WholeSampleConverter
   end
 
   def execute
-    parser = create_parser
-    converter = create_converter(parser.run)
-    formatter = create_formatter
-    save(converter, formatter)
+    convert_normal
   end
 
-  def save(converter, formatter)
+  def convert_normal
+    parser = create_parser
+    converter = create_converter.tap{|s| s.update(parser.run)}
     ZoticaBuilder.save_font_strings
-    File.open(OUTPUT_DIR + "/main.html", "w") do |file|
-      file.write(converter.convert)
-    end
+    File.write(OUTPUT_DIR + "/main.html", converter.convert)
     FileUtils.copy(DOCUMENT_DIR + "/style.css", OUTPUT_DIR + "/style.css")
   end
 
@@ -84,8 +81,8 @@ class WholeSampleConverter
     return parser
   end
 
-  def create_converter(document)
-    converter = SampleConverter.new(document)
+  def create_converter
+    converter = SampleConverter.new(nil)
     Dir.each_child(TEMPLATE_DIR) do |entry|
       if entry.end_with?(".rb")
         binding = TOPLEVEL_BINDING
@@ -94,11 +91,6 @@ class WholeSampleConverter
       end
     end
     return converter
-  end
-
-  def create_formatter
-    formatter = Formatters::Default.new
-    return formatter
   end
 
 end
