@@ -589,6 +589,12 @@ math-space {
     }
   }
 
+  @each $name, $margin in $margins {
+    &.m#{$name} {
+      margin-left: spacing(-$margin) !important;
+    }
+  }
+
 }
 
 
