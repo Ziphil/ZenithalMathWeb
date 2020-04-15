@@ -1,15 +1,7 @@
 # coding: utf-8
 
 
-require 'json'
-require 'pp'
-require 'rexml/document'
-require 'sassc'
-require 'ttfunk'
-include REXML
-
-
-module ZoticaBuilder
+module Zenithal::ZoticaBuilder
 
   DATA_PATH = "resource/math.json"
   COMMON_STYLE_PATH = "resource/style/math.scss"
@@ -36,7 +28,7 @@ module ZoticaBuilder
 
   def apply_options(nodes, options)
     nodes.each do |node|
-      if node.is_a?(Element) && options[:role]
+      if node.is_a?(REXML::Element) && options[:role]
         classes = node["class"].split(" ") - ROLES
         classes << options[:role]
         node["class"] = classes.join(" ")
@@ -62,9 +54,9 @@ module ZoticaBuilder
   end
 
   def build_number(text, options = {})
-    this = Nodes[]
+    this = REXML::Nodes[]
     element = nil
-    this << Element.build("math-n") do |this|
+    this << REXML::Element.build("math-n") do |this|
       this << ~text
       element = this
     end
@@ -84,10 +76,10 @@ module ZoticaBuilder
   end
 
   def build_identifier(text, types, options = {})
-    this = Nodes[]
+    this = REXML::Nodes[]
     element = nil
     font_type = (types.include?("alt")) ? "math" : "main"
-    this << Element.build("math-i") do |this|
+    this << REXML::Element.build("math-i") do |this|
       this["class"] = types.join(" ")
       this["data-cont"] = text
       this << ~text
@@ -104,10 +96,10 @@ module ZoticaBuilder
   end
 
   def build_operator(symbol, types, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     element = nil
     font_type = (types.include?("txt")) ? "main" : "math"
-    this << Element.build("math-o") do |this|
+    this << REXML::Element.build("math-o") do |this|
       this["class"] = types.join(" ")
       this << ~symbol
       element = this
@@ -136,8 +128,8 @@ module ZoticaBuilder
   end
 
   def build_strut(type, options = {})
-    this = Nodes[]
-    this << Element.build("math-strut") do |this|
+    this = REXML::Nodes[]
+    this << REXML::Element.build("math-strut") do |this|
       if type == "upper" || type == "dupper"
         this["style"] += "margin-bottom: -0.5em;"
       elsif type == "dlower" || type == "dfull"
@@ -154,7 +146,7 @@ module ZoticaBuilder
         top_margin = options[:fonts]&.dig(:main, "72", 1) || DEFAULT_FONTS.dig(:main, "72", 1)
         this["style"] += "margin-top: #{top_margin}em;"
       end
-      this << Element.build("math-text") do |this|
+      this << REXML::Element.build("math-text") do |this|
         this["style"] += "line-height: 1;"
         this << ~" "
       end
@@ -164,24 +156,24 @@ module ZoticaBuilder
   end
 
   def build_subsuper(options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     base_element, sub_element, super_element, left_sub_element, left_super_element = nil
     main_element = nil
-    this << Element.build("math-subsup") do |this|
+    this << REXML::Element.build("math-subsup") do |this|
       main_element = this
-      this << Element.build("math-lsub") do |this|
+      this << REXML::Element.build("math-lsub") do |this|
         left_sub_element = this
       end
-      this << Element.build("math-lsup") do |this|
+      this << REXML::Element.build("math-lsup") do |this|
         left_super_element = this
       end
-      this << Element.build("math-base") do |this|
+      this << REXML::Element.build("math-base") do |this|
         base_element = this
       end
-      this << Element.build("math-sub") do |this|
+      this << REXML::Element.build("math-sub") do |this|
         sub_element = this
       end
-      this << Element.build("math-sup") do |this|
+      this << REXML::Element.build("math-sup") do |this|
         super_element = this
       end
     end
@@ -208,19 +200,19 @@ module ZoticaBuilder
   end
 
   def build_underover(options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
-    this << Element.build("math-underover") do |this|
+    this << REXML::Element.build("math-underover") do |this|
       main_element = this
-      this << Element.build("math-over") do |this|
+      this << REXML::Element.build("math-over") do |this|
         over_element = this
       end
-      this << Element.build("math-basewrap") do |this|
-        this << Element.build("math-base") do |this|
+      this << REXML::Element.build("math-basewrap") do |this|
+        this << REXML::Element.build("math-base") do |this|
           base_element = this
         end
-        this << Element.build("math-under") do |this|
+        this << REXML::Element.build("math-under") do |this|
           under_element = this
         end
       end
@@ -242,15 +234,15 @@ module ZoticaBuilder
   end
 
   def build_fraction(options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     numerator_element, denominator_element = nil
-    this << Element.build("math-frac") do |this|
-      this << Element.build("math-num") do |this|
+    this << REXML::Element.build("math-frac") do |this|
+      this << REXML::Element.build("math-num") do |this|
         numerator_element = this
       end
-      this << Element.build("math-denwrap") do |this|
-        this << Element.new("math-line")
-        this << Element.build("math-den") do |this|
+      this << REXML::Element.build("math-denwrap") do |this|
+        this << REXML::Element.new("math-line")
+        this << REXML::Element.build("math-den") do |this|
           denominator_element = this
         end
       end
@@ -273,22 +265,22 @@ module ZoticaBuilder
   end
 
   def build_radical(symbol, modify, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element, index_element = nil
-    this << Element.build("math-rad") do |this|
+    this << REXML::Element.build("math-rad") do |this|
       if modify
         this["class"] = "mod" 
       end
-      this << Element.build("math-index") do |this|
+      this << REXML::Element.build("math-index") do |this|
         index_element = this
       end
-      this << Element.build("math-sqrt") do |this|
-        this << Element.build("math-surd") do |this|
-          this << Element.build("math-o") do |this|
-            this << Text.new(symbol, true, nil, false)
+      this << REXML::Element.build("math-sqrt") do |this|
+        this << REXML::Element.build("math-surd") do |this|
+          this << REXML::Element.build("math-o") do |this|
+            this << REXML::Text.new(symbol, true, nil, false)
           end
         end
-        this << Element.build("math-cont") do |this|
+        this << REXML::Element.build("math-cont") do |this|
           content_element = this
         end
       end
@@ -313,26 +305,26 @@ module ZoticaBuilder
   end
 
   def build_fence(left_kind, right_kind, left_symbol, right_symbol, modify, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element = nil
-    this << Element.build("math-fence") do |this|
+    this << REXML::Element.build("math-fence") do |this|
       this["class"] = "par"
       if modify
         this["class"] = [*this["class"].split(" "), "mod"].join(" ")
         this["data-left"] = left_kind
         this["data-right"] = right_kind
       end
-      this << Element.build("math-left") do |this|
-        this << Element.build("math-o") do |this|
-          this << Text.new(left_symbol, true, nil, false)
+      this << REXML::Element.build("math-left") do |this|
+        this << REXML::Element.build("math-o") do |this|
+          this << REXML::Text.new(left_symbol, true, nil, false)
         end
       end
-      this << Element.build("math-cont") do |this|
+      this << REXML::Element.build("math-cont") do |this|
         content_element = this
       end
-      this << Element.build("math-right") do |this|
-        this << Element.build("math-o") do |this|
-          this << Text.new(right_symbol, true, nil, false)
+      this << REXML::Element.build("math-right") do |this|
+        this << REXML::Element.build("math-o") do |this|
+          this << REXML::Text.new(right_symbol, true, nil, false)
         end
       end
     end
@@ -342,9 +334,9 @@ module ZoticaBuilder
   end
 
   def build_set(left_kind, right_kind, center_kind, left_symbol, right_symbol, center_symbol, modify, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     left_element, right_element = nil
-    this << Element.build("math-fence") do |this|
+    this << REXML::Element.build("math-fence") do |this|
       this["class"] = "par"
       if modify
         this["class"] = [*this["class"].split(" "), "mod"].join(" ")
@@ -352,26 +344,26 @@ module ZoticaBuilder
         this["data-right"] = right_kind
         this["data-center"] = center_kind
       end
-      this << Element.build("math-left") do |this|
-        this << Element.build("math-o") do |this|
-          this << Text.new(left_symbol, true, nil, false)
+      this << REXML::Element.build("math-left") do |this|
+        this << REXML::Element.build("math-o") do |this|
+          this << REXML::Text.new(left_symbol, true, nil, false)
         end
       end
-      this << Element.build("math-cont") do |this|
+      this << REXML::Element.build("math-cont") do |this|
         left_element = this
       end
-      this << Element.build("math-center") do |this|
+      this << REXML::Element.build("math-center") do |this|
         this["class"] = "cpar"
-        this << Element.build("math-o") do |this|
-          this << Text.new(right_symbol, true, nil, false)
+        this << REXML::Element.build("math-o") do |this|
+          this << REXML::Text.new(right_symbol, true, nil, false)
         end
       end
-      this << Element.build("math-cont") do |this|
+      this << REXML::Element.build("math-cont") do |this|
         right_element = this
       end
-      this << Element.build("math-right") do |this|
-        this << Element.build("math-o") do |this|
-          this << Text.new(right_symbol, true, nil, false)
+      this << REXML::Element.build("math-right") do |this|
+        this << REXML::Element.build("math-o") do |this|
+          this << REXML::Text.new(right_symbol, true, nil, false)
         end
       end
     end
@@ -387,27 +379,27 @@ module ZoticaBuilder
   end
 
   def build_integral(symbol, size, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     base_element, sub_element, super_element = nil
-    this << Element.build("math-subsup") do |this|
+    this << REXML::Element.build("math-subsup") do |this|
       this["class"] = "int"
       unless size == "lrg"
         this["class"] = [*this["class"].split(" "), size].join(" ")
       end
-      this << Element.build("math-base") do |this|
+      this << REXML::Element.build("math-base") do |this|
         base_element = this
-        this << Element.build("math-o") do |this|
+        this << REXML::Element.build("math-o") do |this|
           this["class"] = "int"
           unless size == "lrg"
             this["class"] = [*this["class"].split(" "), size].join(" ")
           end
-          this << Text.new(symbol, true, nil, false)
+          this << REXML::Text.new(symbol, true, nil, false)
         end
       end
-      this << Element.build("math-sub") do |this|
+      this << REXML::Element.build("math-sub") do |this|
         sub_element = this
       end
-      this << Element.build("math-sup") do |this|
+      this << REXML::Element.build("math-sup") do |this|
         super_element = this
       end
     end
@@ -424,22 +416,22 @@ module ZoticaBuilder
   end
 
   def build_sum(symbol, size, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     if size == "lrg"
       under_element, over_element = nil
-      this << Element.build("math-underover") do |this|
+      this << REXML::Element.build("math-underover") do |this|
         this["class"] = "sum"
-        this << Element.build("math-over") do |this|
+        this << REXML::Element.build("math-over") do |this|
           over_element = this
         end
-        this << Element.build("math-basewrap") do |this|
-          this << Element.build("math-base") do |this|
-            this << Element.build("math-o") do |this|
+        this << REXML::Element.build("math-basewrap") do |this|
+          this << REXML::Element.build("math-base") do |this|
+            this << REXML::Element.build("math-o") do |this|
               this["class"] = "sum"
-              this << Text.new(symbol, true, nil, false)
+              this << REXML::Text.new(symbol, true, nil, false)
             end
           end
-          this << Element.build("math-under") do |this|
+          this << REXML::Element.build("math-under") do |this|
             under_element = this
           end
         end
@@ -449,19 +441,19 @@ module ZoticaBuilder
       modify_underover(under_element, over_element)
     else
       base_element, sub_element, super_element = nil
-      this << Element.build("math-subsup") do |this|
+      this << REXML::Element.build("math-subsup") do |this|
         this["class"] = "sum inl"
-        this << Element.build("math-base") do |this|
+        this << REXML::Element.build("math-base") do |this|
           base_element = this
-          this << Element.build("math-o") do |this|
+          this << REXML::Element.build("math-o") do |this|
             this["class"] = "sum inl"
-            this << Text.new(symbol, true, nil, false)
+            this << REXML::Text.new(symbol, true, nil, false)
           end
         end
-        this << Element.build("math-sub") do |this|
+        this << REXML::Element.build("math-sub") do |this|
           sub_element = this
         end
-        this << Element.build("math-sup") do |this|
+        this << REXML::Element.build("math-sup") do |this|
           super_element = this
         end
       end
@@ -473,31 +465,31 @@ module ZoticaBuilder
   end
 
   def build_accent(under_symbol, over_symbol, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
-    this << Element.build("math-underover") do |this|
+    this << REXML::Element.build("math-underover") do |this|
       main_element = this
       this["class"] = "acc"
-      this << Element.build("math-over") do |this|
+      this << REXML::Element.build("math-over") do |this|
         over_element = this
         if over_symbol
-          this << Element.build("math-o") do |this|
+          this << REXML::Element.build("math-o") do |this|
             this["class"] = "acc"
-            this << Text.new(over_symbol, true, nil, false)
+            this << REXML::Text.new(over_symbol, true, nil, false)
           end
         end
       end
-      this << Element.build("math-basewrap") do |this|
-        this << Element.build("math-base") do |this|
+      this << REXML::Element.build("math-basewrap") do |this|
+        this << REXML::Element.build("math-base") do |this|
           base_element = this
         end
-        this << Element.build("math-under") do |this|
+        this << REXML::Element.build("math-under") do |this|
           under_element = this
           if under_symbol
-            this << Element.build("math-o") do |this|
+            this << REXML::Element.build("math-o") do |this|
               this["class"] = "acc"
-              this << Text.new(under_symbol, true, nil, false)
+              this << REXML::Text.new(under_symbol, true, nil, false)
             end
           end
         end
@@ -540,34 +532,34 @@ module ZoticaBuilder
   end
 
   def build_wide(kind, under_symbol, over_symbol, modify, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     base_element, under_element, over_element = nil
     main_element = nil
-    this << Element.build("math-underover") do |this|
+    this << REXML::Element.build("math-underover") do |this|
       this["class"] = "wid"
       if modify
         this["class"] = [*this["class"].split(" "), "mod"].join(" ")
         this["data-kind"] = kind
       end
       main_element = this
-      this << Element.build("math-over") do |this|
+      this << REXML::Element.build("math-over") do |this|
         if over_symbol
-          this << Element.build("math-o") do |this|
+          this << REXML::Element.build("math-o") do |this|
             this["class"] = "wid"
-            this << Text.new(over_symbol, true, nil, false)
+            this << REXML::Text.new(over_symbol, true, nil, false)
           end
         end
         over_element = this
       end
-      this << Element.build("math-basewrap") do |this|
-        this << Element.build("math-base") do |this|
+      this << REXML::Element.build("math-basewrap") do |this|
+        this << REXML::Element.build("math-base") do |this|
           base_element = this
         end
-        this << Element.build("math-under") do |this|
+        this << REXML::Element.build("math-under") do |this|
           if under_symbol
-            this << Element.build("math-o") do |this|
+            this << REXML::Element.build("math-o") do |this|
               this["class"] = "wid"
-              this << Text.new(under_symbol, true, nil, false)
+              this << REXML::Text.new(under_symbol, true, nil, false)
             end
           end
           under_element = this
@@ -582,9 +574,9 @@ module ZoticaBuilder
   end
 
   def build_table(type, align_config, raw, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     table_element = nil
-    this << Element.build("math-table") do |this|
+    this << REXML::Element.build("math-table") do |this|
       this["class"] = type
       table_element = this
     end
@@ -595,9 +587,9 @@ module ZoticaBuilder
   end
 
   def build_diagram(vertical_gaps_string, horizontal_gaps_string, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     table_element = nil
-    this << Element.build("math-diagram") do |this|
+    this << REXML::Element.build("math-diagram") do |this|
       if vertical_gaps_string
         this["class"] = [*this["class"].split(" "), "vnon"].join(" ")
       end
@@ -674,9 +666,9 @@ module ZoticaBuilder
   end
 
   def build_table_cell(options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     cell_element = nil
-    this << Element.build("math-cell") do |this|
+    this << REXML::Element.build("math-cell") do |this|
       cell_element = this
     end
     apply_options(this, options)
@@ -685,13 +677,13 @@ module ZoticaBuilder
   end
 
   def build_diagram_vertex(name, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     vertex_element = nil
-    this << Element.build("math-cellwrap") do |this|
+    this << REXML::Element.build("math-cellwrap") do |this|
       if name
         this["data-name"] = name
       end
-      this << Element.build("math-cell") do |this|
+      this << REXML::Element.build("math-cell") do |this|
         vertex_element = this
       end
     end
@@ -701,9 +693,9 @@ module ZoticaBuilder
   end
 
   def build_arrow(name, configs, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     label_element = nil
-    this << Element.build("math-arrow") do |this|
+    this << REXML::Element.build("math-arrow") do |this|
       this["data-start"] = configs[:start_config]
       this["data-end"] = configs[:end_config]
       if configs[:tip_kinds]
@@ -741,9 +733,9 @@ module ZoticaBuilder
   end
 
   def build_tree(options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element = nil
-    this << Element.build("math-tree") do |this|
+    this << REXML::Element.build("math-tree") do |this|
       content_element = this
     end
     apply_options(this, options)
@@ -764,8 +756,8 @@ module ZoticaBuilder
         left_label_element = child.get_elements("math-sys-llabel").first
         right_label_element = child.get_elements("math-sys-rlabel").first
         antecedent_elements = stack.pop(number)
-        inference_element = Element.build("math-infer") do |this|
-          this << Element.build("math-label") do |this|
+        inference_element = REXML::Element.build("math-infer") do |this|
+          this << REXML::Element.build("math-label") do |this|
             if left_label_element.to_a.empty?
               this["class"] = "non"
             end
@@ -773,22 +765,22 @@ module ZoticaBuilder
               this << each_element
             end
           end
-          this << Element.build("math-step") do |this|
-            this << Element.build("math-ant") do |this|
+          this << REXML::Element.build("math-step") do |this|
+            this << REXML::Element.build("math-ant") do |this|
               antecedent_elements.each do |antecedent_element|
                 this << antecedent_element
               end
             end
-            this << Element.build("math-conwrap") do |this|
-              this << Element.new("math-line")
-              this << Element.build("math-con") do |this|
+            this << REXML::Element.build("math-conwrap") do |this|
+              this << REXML::Element.new("math-line")
+              this << REXML::Element.build("math-con") do |this|
                 this << ZoticaBuilder.build_strut("upper").first
                 this << ZoticaBuilder.build_strut("dlower").first
                 this << child.get_elements("math-cont").first
               end
             end
           end
-          this << Element.build("math-label") do |this|
+          this << REXML::Element.build("math-label") do |this|
             if right_label_element.to_a.empty?
               this["class"] = "non"
             end
@@ -807,9 +799,9 @@ module ZoticaBuilder
   end
 
   def build_tree_axiom(options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element = nil
-    this << Element.build("math-axiom") do |this|
+    this << REXML::Element.build("math-axiom") do |this|
       content_element = this
     end
     apply_options(this, options)
@@ -818,17 +810,17 @@ module ZoticaBuilder
   end
 
   def build_tree_inference(number, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element, right_label_element, left_label_element = nil
-    this << Element.build("math-sys-infer") do |this|
+    this << REXML::Element.build("math-sys-infer") do |this|
       this["data-num"] = number.to_s
-      this << Element.build("math-cont") do |this|
+      this << REXML::Element.build("math-cont") do |this|
         content_element = this
       end
-      this << Element.build("math-sys-rlabel") do |this|
+      this << REXML::Element.build("math-sys-rlabel") do |this|
         right_label_element = this
       end
-      this << Element.build("math-sys-llabel") do |this|
+      this << REXML::Element.build("math-sys-llabel") do |this|
         left_label_element = this
       end
     end
@@ -838,9 +830,9 @@ module ZoticaBuilder
   end
 
   def build_group(transform_configs, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element = nil
-    this << Element.build("math-group") do |this|
+    this << REXML::Element.build("math-group") do |this|
       transforms = []
       if transform_configs[:rotate]
         transforms << "rotate(#{transform_configs[:rotate]}deg)"
@@ -856,8 +848,8 @@ module ZoticaBuilder
   end
 
   def build_space(type, options = {})
-    this = Nodes[]
-    this << Element.build("math-space") do |this|
+    this = REXML::Nodes[]
+    this << REXML::Element.build("math-space") do |this|
       this["class"] = type
     end
     apply_options(this, options)
@@ -865,9 +857,9 @@ module ZoticaBuilder
   end
 
   def build_phantom(type, options = {}, &block)
-    this = Nodes[]
+    this = REXML::Nodes[]
     content_element = nil
-    this << Element.build("math-phantom") do |this|
+    this << REXML::Element.build("math-phantom") do |this|
       this["class"] = ["lpres", "rpres"].join(" ")
       unless type == "bth"
         this["class"] = [*this["class"].split(" "), type].join(" ")
@@ -880,9 +872,9 @@ module ZoticaBuilder
   end
 
   def build_text(text, options = {}, &block)
-    this = Nodes[]
-    this << Element.build("math-text") do |this|
-      this << Text.new(text, true, nil, false)
+    this = REXML::Nodes[]
+    this << REXML::Element.build("math-text") do |this|
+      this << REXML::Text.new(text, true, nil, false)
     end
     apply_options(this, options)
     return this
@@ -901,7 +893,7 @@ module ZoticaBuilder
   def create_script_string
     dir = File.expand_path("../" + SCRIPT_DIR, __FILE__)
     string = "const DATA = "
-    string << JSON.generate(ZoticaBuilder::DATA.slice("radical", "fence", "wide", "shift", "arrow"))
+    string << JSON.generate(Zenithal::ZoticaBuilder::DATA.slice("radical", "fence", "wide", "shift", "arrow"))
     string << ";\n"
     string << File.read(dir + "/main.js")
     string << "\n"
@@ -949,10 +941,10 @@ module ZoticaBuilder
     main_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:main], __FILE__)
     math_font_path = File.expand_path("../" + DEFAULT_FONT_PATHS[:math], __FILE__)
     File.open(main_font_path, "w") do |file|
-      file.write(ZoticaBuilder.create_font_string(:main))
+      file.write(Zenithal::ZoticaBuilder.create_font_string(:main))
     end
     File.open(math_font_path, "w") do |file|
-      file.write(ZoticaBuilder.create_font_string(:math))
+      file.write(Zenithal::ZoticaBuilder.create_font_string(:math))
     end
   end
 

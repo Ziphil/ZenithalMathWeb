@@ -1,14 +1,19 @@
 # coding: utf-8
 
 
-require 'zenml'
-
-
 module Zenithal
 
-  ZOTICA_VERSION = "1.0.0"
-
-  require_relative 'zotica/builder'
-  require_relative 'zotica/parser'
+  ZOTICA_VERSION = "1.0.1"
+  ZOTICA_VERSION_ARRAY = VERSION.split(/\./).map(&:to_i)
 
 end
+
+
+require 'json'
+require 'rexml/document'
+require 'sassc'
+require 'ttfunk'
+require 'zenml'
+
+require_relative 'zotica/builder'
+require_relative 'zotica/parser'
