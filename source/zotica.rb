@@ -3,8 +3,8 @@
 
 module Zenithal
 
-  ZOTICA_VERSION = "1.0.1"
-  ZOTICA_VERSION_ARRAY = VERSION.split(/\./).map(&:to_i)
+  ZOTICA_VERSION = "1.1.0"
+  ZOTICA_VERSION_ARRAY = ZOTICA_VERSION.split(/\./).map(&:to_i)
 
 end
 
