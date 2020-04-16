@@ -850,7 +850,15 @@ module Zenithal::ZoticaBuilder
   def build_space(type, options = {})
     this = REXML::Nodes[]
     this << REXML::Element.build("math-space") do |this|
-      this["class"] = type
+      if type =~ /^\-?\d+$/
+        this["style"] += "margin-left: #{type.to_f / 18}em !important; "
+      else
+        if type =~ /^\-/
+          this["class"] = type.gsub(/^\-/, "m")
+        else
+          this["class"] = type
+        end
+      end
     end
     apply_options(this, options)
     return this

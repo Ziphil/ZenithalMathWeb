@@ -312,7 +312,7 @@ module Zenithal::ZoticaSingleParserMethod
         content_this << children_list.fetch(0, REXML::Nodes[])
       end
     when "s"
-      type = attributes["t"] || "medium"
+      type = attributes["t"] || "med"
       this << ZoticaBuilder.build_space(type, options)
     when SPACE_ALTERNATIVES.method(:key?)
       type = SPACE_ALTERNATIVES[name]
