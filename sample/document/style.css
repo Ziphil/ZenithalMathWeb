@@ -61,9 +61,10 @@ article p.normal math-root {
 article p math-root span.box {
   width: 1em;
   height: 1em;
+  color: hsl(240, 80%, 50%);
   display: inline-block;
   vertical-align: middle; 
-  background: linear-gradient(-45deg, hsl(240, 80%, 50%) 25%, white 25%, white 50%, hsl(240, 80%, 50%) 50%, hsl(240, 80%, 50%) 75%, white 75%, white);
+  background: linear-gradient(-45deg, currentcolor 25%, transparent 25%, transparent 50%, currentcolor 50%, currentcolor 75%, transparent 75%, transparent);
   background-size: 4px 4px;
 }
 

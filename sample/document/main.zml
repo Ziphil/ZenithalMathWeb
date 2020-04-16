@@ -379,6 +379,13 @@
         &m<f \in> A \rmulti|bin|> B>.
       >
       \p<
+        Inserting spaces:
+        &m<&raw<\span|class="box"|>> \s|t="thn"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>,
+        &m<&raw<\span|class="box"|>> \s|t="40"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>,
+        &m<&raw<\span|class="box"|>> \s|t="-med"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>,
+        &m<&raw<\span|class="box"|>> \s|t="-12"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>.
+      >
+      \p<
         Phantoms:
         &m<
           \array|align="rr"|<
