@@ -615,14 +615,14 @@ module Zenithal::ZoticaBuilder
         vertical_gap = vertical_gaps&.fetch(row - 1, vertical_gaps.last)
         horizontal_gap = horizontal_gaps&.fetch(column - 1, horizontal_gaps.last)
         if vertical_gap && row > 0
-          if vertical_gap =~ /^\d+$/
+          if vertical_gap =~ /^\-?\d+$/
             child["style"] += "margin-top: #{vertical_gap.to_f / 18}em; "
           else
             child["class"] = [*child["class"].split(" "), "v#{vertical_gap}"].join(" ")
           end
         end
         if horizontal_gap && column > 0
-          if horizontal_gap =~ /^\d+$/
+          if horizontal_gap =~ /^\-?\d+$/
             child["style"] += "margin-left: #{horizontal_gap.to_f / 18}em; "
           else
             child["class"] = [*child["class"].split(" "), "h#{horizontal_gap}"].join(" ")
