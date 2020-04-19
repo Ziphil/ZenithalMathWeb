@@ -6,6 +6,8 @@ module Zenithal::ZoticaSingleParserMethod
   SPACE_ALTERNATIVES = {"sfun" => "afun", "sbin" => "abin", "srel" => "arel", "ssbin" => "asbin", "ssrel" => "asrel", "scas" => "acas", "quad" => "sgl", "qquad" => "dbl"}
   PHANTOM_TYPES = {"ph" => "bth", "vph" => "ver", "hph" => "hor"}
 
+  private
+
   def parse
     if @block
       inner_element = parse_math_root
@@ -16,8 +18,6 @@ module Zenithal::ZoticaSingleParserMethod
     end
     return nodes
   end
-
-  private
 
   def create_math_element(name, attributes, children_list, options = {})
     this = REXML::Nodes[]
