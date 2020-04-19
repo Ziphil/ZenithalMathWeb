@@ -461,41 +461,26 @@ class Zenithal::ZoticaParser < Zenithal::ZenithalParser
 
   def initialize(source)
     super(source)
-    @raw_macro_names = []
-    @math_macros = {}
-    @fonts = {}
+    @inner_parser = Zenithal::ZoticaSingleParser.new(source)
   end
 
   def load_font(path)
-    if path
-      @fonts[:main] = JSON.parse(File.read(path))
-    end
+    @inner_parser.load_font(path)
   end
 
   def register_math_macro(name, &block)
-    outer_self = self
     register_plugin(name) do |attributes|
-      parser = Zenithal::ZoticaSingleParser.new(@source)
-      @raw_macro_names.each do |raw_macro_name|
-        parser.register_plugin(raw_macro_name) do |_|
-          raw_parser = outer_self.clone
-          raw_parser.exact = false
-          raw_parser.whole = false
-          next raw_parser
-        end
-      end
-      @math_macros.each do |math_macro_name, math_macro_block|
-        parser.register_plugin(math_macro_name) do |_|
-          math_parser = parser.clone
-          math_parser.setup(attributes, math_macro_block)
-          next math_parser
-        end
-      end
+      parser = @inner_parser.clone
+      parser.update(@source)
       parser.setup(attributes, block)
-      parser.fonts = @fonts
       next parser
     end
-    @math_macros[name] = block
+    @inner_parser.register_plugin(name) do |_|
+      inner_parser = @inner_parser.clone
+      inner_parser.update(@source)
+      inner_parser.setup(attributes, block)
+      next inner_parser
+    end
   end
 
   def register_simple_math_macro(name)
@@ -510,7 +495,13 @@ class Zenithal::ZoticaParser < Zenithal::ZenithalParser
   end
 
   def register_raw_macro(name)
-    @raw_macro_names << name
+    outer_self = self
+    @inner_parser.register_plugin(name) do |_|
+      raw_parser = outer_self.clone
+      raw_parser.exact = false
+      raw_parser.whole = false
+      next raw_parser
+    end
   end
 
   def raw_macro_name=(name)
