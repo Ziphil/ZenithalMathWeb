@@ -1,11 +1,11 @@
-\zml?|version="1.0"|>
-\xml?|version="1.0",encoding="UTF-8"|>
+\zml?|version="1.1"|;
+\xml?|version="1.0",encoding="UTF-8"|;
 
 \html|lang="ja"|<
   \head<
-    \meta|charset="UTF-8"|>
-    &math-resource|font-url="font.otf"|>
-    \link|rel="stylesheet",type="text/css",href="style.css"|>
+    \meta|charset="UTF-8"|;
+    &math-resource|font-url="font.otf"|;
+    \link|rel="stylesheet",type="text/css",href="style.css"|;
     \title<Zotica>
   >
   \body<
@@ -29,33 +29,33 @@
       \p<
         &m<\frac<A><B>>, &m<\frac<c><e> - \frac<p><k>>
         or more complicated
-        &m<\bb<4> \pitchfork> \frac<φ \bowtie> \frac<K><2>><3 - \frac<\frac<1><xy \otimes> z> \smash> \frac<m><7 Ψ>><Δ>>>.
+        &m<\bb<4> \pitchfork; \frac<φ \bowtie; \frac<K><2>><3 - \frac<\frac<1><xy \otimes; z> \smash; \frac<m><7 Ψ>><Δ>>>.
       >
       \h1<Radicals>
       \p<
         &m<\sqrt<A>>, &m<\sqrt<c>>, &m<\sqrt<q>>
         or
-        &m<\sqrt<\frac<1><i \wwedge> j> + \frac<1><j \vvee> i>>>
+        &m<\sqrt<\frac<1><i \wwedge; j> + \frac<1><j \vvee; i>>>
         or
         &m<\frac<W><\sqrt<5 W>> = \sqrt<\frac<W><5>>>.
       >
       \p<
         Sizes:
-        &m<\sqrt<&raw<\span|class="box",style="height:1em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.1em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.2em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.3em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.4em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.5em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.6em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.7em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.8em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:1.9em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:2em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:2.1em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:2.2em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:2.3em"|>>>>
-        &m<\sqrt<&raw<\span|class="box",style="height:2.4em"|>>>>.
+        &m<\sqrt<&raw<\span|class="box",style="height:1em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.1em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.2em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.3em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.4em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.5em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.6em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.7em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.8em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:1.9em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.1em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.2em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.3em"|;>>>
+        &m<\sqrt<&raw<\span|class="box",style="height:2.4em"|;>>>.
       >
       \p<
         With index:
@@ -74,22 +74,22 @@
       >
       \p<
         Sizes:
-        &m<\paren<&raw<\span|class="box",style="height:1em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:1.2em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:1.4em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:1.6em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:1.8em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:2em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:2.2em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:2.4em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:2.6em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:2.8em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:3em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:3.2em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:3.4em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:3.6em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:3.8em"|>>>>
-        &m<\paren<&raw<\span|class="box",style="height:4em"|>>>>.
+        &m<\paren<&raw<\span|class="box",style="height:1em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.2em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.4em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.6em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:1.8em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:2em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.2em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.4em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.6em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:2.8em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:3em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.2em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.4em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.6em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:3.8em"|;>>>
+        &m<\paren<&raw<\span|class="box",style="height:4em"|;>>>.
       >
       \p<
         Very large:
@@ -99,11 +99,11 @@
       >
       \p<
         With a middle bar:
-        &m<\set<a \in> A><f (a) \approx> g (a)>>
+        &m<\set<a \in; A><f (a) \approx; g (a)>>
         or
-        &m<\set<\frac<n><m> \in> \bb<Q>><n + m \leq> F (n, m)>>.
+        &m<\set<\frac<n><m> \in; \bb<Q>><n + m \leq; F (n, m)>>.
         or
-        &m<\set<\frac<n><\frac<m><\frac<k><l>>> \in> \bb<B>><\frac<l + \frac<k><m>><n> \ggt> 0>>.
+        &m<\set<\frac<n><\frac<m><\frac<k><l>>> \in; \bb<B>><\frac<l + \frac<k><m>><n> \ggt; 0>>.
       >
       \p<
         Asymmetric:
@@ -133,7 +133,7 @@
       >
       \p<
         Primes are kinds of superscripts:
-        &m<A' * \sp<B><\pr>> * \sp<C><\ppr>>>.
+        &m<A' * \sp<B><\pr;> * \sp<C><\ppr;>>.
       >
       \p<
         Left scripts:
@@ -161,21 +161,21 @@
         or
         &m<P \unov<X><\sp<n><2> + 2 n + 1><\sp<n><2> - 2 n> Q>
         or
-        &m<U \unov<Y><\sb<\aleph>><0>><r + \frac<1><2>> V>.
+        &m<U \unov<Y><\sb<\aleph;><0>><r + \frac<1><2>> V>.
       >
       \h1<Sums and products>
       \p<
         &m<\sum<A><B> C>, &m<\sumlike|k="bigsqcup"|<A> C>
         or more practically
-        &m<\varphi> (x) = \sum<n = 0><\infty>> \frac<\sp<\varphi>><(n)> (0)><n !> \sp<x><n>>
+        &m<\varphi; (x) = \sum<n = 0><\infty;> \frac<\sp<\varphi;><(n)> (0)><n !> \sp<x><n>>
         or
-        &m<\bigotimes<L \in> \frak<L>><> \bigoplus<M \in> \frak<M>><> \op<Hom> (L, M)>.
+        &m<\bigotimes<L \in; \frak<L>><> \bigoplus<M \in; \frak<M>><> \op<Hom> (L, M)>.
       >
       \p<
         Inline forms:
         &m<\sum|in|<A><B> C>
         or
-        &m<\bigotimes|in|<n \in> \bb<N>><> \sp<M><\otimes> n>>.
+        &m<\bigotimes|in|<n \in; \bb<N>><> \sp<M><\otimes; n>>.
       >
       \h1<Accents>
       \p<
@@ -187,53 +187,53 @@
       >
       \p<
         Sizes:
-        &m<\widetilde<&raw<\span|class="box",style="width:0.5em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:0.6em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:0.7em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:0.8em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:0.9em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.1em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.2em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.3em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.4em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.5em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.6em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.7em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.8em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:1.9em"|>>>>
-        &m<\widetilde<&raw<\span|class="box",style="width:2em"|>>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.5em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.6em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.7em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.8em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:0.9em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.1em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.2em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.3em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.4em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.5em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.6em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.7em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.8em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:1.9em"|;>>>
+        &m<\widetilde<&raw<\span|class="box",style="width:2em"|;>>>
         or
-        &m<\widetildebelow<&raw<\span|class="box",style="width:1.5em"|>>>>.
+        &m<\widetildebelow<&raw<\span|class="box",style="width:1.5em"|;>>>.
       >
       \p<
         Wide braces:
-        &m<\overbrace<&raw<\span|class="box",style="width:1em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.1em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.2em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.3em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.4em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.5em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.6em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.7em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.8em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:1.9em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.1em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.2em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.3em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.4em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.5em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.6em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.7em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.8em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:2.9em"|>>>>
-        &m<\overbrace<&raw<\span|class="box",style="width:3em"|>>>>.
+        &m<\overbrace<&raw<\span|class="box",style="width:1em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.1em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.2em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.3em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.4em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.5em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.6em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.7em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.8em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:1.9em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.1em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.2em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.3em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.4em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.5em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.6em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.7em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.8em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:2.9em"|;>>>
+        &m<\overbrace<&raw<\span|class="box",style="width:3em"|;>>>.
       >
       \p<
         Other examples:
-        &m<\widetilde<f \oplus> g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>,
-        &m<\ov<\overbrace<A \times> A \times> \cdots> \times> A>><k \text< times>>>, &m<\un<\underbrace<B \times> B \times> \cdots> \times> B>><n + 2 \text< times>>>,
+        &m<\widetilde<f \oplus; g>>, &m<\widehat<T (`g)>>, &m<\overrarr<ABCD>>, &m<\underlarr<PQ>>,
+        &m<\ov<\overbrace<A \times; A \times; \cdots; \times; A>><k \text< times>>>, &m<\un<\underbrace<B \times; B \times; \cdots; \times; B>><n + 2 \text< times>>>,
         &m<\overline<z + pi - 3>>, &m<\wide|k="underline"|<G - g>>.
       >
       \p<
@@ -257,7 +257,7 @@
       >
       \p<
         Accented symbols:
-        &m<\ring<0>>, &m<\tilde<\bf<K>>>, &m<2 \dot<-> 3>, &m<A \hat<\oplus>> B>, &m<`a: D \ddot<\to>> E>.
+        &m<\ring<0>>, &m<\tilde<\bf<K>>>, &m<2 \dot<-> 3>, &m<A \hat<\oplus;> B>, &m<`a: D \ddot<\to;> E>.
       >
       \p<
         Double:
@@ -267,45 +267,45 @@
       \p<
         &m<
           \paren<\matrix<
-            \c<1> \c<2> \br>
+            \c<1> \c<2> \br;
             \c<3> \c<4>
           >>
         >,
         &m<
           \vert<\matrix<
-            \c<\sb<a><11>> \c<\sb<a><12>> \c<\sb<a><13>> \c<\sb<a><14>> \c<\sb<a><15>> \br>
-            \c<\sb<a><21>> \c<\sb<a><22>> \c<\sb<a><23>> \c<\sb<a><24>> \c<\sb<a><25>> \br> 
-            \c<\sb<a><31>> \c<\sb<a><32>> \c<\sb<a><33>> \c<\sb<a><34>> \c<\sb<a><35>> \br>
+            \c<\sb<a><11>> \c<\sb<a><12>> \c<\sb<a><13>> \c<\sb<a><14>> \c<\sb<a><15>> \br;
+            \c<\sb<a><21>> \c<\sb<a><22>> \c<\sb<a><23>> \c<\sb<a><24>> \c<\sb<a><25>> \br; 
+            \c<\sb<a><31>> \c<\sb<a><32>> \c<\sb<a><33>> \c<\sb<a><34>> \c<\sb<a><35>> \br;
             \c<\sb<a><41>> \c<\sb<a><42>> \c<\sb<a><43>> \c<\sb<a><44>> \c<\sb<a><45>>
           >>
         >
         or
         &m<
-          \sb<V><n> \coloneqq> \det>
+          \sb<V><n> \coloneqq; \det;
           \paren<\matrix<
-            \c<1> \c<\sb<X><1>> \c<\sp<\sb<X><1>><2>> \c<\cdots>> \c<\sp<\sb<X><1>><n - 1>> \br>
-            \c<1> \c<\sb<X><2>> \c<\sp<\sb<X><2>><2>> \c<\cdots>> \c<\sp<\sb<X><2>><n - 1>> \br>
-            \c<\vdots>> \c<\vdots>> \c<\vdots>> \c<\ddots>> \c<\vdots>> \br>
-            \c<1> \c<\sb<X><n>> \c<\sp<\sb<X><n>><2>> \c<\cdots>> \c<\sp<\sb<X><n>><n - 1>>
+            \c<1> \c<\sb<X><1>> \c<\sp<\sb<X><1>><2>> \c<\cdots;> \c<\sp<\sb<X><1>><n - 1>> \br;
+            \c<1> \c<\sb<X><2>> \c<\sp<\sb<X><2>><2>> \c<\cdots;> \c<\sp<\sb<X><2>><n - 1>> \br;
+            \c<\vdots;> \c<\vdots;> \c<\vdots;> \c<\ddots;> \c<\vdots;> \br;
+            \c<1> \c<\sb<X><n>> \c<\sp<\sb<X><n>><2>> \c<\cdots;> \c<\sp<\sb<X><n>><n - 1>>
           >>
-          = \prod<\stack<\cc<1 \leq> i \leq> n> \cc<1 \leq> j \leq> n> \cc<i `< j>>><> (\sb<X><j> - \sb<X><i>)
+          = \prod<\stack<\cc<1 \leq; i \leq; n> \cc<1 \leq; j \leq; n> \cc<i `< j>>><> (\sb<X><j> - \sb<X><i>)
         >.
       >
       \h1<Arrays>
       \p<
         &m<
           \array<
-            \c<`F :> \c<V \otimes> W> \c<\longto>> \c<\bb<K>> \br>
-            \c> \c<v \otimes> w> \c<\longmapsto>> \c<f (v) g (w)>
+            \c<`F :> \c<V \otimes; W> \c<\longto;> \c<\bb<K>> \br;
+            \c; \c<v \otimes; w> \c<\longmapsto;> \c<f (v) g (w)>
           >
         >
         or
         &m<
           \array|align="rcl"|<
-            \cc<\nabla> \cdot> \bf<B>><=><0>
-            \cc<\nabla> \times> \bf<E> + \frac<\partial> \bf<B>><\partial> t>><=><\bfrm<0>>
-            \cc<\nabla> \cdot> \bf<D>><=><`r>
-            \cc<\nabla> \times> \bf<H> - \frac<\partial> \bf<D>><\partial> t>><=><\bf<j>>
+            \cc<\nabla; \cdot; \bf<B>><=><0>
+            \cc<\nabla; \times; \bf<E> + \frac<\partial; \bf<B>><\partial; t>><=><\bfrm<0>>
+            \cc<\nabla; \cdot; \bf<D>><=><`r>
+            \cc<\nabla; \times; \bf<H> - \frac<\partial; \bf<D>><\partial; t>><=><\bf<j>>
           >
         >.
       >
@@ -314,76 +314,76 @@
         &m<
           \vert<x> =
           \case<
-            \cc<x><(x \geq> 0)>
+            \cc<x><(x \geq; 0)>
             \cc<- x><(x `< 0)>
           >
         >.
       >
       \h1<Functions>
       \p<
-        &m<\sin> A>
+        &m<\sin; A>
         or
-        &m<\exp> (a - b) = \frac<\exp> a><\exp> b>>
+        &m<\exp; (a - b) = \frac<\exp; a><\exp; b>>
         or
-        &m<\max> `{ \dim> V \mid> V \in> \op<Hoge> (\scr<V>) `}>.
+        &m<\max; `{ \dim; V \mid; V \in; \op<Hoge> (\scr<V>) `}>.
       >
       \h1<Alternative letters>
       \p<
         &m<\bb<Aa> * \varbb<Bb> * \cal<Cc> * \scr<Dd> * \frak<Ee>>
         or
-        &m<`s \nin> \frak<gl> (\sb<\frak<S>><n>)>
+        &m<`s \nin; \frak<gl> (\sb<\frak<S>><n>)>
         or
-        &m<`t \in> \sp<\scr<G>><\scr<F>>: T \raarr> S>
+        &m<`t \in; \sp<\scr<G>><\scr<F>>: T \raarr; S>
         or
-        &m<\frak<g> = \frak<h> \oplus> \bigoplus<`a \in> `D> \sb<\frak<g>><`a>>.
+        &m<\frak<g> = \frak<h> \oplus; \bigoplus<`a \in; `D> \sb<\frak<g>><`a>>.
       >
       \h1<Miscellaneous>
       \p<
         Greek variants:
-        &m<(\varbeta>, `b)>, &m<(\varepsilon>, `e)>, &m<(\vartheta>, `u)>, &m<(\varkappa>, `k)>, &m<(\varpi>, `p)>, &m<(\varrho>, `r)>, &m<(\varphi>, `f)>, &m<(\varcapupsilon>, `Y)>
+        &m<(\varbeta;, `b)>, &m<(\varepsilon;, `e)>, &m<(\vartheta;, `u)>, &m<(\varkappa;, `k)>, &m<(\varpi;, `p)>, &m<(\varrho;, `r)>, &m<(\varphi;, `f)>, &m<(\varcapupsilon;, `Y)>
         and
-        &m<(\capdigamma>, \digamma>)>, &m<(\capkoppa>, \koppa>)>, &m<(\capsampi>, \sampi>)>.
+        &m<(\capdigamma;, \digamma;)>, &m<(\capkoppa;, \koppa;)>, &m<(\capsampi;, \sampi;)>.
       >
       \p<
         Various symbols:
-        &m<\hbar>>, &m<\sharp> \flat>>, &m<\crotchet> \quaver>>, &m<\bspade> \wheart>>, &m<\dagger>>, &m<\amp> \invamp>>
+        &m<\hbar;>, &m<\sharp; \flat;>, &m<\crotchet; \quaver;>, &m<\bspade; \wheart;>, &m<\dagger;>, &m<\amp; \invamp;>
         and
-        &m<\op<Hom> (`b \ltriangle> `J, F \circ> \hyphen>)>
+        &m<\op<Hom> (`b \ltriangle; `J, F \circ; \hyphen;)>
         and
-        &m<m \in> M \iff> f (m) \nin> \sp<M><\natural>> \scand> g (m) \nin> G>.
+        &m<m \in; M \iff; f (m) \nin; \sp<M><\natural;> \scand; g (m) \nin; G>.
       >
       \p<
         Combining negation symbol:
-        &m<X \succrel>\not> Y>, &m<A \lls>\not> B>.
+        &m<X \succrel;\not; Y>, &m<A \lls;\not; B>.
       >
       \p<
         Grouping:
-        &m<M \sb<\otimes>><\bb<Z>> N>
+        &m<M \sb<\otimes;><\bb<Z>> N>
         or
-        &m<\un<\lim>><n \to> \infty>> \frac<\log> n><n> = 0>
+        &m<\un<\lim;><n \to; \infty;> \frac<\log; n><n> = 0>
         or
         &m<n = [-1]>.
       >
       \p<
         Changing identifier styles:
-        &m<V \in> \sb<\bfrm<Vect>><k>>
+        &m<V \in; \sb<\bfrm<Vect>><k>>
         or
-        &m<\rm<Vol> = `r \sfun> \sin> `f \sfun> d `r d `u d`f>
+        &m<\rm<Vol> = `r \sfun; \sin; `f \sfun; d `r d `u d`f>
         or
-        &m<\tt<if> \sfun> B \sfun> \tt<then> \sfun> M \sfun> \tt<else> \sfun> N>.
+        &m<\tt<if> \sfun; B \sfun; \tt<then> \sfun; M \sfun; \tt<else> \sfun; N>.
       >
       \p<
         Changing spacing:
-        &m<f: A \rmulti> B>
+        &m<f: A \rmulti; B>
         and
-        &m<f \in> A \rmulti|bin|> B>.
+        &m<f \in; A \rmulti|bin|; B>.
       >
       \p<
         Inserting spaces:
-        &m<&raw<\span|class="box"|>> \s|t="thn"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>,
-        &m<&raw<\span|class="box"|>> \s|t="40"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>,
-        &m<&raw<\span|class="box"|>> \s|t="-med"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>,
-        &m<&raw<\span|class="box"|>> \s|t="-12"|> &raw<\span|class="box",style="color:hsl(0,100%,40%)"|>>>.
+        &m<&raw<\span|class="box"|;> \s|t="thn"|; &raw<\span|class="box",style="color:hsl(0,100%,40%)"|;>>,
+        &m<&raw<\span|class="box"|;> \s|t="40"|; &raw<\span|class="box",style="color:hsl(0,100%,40%)"|;>>,
+        &m<&raw<\span|class="box"|;> \s|t="-med"|; &raw<\span|class="box",style="color:hsl(0,100%,40%)"|;>>,
+        &m<&raw<\span|class="box"|;> \s|t="-12"|; &raw<\span|class="box",style="color:hsl(0,100%,40%)"|;>>.
       >
       \p<
         Phantoms:
@@ -400,9 +400,9 @@
       >
       \p<
         Texts as subformulae:
-        &m<`{ x \in> X \mid> x \text< is very good> `}>
+        &m<`{ x \in; X \mid; x \text< is very good> `}>
         or
-        &m<`{ x \in> X \mid> &raw<&m<x> is very good> `}>.
+        &m<`{ x \in; X \mid; &raw<&m<x> is very good> `}>.
       >
       \p<
         Specifying classes:
@@ -415,10 +415,10 @@
         Standard:
         &m<
           \diag<
-            \v<X> \v<1> \v<Y> \br>
-            \v<Z> \v<X \oplus> Z> \v<X \otimes> Y>
+            \v<X> \v<1> \v<Y> \br;
+            \v<Z> \v<X \oplus; Z> \v<X \otimes; Y>
             \ar|s="1",e="2"|<f> \ar|s="1",e="4",inv|<g> \ar|s="1",e="5",inv|<h> \ar|s="1",e="6"|<k + long>
-            \ar|s="2",e="3"|<\sb<`v><Y>> \ar|s="3",e="6"|<`r> \ar|s="4",e="5",inv|<\sb<`r><2>> \ar|s="5",e="3"|>
+            \ar|s="2",e="3"|<\sb<`v><Y>> \ar|s="3",e="6"|<`r> \ar|s="4",e="5",inv|<\sb<`r><2>> \ar|s="5",e="3"|;
           >
         >.
       >
@@ -426,10 +426,10 @@
         Bent arrows:
         &m<
           \diag<
-            \v<X> \v> \v> \br>
-            \v> \v<\sp<f><*> M> \v<M> \br>
-            \v> \v<S> \v<T>
-            \ar|s="8",e="9",inv|<f> \ar|s="5",e="6"|>
+            \v<X> \v; \v; \br;
+            \v; \v<\sp<f><*> M> \v<M> \br;
+            \v; \v<S> \v<T>
+            \ar|s="8",e="9",inv|<f> \ar|s="5",e="6"|;
             \ar|s="6",e="9",tip="tail"|<m> \ar|s="5",e="8",tip="tail",inv|<\sp<f><*> m>
             \ar|s="1",e="6",bend="30"|<p> \ar|s="1",e="8",bend="-30",inv|<q>
             \ar|s="1",e="5"|<!>
@@ -438,9 +438,9 @@
         and
         &m<
           \diag<
-            \v<\bfrm<Set> \vph<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)>>
-            \v<\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>> \vph<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)>>
-            \v<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ>>>)> 
+            \v<\bfrm<Set> \vph<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ;>>)>>
+            \v<\sp<\bfrm<Set>><\sp<\scr<C>><\circ;>> \vph<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ;>>)>>
+            \v<\sb<\bfrm<Sh>><J> (\sp<\bfrm<Set>><\sp<\scr<C>><\circ;>>)> 
             \ar|s="1:r40",e="2:l40",bend="40"|<`D> \ar|s="2:l60",e="1:r60",bend="40"|<`G>
             \ar|s="2:r40",e="3:l40",bend="40"|<\bf<a>> \ar|s="3:l60",e="2:r60",bend="40"|<\bf<i>>           
           >
@@ -450,9 +450,9 @@
         Shifted arrows:
         &m<
           \diag<
-            \v<\op<Eq> (A, B)> \v<A> \v<B> \br>
-            \v<K> \v> \v>
-            \ar|s="1",e="2"|<e> \ar|s="4",e="2",inv|<k> \ar|s="4",e="1"|>
+            \v<\op<Eq> (A, B)> \v<A> \v<B> \br;
+            \v<K> \v; \v;
+            \ar|s="1",e="2"|<e> \ar|s="4",e="2",inv|<k> \ar|s="4",e="1"|;
             \ar|s="2",e="3",shift="3"|<f> \ar|s="2",e="3",shift="-3",inv|<g>
           >
         >.
@@ -461,7 +461,7 @@
         Changing label positions:
         &m<
           \diag<
-            \v<1> \v<2> \v<3> \v<4> \br>
+            \v<1> \v<2> \v<3> \v<4> \br;
             \ar|s="1",e="2",pos="10"|<A>
             \ar|s="2",e="3",pos="30"|<B>
             \ar|s="3",e="4",pos="90"|<C>
@@ -474,40 +474,40 @@
         Changing arrow tips:
         &m<
           \diag<
-            \v<1> \v<2> \br>
+            \v<1> \v<2> \br;
             \v<3> \v<4>
-            \ar|s="1",e="2",tip="hook",shift="3"|>
-            \ar|s="1",e="2",shift="-3"|>
-            \ar|s="3",e="4",tip="varhook,head",shift="-3"|>
-            \ar|s="3",e="4",shift="3"|>
-            \ar|s="2",e="4",tip="tail,none",shift="-3"|>
-            \ar|s="2",e="4",shift="3"|>
-            \ar|s="1",e="3",tip="bar",dash|>
-            \ar|s="1",e="4",line="0",mark|<\circlelarr>>
+            \ar|s="1",e="2",tip="hook",shift="3"|;
+            \ar|s="1",e="2",shift="-3"|;
+            \ar|s="3",e="4",tip="varhook,head",shift="-3"|;
+            \ar|s="3",e="4",shift="3"|;
+            \ar|s="2",e="4",tip="tail,none",shift="-3"|;
+            \ar|s="2",e="4",shift="3"|;
+            \ar|s="1",e="3",tip="bar",dash|;
+            \ar|s="1",e="4",line="0",mark|<\circlelarr;>
           >
         >,
-        compare with &m<\to>>, &m<\headrarr>>, &m<\hookrarr>>.
+        compare with &m<\to;>, &m<\headrarr;>, &m<\hookrarr;>.
       >
       \p<
         Double and triple arrows:
         &m<
           \diag<
-            \v> \v<2> \v> \br>
+            \v; \v<2> \v; \br;
             \v<4> \v<5> \v<6> \v<7>
-            \ar|s="2",e="5",line="2",dash|> \ar|s="5",e="6",line="2",inv|<Y> \ar|s="2",e="4",bend="-30",line="2"|>
-            \ar|s="4",e="5",line="3",inv|<Z> \ar|s="2",e="6",bend="30",line="3",dash|>
+            \ar|s="2",e="5",line="2",dash|; \ar|s="5",e="6",line="2",inv|<Y> \ar|s="2",e="4",bend="-30",line="2"|;
+            \ar|s="4",e="5",line="3",inv|<Z> \ar|s="2",e="6",bend="30",line="3",dash|;
             \ar|s="6",e="7"|<M> \ar|s="6",e="7",line="0",inv|<R> \ar|s="6",e="7",line="0",pos="10"|<S> \ar|s="6",e="7",line="0",pos="90"|<E>
           >
         >,
-        compare with &m<\to>>, &m<\raarr>>, &m<\raaarr>>.
+        compare with &m<\to;>, &m<\raarr;>, &m<\raaarr;>.
       >
       \p<
         Changing margin:
         &m<
           \diag|hor="med,sthk",ver="vthn"|<
-            \v<V> \v> \v> \br>
-            \v> \v<T> \v<S> \br>
-            \v<R> \v> \v>
+            \v<V> \v; \v; \br;
+            \v; \v<T> \v<S> \br;
+            \v<R> \v; \v;
             \ar|s="1",e="7",inv|<x> \ar|s="1",e="5"|<y> \ar|s="7",e="5",inv|<`c>
             \ar|s="5",e="6",inv|<\sb<V><\text<verylong>> + \sb<W><\text<longlong>>>
           >
@@ -515,17 +515,17 @@
         or
         &m<
           \diag|hor="thn,med,thk,36"|<
-            \v<1> \v<2> \v<3> \v<4> \v<5> \br>
-            \v<6> \v<7> \v<8> \v<9> \v<10> \br>
-            \v<11> \v<12> \v<13> \v<14> \v<15> \br>
-            \ar|s="1",e="2"|> \ar|s="2",e="3"|> \ar|s="3",e="4"|> \ar|s="4",e="5"|>
-            \ar|s="6",e="7"|> \ar|s="7",e="8"|> \ar|s="8",e="9"|> \ar|s="9",e="10"|>
-            \ar|s="11",e="12"|> \ar|s="12",e="13"|> \ar|s="13",e="14"|> \ar|s="14",e="15"|>
-            \ar|s="1",e="6"|> \ar|s="6",e="11"|>
-            \ar|s="2",e="7"|> \ar|s="7",e="12"|>
-            \ar|s="3",e="8"|> \ar|s="8",e="13"|>
-            \ar|s="4",e="9"|> \ar|s="9",e="14"|>
-            \ar|s="5",e="10"|> \ar|s="10",e="15"|>
+            \v<1> \v<2> \v<3> \v<4> \v<5> \br;
+            \v<6> \v<7> \v<8> \v<9> \v<10> \br;
+            \v<11> \v<12> \v<13> \v<14> \v<15> \br;
+            \ar|s="1",e="2"|; \ar|s="2",e="3"|; \ar|s="3",e="4"|; \ar|s="4",e="5"|;
+            \ar|s="6",e="7"|; \ar|s="7",e="8"|; \ar|s="8",e="9"|; \ar|s="9",e="10"|;
+            \ar|s="11",e="12"|; \ar|s="12",e="13"|; \ar|s="13",e="14"|; \ar|s="14",e="15"|;
+            \ar|s="1",e="6"|; \ar|s="6",e="11"|;
+            \ar|s="2",e="7"|; \ar|s="7",e="12"|;
+            \ar|s="3",e="8"|; \ar|s="8",e="13"|;
+            \ar|s="4",e="9"|; \ar|s="9",e="14"|;
+            \ar|s="5",e="10"|; \ar|s="10",e="15"|;
           >
         >.
       >
@@ -533,8 +533,8 @@
         Specifying a node by its name:
         &m<
           \diag<
-            \v|name="a"|<a> \v|name="c"|<c> \br>
-            \v|name="b"|<b> \v> \br>
+            \v|name="a"|<a> \v|name="c"|<c> \br;
+            \v|name="b"|<b> \v; \br;
             \ar|s="a",e="b",inv|<\sb<F><ab>> \ar|s="a",e="c"|<\sb<F><ac>> \ar|s="c",e="b"|<\sb<F><cb>>
           >
         >
@@ -543,10 +543,10 @@
           \diag|hor="vthk"|<
             \v<\scr<C>> \v<\scr<D>>
             \ar|s="1",e="2",bend="40"|<F> \ar|s="1",e="2",bend="-40",inv|<G>
-            \ar|s="1",e="2",bend="40",pos="30",line="0",name="fl",inv|> \ar|s="1",e="2",bend="-40",pos="30",line="0",name="gl"|>
-            \ar|s="1",e="2",bend="40",pos="70",line="0",name="fr",inv|> \ar|s="1",e="2",bend="-40",pos="70",line="0",name="gr"|>
+            \ar|s="1",e="2",bend="40",pos="30",line="0",name="fl",inv|; \ar|s="1",e="2",bend="-40",pos="30",line="0",name="gl"|;
+            \ar|s="1",e="2",bend="40",pos="70",line="0",name="fr",inv|; \ar|s="1",e="2",bend="-40",pos="70",line="0",name="gr"|;
             \ar|s="fl:c",e="gl:c",line="2",inv|<`a> \ar|s="fr:c",e="gr:c",line="2"|<`b>
-            \ar|s="fl:c",e="gl:c",line="0",name="a"|> \ar|s="fr:c",e="gr:c",line="0",name="b",inv|>
+            \ar|s="fl:c",e="gl:c",line="0",name="a"|; \ar|s="fr:c",e="gr:c",line="0",name="b",inv|;
             \ar|s="a:c",e="b:c",line="3"|<`J>
           >
         >.
@@ -556,8 +556,8 @@
         &m<
           \tree<
             \infr|n="0"|<A> \axm<B>
-            \infr|n="2"|<A \wedge> B><\wedge|ord|> \rm<I>> \axm<`F>
-            \infr|n="2"|<C><\to|ord|> \rm<E>>
+            \infr|n="2"|<A \wedge; B><\wedge|ord|; \rm<I>> \axm<`F>
+            \infr|n="2"|<C><\to|ord|; \rm<E>>
           >
         >
         or
@@ -582,17 +582,17 @@
         1:
         &mb<
           \frac<`p><2>
-          = \sum<k = 0><\infty>> \frac<(2 k)!><\sp<2><2 k> \sfun> \sp<(k!)><2>> \sfun> \frac<1><2 k + 1>
-          = \prod<k = 1><\infty>> \frac<4 \sp<k><2>><4 \sp<k><2> - 1>
-          = \sp<\paren<\int<0><\infty>> \frac<\sin> x><\sqrt<x>> dx>><2>
+          = \sum<k = 0><\infty;> \frac<(2 k)!><\sp<2><2 k> \sfun; \sp<(k!)><2>> \sfun; \frac<1><2 k + 1>
+          = \prod<k = 1><\infty;> \frac<4 \sp<k><2>><4 \sp<k><2> - 1>
+          = \sp<\paren<\int<0><\infty;> \frac<\sin; x><\sqrt<x>> dx>><2>
         >
       >
       \p<
         2:
         &mb<
           \array|align="rrcl"|<
-            \c<`C:> \c<\set<\paren<\matrix<\cc<a><- b> \cc<b><a>>> \in> \sb<\op<GL>><2> (\bb<R>)><\sp<a><2> + \sp<b><2> = 1>> \c<\longto>> \c<\sp<\bb<S>><1>> \br>
-            \c> \c<\paren<\matrix<\cc<a><- b> \cc<b><a>>>> \c<\longmapsto>> \c<a + b \sqrt<- 1>>
+            \c<`C:> \c<\set<\paren<\matrix<\cc<a><- b> \cc<b><a>>> \in; \sb<\op<GL>><2> (\bb<R>)><\sp<a><2> + \sp<b><2> = 1>> \c<\longto;> \c<\sp<\bb<S>><1>> \br;
+            \c; \c<\paren<\matrix<\cc<a><- b> \cc<b><a>>>> \c<\longmapsto;> \c<a + b \sqrt<- 1>>
           >
         >
       >
@@ -600,12 +600,12 @@
         3:
         &mb<
           \diag<
-            \v<P \sb|bin|<\otimes>><R> \sb<\bracket<P, \bigoplus<i \in> I><> \sb<`[ P, \sb<Y><i> `]><T>>><T>>
-            \v<\bigoplus<i \in> I><> \sb<`[ P, \sb<Y><i> `]><T>> \br>
-            \v<P \sb|bin|<\otimes>><R> \sb<\bracket<P, \sb<\bracket<P, \bigoplus<i \in> I><> \sb<Y><i>>><T>>><T>>
-            \v<\sb<\bracket<P, \bigoplus<i \in> I><> \sb<Y><i>>><T>>
-            \ar|s="1",e="2",line="2",tip="none"|> \ar|s="3",e="4",line="2",tip="none"|>
-            \ar|s="1",e="3",inv|<\rm<id> \otimes> `[ \rm<id>, `l `]> \ar|s="2",e="4"|<`l>
+            \v<P \sb|bin|<\otimes;><R> \sb<\bracket<P, \bigoplus<i \in; I><> \sb<`[ P, \sb<Y><i> `]><T>>><T>>
+            \v<\bigoplus<i \in; I><> \sb<`[ P, \sb<Y><i> `]><T>> \br;
+            \v<P \sb|bin|<\otimes;><R> \sb<\bracket<P, \sb<\bracket<P, \bigoplus<i \in; I><> \sb<Y><i>>><T>>><T>>
+            \v<\sb<\bracket<P, \bigoplus<i \in; I><> \sb<Y><i>>><T>>
+            \ar|s="1",e="2",line="2",tip="none"|; \ar|s="3",e="4",line="2",tip="none"|;
+            \ar|s="1",e="3",inv|<\rm<id> \otimes; `[ \rm<id>, `l `]> \ar|s="2",e="4"|<`l>
           >
         >
       >
@@ -613,22 +613,22 @@
         4:
         &mb<
           \diag<
-            \v<\sb<D><0>> \v<\sb<D><1>> \v<\sb<D><2>> \v<\cdots>> \v<\sb<D><n>> \v<\sb<D><n + 1>> \v<\cdots>> \v<\sb<D><\infty>>>
+            \v<\sb<D><0>> \v<\sb<D><1>> \v<\sb<D><2>> \v<\cdots;> \v<\sb<D><n>> \v<\sb<D><n + 1>> \v<\cdots;> \v<\sb<D><\infty;>>
             \ar|s="1",e="2",shift="3",pos="70"|<\sbsp<`F><1><0>> \ar|s="2",e="1",shift="3",pos="30"|<\sbsp<`F><0><1>>
             \ar|s="2",e="3",shift="3",pos="70"|<\sbsp<`F><2><1>> \ar|s="3",e="2",shift="3",pos="30"|<\sbsp<`F><1><2>>
-            \ar|s="3",e="4",shift="3"|> \ar|s="4",e="3",shift="3"|> \ar|s="4",e="5",shift="3"|> \ar|s="5",e="4",shift="3"|>
+            \ar|s="3",e="4",shift="3"|; \ar|s="4",e="3",shift="3"|; \ar|s="4",e="5",shift="3"|; \ar|s="5",e="4",shift="3"|;
             \ar|s="5",e="6",shift="3",pos="70"|<\sbsp<`F><n + 1><n>> \ar|s="6",e="5",shift="3",pos="30"|<\sbsp<`F><n><n + 1>>
-            \ar|s="6",e="7",shift="3"|> \ar|s="7",e="6",shift="3"|>
-            \ar|s="1",e="8",bend="40",pos="15"|<\sbsp<`F><\infty>><0>>
-            \ar|s="2",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><1>>
-            \ar|s="3",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><2>>
-            \ar|s="5",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><n>>
-            \ar|s="6",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty>><n + 1>>
-            \ar|s="8",e="1",bend="40",pos="85"|<\sbsp<`F><0><\infty>>>
-            \ar|s="8",e="2",bend="40",pos="85"|<\sbsp<`F><1><\infty>>>
-            \ar|s="8",e="3",bend="40",pos="85"|<\sbsp<`F><2><\infty>>>
-            \ar|s="8",e="5",bend="40",pos="85"|<\sbsp<`F><n><\infty>>>
-            \ar|s="8",e="6",bend="40",pos="85"|<\sbsp<`F><n + 1><\infty>>>
+            \ar|s="6",e="7",shift="3"|; \ar|s="7",e="6",shift="3"|;
+            \ar|s="1",e="8",bend="40",pos="15"|<\sbsp<`F><\infty;><0>>
+            \ar|s="2",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty;><1>>
+            \ar|s="3",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty;><2>>
+            \ar|s="5",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty;><n>>
+            \ar|s="6",e="8",tip="none",bend="40",pos="15"|<\sbsp<`F><\infty;><n + 1>>
+            \ar|s="8",e="1",bend="40",pos="85"|<\sbsp<`F><0><\infty;>>
+            \ar|s="8",e="2",bend="40",pos="85"|<\sbsp<`F><1><\infty;>>
+            \ar|s="8",e="3",bend="40",pos="85"|<\sbsp<`F><2><\infty;>>
+            \ar|s="8",e="5",bend="40",pos="85"|<\sbsp<`F><n><\infty;>>
+            \ar|s="8",e="6",bend="40",pos="85"|<\sbsp<`F><n + 1><\infty;>>
           >
         >
       >
@@ -636,24 +636,24 @@
         5:
         &mb<
           \tree<
-            \axm<`[p`] \sb<><2>> \axm<`[\neg> p`] \sb<><3>>
-            \infr|n="2"|<\bot>><><\neg> \rm<E>> \axm<`[\neg> q`] \sb<><1>>
-            \infr|n="2"|<\neg> \neg> q><1><\neg> \rm<I>>
-            \infr|n="1"|<q><><\neg> \neg>>
-            \infr|n="1"|<p \to|bin|> q><2><\to|ord|> \rm<I>> \axm<`[(p \to|bin|> q) \to|bin|> p`] \sb<><4>>
-            \infr|n="2"|<p><><\to|ord|> \rm<E>> \axm<`[\neg> p`] \sb<><3>>
-            \infr|n="2"|<\bot>><><\neg> \rm<E>>
-            \infr|n="2"|<\neg> \neg> p><3><\neg> \rm<I>>
-            \infr|n="1"|<p><><\neg> \neg>>
-            \infr|n="1"|<((p \to|bin|> q) \to|bin|> p) \to|bin|> p><4><\to|ord|> \rm<I>>
+            \axm<`[p`] \sb<><2>> \axm<`[\neg; p`] \sb<><3>>
+            \infr|n="2"|<\bot;><><\neg; \rm<E>> \axm<`[\neg; q`] \sb<><1>>
+            \infr|n="2"|<\neg; \neg; q><1><\neg; \rm<I>>
+            \infr|n="1"|<q><><\neg; \neg;>
+            \infr|n="1"|<p \to|bin|; q><2><\to|ord|; \rm<I>> \axm<`[(p \to|bin|; q) \to|bin|; p`] \sb<><4>>
+            \infr|n="2"|<p><><\to|ord|; \rm<E>> \axm<`[\neg; p`] \sb<><3>>
+            \infr|n="2"|<\bot;><><\neg; \rm<E>>
+            \infr|n="2"|<\neg; \neg; p><3><\neg; \rm<I>>
+            \infr|n="1"|<p><><\neg; \neg;>
+            \infr|n="1"|<((p \to|bin|; q) \to|bin|; p) \to|bin|; p><4><\to|ord|; \rm<I>>
           >
         >
       >
       \h1<Some practical examples>
       \p|class="normal"|<
-        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has two real roots when &m<D \coloneqq> \sp<b><2> - 4 ac `> 0> holds, and those roots are explicitly written as
+        The quadratic equation &m<a \sp<x><2> + bx + c = 0> has two real roots when &m<D \coloneqq; \sp<b><2> - 4 ac `> 0> holds, and those roots are explicitly written as
         &mb<
-          x = \frac<-b \pm> \sqrt<\sp<b><2> - 4 ac>><2 a>.
+          x = \frac<-b \pm; \sqrt<\sp<b><2> - 4 ac>><2 a>.
         >
         The proof is quite easy.
         The left-hand side of the equation is transformed as:
@@ -675,32 +675,32 @@
         >
         Taking the square roots of both sides yields
         &mb<
-          x + \frac<b><2 a> = [\pm> \frac<\sqrt<\sp<b><2> - 4 ac>><2 a>].
+          x + \frac<b><2 a> = [\pm; \frac<\sqrt<\sp<b><2> - 4 ac>><2 a>].
         >
         Transposing &m<b `/ 2 a> to the left finally gives the desired formula.
       >
       \p|class="normal"|<
-        主イデアル整域 &m<A> 上の多項式 &m<P \in> A `[X`]> を考え、
+        主イデアル整域 &m<A> 上の多項式 &m<P \in; A `[X`]> を考え、
         &mb<
-          P \eqqcolon> \sp<X><n> + \sb<a><1> \sp<X><n - 1> + \cdots> + \sb<a><n>
+          P \eqqcolon; \sp<X><n> + \sb<a><1> \sp<X><n - 1> + \cdots; + \sb<a><n>
         >
         と係数表示する。
-        &m<A> のある素元 &m<π> が存在し、各 &m<i = 1, \cdots>, n - 1> に対して &m<π> は &m<\sb<a><i>> をわり切り、さらに &m<\sp<π><2>> は &m<\sb<a><n>> をわり切らないとする。
-        このとき、&m<K \coloneqq> \op<Frac> (A)> とおくと、&m<P> は &m<K> 上既約である。
+        &m<A> のある素元 &m<π> が存在し、各 &m<i = 1, \cdots;, n - 1> に対して &m<π> は &m<\sb<a><i>> をわり切り、さらに &m<\sp<π><2>> は &m<\sb<a><n>> をわり切らないとする。
+        このとき、&m<K \coloneqq; \op<Frac> (A)> とおくと、&m<P> は &m<K> 上既約である。
       >
       \p|class="normal"|<
         2 階連続的微分可能な &m<\bb<R>> 値 2 変数関数 &m<f (x, y)> の極大値や極小値が知りたいとする。
         点 &m<(\sb<x><0>, \sb<y><0>)> が極大値もしくは極小値であるための必要条件として、その点が停留点であること、すなわち
         &mb<
-          \frac<\partial> f><\partial> x> (\sb<x><0>, \sb<y><0>) = \frac<\partial> f><\partial> y> (\sb<x><0>, \sb<y><0>) = 0
+          \frac<\partial; f><\partial; x> (\sb<x><0>, \sb<y><0>) = \frac<\partial; f><\partial; y> (\sb<x><0>, \sb<y><0>) = 0
         >
         が成り立つことが挙げられる。
         この条件のもと、Taylor 展開を行うことで、&m<f> の点 &m<(\sb<x><0>, \sb<y><0>)> の周りでの振る舞いは、
         &mb<
-          f (\sb<x><0> + h, \sb<y><0> + k) = f (\sb<x><0>, \sb<y><0>) + \frac<1><2> \paren<\sp<h><2> \frac<\sp<\partial>><2> f><\partial> \sp<x><2>> (\sb<x><0>, \sb<y><0>) + 2 hk \frac<\sp<\partial>><2> f><\partial> x \partial> y> (\sb<x><0>, \sb<y><0>) + \sp<k><2> \frac<\sp<\partial>><2> f><\partial> \sp<y><2>> (\sb<x><0>, \sb<y><0>)> + o (\sp<`r><2>)
+          f (\sb<x><0> + h, \sb<y><0> + k) = f (\sb<x><0>, \sb<y><0>) + \frac<1><2> \paren<\sp<h><2> \frac<\sp<\partial;><2> f><\partial; \sp<x><2>> (\sb<x><0>, \sb<y><0>) + 2 hk \frac<\sp<\partial;><2> f><\partial; x \partial; y> (\sb<x><0>, \sb<y><0>) + \sp<k><2> \frac<\sp<\partial;><2> f><\partial; \sp<y><2>> (\sb<x><0>, \sb<y><0>)> + o (\sp<`r><2>)
         >
         と記述できる。
-        ここで、&m<`r \coloneqq> \sqrt<\sp<h><2> + \sp<k><2>>> とした。
+        ここで、&m<`r \coloneqq; \sqrt<\sp<h><2> + \sp<k><2>>> とした。
       >
       \p|class="normal"|<
         Cauchy の積分公式により、正則関数 &m<F (z)> の値は、ある単純閉曲線 &m<C> の内側の点 &m<z> に対し、 
@@ -715,11 +715,11 @@
         と書けることが分かる。
       >
       \p|class="normal"|<
-        &m<\sp<\bb<C>><2 \times> 2>> の部分集合
+        &m<\sp<\bb<C>><2 \times; 2>> の部分集合
         &mb<
           \array|align="rcl"|<
-            \c<\sb<\frak<sl>><2> (\bb<C>)> \c<\coloneqq>> \c<\set<\paren<\matrix<\cc<c><a>\cc<b><-c>>> \in> \sp<\bb<C>><2 \times> 2>><a, b, c \in> \bb<C>>> \br>
-            \c> \c<=> \c<\bb<C> \paren<\matrix<\cc<0><1>\cc<0><0>>> \oplus> \bb<C> \paren<\matrix<\cc<0><0>\cc<1><0>>> \oplus> \bb<C> \paren<\matrix<\cc<1><0>\cc<0><-1>>>>
+            \c<\sb<\frak<sl>><2> (\bb<C>)> \c<\coloneqq;> \c<\set<\paren<\matrix<\cc<c><a>\cc<b><-c>>> \in; \sp<\bb<C>><2 \times; 2>><a, b, c \in; \bb<C>>> \br;
+            \c; \c<=> \c<\bb<C> \paren<\matrix<\cc<0><1>\cc<0><0>>> \oplus; \bb<C> \paren<\matrix<\cc<0><0>\cc<1><0>>> \oplus; \bb<C> \paren<\matrix<\cc<1><0>\cc<0><-1>>>>
           >
         >
         は、通常の和と交換積によって Lie 代数になる。
