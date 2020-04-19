@@ -477,7 +477,7 @@ class Zenithal::ZoticaParser < Zenithal::ZenithalParser
       parser.setup(attributes, block)
       next parser
     end
-    @inner_parser.register_plugin(name) do |_|
+    @inner_parser.register_plugin(name) do |attributes|
       parser = @inner_parser.clone
       parser.version = outer_self.instance_variable_get("@version")
       parser.update(@source)
