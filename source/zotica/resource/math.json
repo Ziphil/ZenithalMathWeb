@@ -256,6 +256,13 @@
         "width": [1000, 1500, 1770, 2180, 2600, 2850]
       }
     ],
+    "overgroup": [
+      null,
+      {
+        "0": "",
+        "start": "\uDB80\uDDC4", "bar": "\uDB80\uDDAA", "end": "\uDB80\uDDC6"
+      }
+    ],
     "widetildebelow": [
       {
         "0": "\uDB80\uDCA6", "1": "\uDB80\uDCA7", "2": "\uDB80\uDCA8", "3": "\uDB80\uDCA9", "4": "\uDB80\uDCAA",
@@ -289,6 +296,13 @@
         "0": "⏟", "1": "\uDB80\uDDCF", "2": "\uDB80\uDDD0", "3": "\uDB80\uDDD1", "4": "\uDB80\uDDD2", "5": "\uDB80\uDDD3",
         "start": "\uDB80\uDDCC", "bar": "\uDB80\uDDB2", "middle": "\uDB80\uDDCD", "end": "\uDB80\uDDCE",
         "width": [1000, 1500, 1770, 2180, 2600, 2850]
+      },
+      null
+    ],
+    "undergroup": [
+      {
+        "0": "",
+        "start": "\uDB80\uDDCC", "bar": "\uDB80\uDDB2", "end": "\uDB80\uDDCE"
       },
       null
     ]
