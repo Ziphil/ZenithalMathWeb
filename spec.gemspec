@@ -8,7 +8,7 @@ end
 
 Gem::Specification.new do |spec|
   spec.name = "zotica"
-  spec.version = "1.2.0"
+  spec.version = "1.3.0"
   spec.authors = ["Ziphil"]
   spec.email = ["ziphil.shaleiras@gmail.com"]
   spec.licenses = ["MIT"]
