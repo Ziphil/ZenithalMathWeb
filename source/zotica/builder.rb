@@ -101,6 +101,7 @@ module Zenithal::ZoticaBuilder
     font_type = (types.include?("txt")) ? "main" : "math"
     this << REXML::Element.build("math-o") do |this|
       this["class"] = types.join(" ")
+      this["data-cont"] = symbol
       this << ~symbol
       element = this
     end
