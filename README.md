@@ -2,7 +2,7 @@
 <h1>Zotica</h1>
 </div>
 
-![](https://img.shields.io/gem/v/zotica)
+![](https://img.shields.io/gem/v/zotica?label=version)
 ![](https://img.shields.io/github/commit-activity/y/Ziphil/ZenithalMathWeb?label=commits)
 
 
