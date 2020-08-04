@@ -2,6 +2,10 @@
 <h1>Zotica</h1>
 </div>
 
+![](https://img.shields.io/gem/v/zotica)
+![](https://img.shields.io/github/commit-activity/y/Ziphil/ZenithalMathWeb?label=commits)
+
+
 ## 概要
 
 Zotica とは、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法で数式を記述できるマークアップ言語です。
