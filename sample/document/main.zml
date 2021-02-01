@@ -350,7 +350,11 @@
         and
         &m<\op<Hom> (`b \ltriangle; `J, F \circ; \hyphen;)>
         and
-        &m<m \in; M \iff; f (m) \nin; \sp<M><\natural;> \scand; g (m) \nin; G>.
+        &m<m \in; M \iff; f (m) \nin; \sp<M><\natural;> \scand; g (m) \nin; G>
+      >
+      \p<
+        Added symbols:
+        &m<a \sb<\smile;><A> b \scand; a \sb<\frown;><A> b \scand; a \sb<\closure;><A> b \scand; a \sb<\asymp;><A> b>
       >
       \p<
         Combining negation symbol:
