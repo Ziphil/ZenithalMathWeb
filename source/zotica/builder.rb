@@ -34,7 +34,10 @@ module Zenithal::ZoticaBuilder
         node["class"] = classes.join(" ")
       end
       if options[:class]
-        node["class"] = (node["class"].split(" ") + options[:class].split(" ")).join(" ")
+        node["class"] += " " + options[:class]
+      end
+      if options[:style]
+        node["style"] += options[:style]
       end
     end
   end

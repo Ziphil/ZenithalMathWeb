@@ -23,6 +23,7 @@ module Zenithal::ZoticaSingleParserMethod
     this = REXML::Nodes[]
     options[:role] = determine_role(attributes)
     options[:class] = attributes["class"]
+    options[:style] = attributes["style"]
     options[:fonts] = @fonts
     case name
     when "n"
