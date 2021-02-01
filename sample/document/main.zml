@@ -555,6 +555,23 @@
           >
         >.
       >
+      \p<
+        Alignments:
+        &m<
+          P = \op<colim> [] \tort<\diag|bl|<
+            \v<\bfrm<El> (P)> \v<\scr<S>> \v<\sp<\bfrm<Set>><\sp<\scr<S>><\circ;>>>
+            \ar|s="1",e="2"|; \ar|s="2",e="3"|<\bf<y>>
+          >>
+        >
+        or
+        &m<
+          \array|align="rcl"|<
+            \c<\op<Hom> (MX, A)> \c<\diag|bl|<\v; \v; \ar|s="1",e="2"|<R \circ; L>>> \c<\op<Hom> (RLMX, RLA)> \br;
+            \c; \c<\diag|bl|<\v; \v; \ar|s="1",e="2"|<\hyphen; \circ; R \sb<`f><X>>>> \c<\op<Hom> (RKMX, RLA)> \br;
+            \c; \c<\diag|bl|<\v; \v; \ar|s="1",e="2"|<\hyphen; \circ; \sb<`h><MX>>>> \c<\op<Hom> (MX, RLA)>
+          >
+        >
+      >
       \h1<Proof trees (Gentzen style)>
       \p<
         &m<

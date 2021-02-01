@@ -241,7 +241,8 @@ module Zenithal::ZoticaSingleParserMethod
     when "diag"
       vertical_gaps_string = attributes["ver"]
       horizontal_gaps_string = attributes["hor"]
-      this << ZoticaBuilder.build_diagram(vertical_gaps_string, horizontal_gaps_string, options) do |table_this|
+      align_baseline = attributes["bl"]
+      this << ZoticaBuilder.build_diagram(vertical_gaps_string, horizontal_gaps_string, align_baseline, options) do |table_this|
         table_this << children_list.fetch(0, REXML::Nodes[])
       end
     when "c"

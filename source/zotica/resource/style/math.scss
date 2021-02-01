@@ -475,6 +475,10 @@ math-diagram {
     }
   }
 
+  &.baseline {
+    vertical-align: baseline;
+  }
+
   >math-cellwrap {
     text-align: center;
   }

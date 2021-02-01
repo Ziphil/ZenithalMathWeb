@@ -587,7 +587,7 @@ module Zenithal::ZoticaBuilder
     return this
   end
 
-  def build_diagram(vertical_gaps_string, horizontal_gaps_string, options = {}, &block)
+  def build_diagram(vertical_gaps_string, horizontal_gaps_string, align_baseline, options = {}, &block)
     this = REXML::Nodes[]
     table_element = nil
     this << REXML::Element.build("math-diagram") do |this|
@@ -596,6 +596,9 @@ module Zenithal::ZoticaBuilder
       end
       if horizontal_gaps_string
         this["class"] = [*this["class"].split(" "), "hnon"].join(" ")
+      end
+      if align_baseline
+        this["class"] = [*this["class"].split(" "), "baseline"].join(" ")
       end
       table_element = this
     end
