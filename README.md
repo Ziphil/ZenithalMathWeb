@@ -12,6 +12,9 @@ Zotica とは、[ZenML](https://github.com/Ziphil/Zenithal) ライクな文法�
 処理系を通すことで HTML 要素に変換され、専用の CSS ＋ JavaScript を適用することで、Web ページ内に数式を表示することができます。
 TeX と同程度の品質の数式を組めることと、出力される HTML が難読なものにならないようにすることを目指しています。
 
+現在このライブラリは非推奨であり、これ以上更新されることはありません。
+代わりに [TypeScript 実装](https://github.com/Ziphil/ZenmlZotica)を利用してください。
+
 ブラウザ上で数式を表示するエンジンとしては、すでに [MathJax](https://www.mathjax.org/) や [KaTeX](https://katex.org/) などがあります。
 これらとの違いは主に以下の 3 点です。
 
